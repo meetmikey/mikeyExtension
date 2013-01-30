@@ -11,10 +11,13 @@
     {"matches": ["https://mail.google.com/*",
                  "http://mail.google.com/*"
                 ],
-     "js": ["lib/js/jquery-1.9.0.js",
+     "js": ["lib/js/jquery.js",
             "lib/js/underscore.js",
             "lib/js/backbone.js",
             "lib/js/handlebars.js",
+            "contentScripts/mail/js/namespace.js",
+            "contentScripts/mail/js/view/base.js",
+            "contentScripts/mail/js/view/main.js",
             "contentScripts/mail/js/mail.js"],
       "css": ["contentScripts/mail/css/mail.css"]
     }
