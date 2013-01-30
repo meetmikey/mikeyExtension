@@ -1,0 +1,24 @@
+{
+  "name": "MeetMikey Extension",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "MeetMikey Extension",
+  "background": {
+    "scripts": ["main.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {"matches": ["https://mail.google.com/*",
+                 "http://mail.google.com/*"
+                ],
+     "js": ["contentScripts/mail/js/mail.js"],
+      "css": ["contentScripts/mail/css/mail.css"]
+    }
+  ],
+
+  "permissions": [
+    "http://*/",
+    "https://*/",
+    "tabs"
+  ]
+}
