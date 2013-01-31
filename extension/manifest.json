@@ -8,8 +8,7 @@
     "persistent": true
   },
   "content_scripts": [
-    {"matches": ["https://mail.google.com/*",
-                 "http://mail.google.com/*"
+    {"matches": ["*://mail.google.com/*"
                 ],
      "js": ["lib/js/jquery.js",
             "lib/js/underscore.js",
