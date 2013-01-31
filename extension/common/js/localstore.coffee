@@ -1,4 +1,4 @@
-class MeetMikey.LocalStore
+class MeetMikey.Helper.LocalStore
   _instance = undefined
 
   @store: () ->
