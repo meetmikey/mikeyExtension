@@ -4,3 +4,5 @@ window.MeetMikey =
   Collection: {}
   Template: {}
   Helper: {}
+  Settings:
+    APIUrl: "https://local.meetmikey.com"
