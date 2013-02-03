@@ -17,6 +17,7 @@
             "common/js/namespace.js",
             "common/js/localstore.js",
             "contentScripts/mail/js/view/base.js",
+            "contentScripts/mail/js/view/tabs.js",
             "contentScripts/mail/js/view/main.js",
             "contentScripts/mail/js/mail.js"],
       "css": ["contentScripts/mail/css/mail.css"]

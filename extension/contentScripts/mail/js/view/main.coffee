@@ -1,13 +1,6 @@
 template = """
-    <ul class="mm-tabs">
-      <li id="mm-email-tab">
-        <a href="#">Email</a>
-      </li>
-      <li id="mm-meetmikey-tab">
-        <a href="#">Meet Mikey</a>
-      </li>
-    </ul>
-    <div id="mm-content" style="display: none;">
+    <ul id="mm-tabs"></ul>
+    <div id="mm-files-tab" style="display: none;">
       MIKEY TAB IS HERE!!!!!!!
     </div>
 """
@@ -15,16 +8,21 @@ template = """
 class MeetMikey.View.Main extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
-  events:
-    'click #mm-email-tab': 'emailClick'
-    'click #mm-meetmikey-tab': 'meetMikeyClick'
+  subViews:
+    'tabs':
+      view: MeetMikey.View.Tabs
+      selector: '#mm-tabs'
 
-  emailClick: ->
-    console.log 'email'
-    $('#mm-content').hide()
-    $('.UI').show()
+  tabs:
+    email: '.UI'
+    files: '#mm-files-tab'
 
-  meetMikeyClick: ->
-    console.log 'meet mikey'
-    $('.UI').hide()
-    $('#mm-content').show()
+  postRender: =>
+    contentSelector = _.values(@tabs).join(', ')
+    console.log(contentSelector)
+    @subView('tabs').on 'clicked:tab', (tab) =>
+      $(contentSelector).hide()
+      $(@tabs[tab]).show()
+
+  teardown: =>
+    @subView('tabs').off 'clicked:tab'

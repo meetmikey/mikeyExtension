@@ -4,6 +4,9 @@ class MeetMikey.View.Base extends Backbone.View
       obj.view = new obj.view(obj.args)
     this
 
+  subView: (name) =>
+    @subViews[name].view
+
   _teadown: =>
     _.chain(@subViews).values().pluck('view').invoke('_teardown')
 
@@ -18,7 +21,10 @@ class MeetMikey.View.Base extends Backbone.View
   render: =>
     @$el.html @template(@getTemplateData())
     @renderSubviews()
+    @postRender()
     this
+
+  postRender: ->
 
   getTemplateData: -> {}
 
