@@ -16,6 +16,7 @@
             "lib/js/handlebars.js",
             "common/js/namespace.js",
             "common/js/localstore.js",
+            "common/js/oauth.js",
             "contentScripts/mail/js/view/base.js",
             "contentScripts/mail/js/view/tabs.js",
             "contentScripts/mail/js/view/main.js",
