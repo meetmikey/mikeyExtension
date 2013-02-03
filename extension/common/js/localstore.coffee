@@ -2,7 +2,7 @@ class MeetMikey.Helper.LocalStore
   _instance = undefined
 
   @store: () ->
-    _instance ?= new PrivateLocalStore
+    _instance ?= new LocalStore
 
   @get: (key) =>
     @store().get key
@@ -16,7 +16,7 @@ class MeetMikey.Helper.LocalStore
   @clear: =>
     @store().clear()
 
-class PrivateLocalStore
+class LocalStore
   constructor: (@args) ->
     @store = window.localStorage
 
