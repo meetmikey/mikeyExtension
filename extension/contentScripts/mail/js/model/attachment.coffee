@@ -1,2 +1,1 @@
-class MeetMikey.Model.Attachment extends Backbone.Collection
-
+class MeetMikey.Model.Attachment extends Backbone.Model
