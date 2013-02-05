@@ -1,7 +1,6 @@
 template = """
     <ul id="mm-tabs"></ul>
-    <div id="mm-files-tab" style="display: none;">
-      MIKEY TAB IS HERE!!!!!!!
+    <div id="mm-attachments-tab" style="display: none;">
     </div>
 """
 
@@ -15,11 +14,10 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   tabs:
     email: '.UI'
-    files: '#mm-files-tab'
+    attachments: '#mm-attachments-tab'
 
   postRender: =>
     contentSelector = _.values(@tabs).join(', ')
-    console.log(contentSelector)
     @subView('tabs').on 'clicked:tab', (tab) =>
       $(contentSelector).hide()
       $(@tabs[tab]).show()

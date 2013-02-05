@@ -2,7 +2,7 @@ template = """
   <li data-mm-tab="email">
     <a href="#">Email</a>
   </li>
-  <li data-mm-tab="files">
+  <li data-mm-tab="attachments">
     <a href="#">Files</a>
   </li>
 """
