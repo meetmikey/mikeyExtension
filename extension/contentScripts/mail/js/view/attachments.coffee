@@ -14,11 +14,11 @@ template = """
     {{#each models}}
       {{#with attributes}}
       <tr class="zf zA" data-attachment-url="{{getAPIUrl}}/attachmentURL/{{_id}}">
-      <td>{{sender.name}}</td>
-      <td>{{formatRecipients recipients}}</td>
-      <td>{{filename}}</td>
-      <td>{{formatBytes size}}</td>
-      <td>{{formatDate sentDate}}</td>
+      <td class="truncate">{{sender.name}}</td>
+      <td class="truncate">{{formatRecipients recipients}}</td>
+      <td class="truncate">{{filename}}</td>
+      <td class="truncate">{{formatBytes size}}</td>
+      <td class="truncate">{{formatDate sentDate}}</td>
       </tr>
       {{/with}}
     {{/each}}
