@@ -11,6 +11,9 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     'tabs':
       view: MeetMikey.View.Tabs
       selector: '#mm-tabs'
+    'attachments':
+      view: MeetMikey.View.Attachments
+      selector: '#mm-attachments-tab'
 
   tabs:
     email: '.UI'
