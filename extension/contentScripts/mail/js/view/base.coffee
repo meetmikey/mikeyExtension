@@ -2,7 +2,10 @@ class MeetMikey.View.Base extends Backbone.View
   initialize: =>
     for name, obj of @subViews
       obj.view = new obj.view(obj.args)
+    @postInitialize()
     this
+
+  postInitialize: ->
 
   subView: (name) =>
     @subViews[name].view
