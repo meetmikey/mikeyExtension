@@ -5,6 +5,9 @@ template = """
   <li data-mm-tab="attachments">
     <a href="#">Files</a>
   </li>
+  <li data-mm-tab="links">
+    <a href="#">Links</a>
+  </li>
 """
 
 class MeetMikey.View.Tabs extends MeetMikey.View.Base

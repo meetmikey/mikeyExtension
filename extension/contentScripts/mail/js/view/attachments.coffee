@@ -44,10 +44,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   getTemplateData: =>
     @collection
 
-  postRender: =>
-    console.log @collection.models
-    console.log 'rendered'
-
   openAttachment: (event) =>
     target = $(event.currentTarget)
     url = target.attr('data-attachment-url')
