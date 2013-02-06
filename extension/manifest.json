@@ -13,6 +13,7 @@
      "js": ["lib/js/jquery.js",
             "lib/js/underscore.js",
             "lib/js/backbone.js",
+            "lib/js/backbone.localStorage.js",
             "lib/js/handlebars.js",
             "common/js/namespace.js",
             "common/js/utils.js",
