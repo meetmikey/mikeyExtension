@@ -14,5 +14,3 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.off 'reset', @render
 
   postRender: ->
-    console.log @collection.models
-    console.log ('yay i exist')
