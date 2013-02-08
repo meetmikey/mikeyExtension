@@ -1,21 +1,3 @@
-class MeetMikey.Helper.LocalStore
-  _instance = undefined
-
-  @store: () ->
-    _instance ?= new LocalStore
-
-  @get: (key) =>
-    @store().get key
-
-  @set: (key, value) =>
-    @store().set key, value
-
-  @remove: (key) =>
-    @store().remove key
-
-  @clear: =>
-    @store().clear()
-
 class LocalStore
   constructor: (@args) ->
     @store = window.localStorage
@@ -34,3 +16,5 @@ class LocalStore
 
   clear: =>
     @store.clear()
+
+MeetMikey.Helper.LocalStore = new LocalStore()
