@@ -23,7 +23,6 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     attachments: '#mm-attachments-tab'
     links: '#mm-links-tab'
 
-
   postRender: =>
     contentSelector = _.values(@tabs).join(', ')
     @subView('tabs').on 'clicked:tab', (tab) =>
