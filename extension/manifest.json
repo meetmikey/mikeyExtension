@@ -22,6 +22,7 @@
             "contentScripts/mail/js/collection/attachments.js",
             "contentScripts/mail/js/model/link.js",
             "contentScripts/mail/js/collection/links.js",
+            "contentScripts/mail/js/model/user.js",
             "contentScripts/mail/js/view/base.js",
             "contentScripts/mail/js/view/tabs.js",
             "contentScripts/mail/js/view/attachments.js",
