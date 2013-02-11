@@ -27,6 +27,7 @@
             "contentScripts/mail/js/view/attachments.js",
             "contentScripts/mail/js/view/links.js",
             "contentScripts/mail/js/view/main.js",
+            "contentScripts/mail/js/lib/setup.js",
             "contentScripts/mail/js/mail.js"],
       "css": ["contentScripts/mail/css/mail.css"]
     }
