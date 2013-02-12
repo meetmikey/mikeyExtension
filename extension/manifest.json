@@ -14,6 +14,7 @@
             "lib/js/underscore.js",
             "lib/js/backbone.js",
             "lib/js/handlebars.js",
+            "lib/js/bootstrap.js",
             "common/js/namespace.js",
             "common/js/utils.js",
             "common/js/localstore.js",
@@ -30,7 +31,8 @@
             "contentScripts/mail/js/view/main.js",
             "contentScripts/mail/js/lib/setup.js",
             "contentScripts/mail/js/mail.js"],
-      "css": ["contentScripts/mail/css/mail.css"]
+      "css": ["lib/css/bootstrap.css",
+              "contentScripts/mail/css/mail.css"]
     }
   ],
 
