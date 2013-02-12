@@ -127,7 +127,7 @@
           }
 
           that.$element
-            .addClass('in')
+            .addClass('fade-in')
             .attr('aria-hidden', false)
 
           that.enforceFocus()
@@ -157,7 +157,7 @@
         $(document).off('focusin.modal')
 
         this.$element
-          .removeClass('in')
+          .removeClass('fade-in')
           .attr('aria-hidden', true)
 
         $.support.transition && this.$element.hasClass('fade') ?
@@ -230,7 +230,7 @@
 
           if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
 
-          this.$backdrop.addClass('in')
+          this.$backdrop.addClass('fade-in')
 
           if (!callback) return
 
@@ -239,7 +239,7 @@
             callback()
 
         } else if (!this.isShown && this.$backdrop) {
-          this.$backdrop.removeClass('in')
+          this.$backdrop.removeClass('fade-in')
 
           $.support.transition && this.$element.hasClass('fade')?
             this.$backdrop.one($.support.transition.end, callback) :

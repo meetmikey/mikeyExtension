@@ -2355,7 +2355,7 @@ a.thumbnail:focus {
   opacity: 0;
 }
 .modal-backdrop,
-.modal-backdrop.fade.in {
+.modal-backdrop.fade.fade-in {
   opacity: 0.8;
   filter: alpha(opacity=80);
 }
@@ -2390,7 +2390,7 @@ a.thumbnail:focus {
   transition: opacity .3s linear, top .3s ease-out;
   top: -25%;
 }
-.modal.fade.in {
+.modal.fade.fade-in {
   top: 10%;
 }
 .modal-header {
@@ -2874,7 +2874,7 @@ button.close {
   -o-transition: opacity 0.15s linear;
   transition: opacity 0.15s linear;
 }
-.fade.in {
+.fade.fade-in {
   opacity: 1;
 }
 .collapse {
