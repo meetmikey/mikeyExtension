@@ -12,12 +12,17 @@ class Setup
       window.setTimeout(@bootstrap, 200)
 
   setup: (target) =>
-    MeetMikey.Helper.OAuth.authorize (data) =>
-      @injectMainView(target)
+    @injectModal()
 
   injectModal: =>
+    $('body').append $('<div id="mm-onboard-modal"></div>')
+    view = new MeetMikey.View.OnboardModal el: '#mm-onboard-modal'
+    view.render()
+    view.on 'authorized', =>
+      @injectMainView()
 
   injectMainView: (target) =>
+    target ?= $(@targetSelector)
     target.before $('<div id="mm-container"></div>')
     view = new MeetMikey.View.Main el: '#mm-container'
     view.render()
