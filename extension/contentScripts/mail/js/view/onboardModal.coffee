@@ -19,16 +19,18 @@ class MeetMikey.View.OnboardModal extends MeetMikey.View.Base
 
   events:
     'click #authorize-button': 'authorize'
-    'click #not-now-button': 'closeModal'
+    'click #not-now-button': 'hide'
 
   postRender: =>
+    @show()
+
+  show: =>
     @$('.modal').modal 'show'
 
-  closeModal: =>
+  hide: =>
     @$('.modal').modal 'hide'
 
   authorize: =>
-    @closeModal()
-    MeetMikey.Helper.OAuth.authorize (data) =>
+    MeetMikey.Helper.OAuth.openAuthWindow (data) =>
       @trigger 'authorized'
-
+    @hide()

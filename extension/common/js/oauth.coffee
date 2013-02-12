@@ -43,7 +43,10 @@ class OAuth
     window.open MeetMikey.Settings.APIUrl + '/auth/google'
 
 
-  refresh: (data, callback) =>
+  refresh: (callback) =>
+    data = @getUserInfo()
+    return callback null unless data?.refreshToken?
+
     $.ajax
       url: "#{ MeetMikey.Settings.APIUrl }/auth/refresh"
       type: 'POST'
@@ -54,9 +57,9 @@ class OAuth
         if @isUserEmail res.email
           callback res
         else
-          @openAuthWindow callback
+          callback null
       error: =>
-        @openAuthWindow callback
+        callback null
 
   authFail: =>
 

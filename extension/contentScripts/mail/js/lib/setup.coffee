@@ -12,7 +12,11 @@ class Setup
       window.setTimeout(@bootstrap, 200)
 
   setup: (target) =>
-    @injectModal()
+    MeetMikey.Helper.OAuth.refresh (data) =>
+      if data?
+        @injectMainView()
+      else
+        @injectModal()
 
   injectModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')
