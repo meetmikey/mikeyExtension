@@ -12,18 +12,25 @@ class Setup
       window.setTimeout(@bootstrap, 200)
 
   setup: (target) =>
-    MeetMikey.Helper.OAuth.refresh (data) =>
-      if data?
-        @injectMainView()
+    MeetMikey.Helper.OAuth.refresh (userData) =>
+      if userData?
+        @authorized(userData)
       else
         @injectModal()
+
+  authorized: (userData) =>
+    @initalizeGlobalUser userData
+    @injectMainView()
+
+  initalizeGlobalUser: (data) =>
+    MeetMikey.globalUser = new MeetMikey.Model.User data
 
   injectModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')
     view = new MeetMikey.View.OnboardModal el: '#mm-onboard-modal'
     view.render()
-    view.on 'authorized', =>
-      @injectMainView()
+    view.on 'authorized', (userData) =>
+      @authorized(userData)
 
   injectMainView: (target) =>
     target ?= $(@targetSelector)

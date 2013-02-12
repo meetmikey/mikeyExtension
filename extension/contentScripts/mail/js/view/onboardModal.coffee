@@ -32,5 +32,5 @@ class MeetMikey.View.OnboardModal extends MeetMikey.View.Base
 
   authorize: =>
     MeetMikey.Helper.OAuth.openAuthWindow (data) =>
-      @trigger 'authorized'
+      @trigger 'authorized', data
     @hide()
