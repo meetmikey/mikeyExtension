@@ -1,10 +1,12 @@
 template = """
+<ul class="mikeyTabs">
   <li data-mm-tab="email">
     <a href="#">Email</a>
   </li>
   <li data-mm-tab="attachments">
     <a href="#">Files</a>
   </li>
+</ul>
 """
 
 class MeetMikey.View.Tabs extends MeetMikey.View.Base
