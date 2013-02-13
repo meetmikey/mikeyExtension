@@ -1,4 +1,5 @@
 template = """
+<ul class="mikeyTabs">
   <li data-mm-tab="email">
     <a href="#">Email</a>
   </li>
@@ -8,6 +9,7 @@ template = """
   <li data-mm-tab="links">
     <a href="#">Links</a>
   </li>
+</ul>
 """
 
 class MeetMikey.View.Tabs extends MeetMikey.View.Base
