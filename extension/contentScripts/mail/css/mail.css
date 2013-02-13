@@ -79,8 +79,17 @@ border-bottom: 1px solid #ebebeb;
 	border-bottom: 1px solid #e5e5e5;
 	padding-bottom: 2px;
 	font-weight: bold;
+	cursor: hand;
 
 
+}
+
+.labels td {
+	text-align: left;
+}
+
+.labels td:hover {
+	color: #777;
 }
 
 .files {
@@ -146,7 +155,7 @@ table tr td div {
 }
 
 .type {
-	width:40px;
+	width:50px;
 		white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -162,4 +171,33 @@ table tr td div {
 
 .labels .source {
 	color: #222;
+}
+
+
+.caret {
+  border-style: solid;
+  border-width: 4px 4px 0px 4px;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-top-color: #777;
+  border-right-color: transparent;
+  height: 0px;
+  width: 0px;
+  display: inline;
+  float: right;
+  margin-top: 6px;
+  margin-left: 6px;
+}
+
+
+
+.circle {
+  border-radius: 500px;
+  width: 6px;
+  height: 6px;
+  background-color: #777;
+  display: inline;
+  float: right;
+  margin-top: 6px;
+  margin-left: 6px;
 }
