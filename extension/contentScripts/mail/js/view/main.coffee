@@ -1,5 +1,5 @@
 template = """
-    <ul id="mm-tabs"></ul>
+    <div id="mm-tabs"></div>
     <div id="mm-attachments-tab" style="display: none;"></div>
     <div id="mm-links-tab" style="display: none;"></div>
 """

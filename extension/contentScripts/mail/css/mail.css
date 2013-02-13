@@ -1,165 +1,134 @@
-body {
-	font-family: arial, sans-serif;
-	font-size: 13px;
+#mm-container {
+  font-family: arial, sans-serif;
+  font-size: 13px;
 }
 
-a {
-	text-decoration: none;
-
+#mm-contianer a {
+  text-decoration: none;
 }
 
 .truncate {
   overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
-
-
-.mikey-tab {
-
-
-height: 36px;
-margin: 2px 8px 0px 0px;
-padding: 0px 10px 10px 10px;
-display:inline;
-color: #777;
-}
-
-.active {
-	border-bottom: 3px solid #dd4b39;
-	color: #dd4b39 !important;
-	font-weight: bold;
-
-}
-
-
 
 .mikey-tabs {
-font-size: 13px;
-list-style-type: none;
-margin: 0px;
-padding: 0px 0px 12px 0px;
-border-bottom: 1px solid #ebebeb;
-
+  font-size: 14px;
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px 0px 12px 0px;
+  border-bottom: 1px solid #ebebeb;
+  background-color: #fff;
 }
 
 .mikey-tabs a {
-	color: #777;
+  color: #777;
+  text-decoration: none;
 }
 
 .mikey-tabs a:hover {
-	color: #222;
+  color: #222;
 }
 
 .mikey-tabs a:active {
-	color: #dd4b39;
+  color: #dd4b39;
+}
+
+.mikey-tab {
+  height: 36px;
+  margin: 2px 8px 0px 0px;
+  padding: 0px 10px 10px 10px;
+  display:inline;
+  color: #777;
+}
+
+.active {
+  border-bottom: 3px solid #dd4b39;
+}
+.active a {
+  color: #dd4b39 !important;
+  font-weight: bold;
 }
 
 /* -------- INBOX --------- */
 
-.inbox {
-	margin-top: 15px;
-	border: 0px;
-	border-collapse: collapse;
-	width: 100%;
-	border-spacing: 0px;
-	padding: 0px;
-	table-layout: fixed;
-	min-width: 800px;
+#mm-attachments-table {
+  margin-top: 15px;
+  border: 0px;
+  border-collapse: collapse;
+  width: 100%;
+  border-spacing: 0px;
+  padding: 0px;
+  table-layout: fixed;
+  min-width: 800px;
 
 }
 
-.inbox td {
-	padding: 4px 10px 4px 10px; 
-	border:0px;
+#mm-attachments-table td {
+  padding: 4px 10px 4px 10px;
+  border:0px;
 }
 
 .labels {
-	font-size: 13px;
-	background-color: #fff;
-	border-bottom: 1px solid #e5e5e5;
-	padding-bottom: 2px;
-	font-weight: bold;
-
-
+  font-size: 13px;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 2px;
+  font-weight: bold;
 }
 
 .files {
-	background-color: #f3f3f3;
-	font-size: 13px;
-	border-bottom: 1px solid #e5e5e5;
+  background-color: #f3f3f3;
+  font-size: 13px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.mm-file-text {
+  color: #777;
+  margin-left: 6px;
+}
+.mm-sent {
+  width: 60px;
+  text-align: right;
 
 
 }
 
-.file-text {
-	
-	color: #777;
-	margin-left: 6px;
+.mm-size {
+  text-align: right;
+  width: 60px;
 }
-.sent {
-	width: 60px;
-	text-align: right;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 
+.mm-from {
+  width: 150px;
 
 }
 
-.size {
-	text-align: right;
-	width: 60px;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+.mm-to {
+  width:150px;
 }
 
-.from {
-	width: 150px;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-
+.mm-file {
+  width:100%;
+  min-width: 200px;
 }
 
-.to {
-	width:150px;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-
+#mm-attachments-table tr td div, #mm-links-table tr td div {
+  width: 100%;
+  white-space: nowrap;
+  min-width: 200px;
 }
 
-.file {
-	width:100%;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	min-width: 200px;
-
+.mm-type {
+  width:40px;
 }
 
-table tr td div {
-	width: 100%;
-	white-space: nowrap;
-	min-width: 200px;
-}
-
-.type {
-	width:40px;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.source {
-	width:180px;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	color: #777;
+.mm-source {
+  width:180px;
+  color: #777;
 }
 
 .labels .source {
-	color: #222;
+  color: #222;
 }
