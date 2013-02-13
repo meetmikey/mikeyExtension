@@ -19,6 +19,7 @@
             "common/js/utils.js",
             "common/js/localstore.js",
             "common/js/oauth.js",
+            "contentScripts/mail/js/collection/base.js",
             "contentScripts/mail/js/model/attachment.js",
             "contentScripts/mail/js/collection/attachments.js",
             "contentScripts/mail/js/model/link.js",
