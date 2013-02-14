@@ -3,7 +3,7 @@
   font-size: 13px;
 }
 
-#mm-contianer a {
+#mm-container a {
   text-decoration: none;
 }
 
@@ -12,6 +12,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
 
 .mikey-tabs {
   font-size: 14px;
@@ -53,6 +54,23 @@
   font-weight: bold;
 }
 
+.mikey-tab {
+
+
+height: 36px;
+margin: 2px 8px 0px 0px;
+padding: 0px 10px 10px 10px;
+display:inline;
+color: #777;
+}
+
+.active {
+	border-bottom: 3px solid #dd4b39;
+	color: #dd4b39 !important;
+	font-weight: bold;
+
+}
+
 /* -------- INBOX --------- */
 
 #mm-attachments-table, #mm-links-table {
@@ -67,6 +85,31 @@
 
 }
 
+
+.inbox td {
+	padding: 6px 10px 6px 10px;
+	border:0px;
+}
+
+.labels {
+	font-size: 13px;
+	background-color: #fff;
+	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 2px;
+	font-weight: bold;
+	cursor: hand;
+
+
+}
+
+.labels td {
+	text-align: left;
+}
+
+.labels td:hover {
+	color: #777;
+}
+
 #mm-attachments-table td {
   padding: 4px 10px 4px 10px;
   border:0px;
@@ -74,14 +117,6 @@
 
 #mm-attachments-table tr {
   cursor: pointer;
-}
-
-.labels {
-  font-size: 13px;
-  background-color: #fff;
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 2px;
-  font-weight: bold;
 }
 
 .files {
@@ -94,11 +129,19 @@
   color: #777;
   margin-left: 6px;
 }
+
+
+.mm-toggle-box {
+	width: 11px;
+}
+
+
 .mm-sent {
-  width: 60px;
-  text-align: right;
-
-
+ 	width: 60px;
+	text-align: right;
+		white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .mm-size {
@@ -106,8 +149,13 @@
   width: 60px;
 }
 
+
+
 .mm-from {
-  width: 150px;
+  width: 120px;
+		white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 
 }
 
@@ -115,9 +163,55 @@
   width:150px;
 }
 
+
+.file {
+
+
+
+}
+
+.inbox td.file {
+	margin-right: 30px;
+}
+
+.inbox td.source  {
+	padding: 6px 10px 6px 10px;
+
+}
+
+table tr td .flex {
+	width: 92%;
+	white-space: nowrap;
+	min-width: 200px;
+	padding-left: 26px;
+	overflow:hidden;
+
+
+
+}
+
+.mm-type {
+	width:50px;
+		white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.mm-source {
+	width:124px;
+		white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: #222;
+}
+
 .mm-file {
-  width:100%;
-  min-width: 200px;
+width:100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	min-width: 200px;
+	display: inline-block;
 }
 
 #mm-attachments-table tr td div, #mm-links-table tr td div {
@@ -130,11 +224,129 @@
   width:40px;
 }
 
-.mm-source {
-  width:180px;
-  color: #777;
-}
-
 .labels .source {
   color: #222;
+}
+
+.labels .file {
+
+}
+
+.caret {
+  border-style: solid;
+  border-width: 4px 4px 0px 4px;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-top-color: #777;
+  border-right-color: transparent;
+  height: 0px;
+  width: 0px;
+  display: inline;
+  float: right;
+  margin-top: 6px;
+  margin-left: 6px;
+}
+
+
+
+.circle {
+  border-radius: 500px;
+  width: 6px;
+  height: 6px;
+  background-color: #777;
+  display: inline;
+  float: right;
+  margin-top: 6px;
+  margin-left: 6px;
+}
+
+.file-icon {
+	margin-right: 6px;
+	display: inline;
+	background-size: 18px 18px;
+}
+
+.pdf {
+	background:url("../img/pdf.png") no-repeat;
+	background-position: 10px 4px;
+	background-size: 18px 18px;
+
+}
+
+.word {
+	background:url("../img/word.png") no-repeat;
+	background-position: 10px 4px;
+	background-size: 18px 18px;
+
+}
+
+.excel {
+	background:url("../img/excel.png") no-repeat;
+	background-position: 10px 4px;
+	background-size: 18px 18px;
+
+}
+
+.ppt {
+	background:url("../img/ppt.png") no-repeat;
+	background-position: 10px 4px;
+	background-size: 18px 18px;
+
+}
+
+.unknown {
+	background:url("../img/unknown.png") no-repeat;
+	background-position: 10px 4px;
+	background-size: 18px 18px;
+
+}
+
+.favicon {
+	background:url("../img/favicon.ico") no-repeat;
+	background-position: 10px 5px;
+	background-size: 16px 16px;
+
+}
+
+.wired {
+	background:url("../img/wired.ico") no-repeat;
+	background-position: 10px 5px;
+	background-size: 16px 16px;
+
+}
+
+/* ------------ CHECKBOX ----------------- */
+
+.checkbox {
+-webkit-border-radius: 1px;
+-moz-border-radius: 1px;
+border-radius: 1px;
+background-color: rgba(255,255,255,.05);
+border: 1px solid #c6c6c6;
+border: 1px solid rgba(155,155,155,.57);
+font-size: 1px;
+height: 11px;
+margin: 0 0px 0 0px;
+outline: 0;
+vertical-align: text-bottom;
+width: 11px;
+
+}
+
+.checkbox:focus {
+border: 1px solid #4d90fe;
+}
+
+.check {
+background:url("../img/checkmark.png") no-repeat -5px -3px;
+}
+
+.check {
+height: 15px;
+outline: 0;
+width: 15px;
+left: 0;
+position: relative;
+top: -3px;
+
 }
