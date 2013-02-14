@@ -33,5 +33,5 @@ Handlebars.registerHelper 'formatBytes', (bytes, precision=1) ->
     "#{bytes} B"
 
 Handlebars.registerHelper 'formatRecipients', (recipients) ->
-  _.pluck(recipients, 'name').join(', ')
+  _.map(recipients, (r) -> r.name || r.email).join(', ')
 
