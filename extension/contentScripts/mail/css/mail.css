@@ -14,22 +14,7 @@ a {
 }
 
 
-.mikey-tab {
 
-
-height: 36px;
-margin: 2px 8px 0px 0px;
-padding: 0px 10px 10px 10px;
-display:inline;
-color: #777;
-}
-
-.active {
-	border-bottom: 3px solid #dd4b39;
-	color: #dd4b39 !important;
-	font-weight: bold;
-
-}
 
 
 
@@ -54,6 +39,23 @@ border-bottom: 1px solid #ebebeb;
 	color: #dd4b39;
 }
 
+.mikey-tab {
+
+
+height: 36px;
+margin: 2px 8px 0px 0px;
+padding: 0px 10px 10px 10px;
+display:inline;
+color: #777;
+}
+
+.active {
+	border-bottom: 3px solid #dd4b39;
+	color: #dd4b39 !important;
+	font-weight: bold;
+
+}
+
 /* -------- INBOX --------- */
 
 .inbox {
@@ -69,7 +71,7 @@ border-bottom: 1px solid #ebebeb;
 }
 
 .inbox td {
-	padding: 4px 10px 4px 10px; 
+	padding: 6px 10px 6px 10px; 
 	border:0px;
 }
 
@@ -105,6 +107,11 @@ border-bottom: 1px solid #ebebeb;
 	color: #777;
 	margin-left: 6px;
 }
+
+.toggle-box {
+	width: 11px;
+}
+
 .sent {
 	width: 60px;
 	text-align: right;
@@ -124,7 +131,7 @@ border-bottom: 1px solid #ebebeb;
 }
 
 .from {
-	width: 150px;
+	width: 120px;
 		white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -145,13 +152,29 @@ border-bottom: 1px solid #ebebeb;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	min-width: 200px;
+	display: inline-block;
+
 
 }
 
-table tr td div {
-	width: 100%;
+.inbox td.file {
+	margin-right: 30px;
+}
+
+.inbox td.source  {
+	padding: 6px 10px 6px 10px; 
+
+}
+
+table tr td .flex {
+	width: 92%;
 	white-space: nowrap;
 	min-width: 200px;
+	padding-left: 26px;
+	overflow:hidden;
+
+
+
 }
 
 .type {
@@ -162,15 +185,19 @@ table tr td div {
 }
 
 .source {
-	width:180px;
+	width:124px;
 		white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	color: #777;
+	color: #222;
 }
 
 .labels .source {
 	color: #222;
+}
+
+.labels .file {
+
 }
 
 
@@ -200,4 +227,95 @@ table tr td div {
   float: right;
   margin-top: 6px;
   margin-left: 6px;
+}
+
+.file-icon {
+	margin-right: 6px;
+	display: inline;
+	background-size: 18px 18px;
+}
+
+.pdf {
+	background:url("../img/pdf.png") no-repeat;
+	background-position: 10px 4px;
+	background-size: 18px 18px;
+
+}
+
+.word {
+	background:url("../img/word.png") no-repeat;
+	background-position: 10px 4px;
+	background-size: 18px 18px;
+
+}
+
+.excel {
+	background:url("../img/excel.png") no-repeat;
+	background-position: 10px 4px;
+	background-size: 18px 18px;
+
+}
+
+.ppt {
+	background:url("../img/ppt.png") no-repeat;
+	background-position: 10px 4px;
+	background-size: 18px 18px;
+
+}
+
+.unknown {
+	background:url("../img/unknown.png") no-repeat;
+	background-position: 10px 4px;
+	background-size: 18px 18px;
+
+}
+
+.favicon {
+	background:url("../img/favicon.ico") no-repeat;
+	background-position: 10px 5px;
+	background-size: 16px 16px;
+
+}
+
+.wired {
+	background:url("../img/wired.ico") no-repeat;
+	background-position: 10px 5px;
+	background-size: 16px 16px;
+
+}
+
+/* ------------ CHECKBOX ----------------- */
+
+.checkbox {
+-webkit-border-radius: 1px;
+-moz-border-radius: 1px;
+border-radius: 1px;
+background-color: rgba(255,255,255,.05);
+border: 1px solid #c6c6c6;
+border: 1px solid rgba(155,155,155,.57);
+font-size: 1px;
+height: 11px;
+margin: 0 0px 0 0px;
+outline: 0;
+vertical-align: text-bottom;
+width: 11px;
+
+}
+
+.checkbox:focus {
+border: 1px solid #4d90fe;
+}
+
+.check {
+background:url("../img/checkmark.png") no-repeat -5px -3px;
+}
+
+.check {
+height: 15px;
+outline: 0;
+width: 15px;
+left: 0;
+position: relative;
+top: -3px;
+
 }
