@@ -40,12 +40,14 @@
   margin: 2px 8px 0px 0px;
   padding: 0px 10px 10px 10px;
   display:inline;
+  cursor: pointer;
   color: #777;
 }
 
 .active {
   border-bottom: 3px solid #dd4b39;
 }
+
 .active a {
   color: #dd4b39 !important;
   font-weight: bold;
@@ -53,7 +55,7 @@
 
 /* -------- INBOX --------- */
 
-#mm-attachments-table {
+#mm-attachments-table, #mm-links-table {
   margin-top: 15px;
   border: 0px;
   border-collapse: collapse;
@@ -68,6 +70,10 @@
 #mm-attachments-table td {
   padding: 4px 10px 4px 10px;
   border:0px;
+}
+
+#mm-attachments-table tr {
+  cursor: pointer;
 }
 
 .labels {
