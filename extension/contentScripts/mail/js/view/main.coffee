@@ -1,7 +1,7 @@
 template = """
-    <ul id="mm-tabs"></ul>
-    <div id="mm-attachments-tab" style="display: none;">
-    </div>
+    <div id="mm-tabs"></div>
+    <div id="mm-attachments-tab" style="display: none;"></div>
+    <div id="mm-links-tab" style="display: none;"></div>
 """
 
 class MeetMikey.View.Main extends MeetMikey.View.Base
@@ -14,10 +14,14 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     'attachments':
       view: MeetMikey.View.Attachments
       selector: '#mm-attachments-tab'
+    'links':
+      view: MeetMikey.View.Links
+      selector: '#mm-links-tab'
 
   tabs:
     email: '.UI'
     attachments: '#mm-attachments-tab'
+    links: '#mm-links-tab'
 
   postRender: =>
     contentSelector = _.values(@tabs).join(', ')

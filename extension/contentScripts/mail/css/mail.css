@@ -1,42 +1,55 @@
-body {
-	font-family: arial, sans-serif;
-	font-size: 13px;
+#mm-container {
+  font-family: arial, sans-serif;
+  font-size: 13px;
 }
 
-a {
-	text-decoration: none;
-
+#mm-container a {
+  text-decoration: none;
 }
 
 .truncate {
   overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
-
-
-
-
 
 
 .mikey-tabs {
-font-size: 13px;
-list-style-type: none;
-margin: 0px;
-padding: 0px 0px 12px 0px;
-border-bottom: 1px solid #ebebeb;
-
+  font-size: 14px;
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px 0px 12px 0px;
+  border-bottom: 1px solid #ebebeb;
+  background-color: #fff;
 }
 
 .mikey-tabs a {
-	color: #777;
+  color: #777;
+  text-decoration: none;
 }
 
 .mikey-tabs a:hover {
-	color: #222;
+  color: #222;
 }
 
 .mikey-tabs a:active {
-	color: #dd4b39;
+  color: #dd4b39;
+}
+
+.mikey-tab {
+  height: 36px;
+  margin: 2px 8px 0px 0px;
+  padding: 0px 10px 10px 10px;
+  display:inline;
+  color: #777;
+}
+
+.active {
+  border-bottom: 3px solid #dd4b39;
+}
+.active a {
+  color: #dd4b39 !important;
+  font-weight: bold;
 }
 
 .mikey-tab {
@@ -58,17 +71,18 @@ color: #777;
 
 /* -------- INBOX --------- */
 
-.inbox {
-	margin-top: 15px;
-	border: 0px;
-	border-collapse: collapse;
-	width: 100%;
-	border-spacing: 0px;
-	padding: 0px;
-	table-layout: fixed;
-	min-width: 800px;
+#mm-attachments-table {
+  margin-top: 15px;
+  border: 0px;
+  border-collapse: collapse;
+  width: 100%;
+  border-spacing: 0px;
+  padding: 0px;
+  table-layout: fixed;
+  min-width: 800px;
 
 }
+
 
 .inbox td {
 	padding: 6px 10px 6px 10px; 
@@ -94,65 +108,59 @@ color: #777;
 	color: #777;
 }
 
+#mm-attachments-table td {
+  padding: 4px 10px 4px 10px;
+  border:0px;
+}
+
+
 .files {
-	background-color: #f3f3f3;
-	font-size: 13px;
-	border-bottom: 1px solid #e5e5e5;
-
-
+  background-color: #f3f3f3;
+  font-size: 13px;
+  border-bottom: 1px solid #e5e5e5;
 }
 
-.file-text {
-	
-	color: #777;
-	margin-left: 6px;
+.mm-file-text {
+  color: #777;
+  margin-left: 6px;
 }
 
-.toggle-box {
+
+.mm-toggle-box {
 	width: 11px;
 }
 
-.sent {
-	width: 60px;
+
+.mm-sent {
+ 	width: 60px;
 	text-align: right;
 		white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-
-
 }
 
-.size {
-	text-align: right;
-	width: 60px;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+.mm-size {
+  text-align: right;
+  width: 60px;
 }
 
-.from {
-	width: 120px;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 
-}
-
-.to {
-	width:150px;
+	
+.mm-from {
+  width: 120px;
 		white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 
 }
+
+.mm-to {
+  width:150px;
+}
+
 
 .file {
-	width:100%;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	min-width: 200px;
-	display: inline-block;
+	
 
 
 }
@@ -177,14 +185,14 @@ table tr td .flex {
 
 }
 
-.type {
+.mm-type {
 	width:50px;
 		white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-.source {
+.mm-source {
 	width:124px;
 		white-space: nowrap;
 	overflow: hidden;
@@ -192,8 +200,28 @@ table tr td .flex {
 	color: #222;
 }
 
+.mm-file {
+width:100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	min-width: 200px;
+	display: inline-block;
+}
+
+#mm-attachments-table tr td div, #mm-links-table tr td div {
+  width: 100%;
+  white-space: nowrap;
+  min-width: 200px;
+}
+
+.mm-type {
+  width:40px;
+}
+ 
+
 .labels .source {
-	color: #222;
+  color: #222;
 }
 
 .labels .file {

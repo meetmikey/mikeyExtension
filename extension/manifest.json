@@ -14,18 +14,27 @@
             "lib/js/underscore.js",
             "lib/js/backbone.js",
             "lib/js/handlebars.js",
+            "lib/js/bootstrap.js",
             "common/js/namespace.js",
             "common/js/utils.js",
             "common/js/localstore.js",
             "common/js/oauth.js",
+            "contentScripts/mail/js/collection/base.js",
             "contentScripts/mail/js/model/attachment.js",
             "contentScripts/mail/js/collection/attachments.js",
+            "contentScripts/mail/js/model/link.js",
+            "contentScripts/mail/js/collection/links.js",
+            "contentScripts/mail/js/model/user.js",
             "contentScripts/mail/js/view/base.js",
             "contentScripts/mail/js/view/tabs.js",
             "contentScripts/mail/js/view/attachments.js",
+            "contentScripts/mail/js/view/links.js",
+            "contentScripts/mail/js/view/onboardModal.js",
             "contentScripts/mail/js/view/main.js",
+            "contentScripts/mail/js/lib/setup.js",
             "contentScripts/mail/js/mail.js"],
-      "css": ["contentScripts/mail/css/mail.css"]
+      "css": ["lib/css/bootstrap.css",
+              "contentScripts/mail/css/mail.css"]
     }
   ],
 
