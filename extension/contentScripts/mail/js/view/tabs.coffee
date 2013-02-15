@@ -20,10 +20,10 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
 
   postRender: =>
     width = $('.nH').width()
-    $('.mikey-tabs').css 'width':width
+    @$('.mikey-tabs').css 'width', width
     $(window).resize ->
-      width = $('.nH').width();
-      $('.mikey-tabs').css 'width':width
+      width = $('.nH').width()
+      @$('.mikey-tabs').css 'width', width
 
   tabClick: (e) =>
     e.preventDefault()
