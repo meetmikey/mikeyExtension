@@ -73,7 +73,7 @@ color: #777;
 
 /* -------- INBOX --------- */
 
-#mm-attachments-table, #mm-links-table {
+.inbox-table {
   margin-top: 15px;
   border: 0px;
   border-collapse: collapse;
@@ -86,7 +86,7 @@ color: #777;
 }
 
 
-.inbox td {
+.inbox-table td {
 	padding: 6px 10px 6px 10px;
 	border:0px;
 }
@@ -110,11 +110,6 @@ color: #777;
 	color: #777;
 }
 
-#mm-attachments-table td {
-  padding: 4px 10px 4px 10px;
-  border:0px;
-}
-
 #mm-attachments-table tr {
   cursor: pointer;
 }
@@ -132,12 +127,12 @@ color: #777;
 
 
 .mm-toggle-box {
-	width: 11px;
+	width: 23px;
 }
 
 
 .mm-sent {
- 	width: 60px;
+ 	width: 75px;
 	text-align: right;
 		white-space: nowrap;
 	overflow: hidden;
@@ -146,7 +141,7 @@ color: #777;
 
 .mm-size {
   text-align: right;
-  width: 60px;
+  width: 65px;
 }
 
 
@@ -170,11 +165,11 @@ color: #777;
 
 }
 
-.inbox td.file {
+.inbox-table td.file {
 	margin-right: 30px;
 }
 
-.inbox td.source  {
+.inbox-table td.source  {
 	padding: 6px 10px 6px 10px;
 
 }
@@ -185,9 +180,6 @@ table tr td .flex {
 	min-width: 200px;
 	padding-left: 26px;
 	overflow:hidden;
-
-
-
 }
 
 .mm-type {
@@ -212,12 +204,6 @@ width:100%;
 	text-overflow: ellipsis;
 	min-width: 200px;
 	display: inline-block;
-}
-
-#mm-attachments-table tr td div, #mm-links-table tr td div {
-  width: 100%;
-  white-space: nowrap;
-  min-width: 200px;
 }
 
 .mm-type {

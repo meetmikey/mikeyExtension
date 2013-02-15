@@ -2,11 +2,12 @@ template = """
   {{#unless models}}
     There doesn't seem to be any files here!?!
   {{else}}
-    <table id="mm-attachments-table" border="0">
+    <table class="inbox-table" id="mm-attachments-table" border="0">
       <thead class="labels">
+        <th class="mm-toggle-box"></th>
+        <th class="mm-file">File</th>
         <th class="mm-from">From</th>
         <th class="mm-to">To</th>
-        <th class="mm-file">File</th>
         <th class="mm-type">Type</th>
         <th class="mm-size">Size</th>
         <th class="mm-sent">Sent</th>
@@ -15,12 +16,15 @@ template = """
     {{#each models}}
       {{#with attributes}}
       <tr class="files" data-attachment-url="{{getAPIUrl}}/attachmentURL/{{_id}}">
-      <td class="mm-from truncate">{{sender.name}}</td>
-      <td class="mm-to truncate">{{formatRecipients recipients}}</td>
-      <td class="mm-file truncate">{{filename}}</td>
-      <td class="mm-type truncate">pdf</td>
-      <td class="mm-size truncate">{{formatBytes size}}</td>
-      <td class="mm-sent truncate">{{formatDate sentDate}}</td>
+        <td class="mm-toggle-box">
+          <div class="checkbox"><div class="check"></div></div>
+        </td>
+        <td class="mm-file truncate">{{filename}}</td>
+        <td class="mm-from truncate">{{sender.name}}</td>
+        <td class="mm-to truncate">{{formatRecipients recipients}}</td>
+        <td class="mm-type truncate">pdf</td>
+        <td class="mm-size truncate">{{formatBytes size}}</td>
+        <td class="mm-sent truncate">{{formatDate sentDate}}</td>
       </tr>
       {{/with}}
     {{/each}}
