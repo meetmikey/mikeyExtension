@@ -41,12 +41,14 @@
   margin: 2px 8px 0px 0px;
   padding: 0px 10px 10px 10px;
   display:inline;
+  cursor: pointer;
   color: #777;
 }
 
 .active {
   border-bottom: 3px solid #dd4b39;
 }
+
 .active a {
   color: #dd4b39 !important;
   font-weight: bold;
@@ -71,7 +73,7 @@ color: #777;
 
 /* -------- INBOX --------- */
 
-#mm-attachments-table {
+#mm-attachments-table, #mm-links-table {
   margin-top: 15px;
   border: 0px;
   border-collapse: collapse;
@@ -85,7 +87,7 @@ color: #777;
 
 
 .inbox td {
-	padding: 6px 10px 6px 10px; 
+	padding: 6px 10px 6px 10px;
 	border:0px;
 }
 
@@ -113,6 +115,9 @@ color: #777;
   border:0px;
 }
 
+#mm-attachments-table tr {
+  cursor: pointer;
+}
 
 .files {
   background-color: #f3f3f3;
@@ -145,7 +150,7 @@ color: #777;
 }
 
 
-	
+
 .mm-from {
   width: 120px;
 		white-space: nowrap;
@@ -160,7 +165,7 @@ color: #777;
 
 
 .file {
-	
+
 
 
 }
@@ -170,7 +175,7 @@ color: #777;
 }
 
 .inbox td.source  {
-	padding: 6px 10px 6px 10px; 
+	padding: 6px 10px 6px 10px;
 
 }
 
@@ -218,7 +223,6 @@ width:100%;
 .mm-type {
   width:40px;
 }
- 
 
 .labels .source {
   color: #222;
@@ -227,7 +231,6 @@ width:100%;
 .labels .file {
 
 }
-
 
 .caret {
   border-style: solid;
