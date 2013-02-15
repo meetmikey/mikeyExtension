@@ -18,6 +18,13 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
   events:
     'click li': 'tabClick'
 
+  postRender: =>
+    width = $('.nH').width()
+    @$('.mikey-tabs').css 'width', width
+    $(window).resize ->
+      width = $('.nH').width()
+      @$('.mikey-tabs').css 'width', width
+
   tabClick: (e) =>
     e.preventDefault()
     target = $(e.currentTarget)

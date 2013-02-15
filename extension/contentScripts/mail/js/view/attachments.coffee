@@ -14,19 +14,17 @@ template = """
       </thead>
       <tbody>
     {{#each models}}
-      {{#with attributes}}
       <tr class="files" data-attachment-url="{{getAPIUrl}}/attachmentURL/{{_id}}">
         <td class="mm-toggle-box">
           <div class="checkbox"><div class="check"></div></div>
         </td>
         <td class="mm-file truncate">{{filename}}</td>
-        <td class="mm-from truncate">{{sender.name}}</td>
-        <td class="mm-to truncate">{{formatRecipients recipients}}</td>
+        <td class="mm-from truncate">{{from}}</td>
+        <td class="mm-to truncate">{{to}}</td>
         <td class="mm-type truncate">pdf</td>
-        <td class="mm-size truncate">{{formatBytes size}}</td>
-        <td class="mm-sent truncate">{{formatDate sentDate}}</td>
+        <td class="mm-size truncate">{{size}}</td>
+        <td class="mm-sent truncate">{{sentDate}}</td>
       </tr>
-      {{/with}}
     {{/each}}
     </tbody>
     </table>
@@ -48,7 +46,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @collection.off('reset', @render)
 
   getTemplateData: =>
-    @collection
+    models: _.map(@collection.models, (model) -> new MeetMikey.Decorator.Attachment model)
 
   openAttachment: (event) =>
     target = $(event.currentTarget)
