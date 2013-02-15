@@ -17,12 +17,15 @@
 .mikey-tabs {
   font-size: 14px;
   list-style-type: none;
-  margin: 16px 0px 0px 0px;
-  padding: 0px 0px 12px 0px;
+  margin: -43px 0px 0px 0px;
+  padding: 8px 0px 0px 0px;
   border-bottom: 1px solid #ebebeb;
   background-color: #fff;
   margin-bottom: 16px;
-
+  z-index: 10000;
+  position: fixed;
+  width: 100%;
+ 
 }
 
 .mikey-tabs a {
@@ -39,10 +42,10 @@
 }
 
 .mikey-tab {
-  height: 36px;
-  margin: 2px 8px 0px 0px;
-  padding: 0px 7px 10px 10px;
-  display:inline;
+  height: 24px;
+  margin: 2px 12px 0px 0px;
+  padding: 0px 10px 0px 10px;
+  display:inline-block;
   cursor: pointer;
   color: #777;
 }
@@ -343,6 +346,8 @@ top: -3px;
 
 }
 
+
+
 /* -------------- TABLES ----------- */
 
 #mm-attachments-table {
@@ -358,4 +363,8 @@ top: -3px;
 
 #mm-attachments-table {
 
+}
+
+.ae4 {
+  padding-top: 4px;
 }
