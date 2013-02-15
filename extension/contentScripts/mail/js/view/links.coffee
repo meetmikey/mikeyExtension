@@ -12,17 +12,15 @@ template = """
       </thead>
       <tbody>
         {{#each models}}
-          {{#with attributes}}
           <tr class="files">
             <td class="mm-file favicon truncate">
-              <div class="flex">{{mailCleanSubject}}</div>
+              <div class="flex">{{title}}</div>
             </td>
             <td class="mm-source truncate">{{url}}</td>
-            <td class="mm-from truncate">{{sender.name}}</td>
-            <td class="mm-to truncate">{{formatRecipients recipients}}</td>
-            <td class="mm-sent truncate">{{formatDate sentDate}}</td>
+            <td class="mm-from truncate">{{from}}</td>
+            <td class="mm-to truncate">{{to}}</td>
+            <td class="mm-sent truncate">{{sentDate}}</td>
           </tr>
-          {{/with}}
         {{/each}}
       </tbody>
     </table>
@@ -41,6 +39,6 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.off 'reset', @render
 
   getTemplateData: =>
-    @collection
+    models: _.map(@collection.models, (model) -> new MeetMikey.Decorator.Link model)
 
   postRender: ->
