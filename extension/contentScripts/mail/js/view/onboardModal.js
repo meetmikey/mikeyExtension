@@ -5,7 +5,7 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  template = "<div class=\"modal hide fade\">\n  <div class=\"modal-header\">\n    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n    <h3> Authorize Meet Mikey </h3>\n  </div>\n  <div class=\"modal-body\">\n    <p>You must authorize Meet Mikey to use our awesome features.</p>\n  </div>\n  <div class=\"modal-footer\">\n    <a href=\"#\" id=\"not-now-button\" class=\"btn\">Not Now</a>\n    <a href=\"#\" id=\"authorize-button\" class=\"btn btn-primary\">Authorize</a>\n  </div>\n</div>";
+  template = "<div class=\"modal hide fade\">\n  <div class=\"modal-header\">\n    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n    <h3>Get Mikey</h3>\n  </div>\n  <div class=\"modal-body\">\n    <p>You need to let Mikey access your Gmail in order to let him work his magic.</p>\n  </div>\n\n\n  <div class=\"footer-buttons\">\n    <a href=\"#\" id=\"authorize-button\" class=\"button buttons\">Connect</a>\n    <a href=\"#\" id=\"not-now-button\" class=\"button-grey buttons\">Not right now</a>\n    \n  </div>\n \n</div>";
 
   MeetMikey.View.OnboardModal = (function(_super) {
 
