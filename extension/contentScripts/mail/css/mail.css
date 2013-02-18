@@ -1,6 +1,7 @@
 #mm-container {
   font-family: arial, sans-serif;
   font-size: 13px;
+  position: relative;
 }
 
 #mm-container a {
@@ -18,13 +19,14 @@
   font-size: 14px;
   list-style-type: none;
   margin: -43px 0px 0px 0px;
-  padding: 8px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
   border-bottom: 1px solid #ebebeb;
   background-color: #fff;
   margin-bottom: 16px;
-  z-index: 10000;
+  z-index: 3;
   position: fixed;
   width: 100%;
+  top: 0px;
  
 }
 
@@ -79,6 +81,7 @@
   padding: 0px;
   table-layout: fixed;
   min-width: 800px;
+  margin-top: 0px;
 
 }
 
@@ -366,7 +369,7 @@ top: -3px;
 }
 
 .ae4 {
-  padding-top: 4px;
+  padding-top: 10px;
 }
 
 
