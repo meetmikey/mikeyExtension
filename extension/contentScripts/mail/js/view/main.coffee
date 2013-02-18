@@ -1,33 +1,20 @@
-template = """
-    <div id="mm-tabs"></div>
-    <div id="mm-attachments-tab" style="display: none;"></div>
-    <div id="mm-links-tab" style="display: none;"></div>
-"""
-
 class MeetMikey.View.Main extends MeetMikey.View.Base
-  template: Handlebars.compile(template)
-
   subViews:
-    'tabs':
-      view: MeetMikey.View.Tabs
-      selector: '#mm-tabs'
-    'attachments':
-      view: MeetMikey.View.Attachments
-      selector: '#mm-attachments-tab'
-    'links':
-      view: MeetMikey.View.Links
-      selector: '#mm-links-tab'
+    'inbox':
+      view: MeetMikey.View.Inbox
+      selector: '#mm-container'
+    'search':
+      view: MeetMikey.View.Search
+      selector: '#gbqf'
 
-  tabs:
-    email: '.UI'
-    attachments: '#mm-attachments-tab'
-    links: '#mm-links-tab'
+  postInitialize: =>
+    @injectInboxContainer()
 
-  postRender: =>
-    contentSelector = _.values(@tabs).join(', ')
-    @subView('tabs').on 'clicked:tab', (tab) =>
-      $(contentSelector).hide()
-      $(@tabs[tab]).show()
+  injectInboxContainer: =>
+    target = @$(@options.inboxTarget)
+    target.before $('<div id="mm-container"></div>')
 
-  teardown: =>
-    @subView('tabs').off 'clicked:tab'
+  render: =>
+    @renderSubviews()
+
+
