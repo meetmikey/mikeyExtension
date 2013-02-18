@@ -1,7 +1,7 @@
 class MeetMikey.Decorator.Attachment
   constructor: (@model) ->
     @filename = @model.get 'filename'
-    @from = @model.get('sender').name
+    @from = @model.get('sender')?.name
     @to = @formatRecipients()
     @sentDate = @formatDate()
     @size = @formatFileSize()

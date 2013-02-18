@@ -33,9 +33,8 @@ class Setup
       @authorized(userData)
 
   injectMainView: (target) =>
-    target ?= $(@targetSelector)
-    target.before $('<div id="mm-container"></div>')
-    view = new MeetMikey.View.Main el: '#mm-container'
+    target ?= @targetSelector
+    view = new MeetMikey.View.Main el: 'body', inboxTarget: target
     view.render()
 
 MeetMikey.Helper.Setup = new Setup()
