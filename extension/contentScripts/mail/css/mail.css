@@ -420,7 +420,7 @@ background-image: -moz-linear-gradient(top,#f5f5f5,#f1f1f1);
 background-image: -ms-linear-gradient(top,#f5f5f5,#f1f1f1);
 background-image: -o-linear-gradient(top,#f5f5f5,#f1f1f1);
 background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
-color: #333;
+color: #444;
 border: 1px solid #dcdcdc;
 border: 1px solid rgba(0,0,0,0.1);
 }
@@ -432,9 +432,9 @@ background-image: -moz-linear-gradient(top,#f8f8f8,#f1f1f1);
 background-image: -ms-linear-gradient(top,#f8f8f8,#f1f1f1);
 background-image: -o-linear-gradient(top,#f8f8f8,#f1f1f1);
 background-image: linear-gradient(top,#f8f8f8,#f1f1f1);
-color: #444;
+color: #333;
 border: 1px solid #c6c6c6;
-border: 1px solid rgba(0,0,0,0.1);
+
 }
 
 
