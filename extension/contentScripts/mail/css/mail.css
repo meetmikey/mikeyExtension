@@ -18,8 +18,8 @@
 .mikey-tabs {
   font-size: 14px;
   list-style-type: none;
-  margin: -43px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
+  margin: 114px 0px 0px 0px;
+  padding: 8px 0px 0px 0px;
   border-bottom: 1px solid #ebebeb;
   background-color: #fff;
   margin-bottom: 16px;
@@ -81,7 +81,7 @@
   padding: 0px;
   table-layout: fixed;
   min-width: 800px;
-  margin-top: 0px;
+  margin-top: 4px;
 
 }
 
@@ -354,7 +354,7 @@ top: -3px;
 /* -------------- TABLES ----------- */
 
 #mm-attachments-table {
-   margin-top: 15px;
+   margin-top: 6px;
   border: 0px;
   border-collapse: collapse;
   width: 100%;
@@ -364,12 +364,14 @@ top: -3px;
   min-width: 800px;
 }
 
-#mm-attachments-table {
 
+
+#mm-links-table {
+margin-top: 6px;
 }
 
 .ae4 {
-  padding-top: 10px;
+  padding-top: 0px;
 }
 
 
