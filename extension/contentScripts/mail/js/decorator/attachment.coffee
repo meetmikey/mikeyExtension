@@ -6,6 +6,7 @@ class MeetMikey.Decorator.Attachment
     @sentDate = @formatDate()
     @size = @formatFileSize()
     @_id = @model.get('_id')
+    @email = encodeURIComponent(MeetMikey.Helper.OAuth.getUserEmail())
 
   formatRecipients: =>
     MeetMikey.Helper.formatRecipients @model.get('recipients')
