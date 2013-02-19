@@ -1,6 +1,7 @@
 #mm-container {
   font-family: arial, sans-serif;
   font-size: 13px;
+  position: relative;
 }
 
 #mm-container a {
@@ -17,14 +18,15 @@
 .mikey-tabs {
   font-size: 14px;
   list-style-type: none;
-  margin: -43px 0px 0px 0px;
+  margin: 114px 0px 0px 0px;
   padding: 8px 0px 0px 0px;
   border-bottom: 1px solid #ebebeb;
   background-color: #fff;
   margin-bottom: 16px;
-  z-index: 10000;
+  z-index: 3;
   position: fixed;
   width: 100%;
+  top: 0px;
  
 }
 
@@ -79,6 +81,7 @@
   padding: 0px;
   table-layout: fixed;
   min-width: 800px;
+  margin-top: 4px;
 
 }
 
@@ -355,7 +358,7 @@ top: -3px;
 /* -------------- TABLES ----------- */
 
 #mm-attachments-table {
-   margin-top: 15px;
+   margin-top: 6px;
   border: 0px;
   border-collapse: collapse;
   width: 100%;
@@ -365,8 +368,10 @@ top: -3px;
   min-width: 800px;
 }
 
-#mm-attachments-table {
 
+
+#mm-links-table {
+margin-top: 6px;
 }
 
 #mm-links-table {
@@ -385,7 +390,7 @@ top: -3px;
 }
 
 .ae4 {
-  padding-top: 4px;
+  padding-top: 0px;
 }
 
 
