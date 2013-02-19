@@ -11,7 +11,7 @@ class MeetMikey.View.Base extends Backbone.View
   subView: (name) =>
     @subViews[name].view
 
-  _teadown: =>
+  _teardown: =>
     _.chain(@subViews).values().pluck('view').invoke('_teardown')
 
     @teardown()
