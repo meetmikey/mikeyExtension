@@ -13,7 +13,7 @@ class MeetMikey.Decorator.Attachment
     MeetMikey.Helper.formatDate @model.get('sentDate')
 
   formatFileSize: (precision=1) ->
-    bytes = @model.get('size')
+    bytes = @model.get('fileSize')
     convert = (n, unit) ->
       (n / unit).toFixed(precision)
 
