@@ -14,7 +14,10 @@ template = """
         {{#each models}}
         <tr class="files" data-attachment-url="{{url}}">
             <td class="mm-file favicon truncate">
-              <div class="flex">{{title}}</div>
+              <div class="flex">
+                {{title}}
+                <span class="mm-file-text">{{summary}}</span>
+              </div>
             </td>
             <td class="mm-source truncate">{{url}}</td>
             <td class="mm-from truncate">{{from}}</td>
