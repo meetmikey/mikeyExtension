@@ -24,11 +24,16 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     links: '#mm-links-tab'
 
   postRender: =>
-    console.log 'rendering'
+    @subView('tabs').on 'clicked:tab', @showTab
+
+  changeTab: (tab) =>
+    @subView('tabs').setActiveTab tab
+    @showTab tab
+
+  showTab: (tab) =>
     contentSelector = _.values(@tabs).join(', ')
-    @subView('tabs').on 'clicked:tab', (tab) =>
-      $(contentSelector).hide()
-      $(@tabs[tab]).show()
+    $(contentSelector).hide()
+    $(@tabs[tab]).show()
 
   teardown: =>
     @subView('tabs').off 'clicked:tab'

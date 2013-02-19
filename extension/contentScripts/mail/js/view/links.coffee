@@ -12,7 +12,7 @@ template = """
       </thead>
       <tbody>
         {{#each models}}
-          <tr class="files">
+        <tr class="files" data-attachment-url="{{url}}">
             <td class="mm-file favicon truncate">
               <div class="flex">{{title}}</div>
             </td>
@@ -30,6 +30,9 @@ template = """
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  events:
+    'click tr': 'openLink'
+
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()
     @collection.on 'reset', @render
@@ -42,3 +45,8 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     models: _.map(@collection.models, (model) -> new MeetMikey.Decorator.Link model)
 
   postRender: ->
+
+  openLink: (event) =>
+    target = $(event.currentTarget)
+    url = target.attr('data-attachment-url')
+    window.open(url)
