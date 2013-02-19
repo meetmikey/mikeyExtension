@@ -15,6 +15,7 @@ template = """
           <tr class="files">
             <td class="mm-file favicon truncate">
               <div class="flex">{{title}}</div>
+              <div class="file-text">{{summary}}</div>
             </td>
             <td class="mm-source truncate">{{url}}</td>
             <td class="mm-from truncate">{{from}}</td>
