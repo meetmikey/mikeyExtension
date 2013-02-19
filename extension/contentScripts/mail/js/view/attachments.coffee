@@ -14,7 +14,7 @@ template = """
       </thead>
       <tbody>
     {{#each models}}
-      <tr class="files" data-attachment-url="{{getAPIUrl}}/attachmentURL/{{_id}}">
+      <tr class="files" data-attachment-url="{{getAPIUrl}}/attachmentURL/{{_id}}?userEmail={{email}}">
         <td class="mm-toggle-box">
           <div class="checkbox"><div class="check"></div></div>
         </td>

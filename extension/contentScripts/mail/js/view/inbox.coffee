@@ -26,6 +26,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   postRender: =>
     @subView('tabs').on 'clicked:tab', @showTab
 
+  changeTab: (tab) =>
+    @subView('tabs').setActiveTab tab
+    @showTab tab
+
   showTab: (tab) =>
     contentSelector = _.values(@tabs).join(', ')
     $(contentSelector).hide()

@@ -15,6 +15,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
 
 
   handleSearch: (query) =>
+    @subView('searchResults')._teardown()
     @getSearchResults query
     @injectSearchResultsContainer()
 
