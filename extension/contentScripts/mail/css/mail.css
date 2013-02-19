@@ -113,6 +113,10 @@
   cursor: pointer;
 }
 
+#mm-links-table tr {
+  cursor: pointer;
+}
+
 .files {
   background-color: #f3f3f3;
   font-size: 13px;
@@ -362,6 +366,21 @@ top: -3px;
 }
 
 #mm-attachments-table {
+
+}
+
+#mm-links-table {
+   margin-top: 15px;
+  border: 0px;
+  border-collapse: collapse;
+  width: 100%;
+  border-spacing: 0px;
+  padding: 0px;
+  table-layout: fixed;
+  min-width: 800px;
+}
+
+#mm-links-table {
 
 }
 
