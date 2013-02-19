@@ -5,6 +5,7 @@ class MeetMikey.Decorator.Attachment
     @to = @formatRecipients()
     @sentDate = @formatDate()
     @size = @formatFileSize()
+    @_id = @model.get('_id')
 
   formatRecipients: =>
     MeetMikey.Helper.formatRecipients @model.get('recipients')
