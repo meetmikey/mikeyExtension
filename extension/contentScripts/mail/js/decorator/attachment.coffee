@@ -5,6 +5,8 @@ class MeetMikey.Decorator.Attachment
     @to = @formatRecipients()
     @sentDate = @formatDate()
     @size = @formatFileSize()
+    @_id = @model.get('_id')
+    @email = encodeURIComponent(MeetMikey.Helper.OAuth.getUserEmail())
 
   formatRecipients: =>
     MeetMikey.Helper.formatRecipients @model.get('recipients')
@@ -13,7 +15,7 @@ class MeetMikey.Decorator.Attachment
     MeetMikey.Helper.formatDate @model.get('sentDate')
 
   formatFileSize: (precision=1) =>
-    bytes = @model.get('size')
+    bytes = @model.get('fileSize')
     convert = (n, unit) ->
       (n / unit).toFixed(precision)
 
