@@ -25,10 +25,13 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
       width = $('.nH').width()
       @$('.mikey-tabs').css 'width', width
 
+  setActiveTab: (tab) =>
+    @$('.mikey-tab').removeClass 'active'
+    @$(".mikey-tab[data-mm-tab='#{tab}']").addClass 'active'
+
   tabClick: (e) =>
     e.preventDefault()
     target = $(e.currentTarget)
-    @$('.mikey-tab').removeClass 'active'
-    target.addClass 'active'
     tab = target.attr('data-mm-tab')
+    @setActiveTab tab
     @trigger('clicked:tab', tab)
