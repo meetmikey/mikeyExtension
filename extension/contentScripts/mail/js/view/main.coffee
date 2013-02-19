@@ -5,7 +5,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       selector: '#mm-container'
     'search':
       view: MeetMikey.View.Search
-      selector: '#gbqf'
+      selector: 'body'
 
   postInitialize: =>
     @injectInboxContainer()
