@@ -2,7 +2,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   renderSelf: false
 
   events:
-    'click [id=":ag"]': 'showInbox'
+    'click .aim': 'showInbox'
 
   showInbox: =>
     @trigger 'clicked:inbox'
