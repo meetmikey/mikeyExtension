@@ -357,6 +357,14 @@ top: -3px;
 
 /* -------------- TABLES ----------- */
 
+#mm-attachments-tab {
+  padding-top: 10px;
+}
+
+#mm-links-tab {
+  padding-top: 10px;
+}
+
 #mm-attachments-table {
    margin-top: 6px;
   border: 0px;
@@ -390,7 +398,7 @@ margin-top: 6px;
 }
 
 .ae4 {
-  padding-top: 0px;
+  padding-top: 10px;
 }
 
 
