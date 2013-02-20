@@ -203,7 +203,7 @@ table tr td .flex {
 }
 
 .mm-type {
-	width:50px;
+	width:60px;
 		white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -224,10 +224,6 @@ width:100%;
 	text-overflow: ellipsis;
 	min-width: 200px;
 	display: inline-block;
-}
-
-.mm-type {
-  width:40px;
 }
 
 .labels .source {
