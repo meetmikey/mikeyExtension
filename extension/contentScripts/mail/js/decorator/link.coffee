@@ -6,6 +6,7 @@ class MeetMikey.Decorator.Link
     @from = @model.get('sender')?.name
     @to = @formatRecipients()
     @sentDate = @formatDate()
+    @faviconURL = MeetMikey.Helper.getFaviconURL(@model.get('resolvedURL') ? @model.get('url'))
 
   formatRecipients: =>
     MeetMikey.Helper.formatRecipients @model.get('recipients')
