@@ -31,7 +31,7 @@ body {
   position: fixed;
   width: 100%;
   top: 0px;
- 
+
 }
 
 .mikey-tabs a {
@@ -77,7 +77,6 @@ body {
 /* -------- INBOX --------- */
 
 .inbox-table {
-  
   border: 0px;
   border-collapse: collapse;
   width: 100%;
@@ -206,24 +205,34 @@ table tr td .flex {
 	width:60px;
 		white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+
+.mm-icon {
+	background-position: 0px 4px !important;
+	background-size: 18px 18px !important;
+  padding-left: 22px !important;
 }
 
 .mm-source {
-	width:124px;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	color: #222;
+  width:124px;
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #222;
 }
 
 .mm-file {
-width:100%;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	min-width: 200px;
-	display: inline-block;
+  width:100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 200px;
+  display: inline-block;
+}
+
+.mm-favicon {
 }
 
 .labels .source {
@@ -263,50 +272,42 @@ width:100%;
 }
 
 .file-icon {
-	margin-right: 6px;
-	display: inline;
-	background-size: 18px 18px;
+  margin-right: 6px;
+  display: inline;
+  background-size: 18px 18px;
 }
 
 .pdf {
-	background:url("../img/pdf.png") no-repeat;
-	background-position: 10px 4px;
-	background-size: 18px 18px;
+  background:url("../img/pdf.png") no-repeat;
+  background-position: 10px 4px;
+  background-size: 18px 18px;
 
 }
 
 .word {
-	background:url("../img/word.png") no-repeat;
-	background-position: 10px 4px;
-	background-size: 18px 18px;
+  background:url("../img/word.png") no-repeat;
+  background-position: 10px 4px;
+  background-size: 18px 18px;
 
 }
 
 .excel {
-	background:url("../img/excel.png") no-repeat;
-	background-position: 10px 4px;
-	background-size: 18px 18px;
+  background:url("../img/excel.png") no-repeat;
+  background-position: 10px 4px;
+  background-size: 18px 18px;
 
 }
 
 .ppt {
-	background:url("../img/ppt.png") no-repeat;
-	background-position: 10px 4px;
-	background-size: 18px 18px;
-
+  background:url("../img/ppt.png") no-repeat;
+  background-position: 10px 4px;
+  background-size: 18px 18px;
 }
 
 .unknown {
-	background:url("../img/unknown.png") no-repeat;
-	background-position: 10px 4px;
-	background-size: 18px 18px;
-
-}
-
-.favicon {
-	background:url("../img/favicon.ico") no-repeat;
-	background-position: 10px 5px;
-	background-size: 16px 16px;
+  background:url("../img/unknown.png") no-repeat;
+  background-position: 10px 4px;
+  background-size: 18px 18px;
 
 }
 
