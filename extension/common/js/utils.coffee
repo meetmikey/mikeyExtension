@@ -11,3 +11,24 @@ MeetMikey.Helper.formatDate = (timestamp) ->
 
 MeetMikey.Helper.formatRecipients = (recipients) ->
   _.map(recipients, (r) -> r.name || r.email).join(', ')
+
+MeetMikey.Helper.getReadableTypeFromMimeType = (mimeType) ->
+  switch mimeType
+    when 'text/plain' then readable = 'text'
+    when 'application/ics' then readable = 'calendar'
+    else
+      readable = mimeType
+      slashIndex = mimeType.indexOf '/'
+      if slashIndex != -1
+        readable = mimeType.substring( slashIndex + 1 )
+  readable
+
+MeetMikey.Helper.getFaviconURL = (url) ->
+  faviconURL = ''
+  if url
+    faviconBaseURL = 'https://www.google.com/s2/u/0/favicons?domain='
+    a = document.createElement 'a'
+    a.href = url
+    hostname = a.hostname
+    faviconURL = faviconBaseURL + hostname
+  faviconURL
