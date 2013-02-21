@@ -15,6 +15,7 @@
             "lib/js/backbone.js",
             "lib/js/handlebars.js",
             "lib/js/bootstrap.js",
+            "lib/js/jquery.isotope.js"
             "common/js/namespace.js",
             "common/js/utils.js",
             "common/js/localstore.js",
