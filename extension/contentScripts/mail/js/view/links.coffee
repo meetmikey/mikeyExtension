@@ -13,8 +13,7 @@ template = """
       <tbody>
         {{#each models}}
         <tr class="files" data-attachment-url="{{url}}">
-            <td class="mm-file truncate">
-              <img class="mm-favicon" src="{{faviconURL}}"/>
+            <td class="mm-file mm-favicon truncate" style="background:url({{faviconURL}}) no-repeat;">
               <div class="flex">
                 {{title}}
                 <span class="mm-file-text">{{summary}}</span>
