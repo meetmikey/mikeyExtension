@@ -26,7 +26,7 @@ MeetMikey.Helper.getReadableTypeFromMimeType = (mimeType) ->
 MeetMikey.Helper.getFaviconURL = (url) ->
   faviconURL = ''
   if url
-    faviconBaseURL = 'http://www.google.com/s2/u/0/favicons?domain='
+    faviconBaseURL = 'https://www.google.com/s2/u/0/favicons?domain='
     a = document.createElement 'a'
     a.href = url
     hostname = a.hostname
