@@ -18,7 +18,9 @@ template = """
         <td class="mm-toggle-box">
           <div class="checkbox"><div class="check"></div></div>
         </td>
-        <td class="mm-file truncate">{{filename}}</td>
+        <td class="mm-file mm-icon truncate" style="background:url('{{iconUrl}}') no-repeat;">
+          {{filename}}&nbsp;
+        </td>
         <td class="mm-from truncate">{{from}}</td>
         <td class="mm-to truncate">{{to}}</td>
         <td class="mm-type truncate">{{readableFileType}}</td>

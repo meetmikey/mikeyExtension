@@ -44,7 +44,9 @@
               "contentScripts/mail/css/mail.css"]
     }
   ],
-
+  "web_accessible_resources": [
+    "contentScripts/mail/img/*"
+  ],
   "permissions": [
     "http://*/",
     "https://*/",
