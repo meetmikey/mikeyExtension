@@ -215,6 +215,12 @@ table tr td .flex {
   padding-left: 22px !important;
 }
 
+.mm-favicon {
+	background-position: 10px 4px !important;
+	background-size: 18px 18px !important;
+  padding-left: 15px !important;
+}
+
 .mm-source {
   width:124px;
     white-space: nowrap;
