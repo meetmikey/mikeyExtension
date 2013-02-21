@@ -30,7 +30,7 @@ class OAuth
   openAuthWindow: (callback) =>
     handleMessage = (e) =>
       event = e.originalEvent
-      return unless event.origin is 'https://local.meetmikey.com'
+      return unless event.origin is MeetMikey.Settings.APIUrl
       $(window).off 'message', handleMessage
       userObject = JSON.parse event.data
       if @isUserEmail userObject.email
