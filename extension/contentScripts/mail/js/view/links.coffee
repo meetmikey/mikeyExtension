@@ -1,6 +1,6 @@
 template = """
   {{#unless models}}
-    There doesn't seem to be any links here
+    <div class="mm-placeholder">Oops. It doesn't look like Mikey has any links for you.</div>
   {{else}}
     <table class="inbox-table" id="mm-links-table" border="0">
       <thead class="labels">

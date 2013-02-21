@@ -9,6 +9,9 @@ template = """
   <li class="mikey-tab" data-mm-tab="links">
     <a href="#">Links</a>
   </li>
+  <li class="mikey-tab" data-mm-tab="images">
+    <a href="#">Images</a>
+  </li>
 </ul>
 """
 
