@@ -2,6 +2,7 @@ template = """
     <div id="mm-tabs"></div>
     <div id="mm-attachments-tab" style="display: none;"></div>
     <div id="mm-links-tab" style="display: none;"></div>
+    <div id="mm-images-tab" style="display: none;"></div>
 """
 
 class MeetMikey.View.Inbox extends MeetMikey.View.Base
@@ -19,11 +20,20 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
       view: MeetMikey.View.Links
       selector: '#mm-links-tab'
       args: {fetch: true}
+    'images':
+      view: MeetMikey.View.Images
+      selector: '#mm-images-tab'
 
   tabs:
     email: '.UI'
     attachments: '#mm-attachments-tab'
     links: '#mm-links-tab'
+    images: '#mm-images-tab'
+
+  postInitialize: =>
+    @subView('attachments').collection.on 'reset', (attachments) =>
+      images = _.filter attachments.models, (a) -> a.isImage()
+      @subView('images').collection.reset images
 
   postRender: =>
     @subView('tabs').on 'clicked:tab', @showTab
@@ -38,6 +48,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     contentSelector = _.values(@tabs).join(', ')
     $(contentSelector).hide()
     $(@tabs[tab]).show()
+    @subView(tab).trigger 'showTab'
 
   bindCountUpdate: (tab) =>
     @subView(tab).collection.on 'reset add remove', (collection) =>

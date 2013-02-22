@@ -2,6 +2,7 @@ template = """
   <div id="mm-search-tabs"></div>
   <div id="mm-search-attachments-tab" style="display: none;"></div>
   <div id="mm-search-links-tab" style="display: none;"></div>
+  <div id="mm-search-images-tab" style="display: none;"></div>
 """
 class MeetMikey.View.SearchResults extends MeetMikey.View.Base
   template: Handlebars.compile(template)
@@ -16,11 +17,15 @@ class MeetMikey.View.SearchResults extends MeetMikey.View.Base
     'links':
       view: MeetMikey.View.Links
       selector: '#mm-search-links-tab'
+    'images':
+      view: MeetMikey.View.Images
+      selector: '#mm-search-images-tab'
 
   tabs:
     email: '.UI'
     attachments: '#mm-search-attachments-tab'
     links: '#mm-search-links-tab'
+    images: '#mm-search-images-tab'
 
   getTabs: =>
     _.chain(@tabs).keys().without('email').value()
