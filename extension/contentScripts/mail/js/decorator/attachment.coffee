@@ -41,7 +41,7 @@ class MeetMikey.Decorator.Attachment
       "word"
     else if type is "application/vnd.ms-powerpoint" or type is "application/vnd.openxmlformats-officedocument.presentationml.presentation"
       "ppt"
-    else if /image\/.+/.test type
+    else if @model.isImage()
       "image"
     else if /audio\/.+/.test type
       "music"
