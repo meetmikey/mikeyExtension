@@ -1,3 +1,55 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ------------------------ */
+
+
 body {
   font-family: arial,sans-serif;
 }
@@ -202,7 +254,7 @@ table tr td .flex {
 }
 
 .mm-type {
-	width:60px;
+	width:70px;
 		white-space: nowrap;
 	overflow: hidden;
   text-overflow: ellipsis;
@@ -212,7 +264,7 @@ table tr td .flex {
 .mm-icon {
 	background-position: 0px 4px !important;
 	background-size: 18px 18px !important;
-  padding-left: 22px !important;
+  padding-left: 26px !important;
 }
 
 .mm-favicon {
@@ -236,6 +288,14 @@ table tr td .flex {
   text-overflow: ellipsis;
   min-width: 200px;
   display: inline-block;
+}
+
+th.mm-file  {
+  padding-left: 0px;
+}
+
+th.mm-link {
+  padding-left: 10px !important;
 }
 
 .mm-favicon {
@@ -530,3 +590,74 @@ padding: 0px 4px;
   padding: 0px 10px 8px 10px !important;
 }
 
+/* ----------- IMAGES ---------------- */
+
+.box {
+width:250px;
+padding: 0px;
+float: left;
+margin-left: 10px;
+margin-right: 10px;
+margin-bottom: 20px;
+border: 1px solid #ebebeb;
+height: auto;
+padding: 10px;
+background-color: #fff;
+font-size: 12px;
+
+}
+
+.mm-image {
+  width: 250px;
+  margin-bottom: 10px;
+}
+
+/**** Isotope Filtering ****/
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:      -o-transform, opacity;
+          transition-property:         transform, opacity;
+}
+
+/**** disabling Isotope CSS3 transitions ****/
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
+}

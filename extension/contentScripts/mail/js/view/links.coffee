@@ -4,7 +4,7 @@ template = """
   {{else}}
     <table class="inbox-table" id="mm-links-table" border="0">
       <thead class="labels">
-        <th class="mm-file">Link</th>
+        <th class="mm-file mm-link">Link</th>
         <th class="mm-source">Source</th>
         <th class="mm-from">From</th>
         <th class="mm-to">To</th>
