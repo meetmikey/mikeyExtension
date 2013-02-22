@@ -33,6 +33,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   postInitialize: =>
     @subView('attachments').collection.on 'reset', (attachments) =>
       images = _.filter attachments.models, (a) -> a.isImage()
+      images = _.uniq images, false, (i) ->
+        "#{i.get('hash')}_#{i.get('fileSize')}"
       @subView('images').collection.reset images
 
   postRender: =>
