@@ -8,6 +8,7 @@ template = """
         <span>{{filename}}</span>
       </div>
     {{/each}}
+    <div style="clear: both;"></div>
   {{/unless}}
 """
 
