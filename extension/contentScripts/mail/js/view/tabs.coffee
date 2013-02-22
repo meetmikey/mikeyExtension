@@ -10,11 +10,7 @@ template = """
     <a href="#">Links (<span class="mm-count">0</span>)</a>
   </li>
   <li class="mikey-tab" data-mm-tab="images">
-<<<<<<< HEAD
     <a href="#">Images (<span class="mm-count">0</span>)</a>
-=======
-    <a href="#">Images</a>
->>>>>>> 9be8b8660a4d9b1315bc2a077018aec2289bbf2e
   </li>
 </ul>
 """
