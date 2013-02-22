@@ -41,7 +41,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   bindCountUpdate: (tab) =>
     @subView(tab).collection.on 'reset add remove', (collection) =>
-      @subView('tabs').changeTabCount tab, collection.length
+      @subView('tabs').updateTabCount tab, collection.length
 
   teardown: =>
     @subView('tabs').off 'clicked:tab'

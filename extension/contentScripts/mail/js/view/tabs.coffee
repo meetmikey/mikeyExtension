@@ -36,6 +36,6 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     @setActiveTab tab
     @trigger('clicked:tab', tab)
 
-  changeTabCount: (tab, count) =>
+  updateTabCount: (tab, count) =>
     console.log "setting #{tab} count to #{count}"
     @$("[data-mm-tab='#{tab}'] .mm-count").text count
