@@ -1,6 +1,6 @@
 template = """
   {{#unless models}}
-    There doesn't seem to be any files here!?!
+    <div class="mm-placeholder">Oops. It doesn't look like Mikey has any files for you.</div>
   {{else}}
     <table class="inbox-table" id="mm-attachments-table" border="0">
       <thead class="labels">
