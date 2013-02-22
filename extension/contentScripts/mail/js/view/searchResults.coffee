@@ -22,8 +22,20 @@ class MeetMikey.View.SearchResults extends MeetMikey.View.Base
     attachments: '#mm-search-attachments-tab'
     links: '#mm-search-links-tab'
 
+  getTabs: =>
+    _(@tabs).keys().without('email').value()
+
   postRender: =>
     @subView('tabs').on 'clicked:tab', @showTab
+
+  bindCountUpdate: =>
+    _.each @getTabs(), (tab) => @bindCountUpdateForTab tab
+
+  bindCountUpdateForTab: (tab) =>
+    @subView(tab).collection.on 'reset add remove', @updateCountForTab(tab)
+
+  updateCountForTab: (tab) => (collection) =>
+    @subView('tabs').changeTabCount tab, collection.length
 
   showTab: (tab) =>
     contentSelector = _.values(@tabs).join(', ')
@@ -34,9 +46,12 @@ class MeetMikey.View.SearchResults extends MeetMikey.View.Base
     @subView('tabs').off 'clicked:tab'
 
   setResults: (res) =>
+    console.log 'setting results'
     attachments = new MeetMikey.Collection.Attachments res.attachments
     links = new MeetMikey.Collection.Links res.links
-    @subViews.attachments.view.collection = attachments
-    @subViews.links.view.collection = links
-
-
+    @subView('attachments').collection = attachments
+    @subView('links').collection = links
+    @renderSubview('attachments')
+    @renderSubview('links')
+    @updateCountForTab('attachments')(attachments)
+    @updateCountForTab('links')(links)
