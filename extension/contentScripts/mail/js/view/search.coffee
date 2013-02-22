@@ -11,13 +11,13 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
       selector: '#mm-search-container'
 
   postRender: =>
-    @subViews.searchBar.view.on 'search', @handleSearch
-
+    @subView('searchBar').on 'search', @handleSearch
 
   handleSearch: (query) =>
     @subView('searchResults')._teardown()
-    @getSearchResults query
     @injectSearchResultsContainer()
+    @renderSubview 'searchResults'
+    @getSearchResults query
 
   injectSearchResultsContainer: =>
     target = @$ '.BltHke.nH.oy8Mbf[role=main] .UI'
@@ -32,11 +32,6 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
         userEmail: MeetMikey.Helper.OAuth.getUserEmail()
       success: (res) =>
         console.log 'search successful', res
-        @renderSearchResults res
+        @subViews.searchResults.view.setResults res
       failure: ->
         console.log 'search failed'
-
-  renderSearchResults: (res) =>
-    @subViews.searchResults.view.setResults res
-    @renderSubview 'searchResults'
-

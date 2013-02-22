@@ -14,9 +14,11 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     'attachments':
       view: MeetMikey.View.Attachments
       selector: '#mm-attachments-tab'
+      args: {fetch: true}
     'links':
       view: MeetMikey.View.Links
       selector: '#mm-links-tab'
+      args: {fetch: true}
 
   tabs:
     email: '.UI'
@@ -25,6 +27,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   postRender: =>
     @subView('tabs').on 'clicked:tab', @showTab
+    @bindCountUpdate('attachments')
+    @bindCountUpdate('links')
 
   changeTab: (tab) =>
     @subView('tabs').setActiveTab tab
@@ -34,6 +38,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     contentSelector = _.values(@tabs).join(', ')
     $(contentSelector).hide()
     $(@tabs[tab]).show()
+
+  bindCountUpdate: (tab) =>
+    @subView(tab).collection.on 'reset add remove', (collection) =>
+      @subView('tabs').changeTabCount tab, collection.length
 
   teardown: =>
     @subView('tabs').off 'clicked:tab'

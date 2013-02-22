@@ -4,10 +4,10 @@ template = """
     <a href="#">Email</a>
   </li>
   <li class="mikey-tab" data-mm-tab="attachments">
-    <a href="#">Files</a>
+    <a href="#">Files (<span class="mm-count">0</span>)</a>
   </li>
   <li class="mikey-tab" data-mm-tab="links">
-    <a href="#">Links</a>
+    <a href="#">Links (<span class="mm-count">0</span>)</a>
   </li>
   <li class="mikey-tab" data-mm-tab="images">
     <a href="#">Images</a>
@@ -38,3 +38,7 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     tab = target.attr('data-mm-tab')
     @setActiveTab tab
     @trigger('clicked:tab', tab)
+
+  changeTabCount: (tab, count) =>
+    console.log "setting #{tab} count to #{count}"
+    @$("[data-mm-tab='#{tab}'] .mm-count").text count
