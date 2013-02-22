@@ -30,6 +30,9 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     links: '#mm-links-tab'
     images: '#mm-images-tab'
 
+  getTabs: =>
+    _.chain(@tabs).keys().without('email').value()
+
   postInitialize: =>
     @subView('attachments').collection.on 'reset', (attachments) =>
       images = _.filter attachments.models, (a) -> a.isImage()
@@ -37,8 +40,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   postRender: =>
     @subView('tabs').on 'clicked:tab', @showTab
-    @bindCountUpdate('attachments')
-    @bindCountUpdate('links')
+    @bindCountUpdate()
 
   changeTab: (tab) =>
     @subView('tabs').setActiveTab tab
@@ -50,9 +52,21 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     $(@tabs[tab]).show()
     @subView(tab).trigger 'showTab'
 
-  bindCountUpdate: (tab) =>
-    @subView(tab).collection.on 'reset add remove', (collection) =>
-      @subView('tabs').updateTabCount tab, collection.length
+  bindCountUpdate: =>
+    _.each @getTabs(), (tab) => @bindCountUpdateForTab tab
+
+  bindCountUpdateForTab: (tab) =>
+    @subView(tab).collection.on 'reset add remove', @updateCountForTab(tab)
+
+  unbindCountUpdate: =>
+    _.each @getTabs(), (tab) => @unbindCountUpdateForTab tab
+
+  unbindCountUpdateForTab: (tab) =>
+    @subView(tab).collection.off 'reset add remove', @updateCountForTab(tab)
+
+  updateCountForTab: (tab) => (collection) =>
+    @subView('tabs').updateTabCount tab, collection.length
 
   teardown: =>
     @subView('tabs').off 'clicked:tab'
+    @unbindCountUpdate()
