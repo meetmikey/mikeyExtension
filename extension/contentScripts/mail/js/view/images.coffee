@@ -1,11 +1,11 @@
 template = """
   {{#unless models}}
-    Hold up, finding your images boss
+    Hold up, finding your images, boss.
   {{else}}
     {{#each models}}
       <div class="image-box">
         <img class="mm-image" src="{{image}}" />
-        <span>{{filename}}</span>
+        <div class="image-filename">{{filename}}</div>
       </div>
     {{/each}}
   {{/unless}}

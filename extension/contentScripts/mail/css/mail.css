@@ -74,7 +74,7 @@ body {
 .mikey-tabs {
   font-size: 14px;
   list-style-type: none;
-  margin: 114px 0px 0px 0px;
+  margin: 113px 0px 0px 0px;
   padding: 8px 0px 0px 0px;
   border-bottom: 1px solid #ebebeb;
   background-color: #fff;
@@ -614,6 +614,17 @@ font-size: 12px;
 .mm-image {
   width: 250px;
   margin-bottom: 10px;
+}
+
+#mm-images-tab {
+  padding-top: 30px;
+}
+
+.image-filename {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 250px;
+  overflow: hidden;
 }
 
 /**** Isotope Filtering ****/
