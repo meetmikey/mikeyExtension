@@ -8,6 +8,7 @@ template = """
         <div class="image-filename">{{filename}}</div>
       </div>
     {{/each}}
+    <div style="clear: both;"></div>
   {{/unless}}
 """
 
