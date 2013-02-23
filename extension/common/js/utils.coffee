@@ -39,8 +39,8 @@ MeetMikey.Helper.callAPI = (options) ->
   apiData =
     userEmail: MeetMikey.globalUser?.get('email')
     refreshToken: MeetMikey.globalUser?.get('refreshToken')
-  if options.data?
-    _.extend apiData, options.data
-  else
-    options.data = apiData
+
+  _.extend apiData, options.data if options.data?
+  options.data = apiData
+
   $.ajax options
