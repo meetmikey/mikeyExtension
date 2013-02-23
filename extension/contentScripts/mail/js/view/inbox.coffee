@@ -52,7 +52,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     contentSelector = _.values(@tabs).join(', ')
     $(contentSelector).hide()
     $(@tabs[tab]).show()
-    @subView(tab).trigger 'showTab'
+    @subView(tab)?.trigger 'showTab'
 
   bindCountUpdate: =>
     _.each @getTabs(), (tab) => @bindCountUpdateForTab tab
