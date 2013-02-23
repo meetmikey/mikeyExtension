@@ -32,3 +32,15 @@ MeetMikey.Helper.getFaviconURL = (url) ->
     hostname = a.hostname
     faviconURL = faviconBaseURL + hostname
   faviconURL
+
+MeetMikey.Helper.callAPI = (options) ->
+  options ?= {}
+  options.url = "#{MeetMikey.Settings.APIUrl}/#{options.url}"
+  apiData =
+    userEmail: MeetMikey.globalUser?.get('email')
+    refreshToken: MeetMikey.globalUser?.get('refreshToken')
+  if options.data?
+    _.extend apiData, options.data
+  else
+    options.data = apiData
+  $.ajax options

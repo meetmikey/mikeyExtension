@@ -3,7 +3,9 @@ class MeetMikey.Collection.Base extends Backbone.Collection
     return super opts unless MeetMikey.globalUser?
 
     opts ?= {}
-    apiData = userEmail: MeetMikey.globalUser.get('email')
+    apiData =
+      userEmail: MeetMikey.globalUser.get('email')
+      refreshToken: MeetMikey.globalUser.get('refreshToken')
     if opts.data?
       _.extend opts.data, apiData
     else

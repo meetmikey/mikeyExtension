@@ -24,12 +24,11 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     target.before '<div id="mm-search-container"></div>'
 
   getSearchResults: (query) =>
-    $.ajax
-      url: "#{ MeetMikey.Settings.APIUrl }/search"
+    MeetMikey.Helper.callAPI
+      url: "search"
       type: 'GET'
       data:
         query: query
-        userEmail: MeetMikey.Helper.OAuth.getUserEmail()
       success: (res) =>
         console.log 'search successful', res
         @subViews.searchResults.view.setResults res

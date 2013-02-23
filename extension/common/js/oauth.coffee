@@ -47,8 +47,8 @@ class OAuth
     data = @getUserInfo()
     return callback null unless data?.refreshToken?
 
-    $.ajax
-      url: "#{ MeetMikey.Settings.APIUrl }/auth/refresh"
+    MeetMikey.Helper.callAPI
+      url: "auth/refresh"
       type: 'POST'
       data:
         refreshToken: data.refreshToken
