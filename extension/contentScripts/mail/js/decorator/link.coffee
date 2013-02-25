@@ -1,15 +1,21 @@
-class MeetMikey.Decorator.Link
-  constructor: (@model) ->
-    @title = @model.get('title') ? @model.get('url')
-    @summary = @model.get('summary')
-    @url = @model.get 'url'
-    @from = @model.get('sender')?.name
-    @to = @formatRecipients()
-    @sentDate = @formatDate()
-    @faviconURL = MeetMikey.Helper.getFaviconURL(@model.get('resolvedURL') ? @model.get('url'))
+class LinkDecorator
+  decorate: (model) ->
+    object = {}
+    object.title = model.get('title') ? model.get('url')
+    object.summary = model.get('summary')
+    object.url = model.get 'url'
+    object.from = model.get('sender')?.name
+    object.to = @formatRecipients model
+    object.sentDate = @formatDate model
+    object.faviconURL = MeetMikey.Helper.getFaviconURL(model.get('resolvedURL') ? model.get('url'))
 
-  formatRecipients: =>
+    object
+
+  formatRecipients: (model) =>
     MeetMikey.Helper.formatRecipients @model.get('recipients')
 
-  formatDate: =>
+  formatDate: (model) =>
     MeetMikey.Helper.formatDate @model.get('sentDate')
+
+
+MeetMikey.Decorator.Link = new LinkDecorator()

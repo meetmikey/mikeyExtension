@@ -11,27 +11,27 @@ class MeetMikey.Decorator.Attachment
     video: chrome.extension.getURL("#{imgPath}/video.png")
     zip: chrome.extension.getURL("#{imgPath}/zip.png")
 
-  constructor: (@model) ->
-    @filename = @model.get('filename')
-    @from = @model.get('sender')?.name
-    @to = @formatRecipients()
-    @sentDate = @formatDate()
-    @size = @formatFileSize()
-    @_id = @model.get('_id')
-    @readableFileType = MeetMikey.Helper.getReadableTypeFromMimeType(@model.get('contentType'))
-    @email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
-    @refreshToken = MeetMikey.globalUser.get('refreshToken')
-    @iconUrl = @iconUrls[@getIconUrlType()]
-    @image = @model.get 'image'
+  decorate: (model) ->
+    object = {}
+    object.filename = model.get('filename')
+    object.from = model.get('sender')?.name
+    object.to = @formatRecipients model
+    object.sentDate = @formatDate model
+    object.size = @formatFileSize model
+    object._id = model.get('_id')
+    object.readableFileType = MeetMikey.Helper.getReadableTypeFromMimeType(model.get('contentType'))
+    object.refreshToken =  MeetMikey.globalUser.get('refreshToken')
+    object.email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
+    object.iconUrl = @iconUrls[@getIconUrlType(model)]
 
-  formatRecipients: =>
-    MeetMikey.Helper.formatRecipients @model.get('recipients')
+  formatRecipients: (model) =>
+    MeetMikey.Helper.formatRecipients model.get('recipients')
 
-  formatDate: =>
-    MeetMikey.Helper.formatDate @model.get('sentDate')
+  formatDate: (model) =>
+    MeetMikey.Helper.formatDate model.get('sentDate')
 
-  getIconUrlType: =>
-    type = @model.get 'contentType'
+  getIconUrlType: (model) =>
+    type = model.get 'contentType'
 
     if type is "application/pdf"
       "pdf"
@@ -43,7 +43,7 @@ class MeetMikey.Decorator.Attachment
       "word"
     else if type is "application/vnd.ms-powerpoint" or type is "application/vnd.openxmlformats-officedocument.presentationml.presentation"
       "ppt"
-    else if @model.isImage()
+    else if model.isImage()
       "image"
     else if /audio\/.+/.test type
       "music"
@@ -52,8 +52,8 @@ class MeetMikey.Decorator.Attachment
     else
       "unknown"
 
-  formatFileSize: (precision=1) =>
-    bytes = @model.get('fileSize')
+  formatFileSize: (model, precision=1) =>
+    bytes = model.get('fileSize')
     convert = (n, unit) ->
       (n / unit).toFixed(precision)
 

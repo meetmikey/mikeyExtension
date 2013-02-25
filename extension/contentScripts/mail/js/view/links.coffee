@@ -45,7 +45,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.off 'reset', @render
 
   getTemplateData: =>
-    models: _.map(@collection.models, (model) -> new MeetMikey.Decorator.Link model)
+    models: _.map(@collection.models, MeetMikey.Decorator.Link.decorate)
 
   postRender: ->
 

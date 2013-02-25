@@ -48,7 +48,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @collection.off('reset', @render)
 
   getTemplateData: =>
-    models: _.map(@collection.models, (model) -> new MeetMikey.Decorator.Attachment model)
+    models: _.map(@collection.models, MeetMikey.Decorator.Attachment.decorate)
 
   openAttachment: (event) =>
     target = $(event.currentTarget)
