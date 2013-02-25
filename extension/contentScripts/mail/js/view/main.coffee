@@ -12,12 +12,18 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   postInitialize: =>
     @injectInboxContainer()
+    @setLayout @detectLayout()
     @subViews.sidebar.view.on 'clicked:inbox', =>
       @subViews.inbox.view.changeTab 'email'
 
   teardown: =>
     @subViews.sidebar.view.off 'clicked:inbox'
 
+  detectLayout: =>
+    'compact'
+
+  setLayout: (layout='compact') =>
+    @$el.addClass layout
 
   injectInboxContainer: =>
     target = @$(@options.inboxTarget)
