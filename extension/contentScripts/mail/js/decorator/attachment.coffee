@@ -20,6 +20,7 @@ class MeetMikey.Decorator.Attachment
     @_id = @model.get('_id')
     @readableFileType = MeetMikey.Helper.getReadableTypeFromMimeType(@model.get('contentType'))
     @email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
+    @refreshToken = MeetMikey.globalUser.get('refreshToken')
     @iconUrl = @iconUrls[@getIconUrlType()]
     @image = @model.get 'image'
 
