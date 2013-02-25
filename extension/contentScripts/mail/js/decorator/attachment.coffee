@@ -24,6 +24,8 @@ class MeetMikey.Decorator.Attachment
     object.email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
     object.iconUrl = @iconUrls[@getIconUrlType(model)]
 
+    object
+
   formatRecipients: (model) =>
     MeetMikey.Helper.formatRecipients model.get('recipients')
 
