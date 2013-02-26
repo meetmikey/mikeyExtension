@@ -23,7 +23,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   postRender: =>
 
   getTemplateData: =>
-    models: _.map(@collection.models, (model) -> new MeetMikey.Decorator.Attachment model)
+    models: _.map(@collection.models, MeetMikey.Decorator.Attachment.decorate)
 
   initIsotope: =>
     console.log 'isotoping'

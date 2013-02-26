@@ -11,7 +11,7 @@ class AttachmentDecorator
     video: chrome.extension.getURL("#{imgPath}/video.png")
     zip: chrome.extension.getURL("#{imgPath}/zip.png")
 
-  decorate: (model) ->
+  decorate: (model) =>
     object = {}
     object.filename = model.get('filename')
     object.from = model.get('sender')?.name
@@ -23,6 +23,7 @@ class AttachmentDecorator
     object.refreshToken =  MeetMikey.globalUser.get('refreshToken')
     object.email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
     object.iconUrl = @iconUrls[@getIconUrlType(model)]
+    object.image = model.get 'image'
 
     object
 

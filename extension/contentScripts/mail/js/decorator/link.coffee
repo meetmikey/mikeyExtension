@@ -1,5 +1,5 @@
 class LinkDecorator
-  decorate: (model) ->
+  decorate: (model) =>
     object = {}
     object.title = model.get('title') ? model.get('url')
     object.summary = model.get('summary')
@@ -12,10 +12,10 @@ class LinkDecorator
     object
 
   formatRecipients: (model) =>
-    MeetMikey.Helper.formatRecipients @model.get('recipients')
+    MeetMikey.Helper.formatRecipients model.get('recipients')
 
   formatDate: (model) =>
-    MeetMikey.Helper.formatDate @model.get('sentDate')
+    MeetMikey.Helper.formatDate model.get('sentDate')
 
 
 MeetMikey.Decorator.Link = new LinkDecorator()
