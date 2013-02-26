@@ -1,5 +1,5 @@
 imgPath = 'contentScripts/mail/img'
-class MeetMikey.Decorator.Attachment
+class AttachmentDecorator
   iconUrls:
     pdf: chrome.extension.getURL("#{imgPath}/pdf.png")
     excel: chrome.extension.getURL("#{imgPath}/excel.png")
@@ -11,7 +11,7 @@ class MeetMikey.Decorator.Attachment
     video: chrome.extension.getURL("#{imgPath}/video.png")
     zip: chrome.extension.getURL("#{imgPath}/zip.png")
 
-  decorate: (model) ->
+  decorate: (model) =>
     object = {}
     object.filename = model.get('filename')
     object.from = model.get('sender')?.name
@@ -23,6 +23,7 @@ class MeetMikey.Decorator.Attachment
     object.refreshToken =  MeetMikey.globalUser.get('refreshToken')
     object.email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
     object.iconUrl = @iconUrls[@getIconUrlType(model)]
+    object.image = model.get 'image'
 
     object
 
@@ -76,4 +77,4 @@ class MeetMikey.Decorator.Attachment
       "#{convert bytes, terabyte} TB"
     else
       "#{bytes} B"
-
+MeetMikey.Decorator.Attachment = new AttachmentDecorator()

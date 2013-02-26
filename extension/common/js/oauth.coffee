@@ -27,6 +27,24 @@ class OAuth
   authorized: =>
     @getUserInfo()?
 
+  checkUser: (callback) =>
+    data = @getUserInfo()
+    return callback null unless data?.refreshToken?
+
+    MeetMikey.Helper.callAPI
+      url: 'user'
+      type: 'GET'
+      data:
+        refreshToken: data.refreshToken
+        userEmail: data.email
+      success: (res) =>
+        @storeUserInfo res
+        callback res
+      error: =>
+        callback null
+
+
+
   openAuthWindow: (callback) =>
     handleMessage = (e) =>
       event = e.originalEvent
@@ -41,7 +59,6 @@ class OAuth
 
     $(window).on 'message', handleMessage
     window.open MeetMikey.Settings.APIUrl + '/auth/google'
-
 
   refresh: (callback) =>
     data = @getUserInfo()

@@ -12,7 +12,7 @@ class Setup
       window.setTimeout(@bootstrap, 200)
 
   setup: (target) =>
-    MeetMikey.Helper.OAuth.refresh (userData) =>
+    MeetMikey.Helper.OAuth.checkUser (userData) =>
       if userData?
         @authorized(userData)
       else
