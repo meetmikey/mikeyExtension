@@ -25,6 +25,12 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   getTemplateData: =>
     models: _.map(@collection.models, MeetMikey.Decorator.Attachment.decorate)
 
+  setCollection: (attachments) =>
+    images = _.filter attachments.models, (a) -> a.isImage()
+    images = _.uniq images, false, (i) ->
+      "#{i.get('hash')}_#{i.get('fileSize')}"
+    @collection.reset images
+
   initIsotope: =>
     console.log 'isotoping'
     @$el.imagesLoaded =>
