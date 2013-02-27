@@ -32,7 +32,7 @@ body {
 .mikey-tabs {
   font-size: 14px;
   list-style-type: none;
-  margin: 114px 0px 0px 0px;
+  /* margin: 114px 0px 0px 0px; */
   padding: 14px 0px 0px 0px;
   border-bottom: 1px solid #ebebeb;
   background-color: #fff;
