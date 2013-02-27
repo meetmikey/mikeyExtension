@@ -37,8 +37,7 @@ body {
   border-bottom: 1px solid #ebebeb;
   background-color: #fff;
   margin-bottom: 16px;
-  z-index: 3;
-  /* position: fixed; */
+  z-index: 2;
   width: 100%;
   /* top: 0px; */
 
@@ -149,7 +148,7 @@ body {
 
 
 .mm-toggle-box {
-	width: 23px;
+	width: 24px;
 }
 
 
@@ -242,6 +241,10 @@ table tr td .flex {
   color: #222;
 }
 
+.labels th {
+  padding-bottom: 5px;
+}
+
 .mm-file {
   width:100%;
   white-space: nowrap;
@@ -253,6 +256,7 @@ table tr td .flex {
 
 th.mm-file  {
   padding-left: 0px;
+  text-align: left;
 }
 
 th.mm-link {
@@ -584,10 +588,11 @@ font-size: 12px;
   overflow: hidden;
 }
 
+
 /**** Isotope Filtering ****/
 
 .isotope-item {
-  z-index: 2;
+  z-index: 1;
 }
 
 .isotope-hidden.isotope-item {
@@ -632,4 +637,70 @@ font-size: 12px;
       -ms-transition-duration: 0s;
        -o-transition-duration: 0s;
           transition-duration: 0s;
+}
+
+
+/* -------------- ROLL-OVER HOVER BOXES --------------- */
+
+.rollover-box {
+-webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+-moz-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+-webkit-transition: opacity .13s linear;
+-moz-transition: opacity .13s linear;
+-o-transition: opacity .13s linear;
+transition: opacity .13s linear;
+color: #8e8e8e;
+font-size: 12px;
+position: absolute;
+z-index: 2201;
+}
+
+.rollover-main {
+background-color: #fff;
+border: 1px solid #ccc;
+border-bottom-color: #bbb;
+overflow: hidden;
+padding: 15px;
+position: relative;
+width: 348px;
+display: block;
+}
+
+.rollover-footer {
+background-color: #f9f9f9;
+border: 1px solid #ccc;
+border-bottom-color: #bbb;
+border-top: 0;
+overflow: hidden;
+position: relative;
+text-overflow: ellipsis;
+white-space: nowrap;
+width: 348px;
+padding: 10px 15px 10px 15px;
+}
+
+.rollover-footer a {
+  color: #8e8e8e;
+  text-decoration: none;
+}
+
+.rollover-footer a:hover {
+  text-decoration: underline;
+  color: #777;
+}
+
+.rollover-title {
+  color: #222;
+  font-size: 16px;
+  margin-bottom: 10px;
+
+
+}
+
+.rollover-body {
+  color: #222;
+  font-size: 13px;
+  max-height: 152px;
+  overflow: hidden;
 }
