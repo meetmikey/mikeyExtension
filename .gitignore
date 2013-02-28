@@ -3,3 +3,5 @@
 
 *.js
 !extension/lib/js/*.js
+
+extension/contentScripts/mail/css/mail.css

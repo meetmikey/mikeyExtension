@@ -8,17 +8,17 @@ class MeetMikey.View.SearchResults extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   subViews:
-    'tabs':
-      view: MeetMikey.View.Tabs
-      selector: '#mm-search-tabs'
+    # 'tabs':
+    #   view: MeetMikey.View.Tabs
+    #   selector: '#mm-search-tabs'
     'attachments':
-      view: MeetMikey.View.Attachments
+      viewClass: MeetMikey.View.Attachments
       selector: '#mm-search-attachments-tab'
     'links':
-      view: MeetMikey.View.Links
+      viewClass: MeetMikey.View.Links
       selector: '#mm-search-links-tab'
     'images':
-      view: MeetMikey.View.Images
+      viewClass: MeetMikey.View.Images
       selector: '#mm-search-images-tab'
 
   tabs:
@@ -31,7 +31,7 @@ class MeetMikey.View.SearchResults extends MeetMikey.View.Base
     _.chain(@tabs).keys().without('email').value()
 
   postRender: =>
-    @subView('tabs').on 'clicked:tab', @showTab
+    # @subView('tabs').on 'clicked:tab', @showTab
 
   bindCountUpdate: =>
     _.each @getTabs(), (tab) => @bindCountUpdateForTab tab
@@ -54,8 +54,8 @@ class MeetMikey.View.SearchResults extends MeetMikey.View.Base
     $(@tabs[tab]).show()
 
   teardown: =>
-    @subView('tabs').off 'clicked:tab'
-    @unbindCountUpdate()
+    # @subView('tabs').off 'clicked:tab'
+    # @unbindCountUpdate()
 
   setResults: (res) =>
     console.log 'setting results'

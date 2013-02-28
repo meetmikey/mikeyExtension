@@ -42,7 +42,10 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   postInitialize: =>
     @collection = new MeetMikey.Collection.Attachments()
     @collection.on('reset', @render)
-    @collection.fetch() if @options.fetch
+    @collection.fetch success: => @trigger 'reset' if @options.fetch
+
+  postRender: =>
+    console.log 'rendering attachments'
 
   teardown: =>
     @collection.off('reset', @render)

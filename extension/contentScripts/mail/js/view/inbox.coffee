@@ -1,52 +1,39 @@
 template = """
     <div id="mm-tabs"></div>
-    <div id="mm-attachments-tab" style="display: none;"></div>
-    <div id="mm-links-tab" style="display: none;"></div>
-    <div id="mm-images-tab" style="display: none;"></div>
+    <div class="mm-attachments-tab" style="display: none;"></div>
+    <div class="mm-links-tab" style="display: none;"></div>
+    <div class="mm-images-tab" style="display: none;"></div>
 """
 
 class MeetMikey.View.Inbox extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   subViews:
-    'tabs':
-      view: MeetMikey.View.Tabs
-      selector: '#mm-tabs'
     'attachments':
-      view: MeetMikey.View.Attachments
-      selector: '#mm-attachments-tab'
-      args: {fetch: true}
+      viewClass: MeetMikey.View.Attachments
+      selector: '.mm-attachments-tab'
     'links':
-      view: MeetMikey.View.Links
-      selector: '#mm-links-tab'
-      args: {fetch: true}
+      viewClass: MeetMikey.View.Links
+      selector: '.mm-links-tab'
     'images':
-      view: MeetMikey.View.Images
-      selector: '#mm-images-tab'
+      viewClass: MeetMikey.View.Images
+      selector: '.mm-images-tab'
 
   tabs:
     email: '.UI'
-    attachments: '#mm-attachments-tab'
-    links: '#mm-links-tab'
-    images: '#mm-images-tab'
+    attachments: '.mm-attachments-tab'
+    links: '.mm-links-tab'
+    images: '.mm-images-tab'
 
   getTabs: =>
     _.chain(@tabs).keys().without('email').value()
 
   postInitialize: =>
-    @subView('attachments').collection.on 'reset', (attachments) =>
-      images = _.filter attachments.models, (a) -> a.isImage()
-      images = _.uniq images, false, (i) ->
-        "#{i.get('hash')}_#{i.get('fileSize')}"
-      @subView('images').collection.reset images
+    @bindCountUpdate()
+    @subView('attachments').collection.on 'reset', @subView('images').setCollection
 
   postRender: =>
-    @subView('tabs').on 'clicked:tab', @showTab
-    @bindCountUpdate()
-
-  changeTab: (tab) =>
-    @subView('tabs').setActiveTab tab
-    @showTab tab
+    @fetchCollections() if @options.fetch
 
   showTab: (tab) =>
     contentSelector = _.values(@tabs).join(', ')
@@ -55,20 +42,36 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @subView(tab)?.trigger 'showTab'
 
   bindCountUpdate: =>
-    _.each @getTabs(), (tab) => @bindCountUpdateForTab tab
+    _.each @getTabs(), @bindCountUpdateForTab
 
   bindCountUpdateForTab: (tab) =>
+    @subView(tab).on 'reset', @updateCountForTab(tab)
     @subView(tab).collection.on 'reset add remove', @updateCountForTab(tab)
 
   unbindCountUpdate: =>
-    _.each @getTabs(), (tab) => @unbindCountUpdateForTab tab
+    _.each @getTabs(), @unbindCountUpdateForTab
 
   unbindCountUpdateForTab: (tab) =>
+    @subView(tab).off 'reset', @updateCountForTab(tab)
     @subView(tab).collection.off 'reset add remove', @updateCountForTab(tab)
 
   updateCountForTab: (tab) => (collection) =>
-    @subView('tabs').updateTabCount tab, collection.length
+    @trigger 'updateTabCount', tab, collection.length
+
+  updateTabCounts: =>
+    _.each @getTabs(), (tab) =>
+      console.log 'updating count for', tab, 'to', @subView(tab).collection
+      @updateCountForTab(tab) @subView(tab).collection.length
+
+  setResults: (res) =>
+    console.log 'setting results'
+    @subView('attachments').collection.reset res.attachments
+    @subView('links').collection.reset res.links
+
+  fetchCollections: =>
+    console.log 'fetching?!?!??!'
+    @subView('attachments').collection.fetch success: -> console.log 'fetched!'
+    @subView('links').collection.fetch success: @updateCountForTab 'links'
 
   teardown: =>
-    @subView('tabs').off 'clicked:tab'
     @unbindCountUpdate()

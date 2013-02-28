@@ -22,11 +22,14 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     'click li': 'tabClick'
 
   postRender: =>
+    @adjustWidth()
+
+  adjustWidth: =>
     width = $('.nH').width()
-    @$('.mikey-tabs').css 'width', width
+    @$el.css 'width', width
     $(window).resize =>
       width = $('.nH').width()
-      @$('.mikey-tabs').css 'width', width
+      @$el.css 'width', width
 
   setActiveTab: (tab) =>
     @$('.mikey-tab').removeClass 'active'

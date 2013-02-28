@@ -1,11 +1,13 @@
 class MeetMikey.View.Base extends Backbone.View
   initialize: =>
+    @preInitialize()
     for name, obj of @subViews
-      obj.view = new obj.view(obj.args)
+      obj.view = new obj.viewClass(obj.args)
       obj.view.setElement obj.selector
     @postInitialize()
     this
 
+  preInitialize: ->
   postInitialize: ->
 
   subView: (name) =>
@@ -26,11 +28,13 @@ class MeetMikey.View.Base extends Backbone.View
   renderChildren: true
 
   render: =>
+    @preRender()
     @$el.html @template(@getTemplateData()) if @renderSelf
     @renderSubviews() if @renderChildren
     @postRender()
     this
 
+  preRender: ->
   postRender: ->
 
   getTemplateData: -> {}

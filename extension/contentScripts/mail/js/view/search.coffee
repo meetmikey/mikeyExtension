@@ -4,24 +4,35 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
 
   subViews:
     'searchBar':
-      view: MeetMikey.View.SearchBar
+      viewClass: MeetMikey.View.SearchBar
       selector: '#gbqf'
+    'tabs':
+      viewClass: MeetMikey.View.Tabs
+      selector: '#mm-search-tabs-container'
     'searchResults':
-      view: MeetMikey.View.SearchResults
+      viewClass: MeetMikey.View.Inbox
       selector: '#mm-search-container'
 
-  postRender: =>
+  postInitialize: =>
     @subView('searchBar').on 'search', @handleSearch
 
   handleSearch: (query) =>
     @subView('searchResults')._teardown()
+    @subView('tabs')._teardown()
     @injectSearchResultsContainer()
+    @injectTabBarContainer()
+    @subView('tabs').on 'clicked:tab', @subView('searchResults').showTab
+    @subView('searchResults').on 'updateTabCount', @subView('tabs').updateTabCount
+    @renderSubview 'tabs'
     @renderSubview 'searchResults'
     @getSearchResults query
 
   injectSearchResultsContainer: =>
     target = @$ '.BltHke.nH.oy8Mbf[role=main] .UI'
-    target.before '<div id="mm-search-container"></div>'
+    target.before '<div id="mm-search-container" class="mm-container"></div>'
+
+  injectTabBarContainer: =>
+    @$('[id=":ro"] [gh="tm"] .nH.aqK').append $('<div id="mm-search-tabs-container"></div>')
 
   getSearchResults: (query) =>
     MeetMikey.Helper.callAPI
@@ -31,6 +42,6 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
         query: query
       success: (res) =>
         console.log 'search successful', res
-        @subViews.searchResults.view.setResults res
+        @subView('searchResults').setResults res
       failure: ->
         console.log 'search failed'
