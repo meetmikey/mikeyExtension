@@ -257,7 +257,7 @@ th.mm-file  {
 }
 
 th.mm-link {
-  padding-left: 10px !important;
+  padding-left: 41px !important;
 }
 
 .mm-favicon {
@@ -407,12 +407,10 @@ top: -3px;
 
 
 
-#mm-links-table {
-margin-top: 6px;
-}
+
 
 #mm-links-table {
-   margin-top: 15px;
+   margin-top: 6px;
   border: 0px;
   border-collapse: collapse;
   width: 100%;
@@ -674,17 +672,30 @@ position: relative;
 text-overflow: ellipsis;
 white-space: nowrap;
 width: 348px;
-padding: 10px 15px 10px 15px;
+padding: 6px 15px 6px 15px;
+line-height: 16px;
 }
 
 .rollover-footer a {
   color: #8e8e8e;
   text-decoration: none;
+  margin-right: 0px;
 }
 
 .rollover-footer a:hover {
   text-decoration: underline;
   color: #777;
+}
+
+.rollover-actions {
+  display: inline-block;
+  float: right;
+}
+
+.rollover-actions a {
+
+  margin-left: 8px;
+
 }
 
 .rollover-title {
@@ -695,9 +706,81 @@ padding: 10px 15px 10px 15px;
 
 }
 
+.rollover-title a {
+  color: #15c;
+  text-decoration: none;
+}
+
+.rollover-title a:hover {
+  text-decoration: underline;
+}
+
 .rollover-body {
   color: #222;
   font-size: 13px;
   max-height: 152px;
   overflow: hidden;
+}
+
+.rollover-powerpoint {
+  max-height: 328px;
+}
+
+.rollover-image {
+  max-height: 600px;
+  overflow: hidden;
+}
+
+
+.rollover-icons {
+  float: right;
+  display: inline-block;
+  
+}
+
+.rollover-icon-mail {
+  width: 16px;
+  height: 16px;
+  background:url("../img/rollover-mail.png") no-repeat;
+  display: inline-block;
+ 
+  opacity: .4;
+
+}
+
+.rollover-icon-download {
+  width: 16px;
+  height: 16px;
+  background:url("../img/rollover-download.png") no-repeat;
+  display: inline-block;
+  opacity: .4;
+}
+
+.rollover-icon-download:hover {
+  opacity: .5;
+  }
+
+.rollover-icon-mail:hover {
+  opacity: .5;
+  }
+
+.powerpoint-preview {
+  width: 348px;
+}
+
+.image-container {
+  max-width: 152px;
+  height: 152px;
+  overflow: hidden;
+  margin-right: 15px;
+  display: inline-block;
+  float: left;
+}
+
+.image-inside {
+  height: 152px;
+}
+
+.text-box {
+  display: inline;
 }
