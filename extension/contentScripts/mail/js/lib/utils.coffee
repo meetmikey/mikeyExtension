@@ -33,6 +33,14 @@ MeetMikey.Helper.getFaviconURL = (url) ->
     faviconURL = faviconBaseURL + hostname
   faviconURL
 
+MeetMikey.Helper.findSelectors = (selectors..., callback) ->
+  find = ->
+    targets = _.map selectors, (s) -> $ s
+    if _.every(targets, (target) -> target.length > 0)
+      callback targets
+    else setTimeout find, 200
+  find()
+
 MeetMikey.Helper.callAPI = (options) ->
   options ?= {}
   options.url = "#{MeetMikey.Settings.APIUrl}/#{options.url}"

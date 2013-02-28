@@ -1,15 +1,12 @@
 class Setup
-  targetSelector: '.UI'
+  inboxSelector: '.UI'
+  tabsSelector: "[id=':ro'] .nH.aqK"
+
   start: =>
     $(window).one('DOMSubtreeModified', @bootstrap)
 
   bootstrap: =>
-    console.log('trying to bootstrap')
-    target = $(@targetSelector)
-    if target.length > 0
-      @setup target
-    else
-      window.setTimeout(@bootstrap, 200)
+    MeetMikey.Helper.findSelectors @inboxSelector, @tabsSelector, @setup
 
   setup: (target) =>
     MeetMikey.Helper.OAuth.checkUser (userData) =>
