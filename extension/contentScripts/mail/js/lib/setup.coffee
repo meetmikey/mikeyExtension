@@ -30,7 +30,7 @@ class Setup
       @authorized(userData)
 
   injectMainView: (target) =>
-    target ?= @targetSelector
+    target ?= @inboxSelector
     view = new MeetMikey.View.Main el: 'body', inboxTarget: target
     view.render()
 
