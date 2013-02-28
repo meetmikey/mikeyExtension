@@ -7,8 +7,7 @@ cssFolder = 'extension/contentScripts/mail/css'
 task 'compile', ->
   recess = spawn 'recess', ["#{cssFolder}/mail.less", '--compile',], stdio: ['pipe', 'pipe', process.stderr]
   recess.stdout.on 'data', (data) ->
-    writeFile "#{cssFolder}/mail.css", data, (err) ->
-      throw err if err?
+    writeFile "#{cssFolder}/mail.css", data, (err) -> throw err if err?
 
 task 'watch', ->
   invoke 'compile'
