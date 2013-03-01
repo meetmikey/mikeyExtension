@@ -22,14 +22,17 @@
 body {
   font-family: arial, sans-serif;
 }
+
 .mm-container {
   font-family: arial, sans-serif;
   font-size: 13px;
   position: relative;
 }
+
 .mm-container a {
   text-decoration: none;
 }
+
 .mm-container .truncate {
   overflow: hidden;
   white-space: nowrap;
@@ -121,8 +124,9 @@ body {
   padding-left: 10px;
   padding-bottom: 5px;
 }
+
 .mm-container .labels th:hover {
-  color: #777;
+	color: #777;
 }
 #mm-attachments-table tr {
   cursor: pointer;
@@ -130,6 +134,7 @@ body {
 #mm-links-table tr {
   cursor: pointer;
 }
+
 .mm-container .files {
   background-color: #f3f3f3;
   font-size: 13px;
@@ -170,6 +175,10 @@ body {
 .mm-to {
   width: 150px;
 }
+
+.mm-container .file {
+}
+
 .inbox-table td.file {
   margin-right: 30px;
 }
@@ -288,18 +297,18 @@ th.mm-link {
 }
 /* ------------ CHECKBOX ----------------- */
 .mm-container .checkbox {
-  -webkit-border-radius: 1px;
-  -moz-border-radius: 1px;
-  border-radius: 1px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid #c6c6c6;
-  border: 1px solid rgba(155, 155, 155, 0.57);
-  font-size: 1px;
-  height: 11px;
-  margin: 0 0px 0 0px;
-  outline: 0;
-  vertical-align: text-bottom;
-  width: 11px;
+-webkit-border-radius: 1px;
+-moz-border-radius: 1px;
+border-radius: 1px;
+background-color: rgba(255,255,255,.05);
+border: 1px solid #c6c6c6;
+border: 1px solid rgba(155,155,155,.57);
+font-size: 1px;
+height: 11px;
+margin: 0 0px 0 0px;
+outline: 0;
+vertical-align: text-bottom;
+width: 11px;
 }
 .checkbox:focus {
   border: 1px solid #4d90fe;
@@ -572,4 +581,67 @@ display: block;
   font-size: 13px;
   max-height: 152px;
   overflow: hidden;
+}
+
+.rollover-powerpoint {
+  max-height: 328px;
+}
+
+.rollover-image {
+  max-height: 600px;
+  overflow: hidden;
+}
+
+
+.rollover-icons {
+  float: right;
+  display: inline-block;
+
+}
+
+.rollover-icon-mail {
+  width: 16px;
+  height: 16px;
+  background:url("../img/rollover-mail.png") no-repeat;
+  display: inline-block;
+
+  opacity: .4;
+
+}
+
+.rollover-icon-download {
+  width: 16px;
+  height: 16px;
+  background:url("../img/rollover-download.png") no-repeat;
+  display: inline-block;
+  opacity: .4;
+}
+
+.rollover-icon-download:hover {
+  opacity: .5;
+  }
+
+.rollover-icon-mail:hover {
+  opacity: .5;
+  }
+
+.powerpoint-preview {
+  width: 348px;
+}
+
+.image-container {
+  max-width: 152px;
+  height: 152px;
+  overflow: hidden;
+  margin-right: 15px;
+  display: inline-block;
+  float: left;
+}
+
+.image-inside {
+  height: 152px;
+}
+
+.text-box {
+  display: inline;
 }

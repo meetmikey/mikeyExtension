@@ -38,8 +38,11 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()
-    @collection.on 'reset', @render
+    @collection.on 'reset', @linkRender
     @collection.fetch() if @options.fetch
+
+  linkRender: =>
+    @render()
 
   teardown: =>
     @collection.off 'reset', @render
