@@ -39,22 +39,21 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   events:
     'click tr': 'openAttachment'
 
-  pollDelay: 1000*5
+  pollDelay: 1000*10
 
   preInitialize: =>
 
   postInitialize: =>
     @collection = new MeetMikey.Collection.Attachments()
     @collection.on 'reset add', @attachmentRender
-    @collection.fetch() if @options.fetch
+    if @options.fetch
+      @collection.fetch success: =>
+        # setTimeout @poll, @pollDelay
 
   attachmentRender: =>
     @render()
 
   postRender: =>
-    if @options.fetch
-      @collection.fetch()
-      # setTimeout @poll, @pollDelay
 
   teardown: =>
     @collection.off('reset', @render)
