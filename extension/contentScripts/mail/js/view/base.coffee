@@ -1,3 +1,4 @@
+viewthing = null
 class MeetMikey.View.Base extends Backbone.View
   defaultArgs:
     render: true
@@ -5,9 +6,18 @@ class MeetMikey.View.Base extends Backbone.View
 
   initialize: =>
     @preInitialize()
+    @options = _.defaults (@options ? {}), @defaultArgs
+    # cloning object because otherwise @subView objects are shared
+    # between all instances of views
+    @subViews = $.extend(true, {}, @subViews)
+    @options = $.extend true, {}, @options
     for name, obj of @subViews
-      args = _.defaults (obj.args ? {}), @defaultArgs
       obj.view = new obj.viewClass(obj.args)
+
+      if name is 'attachments'
+        console.log 'view cmp', viewthing == obj.view
+        viewthing = obj.view
+
       obj.view.setElement obj.selector
     @postInitialize()
     this
@@ -31,7 +41,6 @@ class MeetMikey.View.Base extends Backbone.View
 
   render: =>
     @preRender()
-    # console.log 'render', @options, 'and recurse', @renderChildren
     @$el.html @template(@getTemplateData()) if @options.render
     @renderSubviews() if @options.renderChildren
     @postRender()

@@ -31,6 +31,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     _.chain(@tabs).keys().without('email').value()
 
   preInitialize: =>
+    console.log 'inbox subview', @subViews
     console.log 'inbox options', @options
     @subViews.attachments.args.fetch = @options.fetch
     @subViews.links.args.fetch = @options.fetch
@@ -41,6 +42,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @subView('attachments').collection.on 'reset', @subView('images').setCollection
 
   postRender: =>
+    console.log 'inbox', @options
     # @fetchCollections() if @options.fetch
 
   showTab: (tab) =>
