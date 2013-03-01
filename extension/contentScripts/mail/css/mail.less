@@ -1,21 +1,29 @@
 
 /*--------------- COLORS ----------------- */
 
-@black {
-  color: #222;
+@black: #222;
+
+
+@white: #fff;
+
+@medium-grey: #777;
+
+
+@red: #dd4b39;
+
+
+/*--------------- GMAIL HACKS -------------- */
+
+.bX {
+  padding-top:20px !important;
+  padding-bottom: 0px !important;
+  
 }
 
-@white {
-  color: #fff;
+.UJ {
+  border-top: none !important;
 }
 
-@medium-grey {
-  color:#777;
-}
-
-@red {
-  color: #dd4b39;
-}
 
 
 /* ------------------------ */
@@ -29,6 +37,7 @@ body {
   font-family: arial, sans-serif;
   font-size: 13px;
   position: relative;
+  padding-top: 20px;
 }
 
 .mm-container a {
@@ -80,17 +89,17 @@ body {
 }
 
 
-.mm-container .active {
+.mikey-tabs .active {
   border-bottom: 3px solid @red;
 }
 
-.mm-container .active a {
+.mikey-tabs .active a {
   color: @red !important;
   font-weight: bold;
 }
 
 
-.mm-container .active {
+.mikey-tabs .active {
 	border-bottom: 3px solid @red;
 	color: @red !important;
 	font-weight: bold;
@@ -585,13 +594,19 @@ font-size: 12px;
 
 }
 
+
+
 .mm-image {
   width: 250px;
   margin-bottom: 10px;
 }
 
-#mm-images-tab {
-  padding-top: 30px;
+.mm-images-tab {
+  padding-top: 20px;
+}
+
+.isotope {
+  padding-top:10px;
 }
 
 .image-filename {
