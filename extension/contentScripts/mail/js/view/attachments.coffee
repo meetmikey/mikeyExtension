@@ -54,7 +54,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   postRender: =>
     if @options.fetch
       @collection.fetch()
-      setTimeout @poll, @pollDelay
+      # setTimeout @poll, @pollDelay
 
   teardown: =>
     @collection.off('reset', @render)
