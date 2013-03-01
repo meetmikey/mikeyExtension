@@ -22,7 +22,6 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     'click li': 'tabClick'
 
   postRender: =>
-    console.log 'rendered tabs'
     @adjustWidth()
 
   adjustWidth: =>

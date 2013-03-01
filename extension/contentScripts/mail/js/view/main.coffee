@@ -21,14 +21,21 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @injectTabBarContainer()
     @setLayout @detectLayout()
     @options.render = false
-    console.log @$ '#mm-tabs-container'
 
   postInitialize: =>
+    same = @subView('inbox').subView('attachments') == @subView('search').subView('searchResults').subView('attachments')
+    samebox = @subView('inbox') == @subView('search').subView('searchResults')
+    console.log 'views are the same: ', same, samebox
     @subView('sidebar').on 'clicked:inbox', @showEmailTab
     @subView('tabs').on 'clicked:tab', @subView('inbox').showTab
     @subView('inbox').on 'updateTabCount', @subView('tabs').updateTabCount
 
+  preRender: =>
+
   postRender: =>
+    same = @subView('inbox').subView('attachments') == @subView('search').subView('searchResults').subView('attachments')
+    samebox = @subView('inbox') == @subView('search').subView('searchResults')
+    console.log 'views are the same: ', same, samebox
 
   teardown: =>
     @subViews('sidebar').off 'clicked:inbox'

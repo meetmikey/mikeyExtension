@@ -46,12 +46,13 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   postInitialize: =>
     @collection = new MeetMikey.Collection.Attachments()
     @collection.on 'reset add', @attachmentRender
-    @collection.fetch success: => @trigger 'reset' if @options.fetch
+    @collection.fetch() if @options.fetch
 
   attachmentRender: =>
     @render()
 
   postRender: =>
+    console.log 'rendered attachments', @options
     if @options.fetch
       @collection.fetch()
       setTimeout @poll, @pollDelay
