@@ -1,6 +1,15 @@
 class MeetMikey.View.Base extends Backbone.View
+  defaultArgs:
+    render: true
+    renderChildren: true
+
   initialize: =>
     @preInitialize()
+    @options = _.defaults (@options ? {}), @defaultArgs
+    # cloning object because otherwise @subView objects are shared
+    # between all instances of views
+    @subViews = $.extend(true, {}, @subViews)
+    @options = $.extend true, {}, @options
     for name, obj of @subViews
       obj.view = new obj.viewClass(obj.args)
       obj.view.setElement obj.selector
@@ -24,13 +33,10 @@ class MeetMikey.View.Base extends Backbone.View
 
   teardown: ->
 
-  renderSelf: true
-  renderChildren: true
-
   render: =>
     @preRender()
-    @$el.html @template(@getTemplateData()) if @renderSelf
-    @renderSubviews() if @renderChildren
+    @$el.html @template(@getTemplateData()) if @options.render
+    @renderSubviews() if @options.renderChildren
     @postRender()
     this
 
@@ -50,4 +56,4 @@ class MeetMikey.View.Base extends Backbone.View
     this
 
   assign: (selector, view) =>
-    view.setElement(selector).render()
+    view.setElement(@$ selector).render()

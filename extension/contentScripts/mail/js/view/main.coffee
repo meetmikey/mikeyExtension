@@ -6,23 +6,30 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     'inbox':
       viewClass: MeetMikey.View.Inbox
       selector: '#mm-container'
-      args: {fetch: true}
+      args: {fetch: true, name: 'main'}
     'search':
       viewClass: MeetMikey.View.Search
       selector: 'body'
+      args: {name: 'search', render: false, renderChildren: false}
     'sidebar':
       viewClass: MeetMikey.View.Sidebar
       selector: '.nM[role=navigation]'
+      args: {render: false}
 
   preInitialize: =>
     @injectInboxContainer()
     @injectTabBarContainer()
     @setLayout @detectLayout()
+    @options.render = false
 
   postInitialize: =>
     @subView('sidebar').on 'clicked:inbox', @showEmailTab
     @subView('tabs').on 'clicked:tab', @subView('inbox').showTab
     @subView('inbox').on 'updateTabCount', @subView('tabs').updateTabCount
+
+  preRender: =>
+
+  postRender: =>
 
   teardown: =>
     @subViews('sidebar').off 'clicked:inbox'
@@ -43,8 +50,3 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
   showEmailTab: =>
     @subView('tabs').setActiveTab 'email'
     @subView('inbox').showTab 'email'
-
-  render: =>
-    @renderSubviews()
-
-

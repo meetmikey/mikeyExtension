@@ -39,16 +39,22 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   events:
     'click tr': 'openAttachment'
 
+  pollDelay: 1000*5
+
+  preInitialize: =>
+
   postInitialize: =>
     @collection = new MeetMikey.Collection.Attachments()
-    @collection.on 'reset', @attachmentRender
-    @collection.fetch success: => @trigger 'reset' if @options.fetch
+    @collection.on 'reset add', @attachmentRender
+    @collection.fetch() if @options.fetch
 
   attachmentRender: =>
     @render()
 
   postRender: =>
-    console.log 'rendering attachments'
+    if @options.fetch
+      @collection.fetch()
+      setTimeout @poll, @pollDelay
 
   teardown: =>
     @collection.off('reset', @render)
@@ -60,5 +66,10 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     target = $(event.currentTarget)
     url = target.attr('data-attachment-url')
     window.open(url)
+
+  poll: =>
+    console.log 'attachments are polling'
+    @collection.fetch update: true, remove: false, success: =>
+      setTimeout @poll, @pollDelay
 
 
