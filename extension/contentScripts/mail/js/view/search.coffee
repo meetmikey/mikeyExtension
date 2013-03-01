@@ -1,7 +1,4 @@
 class MeetMikey.View.Search extends MeetMikey.View.Base
-  renderSelf: false
-  renderChildren: false
-
   subViews:
     'searchBar':
       viewClass: MeetMikey.View.SearchBar
@@ -12,6 +9,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     'searchResults':
       viewClass: MeetMikey.View.Inbox
       selector: '#mm-search-container'
+      args: {fetch: false, name: 'searchResult'}
 
   postInitialize: =>
     @subView('searchBar').on 'search', @handleSearch
