@@ -12,9 +12,11 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     'attachments':
       viewClass: MeetMikey.View.Attachments
       selector: '.mm-attachments-tab'
+      args: {}
     'links':
       viewClass: MeetMikey.View.Links
       selector: '.mm-links-tab'
+      args: {}
     'images':
       viewClass: MeetMikey.View.Images
       selector: '.mm-images-tab'
@@ -28,17 +30,23 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   getTabs: =>
     _.chain(@tabs).keys().without('email').value()
 
+  preInitialize: =>
+    @subViews.attachments.args.fetch = @options.fetch
+    @subViews.links.args.fetch = @options.fetch
+    @subViews.attachments.args.name = @options.name
+
   postInitialize: =>
     @bindCountUpdate()
     @subView('attachments').collection.on 'reset', @subView('images').setCollection
 
   postRender: =>
-    @fetchCollections() if @options.fetch
+    console.log 'inbox', @options
+    # @fetchCollections() if @options.fetch
 
   showTab: (tab) =>
     contentSelector = _.values(@tabs).join(', ')
     $(contentSelector).hide()
-    $(@tabs[tab]).show()
+    @$(@tabs[tab]).show()
     @subView(tab)?.trigger 'showTab'
 
   bindCountUpdate: =>
@@ -67,11 +75,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     console.log 'setting results'
     @subView('attachments').collection.reset res.attachments
     @subView('links').collection.reset res.links
-
-  fetchCollections: =>
-    console.log 'fetching?!?!??!'
-    @subView('attachments').collection.fetch success: -> console.log 'fetched!'
-    @subView('links').collection.fetch success: @updateCountForTab 'links'
 
   teardown: =>
     @unbindCountUpdate()
