@@ -9,7 +9,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       args: {fetch: true, name: 'main'}
     'search':
       viewClass: MeetMikey.View.Search
-      selector: 'body'
+      selector: '.no .nH.nn'
       args: {name: 'search', render: false, renderChildren: false}
     'sidebar':
       viewClass: MeetMikey.View.Sidebar
