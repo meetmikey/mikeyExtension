@@ -52,7 +52,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @render()
 
   postRender: =>
-    console.log 'rendered attachments', @options
     if @options.fetch
       @collection.fetch()
       setTimeout @poll, @pollDelay

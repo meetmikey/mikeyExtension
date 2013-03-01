@@ -1,4 +1,3 @@
-viewthing = null
 class MeetMikey.View.Base extends Backbone.View
   defaultArgs:
     render: true
@@ -13,11 +12,6 @@ class MeetMikey.View.Base extends Backbone.View
     @options = $.extend true, {}, @options
     for name, obj of @subViews
       obj.view = new obj.viewClass(obj.args)
-
-      if name is 'attachments'
-        console.log 'view cmp', viewthing == obj.view
-        viewthing = obj.view
-
       obj.view.setElement obj.selector
     @postInitialize()
     this

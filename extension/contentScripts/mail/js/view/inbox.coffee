@@ -31,8 +31,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     _.chain(@tabs).keys().without('email').value()
 
   preInitialize: =>
-    console.log 'inbox subview', @subViews
-    console.log 'inbox options', @options
     @subViews.attachments.args.fetch = @options.fetch
     @subViews.links.args.fetch = @options.fetch
     @subViews.attachments.args.name = @options.name
