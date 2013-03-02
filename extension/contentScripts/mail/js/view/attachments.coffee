@@ -4,7 +4,7 @@ template = """
   {{else}}
     <table class="inbox-table" id="mm-attachments-table" border="0">
       <thead class="labels">
-        <th class="mm-toggle-box"></th>
+        <!-- <th class="mm-toggle-box"></th> -->
         <th class="mm-file">File</th>
         <th class="mm-from">From</th>
         <th class="mm-to">To</th>
@@ -15,12 +15,12 @@ template = """
       <tbody>
     {{#each models}}
       <tr class="files" data-attachment-url="{{getAPIUrl}}/attachmentURL/{{_id}}?userEmail={{email}}&refreshToken={{refreshToken}}">
-        <td class="mm-toggle-box">
+        <!-- <td class="mm-toggle-box">
           <div class="checkbox"><div class="check"></div></div>
-        </td>
+        </td> -->
         <td class="mm-file mm-icon truncate" style="background:url('{{iconUrl}}') no-repeat;">
           {{filename}}&nbsp;
-        </td>
+        </td> 
         <td class="mm-from truncate">{{from}}</td>
         <td class="mm-to truncate">{{to}}</td>
         <td class="mm-type truncate">{{readableFileType}}</td>

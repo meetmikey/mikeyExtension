@@ -51,19 +51,23 @@ body {
 }
 
 
+  
+#mm-tabs-container,
+#mm-search-tabs-container {
+ position: absolute;
+ bottom: -60px;      
+}
+
 .mikey-tabs {
   font-size: 14px;
   list-style-type: none;
-  margin: 114px 0px 0px 0px;
-  padding: 14px 0px 0px 0px;
+
+  padding: 13px 0px 0px 0px;
   border-bottom: 1px solid #ebebeb;
   background-color: @white;
   margin-bottom: 16px;
   z-index: 2;
-  position: fixed;
   width: 100%;
-  top: 0px;
-
 }
 
 .mikey-tabs a {
@@ -88,7 +92,6 @@ body {
   color: #777;
 }
 
-
 .mikey-tabs .active {
   border-bottom: 3px solid @red;
 }
@@ -97,7 +100,6 @@ body {
   color: @red !important;
   font-weight: bold;
 }
-
 
 .mikey-tabs .active {
 	border-bottom: 3px solid @red;
@@ -137,15 +139,15 @@ body {
 	padding-bottom: 2px;
 	font-weight: bold;
 	cursor: hand;
-
-
 }
 
-.labels th {
-	text-align: left;
+.mm-container .labels th {
+  text-align: left;
   padding-left: 10px;
   padding-bottom: 5px;
 }
+
+
 
 .mm-container .labels th:hover {
 	color: #777;
@@ -172,7 +174,8 @@ body {
 
 
 .mm-toggle-box {
-	width: 24px;
+	width: 30px;
+  padding: 6px 0px 6px 5px !important;
 }
 
 
@@ -185,7 +188,7 @@ body {
 }
 
 .labels .mm-sent {
-  text-align: right;
+  text-align: right !important;
   padding-right: 10px;
 }
 
@@ -195,7 +198,7 @@ body {
 }
 
 .labels .mm-size {
-  text-align: right;
+  text-align: right !important;
   padding-right: 10px;
 }
 
@@ -213,11 +216,7 @@ body {
   width:150px;
 }
 
-
 .mm-container .file {
-
-
-
 }
 
 .inbox-table td.file {
@@ -246,9 +245,9 @@ table tr td .flex {
 
 
 .mm-icon {
-	background-position: 0px 4px !important;
+	background-position: 5px 4px !important;
 	background-size: 18px 18px !important;
-  padding-left: 26px !important;
+  padding-left: 31px !important;
 }
 
 .mm-favicon {
@@ -279,7 +278,7 @@ table tr td .flex {
 }
 
 th.mm-file  {
-  padding-left: 0px;
+  padding-left: 5px !important;
   text-align: left;
 }
 
@@ -388,7 +387,6 @@ margin: 0 0px 0 0px;
 outline: 0;
 vertical-align: text-bottom;
 width: 11px;
-
 }
 
 .checkbox:focus {
@@ -570,7 +568,6 @@ padding: 0px 4px;
 .modal-header {
   padding: 10px 10px 0px 10px !important;
   border-bottom: 0px solid @white !important;
-
 }
 
 .modal-body {
@@ -580,7 +577,7 @@ padding: 0px 4px;
 /* ----------- IMAGES ---------------- */
 
 .image-box {
-width:250px;
+max-width:250px;
 padding: 0px;
 float: left;
 margin-left: 10px;
@@ -591,14 +588,16 @@ height: auto;
 padding: 10px;
 background-color: @white;
 font-size: 12px;
-
+text-align: center;
 }
 
 
 
 .mm-image {
-  width: 250px;
+  max-width: 250px;
   margin-bottom: 10px;
+  text-align: center;
+
 }
 
 .mm-images-tab {
@@ -612,7 +611,7 @@ font-size: 12px;
 .image-filename {
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 250px;
+  max-width: 250px;
   overflow: hidden;
 }
 
