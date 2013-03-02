@@ -4,13 +4,20 @@ template = """
     <a href="#">Email</a>
   </li>
   <li class="mikey-tab" data-mm-tab="attachments">
-    <a href="#">Files (<span class="mm-count">0</span>)</a>
+    <a href="#">
+      Files <span class="mm-count"></span>
+    </a>
+
   </li>
   <li class="mikey-tab" data-mm-tab="links">
-    <a href="#">Links (<span class="mm-count">0</span>)</a>
+    <a href="#">
+      Links <span class="mm-count"></span>
+    </a>
   </li>
   <li class="mikey-tab" data-mm-tab="images">
-    <a href="#">Images (<span class="mm-count">0</span>)</a>
+    <a href="#">
+      Images <span class="mm-count"></span>
+    </a>
   </li>
 </ul>
 """
@@ -44,4 +51,5 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
 
   updateTabCount: (tab, count) =>
     console.log "setting #{tab} count to #{count}"
-    @$("[data-mm-tab='#{tab}'] .mm-count").text count
+    tab =  @$("[data-mm-tab='#{tab}']")
+    tab.find(".mm-count").text "(#{ count })"
