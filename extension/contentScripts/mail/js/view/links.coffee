@@ -36,10 +36,13 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   events:
     'click tr': 'openLink'
 
+  pollDelay: 1000*45
+
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()
     @collection.on 'reset', @linkRender
-    @collection.fetch() if @options.fetch
+    if @options.fetch
+      @collection.fetch success: @waitAndPoll
 
   linkRender: =>
     @render()
@@ -56,3 +59,16 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     target = $(event.currentTarget)
     url = target.attr('data-attachment-url')
     window.open(url)
+
+  waitAndPoll: =>
+    setTimeout @poll, @pollDelay
+
+  poll: =>
+    console.log 'links are polling'
+    @collection.fetch
+      update: true
+      remove: false
+      data:
+        after: @collection.first()?.get('sentDate')
+      success: @waitAndPoll
+      error: @waitAndPoll
