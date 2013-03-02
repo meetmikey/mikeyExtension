@@ -38,6 +38,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   postInitialize: =>
     @bindCountUpdate()
     @subView('attachments').collection.on 'reset', @subView('images').setCollection
+    @subView('attachments').collection.on 'add', _.debounce ((model, collection) => @subView('images').setCollection(collection)), 50
 
   postRender: =>
     console.log 'inbox', @options
@@ -63,8 +64,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @subView(tab).off 'reset', @updateCountForTab(tab)
     @subView(tab).collection.off 'reset add remove', @updateCountForTab(tab)
 
-  updateCountForTab: (tab) => (collection) =>
-    @trigger 'updateTabCount', tab, collection.length
+  updateCountForTab: (tab) => (collection, orCollection) =>
+    @trigger 'updateTabCount', tab, (collection.length || orCollection.length)
 
   updateTabCounts: =>
     _.each @getTabs(), (tab) =>
