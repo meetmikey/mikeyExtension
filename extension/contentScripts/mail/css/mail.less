@@ -24,6 +24,12 @@
   border-top: none !important;
 }
 
+.aeI .G-atb {
+box-shadow: none !important;
+-moz-box-shadow: none !imoportant;
+-webkit-box-shadow: none !important;
+}
+
 
 
 /* ------------------------ */
@@ -55,19 +61,21 @@ body {
 #mm-tabs-container,
 #mm-search-tabs-container {
  position: absolute;
- bottom: -60px;      
+ bottom: -62px; 
+ height:75px;     
 }
 
 .mikey-tabs {
   font-size: 14px;
   list-style-type: none;
 
-  padding: 13px 0px 0px 0px;
+  padding: 14px 0px 0px 0px;
   border-bottom: 1px solid #ebebeb;
   background-color: @white;
   margin-bottom: 16px;
   z-index: 2;
   width: 100%;
+  height: 30px;
 }
 
 .mikey-tabs a {
@@ -79,12 +87,12 @@ body {
   color: @black;
 }
 
-.mikey-tabs a:active {
+.mikey-tabs active:active {
   color: @red;
 }
 
 .mikey-tab {
-  height: 24px;
+  height: 26px;
   margin: 2px 12px 0px 0px;
   padding: 0px 10px 0px 10px;
   display:inline-block;
@@ -128,7 +136,7 @@ body {
 
 
 .inbox-table td {
-	padding: 6px 10px 6px 10px;
+	padding: 9px 10px 9px 10px;
 	border:0px;
 }
 
@@ -144,7 +152,7 @@ body {
 .mm-container .labels th {
   text-align: left;
   padding-left: 10px;
-  padding-bottom: 5px;
+  padding-bottom: 9px;
 }
 
 
@@ -232,7 +240,7 @@ table tr td .flex {
 	width: 92%;
 	white-space: nowrap;
 	min-width: 200px;
-	padding-left: 26px;
+	padding-left: 20px;
 	overflow:hidden;
 }
 
@@ -245,13 +253,13 @@ table tr td .flex {
 
 
 .mm-icon {
-	background-position: 5px 4px !important;
+	background-position: 5px 7px !important;
 	background-size: 18px 18px !important;
   padding-left: 31px !important;
 }
 
 .mm-favicon {
-	background-position: 10px 4px !important;
+	background-position: 5px 7px !important;
 	background-size: 18px 18px !important;
   padding-left: 15px !important;
 }
@@ -283,7 +291,7 @@ th.mm-file  {
 }
 
 th.mm-link {
-  padding-left: 41px !important;
+  padding-left: 36px !important;
 }
 
 .mm-favicon {
@@ -583,7 +591,7 @@ float: left;
 margin-left: 10px;
 margin-right: 10px;
 margin-bottom: 20px;
-border: 1px solid #ebebeb;
+border: 1px solid #e0e0e0;
 height: auto;
 padding: 10px;
 background-color: @white;
@@ -594,7 +602,7 @@ text-align: center;
 
 
 .mm-image {
-  max-width: 250px;
+  width: 250px;
   margin-bottom: 10px;
   text-align: center;
 
@@ -817,7 +825,10 @@ line-height: 16px;
   display: inline;
 }
 
+ 
 /*------------------------------- LOAD ANIMATIONS ----------------------------*/
+
+/*----------
 
 .active {
 
@@ -1234,4 +1245,6 @@ background-color:#777777}
 100%{
 background-color:#FFFFFF}
 
-}
+} 
+
+------- */
