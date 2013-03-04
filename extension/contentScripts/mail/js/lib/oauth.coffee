@@ -40,8 +40,8 @@ class OAuth
       success: (res) =>
         @storeUserInfo res
         callback res
-      error: =>
-        callback null
+      error: (err) =>
+        callback null if err.status is 401
 
 
 
