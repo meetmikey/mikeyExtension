@@ -78,6 +78,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     console.log 'setting results'
     @subView('attachments').collection.reset res.attachments
     @subView('links').collection.reset res.links
+    @subView('images').collection.reset res.images
 
   teardown: =>
     @unbindCountUpdate()
