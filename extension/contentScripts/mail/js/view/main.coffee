@@ -35,7 +35,14 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @subViews('sidebar').off 'clicked:inbox'
 
   detectLayout: =>
-    'compact'
+    padding = parseFloat $('.xY').css('padding-top')
+
+    if padding < 4.5
+      'compact'
+    else if 8.5 <= padding
+      'comfortable'
+    else
+      'cozy'
 
   setLayout: (layout='compact') =>
     @$el.addClass layout
