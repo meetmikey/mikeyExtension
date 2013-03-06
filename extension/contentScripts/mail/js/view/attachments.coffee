@@ -20,7 +20,7 @@ template = """
         </td> -->
         <td class="mm-file mm-icon truncate" style="background:url('{{iconUrl}}') no-repeat;">
           {{filename}}&nbsp;
-        </td> 
+        </td>
         <td class="mm-from truncate">{{from}}</td>
         <td class="mm-to truncate">{{to}}</td>
         <td class="mm-type truncate">{{readableFileType}}</td>
@@ -59,7 +59,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @collection.off('reset', @render)
 
   getTemplateData: =>
-    models: _.map(@collection.models, MeetMikey.Decorator.Attachment.decorate)
+    models: _.invoke(@collection.models, 'decorate')
 
   openAttachment: (event) =>
     target = $(event.currentTarget)

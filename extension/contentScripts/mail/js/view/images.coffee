@@ -23,7 +23,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   postRender: =>
 
   getTemplateData: =>
-    models: _.map(@collection.models, MeetMikey.Decorator.Attachment.decorate)
+    models: _.invoke(@collection.models, 'decorate')
 
   setCollection: (attachments) =>
     images = _.filter attachments.models, (a) -> a.isImage()

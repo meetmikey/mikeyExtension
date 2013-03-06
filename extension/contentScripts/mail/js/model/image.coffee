@@ -1,1 +1,2 @@
-class MeetMikey.Model.Image extends Backbone.Model
+class MeetMikey.Model.Image extends MeetMikey.Model.Base
+  decorator: MeetMikey.Decorator.Attachment
