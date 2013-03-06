@@ -15,10 +15,14 @@ template = """
 class MeetMikey.View.Images extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  pollDelay: 1000*45
+
   postInitialize: =>
-    @collection = new MeetMikey.Collection.Images()
-    @collection.on 'reset', @render
     @once 'showTab', @initIsotope
+    @collection = new MeetMikey.Collection.Images()
+    @collection.on 'reset add', _.debounce(@render, 50)
+    if @options.fetch
+      @collection.fetch success: @waitAndPoll
 
   postRender: =>
 
@@ -40,3 +44,16 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
           duration: 750
           easing: 'linesar'
           queue: false
+
+  waitAndPoll: =>
+    setTimeout @poll, @pollDelay
+
+  poll: =>
+    console.log 'images are polling'
+    @collection.fetch
+      update: true
+      remove: false
+      data:
+        after: @collection.first()?.get('sentDate')
+      success: @waitAndPoll
+      error: @waitAndPoll

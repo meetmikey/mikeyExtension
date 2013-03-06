@@ -20,6 +20,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     'images':
       viewClass: MeetMikey.View.Images
       selector: '.mm-images-tab'
+      args: {}
 
   tabs:
     email: '.UI'
@@ -34,11 +35,12 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @subViews.attachments.args.fetch = @options.fetch
     @subViews.links.args.fetch = @options.fetch
     @subViews.attachments.args.name = @options.name
+    @subViews.images.args.fetch = @options.fetch
 
   postInitialize: =>
     @bindCountUpdate()
-    @subView('attachments').collection.on 'reset', @subView('images').setCollection
-    @subView('attachments').collection.on 'add', _.debounce ((model, collection) => @subView('images').setCollection(collection)), 50
+    # @subView('attachments').collection.on 'reset', @subView('images').setCollection
+    # @subView('attachments').collection.on 'add', _.debounce ((model, collection) => @subView('images').setCollection(collection)), 50
 
   postRender: =>
     console.log 'inbox', @options
