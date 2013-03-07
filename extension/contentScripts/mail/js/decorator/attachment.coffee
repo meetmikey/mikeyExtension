@@ -20,6 +20,7 @@ class AttachmentDecorator
     object.size = @formatFileSize model
     object._id = model.get('_id')
     object.cid = model.cid
+    object.readableFileType = MeetMikey.Helper.getReadableTypeFromMimeType(model.get('contentType'))
     object.iconUrl = @iconUrls[@getIconUrlType(model)]
     object.image = model.get 'image'
 
