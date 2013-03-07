@@ -19,9 +19,7 @@ class AttachmentDecorator
     object.sentDate = @formatDate model
     object.size = @formatFileSize model
     object._id = model.get('_id')
-    object.readableFileType = MeetMikey.Helper.getReadableTypeFromMimeType(model.get('contentType'))
-    object.refreshToken =  MeetMikey.globalUser.get('refreshToken')
-    object.email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
+    object.cid = model.cid
     object.iconUrl = @iconUrls[@getIconUrlType(model)]
     object.image = model.get 'image'
 

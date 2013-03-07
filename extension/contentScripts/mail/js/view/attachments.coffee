@@ -14,7 +14,7 @@ template = """
       </thead>
       <tbody>
     {{#each models}}
-      <tr class="files" data-attachment-url="{{getAPIUrl}}/attachmentURL/{{_id}}?userEmail={{email}}&refreshToken={{refreshToken}}">
+      <tr class="files" data-cid="{{cid}}">
         <!-- <td class="mm-toggle-box">
           <div class="checkbox"><div class="check"></div></div>
         </td> -->
@@ -62,8 +62,12 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     models: _.invoke(@collection.models, 'decorate')
 
   openAttachment: (event) =>
-    target = $(event.currentTarget)
-    url = target.attr('data-attachment-url')
+    cid = $(event.currentTarget).attr('data-cid')
+    model = @collection.get(cid)
+    email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
+    refreshToken = MeetMikey.globalUser.get('refreshToken')
+    url = "#{MeetMikey.Settings.APIUrl}/attachmentURL/#{model.id}?userEmail=#{email}&refreshToken=#{refreshToken}"
+
     window.open(url)
 
   waitAndPoll: =>
