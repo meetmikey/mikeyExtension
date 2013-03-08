@@ -30,6 +30,14 @@ box-shadow: none !important;
 -webkit-box-shadow: none !important;
 }
 
+.mq {
+  display: none !important;
+}
+
+.AO {
+  top: 40px !important;
+}
+
 
 
 /* ------------------------ */
@@ -44,7 +52,11 @@ body {
   font-size: 13px;
   position: relative;
   padding-top: 12px;
+  top: 10px;
+
 }
+
+
 
 .mm-container a {
   text-decoration: none;
@@ -135,9 +147,22 @@ body {
 }
 
 
-.inbox-table td {
-	padding: 9px 10px 9px 10px;
+.comfortable .inbox-table td {
+	padding: 10px 10px 10px 10px;
 	border:0px;
+  height: 19px;
+}
+
+.cozy .inbox-table td {
+  padding: 7px 10px 7px 10px;
+  border:0px;
+  height: 19px;
+}
+
+.compact .inbox-table td {
+  padding: 3px 10px 3px 10px;
+  border:0px;
+  height: 19px;
 }
 
 .mm-container .labels {
@@ -252,17 +277,44 @@ table tr td .flex {
 }
 
 
-.mm-icon {
+.cozy .mm-icon {
 	background-position: 5px 7px !important;
 	background-size: 18px 18px !important;
   padding-left: 31px !important;
 }
 
-.mm-favicon {
+.cozy .mm-favicon {
 	background-position: 5px 7px !important;
 	background-size: 18px 18px !important;
   padding-left: 15px !important;
 }
+
+ .comfortable .mm-icon {
+  background-position: 5px 10px !important;
+  background-size: 18px 18px !important;
+  padding-left: 31px !important;
+}
+
+.comfortable .mm-favicon {
+  background-position: 5px 10px !important;
+  background-size: 18px 18px !important;
+  padding-left: 15px !important;
+}
+
+.compact .mm-icon {
+background-position: 5px 3px !important;
+background-size: 18px 18px !important;
+padding-left: 31px !important;
+}
+
+.compact .mm-favicon {
+background-position: 5px 3px !important;
+background-size: 18px 18px !important;
+padding-left: 15px !important;
+}
+
+
+
 
 .mm-source {
   width:124px;
@@ -282,7 +334,6 @@ table tr td .flex {
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 200px;
-  display: inline-block;
 }
 
 th.mm-file  {
