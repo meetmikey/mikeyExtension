@@ -37,7 +37,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   events:
-    'click tr': 'openAttachment'
+    'click .files': 'openAttachment'
 
   pollDelay: 1000*45
 
