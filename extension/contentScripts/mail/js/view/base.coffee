@@ -26,6 +26,7 @@ class MeetMikey.View.Base extends Backbone.View
     _.chain(@subViews).values().pluck('view').invoke('_teardown')
 
     @teardown()
+    @trigger 'teardown'
     @off()
     @remove()
     @undelegateEvents()
