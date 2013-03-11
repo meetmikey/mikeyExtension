@@ -77,15 +77,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   delayRollover: (event) => @rollover.delaySpawn event
 
-  # spawnRollover: (cid) =>
-  #   return if @rollover? or cid isnt @rolloverInfo.cid
-  #   @$('.rollover-container').append('<div class="rollover"></div>')
-  #   model = @collection.get cid
-  #   @rollover = new MeetMikey.View.Rollover
-  #     model: model, el: @$('.rollover'), x: @rolloverInfo.x, y: @rolloverInfo.y
-  #   @rollover.on 'teardown', => @rollover = null
-  #   @rollover.render()
-
   cancelRollover: => @rollover.cancelSpawn()
 
   waitAndPoll: =>
