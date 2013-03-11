@@ -14,7 +14,7 @@ template = """
       </thead>
       <tbody>
     {{#each models}}
-      <tr class="files" data-attachment-url="{{getAPIUrl}}/attachmentURL/{{_id}}?userEmail={{email}}&refreshToken={{refreshToken}}">
+      <tr class="files" data-cid="{{cid}}">
         <!-- <td class="mm-toggle-box">
           <div class="checkbox"><div class="check"></div></div>
         </td> -->
@@ -30,6 +30,7 @@ template = """
     {{/each}}
     </tbody>
     </table>
+    <div class="rollover-container"></div>
   {{/unless}}
 """
 
@@ -37,7 +38,10 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   events:
-    'click tr': 'openAttachment'
+    'click .files': 'openAttachment'
+    'mouseenter .files': 'startRollover'
+    'mouseleave .files': 'cancelRollover'
+    'mousemove .files': 'delayRollover'
 
   pollDelay: 1000*45
 
@@ -49,11 +53,12 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     if @options.fetch
       @collection.fetch success: @waitAndPoll
 
-
   attachmentRender: =>
     @render()
 
   postRender: =>
+    @rollover = new MeetMikey.View.Rollover el: @$('.rollover-container'), collection: @collection
+    console.log $('.mq')
 
   teardown: =>
     @collection.off('reset', @render)
@@ -62,9 +67,26 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     models: _.invoke(@collection.models, 'decorate')
 
   openAttachment: (event) =>
-    target = $(event.currentTarget)
-    url = target.attr('data-attachment-url')
+    cid = $(event.currentTarget).attr('data-cid')
+    model = @collection.get(cid)
+    url = MeetMikey.Decorator.Attachment.getUrl model
+
     window.open(url)
+
+  startRollover: (event) => @rollover.startSpawn event
+
+  delayRollover: (event) => @rollover.delaySpawn event
+
+  # spawnRollover: (cid) =>
+  #   return if @rollover? or cid isnt @rolloverInfo.cid
+  #   @$('.rollover-container').append('<div class="rollover"></div>')
+  #   model = @collection.get cid
+  #   @rollover = new MeetMikey.View.Rollover
+  #     model: model, el: @$('.rollover'), x: @rolloverInfo.x, y: @rolloverInfo.y
+  #   @rollover.on 'teardown', => @rollover = null
+  #   @rollover.render()
+
+  cancelRollover: => @rollover.cancelSpawn()
 
   waitAndPoll: =>
     setTimeout @poll, @pollDelay

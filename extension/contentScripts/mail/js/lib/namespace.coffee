@@ -6,4 +6,6 @@ window.MeetMikey =
   Template: {}
   Helper: {}
   Settings:
+    #APIUrl: "https://local.meetmikey.com"
     APIUrl: "https://dev.meetmikey.com"
+    #APIUrl: "https://api.meetmikey.com"
