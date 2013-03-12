@@ -50,7 +50,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   postInitialize: =>
     @collection = new MeetMikey.Collection.Attachments()
     @collection.on 'reset add', _.debounce(@render, 50)
-    @rolloverInfo = {}
     if @options.fetch
       @collection.fetch success: @waitAndPoll
 
@@ -58,6 +57,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @render()
 
   postRender: =>
+    @rollover = new MeetMikey.View.Rollover el: @$('.rollover-container'), collection: @collection
     console.log $('.mq')
 
   teardown: =>
@@ -73,34 +73,20 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
     window.open(url)
 
-  setRolloverInfo: (event) =>
+  startRollover: (event) => @rollover.startSpawn event
 
-  startRollover: =>
-    cid = $(event.target).parent('tr').attr('data-cid')
-    @rolloverInfo.cid = cid
-    @rolloverInfo.x = event.pageX
-    @rolloverInfo.y = event.pageY
-    @waitAndSpawnRollover cid
+  delayRollover: (event) => @rollover.delaySpawn event
 
-  delayRollover: =>
-    cid = $(event.target).parent('tr').attr('data-cid')
-    @rolloverInfo.x = event.pageX
-    @rolloverInfo.y = event.pageY
-    @waitAndSpawnRollover cid
+  # spawnRollover: (cid) =>
+  #   return if @rollover? or cid isnt @rolloverInfo.cid
+  #   @$('.rollover-container').append('<div class="rollover"></div>')
+  #   model = @collection.get cid
+  #   @rollover = new MeetMikey.View.Rollover
+  #     model: model, el: @$('.rollover'), x: @rolloverInfo.x, y: @rolloverInfo.y
+  #   @rollover.on 'teardown', => @rollover = null
+  #   @rollover.render()
 
-  spawnRollover: (cid) =>
-    return if @rollover? or cid isnt @rolloverInfo.cid
-    @$('.rollover-container').append('<div class="rollover"></div>')
-    model = @collection.get cid
-    @rollover = new MeetMikey.View.Rollover
-      model: model, el: @$('.rollover'), x: @rolloverInfo.x, y: @rolloverInfo.y
-    @rollover.on 'teardown', => @rollover = null
-    @rollover.render()
-
-  waitAndSpawnRollover: _.debounce(@prototype.spawnRollover, 400)
-
-  cancelRollover: =>
-    @rolloverInfo.cid = null
+  cancelRollover: => @rollover.cancelSpawn()
 
   waitAndPoll: =>
     setTimeout @poll, @pollDelay
