@@ -7,14 +7,12 @@ template = """
       <div class="rollover-body">     
         <div class="rollover-image">
           {{#if image}}
-            <div class="image-container">
-              
-              
-                <img class="aspectcorrect image-inside" src="{{image}}">
-             
-             
-             
-            </div>
+            
+            
+              <div class="image-container">
+                  <img class="aspectcorrect image-inside" src="{{image}}">
+              </div>
+          
           {{/if}}
           {{#if summary}}
             <div class="text-box">{{summary}}</div>
