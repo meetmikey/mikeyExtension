@@ -3,7 +3,7 @@ template = """
     Hold up, finding your images, boss.
   {{else}}
     {{#each models}}
-      <div class="image-box">
+      <div class="image-box" data-cid="{{cid}}">
         <img class="mm-image" src="{{image}}" />
         <div class="image-filename">{{filename}}</div>
       </div>
@@ -16,6 +16,9 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   pollDelay: 1000*45
+
+  events:
+    'click .image-box': 'openImage'
 
   postInitialize: =>
     @once 'showTab', @initIsotope
@@ -34,6 +37,14 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     images = _.uniq images, false, (i) ->
       "#{i.get('hash')}_#{i.get('fileSize')}"
     @collection.reset images
+
+  openImage: (event) =>
+    cid = $(event.currentTarget).attr('data-cid')
+    model = @collection.get(cid)
+    url = model.get 'image'
+
+    window.open url
+
 
   initIsotope: =>
     console.log 'isotoping'

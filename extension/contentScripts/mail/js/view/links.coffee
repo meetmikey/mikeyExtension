@@ -19,7 +19,7 @@ template = """
                 <span class="mm-file-text">{{summary}}</span>
               </div>
             </td>
-            <td class="mm-source truncate">{{url}}</td>
+            <td class="mm-source truncate">{{displayUrl}}</td>
             <td class="mm-from truncate">{{from}}</td>
             <td class="mm-to truncate">{{to}}</td>
             <td class="mm-sent truncate">{{sentDate}}</td>
