@@ -38,7 +38,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @subViews.images.args.fetch = @options.fetch
 
   postInitialize: =>
-    @bindCountUpdate()
+    @bindCountUpdate() unless @options.fetch
 
   postRender: =>
 
@@ -63,7 +63,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @subView(tab).collection.off 'reset add remove', @updateCountForTab(tab)
 
   updateCountForTab: (tab) => (collection, orCollection) =>
-    @trigger 'updateTabCount', tab, (collection.length || orCollection.length)
+    @trigger 'updateTabCount', tab, (collection.length ? orCollection.length)
 
   updateTabCounts: =>
     _.each @getTabs(), (tab) =>

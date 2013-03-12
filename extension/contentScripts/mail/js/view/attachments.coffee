@@ -53,12 +53,8 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     if @options.fetch
       @collection.fetch success: @waitAndPoll
 
-  attachmentRender: =>
-    @render()
-
   postRender: =>
-    @rollover = new MeetMikey.View.Rollover el: @$('.rollover-container'), collection: @collection
-    console.log $('.mq')
+    @rollover = new MeetMikey.View.AttachmentRollover el: @$('.rollover-container'), collection: @collection
 
   teardown: =>
     @collection.off('reset', @render)
@@ -76,15 +72,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   startRollover: (event) => @rollover.startSpawn event
 
   delayRollover: (event) => @rollover.delaySpawn event
-
-  # spawnRollover: (cid) =>
-  #   return if @rollover? or cid isnt @rolloverInfo.cid
-  #   @$('.rollover-container').append('<div class="rollover"></div>')
-  #   model = @collection.get cid
-  #   @rollover = new MeetMikey.View.Rollover
-  #     model: model, el: @$('.rollover'), x: @rolloverInfo.x, y: @rolloverInfo.y
-  #   @rollover.on 'teardown', => @rollover = null
-  #   @rollover.render()
 
   cancelRollover: => @rollover.cancelSpawn()
 

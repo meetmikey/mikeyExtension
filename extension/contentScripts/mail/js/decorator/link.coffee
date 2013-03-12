@@ -3,11 +3,13 @@ class LinkDecorator
     object = {}
     object.title = model.get('title') ? model.get('url')
     object.summary = model.get('summary')
+    object.image = model.get('image')
     object.url = model.get 'url'
     object.from = model.get('sender')?.name
     object.to = @formatRecipients model
     object.sentDate = @formatDate model
     object.faviconURL = MeetMikey.Helper.getFaviconURL(model.get('resolvedURL') ? model.get('url'))
+    object.cid = model.cid
 
     object
 
