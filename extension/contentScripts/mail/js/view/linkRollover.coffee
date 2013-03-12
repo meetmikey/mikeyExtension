@@ -8,9 +8,11 @@ template = """
         <div class="rollover-image">
           {{#if image}}
             <div class="image-container">
-              <div class="image-inside aspectcorrect">
-                <img src="{{image}}">
-              </div>
+              
+              
+                <img class="aspectcorrect image-inside" src="{{image}}">
+             
+             
              
             </div>
           {{/if}}
