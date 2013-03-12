@@ -38,7 +38,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @subViews.images.args.fetch = @options.fetch
 
   postInitialize: =>
-    @bindCountUpdate()
+    @bindCountUpdate() unless @options.fetch
 
   postRender: =>
 
