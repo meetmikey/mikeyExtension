@@ -12,7 +12,7 @@ template = """
       </thead>
       <tbody>
         {{#each models}}
-        <tr class="files" data-attachment-url="{{url}}">
+        <tr class="files" data-cid="{{cid}}">
             <td class="mm-file mm-favicon truncate" style="background:url({{faviconURL}}) no-repeat;">
               <div class="flex">
                 {{title}}
@@ -27,6 +27,7 @@ template = """
         {{/each}}
       </tbody>
     </table>
+    <div class="rollover-container"></div>
   {{/unless}}
 """
 
@@ -34,18 +35,21 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   events:
-    'click tr': 'openLink'
+    'click .files': 'openLink'
+    'mouseenter .files': 'startRollover'
+    'mouseleave .files': 'cancelRollover'
+    'mousemove .files': 'delayRollover'
 
   pollDelay: 1000*45
 
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()
-    @collection.on 'reset', @linkRender
+    @collection.on 'reset add', _.debounce(@render, 50)
     if @options.fetch
       @collection.fetch success: @waitAndPoll
 
-  linkRender: =>
-    @render()
+  postRender: =>
+    @rollover = new MeetMikey.View.LinkRollover el: @$('.rollover-container'), collection: @collection
 
   teardown: =>
     @collection.off 'reset', @render
@@ -53,12 +57,16 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   getTemplateData: =>
     models: _.invoke(@collection.models, 'decorate')
 
-  postRender: ->
-
   openLink: (event) =>
-    target = $(event.currentTarget)
-    url = target.attr('data-attachment-url')
-    window.open(url)
+    cid = $(event.currentTarget).attr('data-cid')
+    model = @collection.get cid
+    window.open model.get('url')
+
+  startRollover: (event) => @rollover.startSpawn event
+
+  delayRollover: (event) => @rollover.delaySpawn event
+
+  cancelRollover: => @rollover.cancelSpawn()
 
   waitAndPoll: =>
     setTimeout @poll, @pollDelay

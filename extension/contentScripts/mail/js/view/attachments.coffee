@@ -53,12 +53,8 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     if @options.fetch
       @collection.fetch success: @waitAndPoll
 
-  attachmentRender: =>
-    @render()
-
   postRender: =>
-    @rollover = new MeetMikey.View.Rollover el: @$('.rollover-container'), collection: @collection
-    console.log $('.mq')
+    @rollover = new MeetMikey.View.AttachmentRollover el: @$('.rollover-container'), collection: @collection
 
   teardown: =>
     @collection.off('reset', @render)
