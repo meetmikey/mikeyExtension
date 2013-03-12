@@ -4,15 +4,20 @@ template = """
       <div class="rollover-title">
         <a href="{{url}}">{{title}}</a>
       </div>
-      <div class="rollover-body rollover-image">
-        {{#if image}}
-          <div class="image-container">
-            <img class="image-inside" src="{{image}}">
-          </div>
-        {{/if}}
-        {{#if summary}}
-          <div class="text-box">{{summary}}</div>
-        {{/if}}
+      <div class="rollover-body">     
+        <div class="rollover-image">
+          {{#if image}}
+            <div class="image-container">
+              <div class="image-inside aspectcorrect">
+                <img src="{{image}}">
+              </div>
+             
+            </div>
+          {{/if}}
+          {{#if summary}}
+            <div class="text-box">{{summary}}</div>
+          {{/if}}
+        </div>
       </div>
     </div>
 

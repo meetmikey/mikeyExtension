@@ -4,10 +4,14 @@ template = """
       <div class="rollover-title">
         <a href="{{url}}">{{filename}}</a>
       </div>
-      <div class="rollover-body rollover-powerpoint">
-        {{#if image}}
-          <img class="powerpoint-preview" src="{{image}}">
-        {{/if}}
+      <div class="rollover-body">
+        <div class="rollover-powerpoint">
+          {{#if image}}
+           
+            <img class="powerpoint-preview" src="{{image}}">
+            
+          {{/if}}
+        </div>
       </div>
     </div>
 
