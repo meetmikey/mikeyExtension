@@ -49,7 +49,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   injectInboxContainer: =>
     target = @$(@options.inboxTarget)
-    target.before $('<div id="mm-container" class="mm-container"></div>')
+    target.before $('<div id="mm-container" class="mm-container" style="display: none;"></div>')
 
   injectTabBarContainer: =>
     $('[id=":ro"] .nH.aqK').append $('<div id="mm-tabs-container"></div>')

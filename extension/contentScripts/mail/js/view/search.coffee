@@ -26,7 +26,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
 
   injectSearchResultsContainer: =>
     target = @$ '.BltHke.nH.oy8Mbf[role=main] .UI'
-    target.before '<div id="mm-search-container" class="mm-container"></div>'
+    target.before '<div id="mm-search-container" class="mm-container" style="display: none;"></div>'
 
   injectTabBarContainer: =>
     MeetMikey.Helper.findSelectors '[id=":ro"] [gh="tm"] .nH.aqK', (targets) =>

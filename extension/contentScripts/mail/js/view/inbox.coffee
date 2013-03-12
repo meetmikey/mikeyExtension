@@ -43,10 +43,20 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   postRender: =>
 
   showTab: (tab) =>
-    contentSelector = _.values(@tabs).join(', ')
-    $(contentSelector).hide()
+    @hideAllTabs()
+    @manageInboxDisplay(tab)
     $(@tabs[tab]).show()
     @subView(tab)?.trigger 'showTab'
+
+  hideAllTabs: () =>
+    contentSelector = _.values(@tabs).join(', ')
+    $(contentSelector).hide()
+
+  manageInboxDisplay: (tab) =>
+    method = if tab is 'email' then 'hide' else 'show'
+    console.log 'inboxDisplay', method
+    @$el[method]()
+
 
   bindCountUpdate: =>
     _.each @getTabs(), @bindCountUpdateForTab
