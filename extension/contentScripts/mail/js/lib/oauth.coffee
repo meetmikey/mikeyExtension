@@ -12,7 +12,7 @@ class OAuth
     @userKeyTemplate @getUserEmail()
 
   storeUserInfo: (data) =>
-    MeetMikey.Helper.LocalStore.set @userKey(), data
+    MeetMikey.Helper.LocalStore.set @userKeyTemplate(data.email), data
 
   getUserInfo: =>
     MeetMikey.Helper.LocalStore.get @userKey()
@@ -51,8 +51,8 @@ class OAuth
       return unless event.origin is MeetMikey.Settings.APIUrl
       $(window).off 'message', handleMessage
       userObject = JSON.parse event.data
+      @storeUserInfo userObject
       if @isUserEmail userObject.email
-        @storeUserInfo userObject
         callback userObject
       else
         @authFail()
