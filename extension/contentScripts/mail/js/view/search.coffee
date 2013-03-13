@@ -22,6 +22,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     @subView('tabs').on 'clicked:tab', @subView('searchResults').showTab
     @subView('searchResults').on 'updateTabCount', @subView('tabs').updateTabCount
     @renderSubview 'searchResults'
+    @subView('searchResults').showTab MeetMikey.Globals.tabState
     @getSearchResults query
 
   injectSearchResultsContainer: =>
@@ -32,6 +33,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     MeetMikey.Helper.findSelectors '[id=":ro"] [gh="tm"] .nH.aqK', (targets) =>
       targets[0].append $('<div id="mm-search-tabs-container"></div>')
       @renderSubview 'tabs'
+      @subView('tabs').setActiveTab MeetMikey.Globals.tabState
 
   getSearchResults: (query) =>
     MeetMikey.Helper.callAPI

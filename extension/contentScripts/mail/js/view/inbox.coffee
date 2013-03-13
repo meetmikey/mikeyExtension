@@ -54,7 +54,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   manageInboxDisplay: (tab) =>
     method = if tab is 'email' then 'hide' else 'show'
-    console.log 'inboxDisplay', method
     @$el[method]()
 
 
