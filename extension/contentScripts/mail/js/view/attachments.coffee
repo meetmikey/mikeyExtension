@@ -23,7 +23,7 @@ template = """
         </td>
         <td class="mm-from truncate">{{from}}</td>
         <td class="mm-to truncate">{{to}}</td>
-        <td class="mm-type truncate">{{readableFileType}}</td>
+        <td class="mm-type truncate">{{type}}</td>
         <td class="mm-size truncate">{{size}}</td>
         <td class="mm-sent truncate">{{sentDate}}</td>
       </tr>
