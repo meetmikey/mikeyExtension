@@ -22,6 +22,7 @@ class AttachmentDecorator
     object._id = model.get('_id')
     object.cid = model.cid
     object.readableFileType = MeetMikey.Helper.getReadableTypeFromMimeType(model.get('contentType'))
+    object.type = model.get 'docType'
     object.iconUrl = @iconUrls[@getIconUrlType(model)]
     object.image = model.get 'image'
     object.msgHex = model.get('gmMsgHex')

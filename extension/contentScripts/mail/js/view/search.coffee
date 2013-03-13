@@ -34,6 +34,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
       targets[0].append $('<div id="mm-search-tabs-container"></div>')
       @renderSubview 'tabs'
       @subView('tabs').setActiveTab MeetMikey.Globals.tabState
+      @$('.AO').addClass 'AO-tabs'
 
   getSearchResults: (query) =>
     MeetMikey.Helper.callAPI

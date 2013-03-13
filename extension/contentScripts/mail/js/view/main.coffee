@@ -53,6 +53,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   injectTabBarContainer: =>
     $('[id=":ro"] .nH.aqK').append $('<div id="mm-tabs-container"></div>')
+    @$('.AO').addClass 'AO-tabs'
 
   showEmailTab: =>
     @subView('tabs').setActiveTab 'email'
