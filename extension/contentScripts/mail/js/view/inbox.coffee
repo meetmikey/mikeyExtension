@@ -80,9 +80,9 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   setResults: (res) =>
     console.log 'setting results'
-    @subView('attachments').collection.reset res.attachments
-    @subView('links').collection.reset res.links
-    @subView('images').collection.reset res.images
+    @subView('attachments').collection.reset res.attachments, sort: false
+    @subView('links').collection.reset res.links, sort: false
+    @subView('images').collection.reset res.images, sort: false
 
   teardown: =>
     @unbindCountUpdate()
