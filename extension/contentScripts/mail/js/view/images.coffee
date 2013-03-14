@@ -54,17 +54,32 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
     window.open url
 
+  runIsotope: =>
+    console.log 'isotoping'
+    @$el.isotope
+      filter: '*'
+      animationOptions:
+        duration: 750
+        easing: 'linear'
+        queue: false
+    
+
+  checkAndRunIsotope: =>
+    #console.log 'checkAndRunIsotope'
+    if @areImagesLoaded
+      #console.log 'images loaded, clearing interval'
+      clearInterval @isotopeInterval
+    else
+      @runIsotope()
 
   initIsotope: =>
-    console.log 'isotoping'
+    #console.log 'initIsotope'
+    @areImagesLoaded = false
+    @isotopeInterval = setInterval @checkAndRunIsotope, 200
     @$el.imagesLoaded =>
-      console.log 'images loaded, really isotoping now'
-      @$el.isotope
-        filter: '*'
-        animationOptions:
-          duration: 750
-          easing: 'linear'
-          queue: false
+      @areImagesLoaded = true
+      #console.log 'images loaded, isotoping one last time'
+      @runIsotope()
 
   waitAndPoll: =>
     setTimeout @poll, @pollDelay
