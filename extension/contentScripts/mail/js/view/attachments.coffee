@@ -43,9 +43,9 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   events:
     'click .files': 'openAttachment'
-    'mouseenter .mm-file, .mm-icon': 'startRollover'
-    'mouseleave .mm-file, .mm-icon': 'cancelRollover'
-    'mousemove .mm-file, .mm-icon': 'delayRollover'
+    'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
+    'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
+    'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
 
   pollDelay: 1000*45
 
