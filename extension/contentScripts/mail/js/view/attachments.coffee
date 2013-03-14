@@ -7,8 +7,8 @@ template = """
         <!-- <th class="mm-toggle-box"></th> -->
 
         <th class="mm-download">File</th>
-        <th class="mm-icon"></th>
-        <th class="mm-file"></th>
+        <th class="mm-icon">&nbsp;</th>
+        <th class="mm-file">&nbsp;</th>
         <th class="mm-from">From</th>
         <th class="mm-to">To</th>
         <th class="mm-type">Type</th>
