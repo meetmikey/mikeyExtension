@@ -199,10 +199,11 @@ body {
 }
 
 
-
+/*
 .mm-container .labels th:hover {
 	color: #777;
 }
+*/
 
 #mm-attachments-table tr {
   cursor: pointer;
@@ -298,20 +299,25 @@ table tr td .flex {
 .cozy .mm-icon {
 	background-position: 5px 7px !important;
 	background-size: 18px 18px !important;
-  padding-left: 31px !important;
+  padding-left: 5px !important;
+  width:18px;
 }
 
 .cozy .mm-favicon {
 	background-position: 5px 7px !important;
 	background-size: 18px 18px !important;
   padding-left: 15px !important;
+  width:18px;
 }
 
  .comfortable .mm-icon {
   background-position: 5px 10px !important;
   background-size: 18px 18px !important;
-  padding-left: 31px !important;
+  padding-left: 5px !important;
+  width:18px;
 }
+
+
 
 .comfortable .mm-favicon {
   background-position: 5px 10px !important;
@@ -331,6 +337,29 @@ background-size: 18px 18px !important;
 padding-left: 15px !important;
 }
 
+.comfortable .mm-download {
+   background-position: 5px 10px !important;
+   background:url("https://dl.dropbox.com/u/4203014/download.png") no-repeat;
+   width:16px;
+  }
+
+.compact .mm-download {
+   background-position: 5px 3px !important;
+   background:url("https://dl.dropbox.com/u/4203014/download.png") no-repeat;
+   width:16px;
+  }
+
+.cozy .mm-download {
+   background-position: 5px 7px !important;
+   background:url("https://dl.dropbox.com/u/4203014/download.png") no-repeat;
+   width:16px;
+  }
+
+
+.mm-download:hover {
+   background:url("https://dl.dropbox.com/u/4203014/download-rollover.png") no-repeat;
+  }
+
 
 
 
@@ -344,6 +373,11 @@ padding-left: 15px !important;
 
 .labels th {
   padding-bottom: 5px;
+  background: none !important;
+}
+
+.th.mm-download {
+  background:none !important;
 }
 
 .mm-file {
@@ -665,8 +699,9 @@ height: auto;
 padding: 10px;
 background-color: @white;
 font-size: 12px;
-text-align: center;
+cursor: pointer;
 }
+
 
 .image-footer {
   .footer;
@@ -883,6 +918,7 @@ text-align: center;
   opacity: .5;
   }
 
+
 .powerpoint-preview {
   width: 348px;
 }
@@ -897,6 +933,10 @@ text-align: center;
   width: 152px;
   height: 152px;
   overflow: hidden;
+}
+
+.rollover-actions {
+  float: right;
 }
 
 
@@ -923,6 +963,24 @@ text-align: center;
   position:relative;
   overflow:hidden;
 
+}
+
+.image-text {
+overflow: hidden;
+position: relative;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+.image-text a {
+  color: #8e8e8e;
+  text-decoration: none;
+  margin-right: 0px;
+}
+
+.image-text a:hover {
+  text-decoration: underline;
+  color: #777;
 }
 
 
