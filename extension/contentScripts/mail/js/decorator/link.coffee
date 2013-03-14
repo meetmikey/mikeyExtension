@@ -6,6 +6,7 @@ class LinkDecorator
     object.title = model.get('title') ? model.get('url')
     object.summary = model.get('summary')
     object.image = model.get('image')
+    object.msgHex = model.get('gmMsgHex')
     object.url = model.get 'url'
     object.displayUrl = @stripHttp model.get('url')
     object.from = model.get('sender')?.name

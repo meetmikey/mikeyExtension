@@ -26,6 +26,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @subView('sidebar').on 'clicked:inbox', @showEmailTab
     @subView('tabs').on 'clicked:tab', @subView('inbox').showTab
     @subView('inbox').on 'updateTabCount', @subView('tabs').updateTabCount
+    $(window).on 'hashchange', @pageNavigated
 
   preRender: =>
 
@@ -53,7 +54,15 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   injectTabBarContainer: =>
     $('[id=":ro"] .nH.aqK').append $('<div id="mm-tabs-container"></div>')
+    @$('.AO').addClass 'AO-tabs'
 
   showEmailTab: =>
     @subView('tabs').setActiveTab 'email'
     @subView('inbox').showTab 'email'
+
+  pageNavigated: =>
+    viewWithTabs = /#search|#inbox(?!\/)/.test window.location.hash
+    if viewWithTabs
+      @$('.AO').addClass 'AO-tabs'
+    else
+      @$('.AO').removeClass 'AO-tabs'

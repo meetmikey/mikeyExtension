@@ -5,7 +5,6 @@ template = """
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
         <img class="mm-image" src="{{image}}" />
-
         <div class="image-text">
           <a href="#inbox/{{msgHex}}">View email thread</a>
           <div class="rollover-actions">
@@ -13,7 +12,6 @@ template = """
             <a href="{{image}}">Open</a>
           </div>
         </div>
-
       </div>
     {{/each}}
     <div style="clear: both;"></div>
@@ -57,11 +55,12 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   initIsotope: =>
     console.log 'isotoping'
     @$el.imagesLoaded =>
+      console.log 'images loaded, really isotoping now'
       @$el.isotope
         filter: '*'
         animationOptions:
           duration: 750
-          easing: 'linesar'
+          easing: 'linear'
           queue: false
 
   waitAndPoll: =>

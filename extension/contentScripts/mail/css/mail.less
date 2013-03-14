@@ -34,7 +34,7 @@ box-shadow: none !important;
 
 /* body moved down to make space for tabs */
 
-.AO {
+.AO-tabs {
   top: 45px !important;
   padding-bottom: 45px !important;
 }
@@ -45,7 +45,7 @@ box-shadow: none !important;
   margin-top:14px;
 }
 
-/* spacing for email search results 
+/* spacing for email search results
 
 .Cp {
   margin-top: 24px;
@@ -703,12 +703,15 @@ cursor: pointer;
 }
 
 
+.image-footer {
+  .footer;
+}
 
 .mm-image {
   max-width: 250px;
   margin-bottom: 10px;
   text-align: center;
-
+  cursor: pointer;
 }
 
 .mm-images-tab {
@@ -781,64 +784,71 @@ cursor: pointer;
 /* -------------- ROLL-OVER HOVER BOXES --------------- */
 
 .rollover-box {
--webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
--moz-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
--webkit-transition: opacity .13s linear;
--moz-transition: opacity .13s linear;
--o-transition: opacity .13s linear;
-transition: opacity .13s linear;
-color: #8e8e8e;
-font-size: 12px;
-position: absolute;
-z-index: 2201;
+  -webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  -webkit-transition: opacity .13s linear;
+  -moz-transition: opacity .13s linear;
+  -o-transition: opacity .13s linear;
+  transition: opacity .13s linear;
+  color: #8e8e8e;
+  font-size: 12px;
+  position: absolute;
+  z-index: 2201;
 }
 
 .rollover-main {
-background-color: @white;
-border: 1px solid #ccc;
-border-bottom-color: #bbb;
-overflow: hidden;
-padding: 15px;
-position: relative;
-width: 348px;
-display: block;
+  background-color: @white;
+  border: 1px solid #ccc;
+  border-bottom-color: #bbb;
+  overflow: hidden;
+  padding: 15px;
+  position: relative;
+  width: 348px;
+  display: block;
 }
 
 .rollover-footer {
-background-color: #f9f9f9;
-border: 1px solid #ccc;
-border-bottom-color: #bbb;
-border-top: 0;
-overflow: hidden;
-position: relative;
-text-overflow: ellipsis;
-white-space: nowrap;
-width: 348px;
-padding: 6px 15px 6px 15px;
-line-height: 16px;
+  .footer;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-bottom-color: #bbb;
+  border-top: 0;
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 348px;
+  padding: 6px 15px 6px 15px;
+  line-height: 16px;
 }
 
-.rollover-footer a {
+.footer {
+  a {
   color: #8e8e8e;
   text-decoration: none;
   margin-right: 0px;
+    &:hover {
+      text-decoration: underline;
+      color: #777;
+    }
+  }
 }
 
-.rollover-footer a:hover {
-  text-decoration: underline;
-  color: #777;
-}
-
-.rollover-actions {
+.footer-actions {
   display: inline-block;
   float: right;
+  a {
+    margin-left: 8px;
+  }
 }
 
-.rollover-actions a {
+.rollover-footer-actions {
+  .footer-actions;
+}
 
-  margin-left: 8px;
-
+.image-footer-actions {
+  .footer-actions;
 }
 
 .rollover-title {
@@ -914,11 +924,11 @@ line-height: 16px;
 }
 
 .image-container {
-  
+
   margin-right: 15px;
   display: inline-block;
   float: left;
-  
+
   z-index: 1;
   width: 152px;
   height: 152px;
