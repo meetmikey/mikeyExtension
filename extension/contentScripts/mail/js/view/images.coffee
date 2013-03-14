@@ -58,11 +58,12 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   initIsotope: =>
     console.log 'isotoping'
     @$el.imagesLoaded =>
+      console.log 'images loaded, really isotoping now'
       @$el.isotope
         filter: '*'
         animationOptions:
           duration: 750
-          easing: 'linesar'
+          easing: 'linear'
           queue: false
 
   waitAndPoll: =>
