@@ -62,20 +62,20 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     
 
   checkAndRunIsotope: =>
-    #console.log 'checkAndRunIsotope'
+    console.log 'checkAndRunIsotope'
     if @areImagesLoaded
-      #console.log 'images loaded, clearing interval'
+      console.log 'images loaded, clearing interval'
       clearInterval @isotopeInterval
     else
       @runIsotope()
 
   initIsotope: =>
-    #console.log 'initIsotope'
+    console.log 'initIsotope'
     @areImagesLoaded = false
     @isotopeInterval = setInterval @checkAndRunIsotope, 200
     @$el.imagesLoaded =>
       @areImagesLoaded = true
-      #console.log 'images loaded, isotoping one last time'
+      console.log 'images loaded, isotoping one last time'
       @runIsotope()
 
   waitAndPoll: =>
