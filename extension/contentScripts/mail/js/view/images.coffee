@@ -5,7 +5,15 @@ template = """
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
         <img class="mm-image" src="{{image}}" />
-        <div class="image-filename">{{filename}}</div>
+
+        <div class="image-text">
+          <a href="#inbox/{{msgHex}}">View email thread</a>
+          <div class="rollover-actions">
+            <!-- <a href="#">Forward</a> -->
+            <a href="{{image}}">Open</a>
+          </div>
+        </div>
+
       </div>
     {{/each}}
     <div style="clear: both;"></div>
@@ -18,7 +26,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   pollDelay: 1000*45
 
   events:
-    'click .image-box': 'openImage'
+    'click .mm-image': 'openImage'
 
   postInitialize: =>
     @once 'showTab', @initIsotope
@@ -39,7 +47,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @collection.reset images
 
   openImage: (event) =>
-    cid = $(event.currentTarget).attr('data-cid')
+    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
     url = model.get 'image'
 

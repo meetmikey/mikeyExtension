@@ -5,7 +5,10 @@ template = """
     <table class="inbox-table" id="mm-attachments-table" border="0">
       <thead class="labels">
         <!-- <th class="mm-toggle-box"></th> -->
-        <th class="mm-file">File</th>
+
+        <th class="mm-download">File</th>
+        <th class="mm-icon"></th>
+        <th class="mm-file"></th>
         <th class="mm-from">From</th>
         <th class="mm-to">To</th>
         <th class="mm-type">Type</th>
@@ -18,9 +21,10 @@ template = """
         <!-- <td class="mm-toggle-box">
           <div class="checkbox"><div class="check"></div></div>
         </td> -->
-        <td class="mm-file mm-icon truncate" style="background:url('{{iconUrl}}') no-repeat;">
-          {{filename}}&nbsp;
-        </td>
+
+        <td class="mm-download">&nbsp;</td>
+        <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
+        <td class="mm-file truncate">{{filename}}&nbsp;</td>
         <td class="mm-from truncate">{{from}}</td>
         <td class="mm-to truncate">{{to}}</td>
         <td class="mm-type truncate">{{readableFileType}}</td>
@@ -39,9 +43,9 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   events:
     'click .files': 'openAttachment'
-    'mouseenter .files': 'startRollover'
-    'mouseleave .files': 'cancelRollover'
-    'mousemove .files': 'delayRollover'
+    'mouseenter .mm-file, .mm-icon': 'startRollover'
+    'mouseleave .mm-file, .mm-icon': 'cancelRollover'
+    'mousemove .mm-file, .mm-icon': 'delayRollover'
 
   pollDelay: 1000*45
 
