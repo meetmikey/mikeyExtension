@@ -30,6 +30,4 @@ class LinkDecorator
     else
       url
 
-
-
 MeetMikey.Decorator.Link = new LinkDecorator()
