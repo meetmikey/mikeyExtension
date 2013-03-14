@@ -4,15 +4,12 @@ template = """
   {{else}}
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
-        <div>
-          <img class="mm-image" src="{{image}}" />
-          <div class="image-filename">{{filename}}</div>
-        </div>
-        <div class="image-footer">
+        <img class="mm-image" src="{{image}}" />
+        <div class="image-text">
           <a href="#inbox/{{msgHex}}">View email thread</a>
-          <div class="image-footer-actions">
-            <a href="#">Forward</a>
-            <a href="{{image}}">Download</a>
+          <div class="rollover-actions">
+            <!-- <a href="#">Forward</a> -->
+            <a href="{{image}}">Open</a>
           </div>
         </div>
       </div>
