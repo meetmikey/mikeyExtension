@@ -26,12 +26,13 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     @getSearchResults query
 
   injectSearchResultsContainer: =>
-    target = @$ '.BltHke.nH.oy8Mbf[role=main] .UI'
-    target.before '<div id="mm-search-container" class="mm-container" style="display: none;"></div>'
+    selector = '.BltHke.nH.oy8Mbf[role=main] .UI'
+    element =  '<div id="mm-search-container" class="mm-container" style="display: none;"></div>'
+    MeetMikey.Helper.DOMManager.injectBeside selector, element
 
   injectTabBarContainer: =>
-    MeetMikey.Helper.findSelectors '[id=":ro"] [gh="tm"] .nH.aqK', (targets) =>
-      targets[0].append $('<div id="mm-search-tabs-container"></div>')
+    element = '<div id="mm-search-tabs-container"></div>'
+    MeetMikey.Helper.DOMManager.injectInto '[id=":ro"] [gh="tm"] .nH.aqK', element, =>
       @renderSubview 'tabs'
       @subView('tabs').setActiveTab MeetMikey.Globals.tabState
       @$('.AO').addClass 'AO-tabs'

@@ -49,12 +49,13 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @$el.addClass layout
 
   injectInboxContainer: =>
-    target = @$(@options.inboxTarget)
-    target.before $('<div id="mm-container" class="mm-container" style="display: none;"></div>')
+    element = '<div id="mm-container" class="mm-container" style="display: none;"></div>'
+    MeetMikey.Helper.DOMManager.injectBeside @options.inboxTarget, element
 
   injectTabBarContainer: =>
-    $('[id=":ro"] .nH.aqK').append $('<div id="mm-tabs-container"></div>')
-    @$('.AO').addClass 'AO-tabs'
+    element = '<div id="mm-tabs-container"></div>'
+    MeetMikey.Helper.DOMManager.injectInto '[id=":ro"] .nH.aqK', element, =>
+      @$('.AO').addClass 'AO-tabs'
 
   showEmailTab: =>
     @subView('tabs').setActiveTab 'email'
