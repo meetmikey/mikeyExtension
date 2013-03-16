@@ -42,7 +42,8 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   events:
-    'click .files': 'openMessage'
+    'click .files .mm-file': 'openMessage'
+    'click .files .mm-download': 'openAttachment'
     'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
@@ -67,7 +68,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     models: _.invoke(@collection.models, 'decorate')
 
   openAttachment: (event) =>
-    cid = $(event.currentTarget).attr('data-cid')
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
     url = MeetMikey.Decorator.Attachment.getUrl model
 
