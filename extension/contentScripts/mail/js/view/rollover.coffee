@@ -18,14 +18,14 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
   startSpawn: (event) =>
     cid = $(event.target).closest('tr').attr('data-cid')
     @cursorInfo.cid = cid
-    @cursorInfo.x = event.pageX
-    @cursorInfo.y = event.pageY
+    @cursorInfo.x = event.clientX
+    @cursorInfo.y = event.clientY
     @waitAndSpawn cid
 
   delaySpawn: (event) =>
     cid = $(event.target).closest('tr').attr('data-cid')
-    @cursorInfo.x = event.pageX
-    @cursorInfo.y = event.pageY
+    @cursorInfo.x = event.clientX
+    @cursorInfo.y = event.clientY
     @waitAndSpawn cid
 
   spawn: (cid) =>
