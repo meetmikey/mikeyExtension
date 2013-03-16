@@ -59,7 +59,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         duration: 750
         easing: 'linear'
         queue: false
-    
 
   checkAndRunIsotope: =>
     console.log 'checkAndRunIsotope'
