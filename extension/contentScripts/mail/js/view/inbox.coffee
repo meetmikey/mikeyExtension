@@ -56,7 +56,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     method = if tab is 'email' then 'hide' else 'show'
     @$el[method]()
 
-
   bindCountUpdate: =>
     _.each @getTabs(), @bindCountUpdateForTab
 

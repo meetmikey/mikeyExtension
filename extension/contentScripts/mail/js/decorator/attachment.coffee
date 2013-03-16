@@ -1,4 +1,4 @@
-imgPath = 'contentScripts/mail/img'
+imgPath = MeetMikey.Settings.imgPath
 class AttachmentDecorator
   iconUrls:
     pdf: chrome.extension.getURL("#{imgPath}/pdf.png")

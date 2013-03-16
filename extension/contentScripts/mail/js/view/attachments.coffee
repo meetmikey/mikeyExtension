@@ -22,7 +22,7 @@ template = """
           <div class="checkbox"><div class="check"></div></div>
         </td> -->
 
-        <td class="mm-download">&nbsp;</td>
+        <td class="mm-download" style="background-image: url('{{../downloadUrl}}');">&nbsp;</td>
         <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
         <td class="mm-file truncate">{{filename}}&nbsp;</td>
         <td class="mm-from truncate">{{from}}</td>
@@ -37,12 +37,15 @@ template = """
     <div class="rollover-container"></div>
   {{/unless}}
 """
+downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/download-rollover.png")
+
 
 class MeetMikey.View.Attachments extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   events:
-    'click .files': 'openAttachment'
+    'click .files .mm-file': 'openMessage'
+    'click .files .mm-download': 'openAttachment'
     'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
@@ -65,13 +68,21 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   getTemplateData: =>
     models: _.invoke(@collection.models, 'decorate')
+    downloadUrl: downloadUrl
 
   openAttachment: (event) =>
-    cid = $(event.currentTarget).attr('data-cid')
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
     url = MeetMikey.Decorator.Attachment.getUrl model
 
     window.open(url)
+
+  openMessage: (event) =>
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
+    model = @collection.get(cid)
+    hash = "#inbox/#{model.get 'gmMsgHex'}"
+
+    window.location = hash
 
   startRollover: (event) => @rollover.startSpawn event
 

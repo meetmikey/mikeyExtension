@@ -2,8 +2,8 @@
   @options
     build: './build/js'
 
-  @javascript './extension/lib/js/', output: './extension/lib/js/'
-  @coffeescript './extension/contentScripts/mail/js', output: './extension/contentScripts/mail/js'
+  # @javascript './extension/lib/js/', output: './extension/lib/js/'
+  @coffeescript './extension', output: './extension'
 
 @stylesheets 'styles', ->
   @options
