@@ -25,7 +25,7 @@ template = """
       <a href="#inbox/{{msgHex}}">View email thread</a>
       <div class="rollover-actions">
         <!-- <a href="#">Forward</a> -->
-        <a href="{{url}}">Download</a>
+        <!-- <a href="{{url}}">Download</a> -->
       </div>
     </div>
   </div>

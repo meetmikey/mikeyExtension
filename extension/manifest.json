@@ -1,8 +1,8 @@
 {
-  "name": "MeetMikey Extension",
-  "version": "0.0.1",
+  "name": "Mikey for Gmail™",
+  "version": "0.0.3",
   "manifest_version": 2,
-  "description": "MeetMikey Extension",
+  "description": "Meet Mikey. Start spending less time in your inbox.",
   "background": {
     "scripts": ["main.js"],
     "persistent": true
