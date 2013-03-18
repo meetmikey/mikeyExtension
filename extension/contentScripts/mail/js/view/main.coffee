@@ -62,7 +62,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @subView('inbox').showTab 'email'
 
   pageNavigated: =>
-    viewWithTabs = /#search|#inbox(?!\/)/.test window.location.hash
+    viewWithTabs = /#search(?!.+\/)|#inbox(?!\/)/.test window.location.hash
     if viewWithTabs
       @$('.AO').addClass 'AO-tabs'
     else

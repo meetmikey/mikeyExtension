@@ -45,6 +45,6 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
         query: query
       success: (res) =>
         console.log 'search successful', res
-        @subView('searchResults').setResults res
+        @subView('searchResults').setResults res, query
       failure: ->
         console.log 'search failed'

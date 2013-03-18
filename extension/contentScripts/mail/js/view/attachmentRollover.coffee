@@ -7,16 +7,20 @@ template = """
       <div class="rollover-body">
         <div class="rollover-powerpoint">
           {{#if image}}
-           
+
             <img class="powerpoint-preview" src="{{image}}">
-            
+
           {{/if}}
         </div>
       </div>
     </div>
 
     <div class="rollover-footer">
-      <a href="#inbox/{{msgHex}}">View email thread</a>
+      {{#if searchQuery}}
+        <a href="#search/{{searchQuery}}/{{msgHex}}">View email thread</a>
+      {{else}}
+        <a href="#inbox/{{msgHex}}">View email thread</a>
+      {{/if}}
 
       <div class="rollover-actions">
         <!-- <a href="#">Forward</a> -->

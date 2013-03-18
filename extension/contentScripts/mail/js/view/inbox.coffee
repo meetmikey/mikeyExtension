@@ -77,11 +77,11 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     _.each @getTabs(), (tab) =>
       @updateCountForTab(tab) @subView(tab).collection.length
 
-  setResults: (res) =>
+  setResults: (res, query) =>
     console.log 'setting results'
-    @subView('attachments').collection.reset res.attachments, sort: false
-    @subView('links').collection.reset res.links, sort: false
-    @subView('images').collection.reset res.images, sort: false
+    @subView('attachments').setResults res.attachments, query
+    @subView('links').setResults res.links, query
+    @subView('images').setResults res.images, query
 
   teardown: =>
     @unbindCountUpdate()
