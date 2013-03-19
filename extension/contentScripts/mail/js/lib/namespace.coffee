@@ -8,5 +8,5 @@ window.MeetMikey =
   Globals: {}
   Settings:
     # APIUrl: "https://local.meetmikey.com"
-    APIUrl: "https://dev.meetmikey.com"
-    # APIUrl: "https://api.meetmikey.com"
+    # APIUrl: "https://dev.meetmikey.com"
+    APIUrl: "https://api.meetmikey.com"
