@@ -25,10 +25,14 @@ class OAuth
       @openAuthWindow callback
 
   authorized: =>
-    @getUserInfo()?
+    @getUserInfo()?.refreshToken?
+
+  doNotAsk: =>
+    @storeUserInfo email: @getUserEmail(), ignoreAccount: true
 
   checkUser: (callback) =>
     data = @getUserInfo()
+    return if data?.ignoreAccount
     return callback null unless data?.refreshToken?
 
     MeetMikey.Helper.callAPI
@@ -42,8 +46,6 @@ class OAuth
         callback res
       error: (err) =>
         callback null if err.status is 401
-
-
 
   openAuthWindow: (callback) =>
     handleMessage = (e) =>

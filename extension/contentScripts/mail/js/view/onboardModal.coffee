@@ -12,10 +12,10 @@ template = """
     <div class="footer-buttons">
       <a href="#" id="authorize-button" class="button buttons">Connect</a>
       <a href="#" id="not-now-button" class="button-grey buttons">Not right now</a>
-      <a href="#" id="not-now-button" class="button-grey buttons">Never this account</a>
-      
+      <a href="#" id="never-button" class="button-grey buttons">Never this account</a>
+
     </div>
-   
+
   </div>
 """
 
@@ -25,6 +25,7 @@ class MeetMikey.View.OnboardModal extends MeetMikey.View.Base
   events:
     'click #authorize-button': 'authorize'
     'click #not-now-button': 'hide'
+    'click #never-button': 'doNotAsk'
 
   postRender: =>
     @show()
@@ -34,6 +35,10 @@ class MeetMikey.View.OnboardModal extends MeetMikey.View.Base
 
   hide: =>
     @$('.modal').modal 'hide'
+
+  doNotAsk: =>
+    MeetMikey.Helper.OAuth.doNotAsk()
+    @hide()
 
   authorize: =>
     MeetMikey.Helper.OAuth.openAuthWindow (data) =>
