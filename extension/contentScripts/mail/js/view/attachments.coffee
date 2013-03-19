@@ -56,12 +56,13 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   postInitialize: =>
     @collection = new MeetMikey.Collection.Attachments()
+    @rollover = new MeetMikey.View.AttachmentRollover collection: @collection, search: !@options.fetch
     @collection.on 'reset add', _.debounce(@render, 50)
     if @options.fetch
       @collection.fetch success: @waitAndPoll
 
   postRender: =>
-    @rollover = new MeetMikey.View.AttachmentRollover el: @$('.rollover-container'), collection: @collection
+    @rollover.setElement @$('.rollover-container')
 
   teardown: =>
     @collection.off('reset', @render)
@@ -80,7 +81,11 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   openMessage: (event) =>
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
-    hash = "#inbox/#{model.get 'gmMsgHex'}"
+    msgHex = model.get 'gmMsgHex'
+    if @options.fetch
+      hash = "#inbox/#{msgHex}"
+    else
+      hash = "#search/#{@searchQuery}/#{msgHex}"
 
     window.location = hash
 
@@ -89,6 +94,11 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   delayRollover: (event) => @rollover.delaySpawn event
 
   cancelRollover: => @rollover.cancelSpawn()
+
+  setResults: (models, query) =>
+    @searchQuery = query
+    @rollover.setQuery query
+    @collection.reset models, sort: false
 
   waitAndPoll: =>
     setTimeout @poll, @pollDelay

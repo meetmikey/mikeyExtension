@@ -53,7 +53,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     MeetMikey.Helper.DOMManager.injectBeside @options.inboxTarget, element
 
   injectTabBarContainer: =>
-    element = '<div id="mm-tabs-container"></div>'
+    element = '<div id="mm-tabs-container" class="mm-tabs-container"></div>'
     MeetMikey.Helper.DOMManager.injectInto '[id=":ro"] .nH.aqK', element, =>
       @$('.AO').addClass 'AO-tabs'
 
@@ -62,7 +62,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @subView('inbox').showTab 'email'
 
   pageNavigated: =>
-    viewWithTabs = /#search|#inbox(?!\/)/.test window.location.hash
+    viewWithTabs = /#search(?!.+\/)|#inbox(?!\/)/.test window.location.hash
     if viewWithTabs
       @$('.AO').addClass 'AO-tabs'
     else

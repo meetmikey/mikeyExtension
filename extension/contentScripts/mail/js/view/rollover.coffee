@@ -6,7 +6,7 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
     'mouseenter': 'cancelHide'
 
   getTemplateData: =>
-    @model.decorate()
+    _.extend @model.decorate(), {searchQuery: @searchQuery}
 
   postInitialize: =>
     @cursorInfo = {}
@@ -49,4 +49,7 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
 
   cancelHide: =>
     @hideFlag = false
+
+  setQuery: (query) =>
+    @searchQuery = query
 

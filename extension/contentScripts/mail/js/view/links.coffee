@@ -44,12 +44,13 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()
+    @rollover = new MeetMikey.View.LinkRollover collection: @collection, search: !@options.fetch
     @collection.on 'reset add', _.debounce(@render, 50)
     if @options.fetch
       @collection.fetch success: @waitAndPoll
 
   postRender: =>
-    @rollover = new MeetMikey.View.LinkRollover el: @$('.rollover-container'), collection: @collection
+    @rollover.setElement @$('.rollover-container')
 
   teardown: =>
     @collection.off 'reset', @render
@@ -67,6 +68,11 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   delayRollover: (event) => @rollover.delaySpawn event
 
   cancelRollover: => @rollover.cancelSpawn()
+
+  setResults: (models, query) =>
+    @searchQuery = query
+    @rollover.setQuery query
+    @collection.reset models, sort: false
 
   waitAndPoll: =>
     setTimeout @poll, @pollDelay

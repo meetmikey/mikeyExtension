@@ -84,7 +84,7 @@ class AttachmentDecorator
     email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
     refreshToken = MeetMikey.globalUser.get('refreshToken')
 
-    "#{MeetMikey.Settings.APIUrl}/attachmentURL/#{model.id}?userEmail=#{email}&refreshToken=#{refreshToken}"
+    "#{MeetMikey.Helper.getAPIUrl()}/attachmentURL/#{model.id}?userEmail=#{email}&refreshToken=#{refreshToken}"
 
 
 MeetMikey.Decorator.Attachment = new AttachmentDecorator()

@@ -48,7 +48,7 @@ class OAuth
   openAuthWindow: (callback) =>
     handleMessage = (e) =>
       event = e.originalEvent
-      return unless event.origin is MeetMikey.Settings.APIUrl
+      return unless event.origin is MeetMikey.Helper.getAPIUrl()
       $(window).off 'message', handleMessage
       userObject = JSON.parse event.data
       @storeUserInfo userObject
@@ -58,7 +58,7 @@ class OAuth
         @authFail()
 
     $(window).on 'message', handleMessage
-    window.open MeetMikey.Settings.APIUrl + '/auth/google'
+    window.open MeetMikey.Helper.getAPIUrl() + '/auth/google'
 
   refresh: (callback) =>
     data = @getUserInfo()

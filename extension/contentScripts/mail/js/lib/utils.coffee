@@ -1,5 +1,8 @@
-Handlebars.registerHelper 'getAPIUrl', ->
-  MeetMikey.Settings.APIUrl
+MeetMikey.Helper.getAPIUrl = ->
+  settings = MeetMikey.Settings
+  settings.APIUrls[settings.env]
+
+Handlebars.registerHelper 'getAPIUrl', MeetMikey.Helper.getAPIUrl
 
 MeetMikey.Helper.formatDate = (timestamp) ->
   date = new Date(timestamp)
@@ -32,7 +35,7 @@ MeetMikey.Helper.findSelectors = (selectors..., callback) ->
 
 MeetMikey.Helper.callAPI = (options) ->
   options ?= {}
-  options.url = "#{MeetMikey.Settings.APIUrl}/#{options.url}"
+  options.url = "#{MeetMikey.Helper.getAPIUrl()}/#{options.url}"
   apiData =
     userEmail: MeetMikey.globalUser?.get('email')
     refreshToken: MeetMikey.globalUser?.get('refreshToken')
