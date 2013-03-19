@@ -31,7 +31,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     MeetMikey.Helper.DOMManager.injectBeside selector, element
 
   injectTabBarContainer: =>
-    element = '<div id="mm-search-tabs-container"></div>'
+    element = '<div id="mm-search-tabs-container" class="mm-tabs-container"></div>'
     MeetMikey.Helper.DOMManager.injectInto '[id=":ro"] [gh="tm"] .nH.aqK', element, =>
       @renderSubview 'tabs'
       @subView('tabs').setActiveTab MeetMikey.Globals.tabState
