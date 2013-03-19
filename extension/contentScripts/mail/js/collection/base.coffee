@@ -1,5 +1,6 @@
 class MeetMikey.Collection.Base extends Backbone.Collection
   fetch: (opts) ->
+    opts.cache = false
     return super opts unless MeetMikey.globalUser?
 
     opts ?= {}
