@@ -36,6 +36,7 @@ MeetMikey.Helper.findSelectors = (selectors..., callback) ->
 MeetMikey.Helper.callAPI = (options) ->
   options ?= {}
   options.url = "#{MeetMikey.Helper.getAPIUrl()}/#{options.url}"
+  options.cache = false
   apiData =
     userEmail: MeetMikey.globalUser?.get('email')
     refreshToken: MeetMikey.globalUser?.get('refreshToken')
