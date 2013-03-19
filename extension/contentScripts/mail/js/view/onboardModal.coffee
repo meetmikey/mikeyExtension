@@ -12,6 +12,7 @@ template = """
     <div class="footer-buttons">
       <a href="#" id="authorize-button" class="button buttons">Connect</a>
       <a href="#" id="not-now-button" class="button-grey buttons">Not right now</a>
+      <a href="#" id="not-now-button" class="button-grey buttons">Never this account</a>
       
     </div>
    

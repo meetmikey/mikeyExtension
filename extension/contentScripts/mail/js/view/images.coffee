@@ -1,6 +1,6 @@
 template = """
   {{#unless models}}
-    Hold up, finding your images, boss.
+   
   {{else}}
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
