@@ -63,12 +63,13 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   postInitialize: =>
     @collection = new MeetMikey.Collection.Attachments()
     @rollover = new MeetMikey.View.AttachmentRollover collection: @collection, search: !@options.fetch
-    @subView('pagination').collection = @collection
 
     @collection.on 'reset add', _.debounce(@render, 50)
-    @subView('pagination').on 'changed:page', @render
 
+    @subView('pagination').options.render = @options.fetch
     if @options.fetch
+      @subView('pagination').collection = @collection
+      @subView('pagination').on 'changed:page', @render
       @collection.fetch success: @waitAndPoll
 
   postRender: =>
@@ -78,8 +79,14 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @collection.off('reset', @render)
 
   getTemplateData: =>
-    models: _.invoke(@subView('pagination').getPageItems(), 'decorate')
+    models: _.invoke(@getModels(), 'decorate')
     downloadUrl: downloadUrl
+
+  getModels: =>
+    if @options.fetch
+      @subView('pagination').getPageItems()
+    else
+      @collection.models
 
   openAttachment: (event) =>
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
