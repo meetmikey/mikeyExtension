@@ -38,7 +38,7 @@ template = """
     <div class="rollover-container"></div>
   {{/unless}}
 """
-downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/download-rollover.png")
+downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/download.png")
 
 
 class MeetMikey.View.Attachments extends MeetMikey.View.Base
