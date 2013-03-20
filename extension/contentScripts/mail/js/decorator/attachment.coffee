@@ -2,14 +2,15 @@ imgPath = MeetMikey.Settings.imgPath
 class AttachmentDecorator
   iconUrls:
     pdf: chrome.extension.getURL("#{imgPath}/pdf.png")
-    excel: chrome.extension.getURL("#{imgPath}/excel.png")
-    word: chrome.extension.getURL("#{imgPath}/word.png")
-    ppt: chrome.extension.getURL("#{imgPath}/ppt.png")
-    unknown: chrome.extension.getURL("#{imgPath}/unknown.png")
+    spreadsheet: chrome.extension.getURL("#{imgPath}/excel.png")
+    document: chrome.extension.getURL("#{imgPath}/word.png")
+    presentation: chrome.extension.getURL("#{imgPath}/ppt.png")
+    other: chrome.extension.getURL("#{imgPath}/unknown.png")
+    code: chrome.extension.getURL("#{imgPath}/unknown.png")
     image: chrome.extension.getURL("#{imgPath}/image.png")
     music: chrome.extension.getURL("#{imgPath}/music.png")
     video: chrome.extension.getURL("#{imgPath}/video.png")
-    zip: chrome.extension.getURL("#{imgPath}/zip.png")
+    archive: chrome.extension.getURL("#{imgPath}/zip.png")
 
   decorate: (model) =>
     object = {}
@@ -22,7 +23,7 @@ class AttachmentDecorator
     object._id = model.get('_id')
     object.cid = model.cid
     object.type = model.get 'docType'
-    object.iconUrl = @iconUrls[@getIconUrlType(model)]
+    object.iconUrl = @iconUrls[model.get 'docType']
     object.image = model.get 'image'
     object.msgHex = model.get('gmMsgHex')
 
