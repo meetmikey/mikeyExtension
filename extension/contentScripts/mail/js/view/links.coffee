@@ -2,6 +2,7 @@ template = """
   {{#unless models}}
     <div class="mm-placeholder">Oops. It doesn't look like Mikey has any links for you.</div>
   {{else}}
+    <div class="pagination-container"></div>
     <table class="inbox-table" id="mm-links-table" border="0">
       <thead class="labels">
         <th class="mm-file mm-link">Link</th>
@@ -34,6 +35,11 @@ template = """
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  subViews:
+    'pagination':
+      viewClass: MeetMikey.View.Pagination
+      selector: '.pagination-container'
+
   events:
     'click .files': 'openLink'
     'mouseenter .files': 'startRollover'
@@ -45,7 +51,11 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()
     @rollover = new MeetMikey.View.LinkRollover collection: @collection, search: !@options.fetch
+    @subView('pagination').collection = @collection
+
     @collection.on 'reset add', _.debounce(@render, 50)
+    @subView('pagination').on 'changed:page', @render
+
     if @options.fetch
       @collection.fetch success: @waitAndPoll
 
@@ -56,7 +66,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.off 'reset', @render
 
   getTemplateData: =>
-    models: _.invoke(@collection.models, 'decorate')
+    models: _.invoke(@subView('pagination').getPageItems(), 'decorate')
 
   openLink: (event) =>
     cid = $(event.currentTarget).attr('data-cid')

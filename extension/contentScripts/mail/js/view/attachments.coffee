@@ -2,6 +2,7 @@ template = """
   {{#unless models}}
     <div class="mm-placeholder">Oops. It doesn't look like Mikey has any files for you.</div>
   {{else}}
+    <div class="pagination-container"></div>
     <table class="inbox-table" id="mm-attachments-table" border="0">
       <thead class="labels">
         <!-- <th class="mm-toggle-box"></th> -->
@@ -43,6 +44,11 @@ downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/download-ro
 class MeetMikey.View.Attachments extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  subViews:
+    'pagination':
+      viewClass: MeetMikey.View.Pagination
+      selector: '.pagination-container'
+
   events:
     'click .files .mm-file': 'openMessage'
     'click .files .mm-download': 'openAttachment'
@@ -57,7 +63,11 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   postInitialize: =>
     @collection = new MeetMikey.Collection.Attachments()
     @rollover = new MeetMikey.View.AttachmentRollover collection: @collection, search: !@options.fetch
+    @subView('pagination').collection = @collection
+
     @collection.on 'reset add', _.debounce(@render, 50)
+    @subView('pagination').on 'changed:page', @render
+
     if @options.fetch
       @collection.fetch success: @waitAndPoll
 
@@ -68,7 +78,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @collection.off('reset', @render)
 
   getTemplateData: =>
-    models: _.invoke(@collection.models, 'decorate')
+    models: _.invoke(@subView('pagination').getPageItems(), 'decorate')
     downloadUrl: downloadUrl
 
   openAttachment: (event) =>

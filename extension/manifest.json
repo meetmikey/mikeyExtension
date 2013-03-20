@@ -37,6 +37,7 @@
             "contentScripts/mail/js/view/tabs.js",
             "contentScripts/mail/js/view/images.js",
             "contentScripts/mail/js/view/rollover.js",
+            "contentScripts/mail/js/view/pagination.js",
             "contentScripts/mail/js/view/attachmentRollover.js",
             "contentScripts/mail/js/view/attachments.js",
             "contentScripts/mail/js/view/linkRollover.js",
