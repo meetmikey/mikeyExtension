@@ -27,6 +27,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @subView('tabs').on 'clicked:tab', @subView('inbox').showTab
     @subView('inbox').on 'updateTabCount', @subView('tabs').updateTabCount
     $(window).on 'hashchange', @pageNavigated
+    MeetMikey.Globals.tabState = 'email'
 
   preRender: =>
 
