@@ -58,7 +58,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @$el[method]()
 
   trackTabEvent: (tab) =>
-    console.log 'tracking tab event'
     MeetMikey.Helper.Mixpanel.trackEvent 'tabChange',
       search: !@options.fetch, tab: tab
 
