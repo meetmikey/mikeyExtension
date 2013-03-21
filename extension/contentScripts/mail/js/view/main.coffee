@@ -26,6 +26,8 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @subView('sidebar').on 'clicked:inbox', @showEmailTab
     @subView('tabs').on 'clicked:tab', @subView('inbox').showTab
     @subView('inbox').on 'updateTabCount', @subView('tabs').updateTabCount
+    $(window).on 'hashchange', @pageNavigated
+    MeetMikey.Globals.tabState = 'email'
 
   preRender: =>
 
@@ -48,12 +50,21 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @$el.addClass layout
 
   injectInboxContainer: =>
-    target = @$(@options.inboxTarget)
-    target.before $('<div id="mm-container" class="mm-container"></div>')
+    element = '<div id="mm-container" class="mm-container" style="display: none;"></div>'
+    MeetMikey.Helper.DOMManager.injectBeside @options.inboxTarget, element
 
   injectTabBarContainer: =>
-    $('[id=":ro"] .nH.aqK').append $('<div id="mm-tabs-container"></div>')
+    element = '<div id="mm-tabs-container" class="mm-tabs-container"></div>'
+    MeetMikey.Helper.DOMManager.injectInto '[id=":ro"] .nH.aqK', element, =>
+      @$('.AO').addClass 'AO-tabs'
 
   showEmailTab: =>
     @subView('tabs').setActiveTab 'email'
     @subView('inbox').showTab 'email'
+
+  pageNavigated: =>
+    viewWithTabs = /#search(?!.+\/)|#inbox(?!\/)/.test window.location.hash
+    if viewWithTabs
+      @$('.AO').addClass 'AO-tabs'
+    else
+      @$('.AO').removeClass 'AO-tabs'

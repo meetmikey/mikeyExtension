@@ -12,7 +12,7 @@ class OAuth
     @userKeyTemplate @getUserEmail()
 
   storeUserInfo: (data) =>
-    MeetMikey.Helper.LocalStore.set @userKey(), data
+    MeetMikey.Helper.LocalStore.set @userKeyTemplate(data.email), data
 
   getUserInfo: =>
     MeetMikey.Helper.LocalStore.get @userKey()
@@ -25,13 +25,17 @@ class OAuth
       @openAuthWindow callback
 
   authorized: =>
-    @getUserInfo()?
+    @getUserInfo()?.refreshToken?
+
+  doNotAsk: =>
+    @storeUserInfo email: @getUserEmail(), ignoreAccount: true
 
   trackAuthEvent: (user) =>
     MeetMikey.Helper.Mixpanel.trackEvent 'authorized', user
 
   checkUser: (callback) =>
     data = @getUserInfo()
+    return if data?.ignoreAccount
     return callback null unless data?.refreshToken?
 
     MeetMikey.Helper.callAPI
@@ -46,22 +50,20 @@ class OAuth
       error: (err) =>
         callback null if err.status is 401
 
-
-
   openAuthWindow: (callback) =>
     handleMessage = (e) =>
       event = e.originalEvent
-      return unless event.origin is MeetMikey.Settings.APIUrl
+      return unless event.origin is MeetMikey.Helper.getAPIUrl()
       $(window).off 'message', handleMessage
       userObject = JSON.parse event.data
+      @storeUserInfo userObject
       if @isUserEmail userObject.email
-        @storeUserInfo userObject
         callback userObject
       else
         @authFail()
 
     $(window).on 'message', handleMessage
-    window.open MeetMikey.Settings.APIUrl + '/auth/google'
+    window.open MeetMikey.Helper.getAPIUrl() + '/auth/google'
 
   refresh: (callback) =>
     data = @getUserInfo()

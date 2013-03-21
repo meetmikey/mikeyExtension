@@ -6,7 +6,7 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
     'mouseenter': 'cancelHide'
 
   getTemplateData: =>
-    @model.decorate()
+    _.extend @model.decorate(), {searchQuery: @searchQuery}
 
   postInitialize: =>
     @cursorInfo = {}
@@ -18,14 +18,14 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
   startSpawn: (event) =>
     cid = $(event.target).closest('tr').attr('data-cid')
     @cursorInfo.cid = cid
-    @cursorInfo.x = event.pageX
-    @cursorInfo.y = event.pageY
+    @cursorInfo.x = event.clientX
+    @cursorInfo.y = event.clientY
     @waitAndSpawn cid
 
   delaySpawn: (event) =>
     cid = $(event.target).closest('tr').attr('data-cid')
-    @cursorInfo.x = event.pageX
-    @cursorInfo.y = event.pageY
+    @cursorInfo.x = event.clientX
+    @cursorInfo.y = event.clientY
     @waitAndSpawn cid
 
   spawn: (cid) =>
@@ -49,4 +49,7 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
 
   cancelHide: =>
     @hideFlag = false
+
+  setQuery: (query) =>
+    @searchQuery = query
 

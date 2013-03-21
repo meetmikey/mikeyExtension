@@ -1,5 +1,8 @@
-Handlebars.registerHelper 'getAPIUrl', ->
-  MeetMikey.Settings.APIUrl
+MeetMikey.Helper.getAPIUrl = ->
+  settings = MeetMikey.Settings
+  settings.APIUrls[settings.env]
+
+Handlebars.registerHelper 'getAPIUrl', MeetMikey.Helper.getAPIUrl
 
 MeetMikey.Helper.formatDate = (timestamp) ->
   date = new Date(timestamp)
@@ -11,17 +14,6 @@ MeetMikey.Helper.formatDate = (timestamp) ->
 
 MeetMikey.Helper.formatRecipients = (recipients) ->
   _.map(recipients, (r) -> r.name || r.email).join(', ')
-
-MeetMikey.Helper.getReadableTypeFromMimeType = (mimeType) ->
-  switch mimeType
-    when 'text/plain' then readable = 'text'
-    when 'application/ics' then readable = 'calendar'
-    else
-      readable = mimeType
-      slashIndex = mimeType.indexOf '/'
-      if slashIndex != -1
-        readable = mimeType.substring( slashIndex + 1 )
-  readable
 
 MeetMikey.Helper.getFaviconURL = (url) ->
   faviconURL = ''
@@ -43,7 +35,8 @@ MeetMikey.Helper.findSelectors = (selectors..., callback) ->
 
 MeetMikey.Helper.callAPI = (options) ->
   options ?= {}
-  options.url = "#{MeetMikey.Settings.APIUrl}/#{options.url}"
+  options.url = "#{MeetMikey.Helper.getAPIUrl()}/#{options.url}"
+  options.cache = false
   apiData =
     userEmail: MeetMikey.globalUser?.get('email')
     refreshToken: MeetMikey.globalUser?.get('refreshToken')

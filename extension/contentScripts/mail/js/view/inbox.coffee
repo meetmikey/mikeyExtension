@@ -52,8 +52,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   hideAllTabs: () =>
     contentSelector = _.values(@tabs).join(', ')
     $(contentSelector).hide()
-    $(@tabs[tab]).show()
-    @subView(tab)?.trigger 'showTab'
+
+  manageInboxDisplay: (tab) =>
+    method = if tab is 'email' then 'hide' else 'show'
+    @$el[method]()
 
   trackTabEvent: (tab) =>
     console.log 'tracking tab event'
@@ -81,11 +83,11 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     _.each @getTabs(), (tab) =>
       @updateCountForTab(tab) @subView(tab).collection.length
 
-  setResults: (res) =>
+  setResults: (res, query) =>
     console.log 'setting results'
-    @subView('attachments').collection.reset res.attachments
-    @subView('links').collection.reset res.links
-    @subView('images').collection.reset res.images
+    @subView('attachments').setResults res.attachments, query
+    @subView('links').setResults res.links, query
+    @subView('images').setResults res.images, query
 
   teardown: =>
     @unbindCountUpdate()

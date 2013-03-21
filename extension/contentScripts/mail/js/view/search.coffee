@@ -22,6 +22,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     @subView('tabs').on 'clicked:tab', @subView('searchResults').showTab
     @subView('searchResults').on 'updateTabCount', @subView('tabs').updateTabCount
     @renderSubview 'searchResults'
+    @subView('searchResults').showTab MeetMikey.Globals.tabState
     @getSearchResults query
     @trackSearchEvent query
 
@@ -32,13 +33,16 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
 
 
   injectSearchResultsContainer: =>
-    target = @$ '.BltHke.nH.oy8Mbf[role=main] .UI'
-    target.before '<div id="mm-search-container" class="mm-container"></div>'
+    selector = '.BltHke.nH.oy8Mbf[role=main] .UI'
+    element =  '<div id="mm-search-container" class="mm-container" style="display: none;"></div>'
+    MeetMikey.Helper.DOMManager.injectBeside selector, element
 
   injectTabBarContainer: =>
-    MeetMikey.Helper.findSelectors '[id=":ro"] [gh="tm"] .nH.aqK', (targets) =>
-      targets[0].append $('<div id="mm-search-tabs-container"></div>')
+    element = '<div id="mm-search-tabs-container" class="mm-tabs-container"></div>'
+    MeetMikey.Helper.DOMManager.injectInto '[id=":ro"] [gh="tm"] .nH.aqK', element, =>
       @renderSubview 'tabs'
+      @subView('tabs').setActiveTab MeetMikey.Globals.tabState
+      @$('.AO').addClass 'AO-tabs'
 
   getSearchResults: (query) =>
     MeetMikey.Helper.callAPI
@@ -48,6 +52,6 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
         query: query
       success: (res) =>
         console.log 'search successful', res
-        @subView('searchResults').setResults res
+        @subView('searchResults').setResults res, query
       failure: ->
         console.log 'search failed'

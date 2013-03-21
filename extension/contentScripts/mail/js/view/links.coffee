@@ -2,6 +2,7 @@ template = """
   {{#unless models}}
     <div class="mm-placeholder">Oops. It doesn't look like Mikey has any links for you.</div>
   {{else}}
+    <div class="pagination-container"></div>
     <table class="inbox-table" id="mm-links-table" border="0">
       <thead class="labels">
         <th class="mm-file mm-link">Link</th>
@@ -19,7 +20,7 @@ template = """
                 <span class="mm-file-text">{{summary}}</span>
               </div>
             </td>
-            <td class="mm-source truncate">{{url}}</td>
+            <td class="mm-source truncate">{{displayUrl}}</td>
             <td class="mm-from truncate">{{from}}</td>
             <td class="mm-to truncate">{{to}}</td>
             <td class="mm-sent truncate">{{sentDate}}</td>
@@ -34,6 +35,11 @@ template = """
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  subViews:
+    'pagination':
+      viewClass: MeetMikey.View.Pagination
+      selector: '.pagination-container'
+
   events:
     'click .files': 'openLink'
     'mouseenter .files': 'startRollover'
@@ -44,18 +50,23 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()
+    @rollover = new MeetMikey.View.LinkRollover collection: @collection, search: !@options.fetch
+    @subView('pagination').collection = @collection
+
     @collection.on 'reset add', _.debounce(@render, 50)
+    @subView('pagination').on 'changed:page', @render
+
     if @options.fetch
       @collection.fetch success: @waitAndPoll
 
   postRender: =>
-    @rollover = new MeetMikey.View.LinkRollover el: @$('.rollover-container'), collection: @collection
+    @rollover.setElement @$('.rollover-container')
 
   teardown: =>
     @collection.off 'reset', @render
 
   getTemplateData: =>
-    models: _.invoke(@collection.models, 'decorate')
+    models: _.invoke(@subView('pagination').getPageItems(), 'decorate')
 
   openLink: (event) =>
     cid = $(event.currentTarget).attr('data-cid')
@@ -67,6 +78,11 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   delayRollover: (event) => @rollover.delaySpawn event
 
   cancelRollover: => @rollover.cancelSpawn()
+
+  setResults: (models, query) =>
+    @searchQuery = query
+    @rollover.setQuery query
+    @collection.reset models, sort: false
 
   waitAndPoll: =>
     setTimeout @poll, @pollDelay

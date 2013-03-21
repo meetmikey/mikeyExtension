@@ -5,7 +5,5 @@ window.MeetMikey =
   Decorator: {}
   Template: {}
   Helper: {}
-  Settings:
-    #APIUrl: "https://local.meetmikey.com"
-    APIUrl: "https://dev.meetmikey.com"
-    #APIUrl: "https://api.meetmikey.com"
+  Globals: {}
+  Settings: {}
