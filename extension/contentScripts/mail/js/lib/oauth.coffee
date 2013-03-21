@@ -57,6 +57,7 @@ class OAuth
       $(window).off 'message', handleMessage
       userObject = JSON.parse event.data
       @storeUserInfo userObject
+      @trackAuthEvent userObject
       if @isUserEmail userObject.email
         callback userObject
       else
