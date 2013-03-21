@@ -1,4 +1,5 @@
 template = """
+  <span>{{start}}-{{end}} of {{size}}</span>
   <a href="#" class="prev-page">Prev</a>
   <span class="page-count">Page {{page}}</span>
   <a href="#" class="next-page">Next</a>
@@ -15,7 +16,16 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
   itemsPerPage: 50
 
   getTemplateData: =>
+    index = @currentPageIndex()
+
     page: @page + 1
+    start: index + 1
+    end: Math.min(@collection.length, index + @itemsPerPage)
+    size: @collection.length
+
+
+  currentPageIndex: =>
+    @page * @itemsPerPage
 
   getPageItems: =>
     _.chain(@collection.models)
