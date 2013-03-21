@@ -1,15 +1,15 @@
 template = """
   {{#unless models}}
-   
+
   {{else}}
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
         <img class="mm-image" src="{{image}}" />
         <div class="image-text">
           {{#if ../searchQuery}}
-            <a href="#search/{{../../searchQuery}}/{{msgHex}}">View email thread</a>
+            <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
           {{else}}
-            <a href="#inbox/{{msgHex}}">View email thread</a>
+            <a href="#inbox/{{msgHex}}" class="open-message">View email thread</a>
           {{/if}}
           <div class="rollover-actions">
             <!-- <a href="#">Forward</a> -->
@@ -29,6 +29,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   events:
     'click .mm-image': 'openImage'
+    'click .open-message': 'openMessage'
 
   postInitialize: =>
     @once 'showTab', @initIsotope
@@ -54,7 +55,17 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     model = @collection.get(cid)
     url = model.get 'image'
 
+    MeetMikey.Heper.Mixpanel.trackEvent 'openImage',
+      modelId: model.id, search: @searchQuery?
+
     window.open url
+
+  openMessage: (event) =>
+    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
+    model = @collection.get(cid)
+
+    MeetMikey.Heper.Mixpanel.trackEvent 'openMessage',
+      currentTab: MeetMikey.Globals.tabState, modelId: model.id, search: @searchQuery?
 
   runIsotope: =>
     console.log 'isotoping'
