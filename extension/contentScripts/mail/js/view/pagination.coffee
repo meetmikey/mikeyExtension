@@ -27,6 +27,7 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
     event.preventDefault()
     return if @lastPage? and @page + 1 > @lastPage
     @page += 1
+    @trackNextPageEvent()
     if @page * @itemsPerPage + 1 > @collection.length
       @fetchNextPage()
     else
@@ -50,4 +51,13 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
     event.preventDefault()
     return unless @page > 0
     @page -= 1
+    @trackPrevPageEvent()
     @trigger 'changed:page'
+
+  trackNextPageEvent: =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'nextPage',
+      currentTab: MeetMikey.Global.tabState, page: @page
+
+  trackPrevPageEvent: =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'prevPage',
+      currentTab: MeetMikey.Global.tabState, page: @page
