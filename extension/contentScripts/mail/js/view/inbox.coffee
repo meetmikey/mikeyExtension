@@ -43,10 +43,22 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   postRender: =>
 
   showTab: (tab) =>
+    @hideAllTabs()
+    @manageInboxDisplay(tab)
+    $(@tabs[tab]).show()
+    @subView(tab)?.trigger 'showTab'
+    @trackTabEvent(tab)
+
+  hideAllTabs: () =>
     contentSelector = _.values(@tabs).join(', ')
     $(contentSelector).hide()
     $(@tabs[tab]).show()
     @subView(tab)?.trigger 'showTab'
+
+  trackTabEvent: (tab) =>
+    console.log 'tracking tab event'
+    MeetMikey.Helper.Mixpanel.trackEvent 'tabChange',
+      search: !@options.fetch, tab: tab
 
   bindCountUpdate: =>
     _.each @getTabs(), @bindCountUpdateForTab

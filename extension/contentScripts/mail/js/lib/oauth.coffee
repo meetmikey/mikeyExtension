@@ -27,6 +27,9 @@ class OAuth
   authorized: =>
     @getUserInfo()?
 
+  trackAuthEvent: (user) =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'authorized', user
+
   checkUser: (callback) =>
     data = @getUserInfo()
     return callback null unless data?.refreshToken?
