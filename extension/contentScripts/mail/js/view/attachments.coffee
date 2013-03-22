@@ -93,6 +93,9 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     model = @collection.get(cid)
     url = MeetMikey.Decorator.Attachment.getUrl model
 
+    MeetMikey.Helper.Mixpanel.trackEvent 'downloadAttachment',
+      modelId: model.id, search: !@options.fetch
+
     window.open(url)
 
   openMessage: (event) =>
@@ -103,6 +106,9 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
       hash = "#inbox/#{msgHex}"
     else
       hash = "#search/#{@searchQuery}/#{msgHex}"
+
+    MeetMikey.Helper.Mixpanel.trackEvent 'openMessage',
+      currentTab: MeetMikey.Globals.tabState, modelId: model.id, search: !@options.fetch
 
     window.location = hash
 

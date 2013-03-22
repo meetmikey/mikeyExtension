@@ -24,6 +24,13 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     @renderSubview 'searchResults'
     @subView('searchResults').showTab MeetMikey.Globals.tabState
     @getSearchResults query
+    @trackSearchEvent query
+
+  trackSearchEvent: (query) =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'search',
+      query: query
+      currentTab: MeetMikey.Globals.tabState
+
 
   injectSearchResultsContainer: =>
     selector = '.BltHke.nH.oy8Mbf[role=main] .UI'

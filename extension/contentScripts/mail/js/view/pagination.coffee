@@ -1,8 +1,5 @@
 template = """
     
-  
-
-    
   <div class="arrow-buttons">
 
        <div class="page-button forward next-page">
@@ -19,10 +16,7 @@ template = """
   
   </div>
 
-    <span class="page-count">Page {{page}}</span>
-
-  
-  
+     <div class="page-count"><strong>{{start}}-{{end}}</strong> of <strong>{{size}}</strong></div>
 """
 
 class MeetMikey.View.Pagination extends MeetMikey.View.Base
@@ -35,8 +29,23 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
   page: 0
   itemsPerPage: 50
 
+  postInitialize: =>
+    Backbone.on 'changed:tab', =>
+      if @page isnt 0
+        @page = 0
+        @trigger 'changed:page'
+
   getTemplateData: =>
+    index = @currentPageIndex()
+
     page: @page + 1
+    start: index + 1
+    end: Math.min(@collection.length, index + @itemsPerPage)
+    size: @collection.length
+
+
+  currentPageIndex: =>
+    @page * @itemsPerPage
 
   getPageItems: =>
     _.chain(@collection.models)
@@ -48,6 +57,7 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
     event.preventDefault()
     return if @lastPage? and @page + 1 > @lastPage
     @page += 1
+    @trackNextPageEvent()
     if @page * @itemsPerPage + 1 > @collection.length
       @fetchNextPage()
     else
@@ -71,4 +81,13 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
     event.preventDefault()
     return unless @page > 0
     @page -= 1
+    @trackPrevPageEvent()
     @trigger 'changed:page'
+
+  trackNextPageEvent: =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'nextPage',
+      currentTab: MeetMikey.Globals.tabState, page: @page
+
+  trackPrevPageEvent: =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'prevPage',
+      currentTab: MeetMikey.Globals.tabState, page: @page

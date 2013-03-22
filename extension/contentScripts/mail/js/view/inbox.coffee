@@ -47,6 +47,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @manageInboxDisplay(tab)
     $(@tabs[tab]).show()
     @subView(tab)?.trigger 'showTab'
+    Backbone.trigger 'changed:tab', tab
+    @trackTabEvent(tab)
 
   hideAllTabs: () =>
     contentSelector = _.values(@tabs).join(', ')
@@ -55,6 +57,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   manageInboxDisplay: (tab) =>
     method = if tab is 'email' then 'hide' else 'show'
     @$el[method]()
+
+  trackTabEvent: (tab) =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'tabChange',
+      search: !@options.fetch, tab: tab
 
   bindCountUpdate: =>
     _.each @getTabs(), @bindCountUpdateForTab

@@ -1,21 +1,56 @@
-`
-(function(c,a){window.mixpanel=a;var b,d,h,e;b=c.createElement("script"); b.type="text/javascript";b.async=!0;b.src=("https:"===c.location.protocol?"https:":"http:")+ '//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';d=c.getElementsByTagName("script")[0]; d.parentNode.insertBefore(b,d);a._i=[];a.init=function(b,c,f){function d(a,b){ var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]);a[b]=function(){a.push([b].concat( Array.prototype.slice.call(arguments,0)))}}var g=a;"undefined"!==typeof f?g=a[f]=[]: f="mixpanel";g.people=g.people||[];h=['disable','track','track_pageview','track_links', 'track_forms','register','register_once','unregister','identify','alias','name_tag', 'set_config','people.set','people.increment','people.track_charge','people.append']; for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.2;})(document,window.mixpanel||[]);
-`
-mixpanel.init(MeetMikey.Settings.mixpanelID)
-
 class Mixpanel
-  constructor: ->
+  apiUrl: 'https://api.mixpanel.com'
 
   inCorrectEnv: MeetMikey.Settings.env is 'production'
+  token: MeetMikey.Settings.mixpanelId
 
+  userId: null
+
+  # TODO: write wrapper for engage endpoint, add distinct_id support with identify
   setUser: (user) =>
     return unless @inCorrectEnv
-    userProps = _.pick user.attributes, '_id', 'displayName', 'email'
-    mixpanel.people.identify userProps._id
-    mixpanel.people.set userProps
+    @userId = user.id
+    @_engage user
 
   trackEvent: (event, props) =>
+    console.log 'tracking event:', event, @inCorrectEnv
     return unless @inCorrectEnv
     props = if props? then _.clone(props) else {}
     props = _.extend props, @props
-    mixpanel.track event, props
+    @_track event, props
+
+  encodeB64: (obj) ->
+    # btoa dies on utf-8 strings, escape/unescape fixes
+    str = JSON.stringify obj
+    window.btoa unescape encodeURIComponent str
+
+  _buildObj: (event, props)=>
+    properties = _.extend props, {token: @token, time: Date.now(), distinct_id: @userId}
+    {event, properties}
+
+  _track: (event, props) =>
+    obj = @_buildObj event, props
+    $.ajax
+      url: "#{@apiUrl}/track"
+      data:
+        data: @encodeB64(obj)
+        ip: 1
+
+  _buildUserObj: (user) =>
+    attrs = user.attributes
+
+    $token: @token
+    $distinct_id: @userId
+    $set:
+      $email: attrs.email
+      $first_name: attrs.firstName
+      $last_name: attrs.lastName
+
+  _engage: (user) =>
+    obj = @_buildUserObj user
+    $.ajax
+      url: "#{@apiUrl}/engage"
+      data: {data: @encodeB64(obj)}
+
+
+MeetMikey.Helper.Mixpanel = new Mixpanel()

@@ -30,6 +30,9 @@ class OAuth
   doNotAsk: =>
     @storeUserInfo email: @getUserEmail(), ignoreAccount: true
 
+  trackAuthEvent: (user) =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'authorized', user
+
   checkUser: (callback) =>
     data = @getUserInfo()
     return if data?.ignoreAccount
@@ -54,6 +57,7 @@ class OAuth
       $(window).off 'message', handleMessage
       userObject = JSON.parse event.data
       @storeUserInfo userObject
+      @trackAuthEvent userObject
       if @isUserEmail userObject.email
         callback userObject
       else

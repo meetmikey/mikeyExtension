@@ -18,9 +18,14 @@ class Setup
   authorized: (userData) =>
     @initalizeGlobalUser userData
     @injectMainView()
+    @trackLoginEvent(userData)
+
+  trackLoginEvent: (user) =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'login', user
 
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data
+    MeetMikey.Helper.Mixpanel.setUser MeetMikey.globalUser
 
   injectModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')
