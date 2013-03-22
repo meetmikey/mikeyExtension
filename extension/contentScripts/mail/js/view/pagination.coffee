@@ -1,7 +1,28 @@
 template = """
-  <a href="#" class="prev-page">Prev</a>
-  <span class="page-count">Page {{page}}</span>
-  <a href="#" class="next-page">Next</a>
+    
+  
+
+    
+  <div class="arrow-buttons">
+
+       <div class="page-button forward next-page">
+        <div class="arrow">
+        </div>
+      </div>
+      
+      <div class="page-button back prev-page">
+        <div class="arrow">
+        </div>
+      </div>
+  
+     
+  
+  </div>
+
+    <span class="page-count">Page {{page}}</span>
+
+  
+  
 """
 
 class MeetMikey.View.Pagination extends MeetMikey.View.Base

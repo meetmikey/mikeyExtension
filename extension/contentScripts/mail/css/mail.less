@@ -52,6 +52,13 @@ box-shadow: none !important;
 
 }
 
+.compact .bX { 
+padding-top: 24px;
+
+}
+
+
+
 
 
 
@@ -994,6 +1001,124 @@ white-space: nowrap;
 .image-text a:hover {
   text-decoration: underline;
   color: #777;
+}
+
+/* ---------------- PAGINATION ---------------------- */
+
+.pagination-container {
+  float:right;
+  margin-right:16px;
+}
+
+.page-count {
+  font-size:13px;
+  display:inline-block;
+  float:right;
+  margin-right: 10px;
+  padding-top:7px;
+}
+
+.arrow-buttons {
+  margin-left: 0px;
+  float: right;
+  width: 72px;
+
+}
+
+.grey-button {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background-color: #f5f5f5;
+  background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+  background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+  color: #444;
+  border: 1px solid #dcdcdc;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-block;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid #c6c6c6;
+  }
+}
+
+.page-button {
+  .grey-button;
+  margin-right: 0px;
+  width: 34px;
+  outline: 0;
+  padding: 3px 0px;
+}
+
+
+.page-button:active {
+-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+background: #f8f8f8;
+}
+
+.forward {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  float:right;
+  margin-left: -1px;
+}
+
+.back {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  float:right;
+  
+}
+
+.forward .arrow {
+  background: url(img/sprite_black2.png) -42px -21px no-repeat;
+  width: 21px;
+  height: 21px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  opacity: .55;
+  
+}
+
+.page-button:hover .forward .arrow {
+  background: url(img/sprite_black2.png) -42px -21px no-repeat;
+  width: 21px;
+  height: 21px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  opacity: .9;
+}
+
+.back .arrow {
+  background: url(img/sprite_black2.png) -21px -21px no-repeat;
+  width: 21px;
+  height: 21px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  opacity: .55;
+ 
+}
+
+.page-button:hover .back .arrow {
+  background: url(img/sprite_black2.png) -21px -21px no-repeat;
+  width: 21px;
+  height: 21px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  opacity: .9;
 }
 
 
