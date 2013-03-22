@@ -41,7 +41,7 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
 
   nextPage: (event) =>
     event.preventDefault()
-    return if @lastPage? and @page + 1 > @lastPage
+    return if @fetching or @onLastPage()
     @page += 1
     @trackNextPageEvent()
     if @page * @itemsPerPage + 1 > @collection.length
@@ -50,6 +50,7 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
       @trigger 'changed:page'
 
   fetchNextPage: (callback) =>
+    @fetching = true
     @collection.fetch
       silent: true
       update: true
@@ -62,6 +63,7 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
   pageFetched: (collection, response) =>
     @lastPage = @page if response.length < @itemsPerPage
     @trigger 'changed:page'
+    @fetching = false
 
   prevPage: (event) =>
     event.preventDefault()
@@ -69,6 +71,9 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
     @page -= 1
     @trackPrevPageEvent()
     @trigger 'changed:page'
+
+  onLastPage: =>
+    @lastPage? and @page >= @lastPage
 
   trackNextPageEvent: =>
     MeetMikey.Helper.Mixpanel.trackEvent 'nextPage',
