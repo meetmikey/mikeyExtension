@@ -15,6 +15,12 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
   page: 0
   itemsPerPage: 50
 
+  postInitialize: =>
+    Backbone.on 'changed:tab', =>
+      if @page isnt 0
+        @page = 0
+        @trigger 'changed:page'
+
   getTemplateData: =>
     index = @currentPageIndex()
 
