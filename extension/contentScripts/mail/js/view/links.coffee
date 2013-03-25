@@ -5,7 +5,8 @@ template = """
     <div class="pagination-container"></div>
     <table class="inbox-table" id="mm-links-table" border="0">
       <thead class="labels">
-        <th class="mm-file mm-link">Link</th>
+        <th class="mm-download">Link</th>
+        <th class="mm-file mm-link"></th>
         <th class="mm-source">Source</th>
         <th class="mm-from">From</th>
         <th class="mm-to">To</th>
@@ -14,6 +15,7 @@ template = """
       <tbody>
         {{#each models}}
         <tr class="files" data-cid="{{cid}}">
+            <td class="mm-download" style="background-image: url('{{../downloadUrl}}');">&nbsp;</td>
             <td class="mm-file mm-favicon truncate" style="background:url({{faviconURL}}) no-repeat;">
               <div class="flex">
                 {{title}}
