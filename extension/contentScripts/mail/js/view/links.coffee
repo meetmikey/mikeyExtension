@@ -34,6 +34,8 @@ template = """
   {{/unless}}
 """
 
+downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/open-link.png")
+
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
@@ -43,7 +45,8 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
       selector: '.pagination-container'
 
   events:
-    'click .files': 'openLink'
+    'click .files .mm-file': 'openMessage'
+    'click .files .mm-download': 'openLink'
     'mouseenter .files': 'startRollover'
     'mouseleave .files': 'cancelRollover'
     'mousemove .files': 'delayRollover'
@@ -69,6 +72,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   getTemplateData: =>
     models: _.invoke(@subView('pagination').getPageItems(), 'decorate')
+    downloadUrl: downloadUrl
 
   openLink: (event) =>
     cid = $(event.currentTarget).attr('data-cid')
@@ -84,6 +88,21 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   delayRollover: (event) => @rollover.delaySpawn event
 
   cancelRollover: => @rollover.cancelSpawn()
+
+  openMessage: (event) =>
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
+    model = @collection.get(cid)
+    msgHex = model.get 'gmMsgHex'
+    if @options.fetch
+      hash = "#inbox/#{msgHex}"
+    else
+      hash = "#search/#{@searchQuery}/#{msgHex}"
+
+    MeetMikey.Helper.Mixpanel.trackEvent 'openMessage',
+      currentTab: MeetMikey.Globals.tabState, modelId: model.id, search: !@options.fetch
+
+    window.location = hash
+
 
   setResults: (models, query) =>
     @searchQuery = query
@@ -102,3 +121,5 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
         after: @collection.first()?.get('sentDate')
       success: @waitAndPoll
       error: @waitAndPoll
+
+
