@@ -6,6 +6,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     'tabs':
       viewClass: MeetMikey.View.Tabs
       selector: '#mm-search-tabs-container'
+      args: {search: true}
     'searchResults':
       viewClass: MeetMikey.View.Inbox
       selector: '#mm-search-container'

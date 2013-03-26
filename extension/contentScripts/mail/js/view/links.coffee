@@ -15,7 +15,7 @@ template = """
       <tbody>
         {{#each models}}
         <tr class="files" data-cid="{{cid}}">
-            <td class="mm-download" style="background-image: url('{{../downloadUrl}}');">&nbsp;</td>
+            <td class="mm-download" style="background-image: url('{{../openIconUrl}}');">&nbsp;</td>
             <td class="mm-file mm-favicon truncate" style="background:url({{faviconURL}}) no-repeat;">
               <div class="flex">
                 {{title}}
@@ -34,15 +34,10 @@ template = """
   {{/unless}}
 """
 
-downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/open-link.png")
+openIconUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/open-link.png")
 
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
-
-  subViews:
-    'pagination':
-      viewClass: MeetMikey.View.Pagination
-      selector: '.pagination-container'
 
   events:
     'click .files .mm-file': 'openMessage'
@@ -56,10 +51,10 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()
     @rollover = new MeetMikey.View.LinkRollover collection: @collection, search: !@options.fetch
-    @subView('pagination').collection = @collection
+    @pagination = new MeetMikey.Model.PaginationState items: @collection
 
     @collection.on 'reset add', _.debounce(@render, 50)
-    @subView('pagination').on 'changed:page', @render
+    @pagination.on 'change:page', @render
 
     if @options.fetch
       @collection.fetch success: @waitAndPoll
@@ -71,8 +66,8 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.off 'reset', @render
 
   getTemplateData: =>
-    models: _.invoke(@subView('pagination').getPageItems(), 'decorate')
-    downloadUrl: downloadUrl
+    models: _.invoke(@pagination.getPageItems(), 'decorate')
+    openIconUrl: openIconUrl
 
   openLink: (event) =>
     cid = $(event.currentTarget).attr('data-cid')

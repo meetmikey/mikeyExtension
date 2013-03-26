@@ -44,11 +44,6 @@ downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/download.pn
 class MeetMikey.View.Attachments extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
-  subViews:
-    'pagination':
-      viewClass: MeetMikey.View.Pagination
-      selector: '.pagination-container'
-
   events:
     'click .files .mm-file': 'openMessage'
     'click .files .mm-download': 'openAttachment'
@@ -63,13 +58,12 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   postInitialize: =>
     @collection = new MeetMikey.Collection.Attachments()
     @rollover = new MeetMikey.View.AttachmentRollover collection: @collection, search: !@options.fetch
+    @pagination = new MeetMikey.Model.PaginationState items: @collection
 
     @collection.on 'reset add', _.debounce(@render, 50)
 
-    @subView('pagination').options.render = @options.fetch
     if @options.fetch
-      @subView('pagination').collection = @collection
-      @subView('pagination').on 'changed:page', @render
+      @pagination.on 'change:page', @render
       @collection.fetch success: @waitAndPoll
 
   postRender: =>
@@ -84,7 +78,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   getModels: =>
     if @options.fetch
-      @subView('pagination').getPageItems()
+      @pagination.getPageItems()
     else
       @collection.models
 

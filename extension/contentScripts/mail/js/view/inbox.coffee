@@ -31,6 +31,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   getTabs: =>
     _.chain(@tabs).keys().without('email').value()
 
+  tabState: => MeetMikey.Globals.tabState
+
   preInitialize: =>
     @subViews.attachments.args.fetch = @options.fetch
     @subViews.links.args.fetch = @options.fetch
@@ -47,7 +49,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @manageInboxDisplay(tab)
     $(@tabs[tab]).show()
     @subView(tab)?.trigger 'showTab'
-    Backbone.trigger 'changed:tab', tab
+    Backbone.trigger 'change:tab', tab
     @trackTabEvent(tab)
 
   hideAllTabs: () =>
@@ -61,6 +63,21 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   trackTabEvent: (tab) =>
     MeetMikey.Helper.Mixpanel.trackEvent 'tabChange',
       search: !@options.fetch, tab: tab
+
+  bindPageHandlers: =>
+    Backbone.on 'clicked:next-page', @nextPage
+    Backbone.on 'clicked:prev-page', @prevPage
+
+  paginationForTab: =>
+    @subView(@tabState())?.pagination
+
+  nextPage: =>
+    view = @subView @tabState()
+    view.pagination.nextPage()
+
+  prevPage: =>
+    view = @subView @tabState()
+    view.pagination.prevPage()
 
   bindCountUpdate: =>
     _.each @getTabs(), @bindCountUpdateForTab

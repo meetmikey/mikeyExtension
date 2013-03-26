@@ -1,23 +1,24 @@
 template = """
-    
+  <div class="pagination-wrapper" style="display: {{display}};">
   <div class="arrow-buttons">
 
        <div class="page-button forward next-page">
-        <div class="arrow">
+        <div class="arrow" style="background: url({{arrowSprite}}) -42px -21px no-repeat">
         </div>
       </div>
-      
+
       <div class="page-button back prev-page">
-        <div class="arrow">
+        <div class="arrow" style="background: url({{arrowSprite}}) -21px -21px no-repeat">
         </div>
       </div>
-  
-     
-  
+
   </div>
 
      <div class="page-count"><strong>{{start}}-{{end}}</strong> of <strong>{{size}}</strong></div>
+     </div>
 """
+imgPath = MeetMikey.Settings.imgPath
+arrowSprite = chrome.extension.getURL "#{imgPath}/sprite_black2.png"
 
 class MeetMikey.View.Pagination extends MeetMikey.View.Base
   template: Handlebars.compile(template)
@@ -30,64 +31,28 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
   itemsPerPage: 50
 
   postInitialize: =>
-    Backbone.on 'changed:tab', =>
-      if @page isnt 0
-        @page = 0
-        @trigger 'changed:page'
 
   getTemplateData: =>
-    index = @currentPageIndex()
+    state = @state?.getStateData() ? {}
+    _.extend state, arrowSprite: arrowSprite, display: @getDisplay()
 
-    page: @page + 1
-    start: index + 1
-    end: Math.min(@collection.length, index + @itemsPerPage)
-    size: @collection.length
+  setState: (state) =>
+    @resetState() if @state?
+    @state = state
+    @listenTo @state, 'change:page', @render if @state?
+    @render()
 
+  resetState: =>
+    @state.set 'page', 0
+    @stopListening @state, 'change:page'
 
-  currentPageIndex: =>
-    @page * @itemsPerPage
-
-  getPageItems: =>
-    _.chain(@collection.models)
-      .rest(@page*@itemsPerPage)
-      .first(@itemsPerPage)
-      .value()
-
-  nextPage: (event) =>
-    event.preventDefault()
-    return if @fetching or @onLastPage()
-    @page += 1
+  nextPage: =>
+    @state.nextPage()
     @trackNextPageEvent()
-    if @page * @itemsPerPage + 1 > @collection.length
-      @fetchNextPage()
-    else
-      @trigger 'changed:page'
 
-  fetchNextPage: (callback) =>
-    @fetching = true
-    @collection.fetch
-      silent: true
-      update: true
-      remove: false
-      data:
-        before: @collection.last()?.get('sentDate')
-        limit: @itemsPerPage
-      success: @pageFetched
-
-  pageFetched: (collection, response) =>
-    @lastPage = @page if response.length < @itemsPerPage
-    @trigger 'changed:page'
-    @fetching = false
-
-  prevPage: (event) =>
-    event.preventDefault()
-    return unless @page > 0
-    @page -= 1
+  prevPage: =>
+    @state.prevPage()
     @trackPrevPageEvent()
-    @trigger 'changed:page'
-
-  onLastPage: =>
-    @lastPage? and @page >= @lastPage
 
   trackNextPageEvent: =>
     MeetMikey.Helper.Mixpanel.trackEvent 'nextPage',
@@ -96,3 +61,7 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
   trackPrevPageEvent: =>
     MeetMikey.Helper.Mixpanel.trackEvent 'prevPage',
       currentTab: MeetMikey.Globals.tabState, page: @page
+
+  getDisplay: =>
+    tab = MeetMikey.Globals.tabState
+    method = if (tab is 'email' or tab is 'images') then 'none' else 'block'

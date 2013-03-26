@@ -3,6 +3,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     'tabs':
       viewClass: MeetMikey.View.Tabs
       selector: '#mm-tabs-container'
+      args: {search: false}
     'inbox':
       viewClass: MeetMikey.View.Inbox
       selector: '#mm-container'
@@ -26,6 +27,8 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @subView('sidebar').on 'clicked:inbox', @showEmailTab
     @subView('tabs').on 'clicked:tab', @subView('inbox').showTab
     @subView('inbox').on 'updateTabCount', @subView('tabs').updateTabCount
+    Backbone.on 'change:tab', (tab) =>
+      @setPaginationState @subView('inbox').paginationForTab(tab)
     $(window).on 'hashchange', @pageNavigated
     MeetMikey.Globals.tabState = 'email'
 
@@ -34,7 +37,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
   postRender: =>
 
   teardown: =>
-    @subViews('sidebar').off 'clicked:inbox'
+    Backbone.off 'change:tab'
 
   detectLayout: =>
     padding = parseFloat $('.xY').css('padding-top')
@@ -48,6 +51,9 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   setLayout: (layout='compact') =>
     @$el.addClass layout
+
+  setPaginationState: (pagination) =>
+    @subView('tabs').subView('pagination').setState pagination
 
   injectInboxContainer: =>
     element = '<div id="mm-container" class="mm-container" style="display: none;"></div>'

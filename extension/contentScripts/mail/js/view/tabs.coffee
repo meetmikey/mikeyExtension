@@ -20,23 +20,36 @@ template = """
     </a>
   </li>
 </ul>
+<div class="pagination-container"></div>
 """
 
 class MeetMikey.View.Tabs extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  subViews:
+    'pagination':
+      selector: '.pagination-container'
+      viewClass: MeetMikey.View.Pagination
+      args: {}
+
   events:
     'click li': 'tabClick'
+
+  preInitialize: =>
+    @subViews.pagination.args.render = false if @options.search
 
   postRender: =>
     @adjustWidth()
 
   adjustWidth: =>
-    width = $('.nH').width()
+    @setWidth()
+    $(window).resize @setWidth
+
+  setWidth: =>
+    elem = $('.nH.nn > .nH > .nH').parent().parent()
+    width = elem.width()
     @$el.css 'width', width
-    $(window).resize =>
-      width = $('.nH').width()
-      @$el.css 'width', width
+
 
   setActiveTab: (tab) =>
     @$('.mikey-tab').removeClass 'active'
