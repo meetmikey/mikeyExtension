@@ -94,10 +94,6 @@ body {
   text-overflow: ellipsis;
 }
 
-
-
-
-
 #mm-tabs-container,
 #mm-search-tabs-container {
  position: absolute;
@@ -108,13 +104,26 @@ body {
 .mikey-tabs {
   font-size: 14px;
   list-style-type: none;
-  padding: 14px 0px 0px 0px;
+  padding: 28px 0px 0px 0px;
   background-color: transparent;
   z-index: 2;
   height: 30px;
   display: inline-block;
-  margin-bottom: 0;
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
 }
+
+body.compact .mikey-tabs {
+  padding-top:21px;
+  height:30px;
+
+}
+
+body.compact .mikey-tab {
+  margin-top: 0px;
+  height:27px;
+}
+
 
 .mikey-tabs a {
   color: #777;
