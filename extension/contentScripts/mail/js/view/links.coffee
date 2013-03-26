@@ -80,7 +80,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     cid = $(event.currentTarget).attr('data-cid')
     model = @collection.get cid
 
-    MeetMikey.Heper.Mixpanel.trackEvent 'openLink',
+    MeetMikey.Helper.Mixpanel.trackEvent 'openLink',
       modelId: model.id, search: !@options.fetch
 
     window.open model.get('url')
