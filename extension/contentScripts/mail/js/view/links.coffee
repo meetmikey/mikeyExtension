@@ -66,8 +66,15 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.off 'reset', @render
 
   getTemplateData: =>
-    models: _.invoke(@pagination.getPageItems(), 'decorate')
+    models: _.invoke(@getModels(), 'decorate')
     openIconUrl: openIconUrl
+
+  getModels: =>
+    if @options.fetch
+      @pagination.getPageItems()
+    else
+      @collection.models
+
 
   openLink: (event) =>
     cid = $(event.currentTarget).attr('data-cid')
