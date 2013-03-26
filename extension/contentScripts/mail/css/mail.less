@@ -75,11 +75,7 @@ body {
   position: relative;
   top: 0px;
   padding-bottom: 0px;
-  margin-top: 24px;
-
-
-
-
+  margin-top: 0px;
 }
 
 
@@ -733,6 +729,10 @@ font-size: 12px;
 cursor: pointer;
 }
 
+.image-box:hover {
+  border-color: #bbb;
+}
+
 
 .image-footer {
   .footer;
@@ -1021,7 +1021,20 @@ white-space: nowrap;
   margin-right:16px;
   margin-top: 1em;
   display: inline-block;
+  .compact & {
+    margin-top:15px;
+  }
+  .cozy & {
+    margin-top:21px;
+    margin-right: 28px;
+  }
+  .comfortable & {
+    margin-top:21px;
+    margin-right:44px;
+  }
+
 }
+
 
 .page-count {
   font-size:13px;
