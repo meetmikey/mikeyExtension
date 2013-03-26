@@ -5,8 +5,8 @@ template = """
       <h3>Connect Mikey to your Gmail</h3>
     </div>
     <div class="modal-body">
-      <p>Mikey needs access to your Gmail in order to perform his magic. All the data that Mikey uses is encrypted and securely stored. If you have any questions or concerns, feel free to call or email Andrew (one of Mikey's creators).</p>
-      <p><a href="mailto:andrew@mikeyteam.com">andrew@mikeyteam.com</a><br>650.995.4393</p>
+      <p>Mikey needs access to your Gmail in order to perform his magic.</p>
+      
 
 
     </div>
