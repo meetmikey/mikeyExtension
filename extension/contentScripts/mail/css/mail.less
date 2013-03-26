@@ -102,6 +102,7 @@ body {
 #mm-search-tabs-container {
  position: absolute;
  margin-top:1px;
+ border-bottom: 1px solid #ebebeb;
 
 }
 
@@ -109,12 +110,26 @@ body {
   font-size: 14px;
   list-style-type: none;
   padding: 14px 0px 0px 0px;
-  border-bottom: 1px solid #ebebeb;
+  
   background-color: transparent;
   z-index: 2;
   width: 100%;
-  height: 30px;
+  height: 26px;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
 }
+
+body.compact .mikey-tabs {
+  padding-top:9px;
+  height:15px;
+
+}
+
+body.compact .mikey-tab {
+  margin-top: 0px;
+  height:27px;
+}
+
 
 .mikey-tabs a {
   color: #777;
