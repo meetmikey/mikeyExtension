@@ -1,7 +1,7 @@
 _.extend MeetMikey.Settings,
   env: "production"
   imgPath: 'contentScripts/mail/img'
-  mixpanelId: "af5785451534e81c5449838a052e8459"
+  mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   APIUrls:
     local: "https://local.meetmikey.com"
     development: "https://dev.meetmikey.com"
