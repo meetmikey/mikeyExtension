@@ -4,6 +4,8 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
   events:
     'mouseleave': 'startHide'
     'mouseenter': 'cancelHide'
+    'click .rollover-resource-link': 'trackOpenResourceEvent'
+    'click .rollover-message-link': 'trackOpenMessageEvent'
 
   getTemplateData: =>
     _.extend @model.decorate(), {searchQuery: @searchQuery}
@@ -33,6 +35,7 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
     @model = @collection.get cid
     @render()
     @$el.show()
+    @trackSpawnEvent()
 
   waitAndSpawn: _.debounce(@prototype.spawn, 400)
 
@@ -53,3 +56,14 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
   setQuery: (query) =>
     @searchQuery = query
 
+  trackSpawnEvent: =>
+    MeetMikey.Helper.trackResourceEvent 'openRollover', @model,
+      search: @searchQuery?, currentTab: MeetMikey.Globals.tabState
+
+  trackOpenMessageEvent: =>
+    MeetMikey.Helper.trackResourceEvent 'openMessage', @model,
+      search: @searchQuery?, currentTab: MeetMikey.Globals.tabState, rollover: true
+
+  trackOpenResourceEvent: =>
+    MeetMikey.Helper.trackResourceEvent 'openResource', @model,
+      search: @searchQuery?, currentTab: MeetMikey.Globals.tabState, rollover: true
