@@ -77,7 +77,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
 
   openLink: (event) =>
-    cid = $(event.currentTarget).attr('data-cid')
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get cid
 
     MeetMikey.Helper.Mixpanel.trackEvent 'openLink',
