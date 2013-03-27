@@ -55,8 +55,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     model = @collection.get(cid)
     url = model.get 'image'
 
-    MeetMikey.Helper.Mixpanel.trackEvent 'openImage',
-      modelId: model.id, search: @searchQuery?
+    MeetMikey.Helper.trackResourceEvent 'openResource', model,
+      search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
 
     window.open url
 
@@ -64,8 +64,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
 
-    MeetMikey.Helper.Mixpanel.trackEvent 'openMessage',
-      currentTab: MeetMikey.Globals.tabState, modelId: model.id, search: @searchQuery?
+    MeetMikey.Helper.trackResourceEvent 'openMessage', model,
+      currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
 
   runIsotope: =>
     console.log 'isotoping'

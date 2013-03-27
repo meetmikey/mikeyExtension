@@ -8,15 +8,16 @@ class Mixpanel
 
   # TODO: write wrapper for engage endpoint, add distinct_id support with identify
   setUser: (user) =>
-    return unless @inCorrectEnv
     @userId = user.id
+    @userProps = _.pick user.attributes, 'firstName', 'lastName', '_id'
+    return unless @inCorrectEnv
     @_engage user
 
   trackEvent: (event, props) =>
-    console.log 'tracking event:', event, @inCorrectEnv
-    return unless @inCorrectEnv
+    unless @inCorrectEnv
+      console.log 'tracking event:', event, @_buildObj(event,props), @inCorrectEnv
+      return
     props = if props? then _.clone(props) else {}
-    props = _.extend props, @props
     @_track event, props
 
   encodeB64: (obj) ->
@@ -25,7 +26,8 @@ class Mixpanel
     window.btoa unescape encodeURIComponent str
 
   _buildObj: (event, props)=>
-    properties = _.extend props, {token: @token, time: Date.now(), distinct_id: @userId}
+    metaData = _.extend (@userProps ? {}), {token: @token, time: Date.now(), distinct_id: @userId}
+    properties = _.extend props, metaData
     {event, properties}
 
   _track: (event, props) =>

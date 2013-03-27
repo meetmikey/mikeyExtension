@@ -87,8 +87,8 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     model = @collection.get(cid)
     url = MeetMikey.Decorator.Attachment.getUrl model
 
-    MeetMikey.Helper.Mixpanel.trackEvent 'downloadAttachment',
-      modelId: model.id, search: !@options.fetch
+    MeetMikey.Helper.trackResourceEvent 'openResource', model,
+      search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
 
     window.open(url)
 
@@ -101,8 +101,8 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     else
       hash = "#search/#{@searchQuery}/#{msgHex}"
 
-    MeetMikey.Helper.Mixpanel.trackEvent 'openMessage',
-      currentTab: MeetMikey.Globals.tabState, modelId: model.id, search: !@options.fetch
+    MeetMikey.Helper.trackResourceEvent 'openMessage', model,
+      currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
 
     window.location = hash
 

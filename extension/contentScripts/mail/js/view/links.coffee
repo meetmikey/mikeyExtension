@@ -80,8 +80,8 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get cid
 
-    MeetMikey.Helper.Mixpanel.trackEvent 'openLink',
-      modelId: model.id, search: !@options.fetch
+    MeetMikey.Helper.trackResourceEvent 'openResource', model,
+      search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
 
     window.open model.get('url')
 
@@ -100,8 +100,8 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     else
       hash = "#search/#{@searchQuery}/#{msgHex}"
 
-    MeetMikey.Helper.Mixpanel.trackEvent 'openMessage',
-      currentTab: MeetMikey.Globals.tabState, modelId: model.id, search: !@options.fetch
+    MeetMikey.Helper.trackResourceEvent 'openMessage', model,
+      currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
 
     window.location = hash
 
