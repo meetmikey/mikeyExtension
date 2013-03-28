@@ -15,7 +15,7 @@ MeetMikey.Helper.formatDate = (timestamp) ->
 MeetMikey.Helper.formatRecipients = (recipients) ->
   _.map(recipients, (r) -> r.name || r.email).join(', ')
 
-MeetMikey.Helper.formatRecipients  = (sender) ->
+MeetMikey.Helper.formatSender = (sender) ->
   sender?.name || sender?.email
 
 MeetMikey.Helper.getFaviconURL = (url) ->
