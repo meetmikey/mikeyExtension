@@ -48,8 +48,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @hideAllTabs()
     @manageInboxDisplay(tab)
     $(@tabs[tab]).show()
-    @subView(tab)?.trigger 'showTab'
     Backbone.trigger 'change:tab', tab
+    @subView(tab)?.trigger 'showTab'
     @trackTabEvent(tab)
 
   hideAllTabs: () =>

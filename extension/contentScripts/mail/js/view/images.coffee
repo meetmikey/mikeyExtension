@@ -26,6 +26,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   pollDelay: 1000*45
+  fetching: false
 
   events:
     'click .mm-image': 'openImage'
@@ -33,6 +34,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   postInitialize: =>
     @once 'showTab', @initIsotope
+    @on 'showTab', @bindScrollHandler
+    Backbone.on 'change:tab', @unbindScrollHandler
     @collection = new MeetMikey.Collection.Images()
     @collection.on 'reset add', _.debounce(@render, 50)
     if @options.fetch
@@ -66,6 +69,35 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
+
+  $scrollElem: => $('[id=":rp"]')
+  bindScrollHandler: => @$scrollElem().on 'scroll', @scrollHandler if @options.fetch
+  unbindScrollHandler: => @$scrollElem().off 'scroll', @scrollHandler
+
+  scrollHandler: (event)=>
+    @fetchMoreImages() if not @fetching and not @endOfImages and @nearBottom()
+
+  nearBottom: =>
+    $scrollElem = @$scrollElem()
+    $scrollElem.scrollTop() + $scrollElem.height() > @$el.height()
+
+  fetchMoreImages: =>
+    console.log 'go and fetch some images!'
+    @fetching = true
+    @collection.fetch
+      silent: true
+      update: true
+      remove: false
+      data:
+        before: @collection.last()?.get('sentDate')
+      success: @fetchSuccess
+
+  fetchSuccess: (collection, response) =>
+    @fetching = false
+    @endOfImages = true if _.isEmpty(@response)
+    @render()
+    @$el.isotope('reloadItems')
+    @initIsotope()
 
   runIsotope: =>
     console.log 'isotoping'
