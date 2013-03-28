@@ -47,12 +47,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     models: _.invoke(@collection.models, 'decorate')
     searchQuery: @searchQuery
 
-  setCollection: (attachments) =>
-    images = _.filter attachments.models, (a) -> a.isImage()
-    images = _.uniq images, false, (i) ->
-      "#{i.get('hash')}_#{i.get('fileSize')}"
-    @collection.reset images
-
   openImage: (event) =>
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
