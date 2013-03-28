@@ -9,7 +9,7 @@ class LinkDecorator
     object.msgHex = model.get('gmMsgHex')
     object.url = model.get 'url'
     object.displayUrl = @stripHttp model.get('url')
-    object.from = model.get('sender')?.name
+    object.from = @formatSender model
     object.to = @formatRecipients model
     object.sentDate = @formatDate model
     object.faviconURL = MeetMikey.Helper.getFaviconURL(model.get('resolvedURL') ? model.get('url'))
@@ -19,6 +19,9 @@ class LinkDecorator
 
   formatRecipients: (model) =>
     MeetMikey.Helper.formatRecipients model.get('recipients')
+
+  formatSender: (model) =>
+    MeetMikey.Helper.formatSender model.get('sender')
 
   formatDate: (model) =>
     MeetMikey.Helper.formatDate model.get('sentDate')
