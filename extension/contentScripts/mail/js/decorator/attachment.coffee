@@ -15,7 +15,7 @@ class AttachmentDecorator
   decorate: (model) =>
     object = {}
     object.filename = model.get('filename')
-    object.from = model.get('sender')?.name
+    object.from = @formatSender model
     object.to = @formatRecipients model
     object.sentDate = @formatDate model
     object.size = @formatFileSize model
@@ -32,6 +32,9 @@ class AttachmentDecorator
 
   formatRecipients: (model) =>
     MeetMikey.Helper.formatRecipients model.get('recipients')
+
+  formatSender: (model) =>
+    MeetMikey.Helper.formatSender model.get('sender')
 
   formatDate: (model) =>
     MeetMikey.Helper.formatDate model.get('sentDate')
