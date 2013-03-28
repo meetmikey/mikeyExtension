@@ -23,7 +23,9 @@ template = """
           <div class="checkbox"><div class="check"></div></div>
         </td> -->
 
-        <td class="mm-download" style="background-image: url('{{../downloadUrl}}');">&nbsp;</td>
+        <td class="mm-download" style="background-image: url('{{../downloadUrl}}');">
+              <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">&nbsp;</div>
+        </td>
         <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
         <td class="mm-file truncate">{{filename}}&nbsp;</td>
         <td class="mm-from truncate">{{from}}</td>
@@ -60,6 +62,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @rollover = new MeetMikey.View.AttachmentRollover collection: @collection, search: !@options.fetch
     @pagination = new MeetMikey.Model.PaginationState items: @collection
 
+
     @collection.on 'reset add', _.debounce(@render, 50)
 
     if @options.fetch
@@ -68,6 +71,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
+    $('.mm-download-tooltip').tooltip placement: 'bottom'
 
   teardown: =>
     @collection.off('reset', @render)

@@ -6,14 +6,18 @@ template = """
       <div class="image-box" data-cid="{{cid}}">
         <img class="mm-image" src="{{image}}" />
         <div class="image-text">
-          {{#if ../searchQuery}}
-            <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
-          {{else}}
-            <a href="#inbox/{{msgHex}}" class="open-message">View email thread</a>
-          {{/if}}
+          <div class="image-filename">
+            <a href="{{image}}">{{filename}}&nbsp;</a>
+          </div>
+         
           <div class="rollover-actions">
             <!-- <a href="#">Forward</a> -->
-            <a href="{{image}}">Open</a>
+            
+             {{#if ../searchQuery}}
+                <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
+              {{else}}
+                <a href="#inbox/{{msgHex}}" class="open-message">Email thread</a>
+          {{/if}}
           </div>
         </div>
       </div>

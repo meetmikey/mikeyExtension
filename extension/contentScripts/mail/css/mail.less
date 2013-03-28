@@ -22,9 +22,9 @@
 /* remove drop shadow off top header on */
 
 .aeI .G-atb {
-box-shadow: none !important;
--moz-box-shadow: none !imoportant;
 -webkit-box-shadow: none !important;
+-moz-box-shadow: none !imoportant;
+box-shadow: none !important;
 }
 
 .mq {
@@ -70,12 +70,12 @@ body {
 }
 
 .mm-container {
-  font-family: arial, sans-serif;
-  font-size: 13px;
   position: relative;
   top: 0px;
-  padding-bottom: 0px;
   margin-top: 0px;
+  padding-bottom: 0px;
+  font-size: 13px;
+  font-family: arial, sans-serif;
 }
 
 
@@ -86,8 +86,8 @@ body {
 
 .mm-container .truncate {
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #mm-tabs-container,
@@ -98,13 +98,13 @@ body {
 }
 
 .mikey-tabs {
-  font-size: 14px;
-  list-style-type: none;
-  padding: 28px 0px 0px 0px;
-  background-color: transparent;
   z-index: 2;
-  height: 30px;
   display: inline-block;
+  padding: 28px 0px 0px 0px;
+  height: 30px;
+  background-color: transparent;
+  list-style-type: none;
+  font-size: 14px;
   -webkit-margin-before: 0em;
   -webkit-margin-after: 0em;
 }
@@ -135,12 +135,12 @@ body.compact .mikey-tab {
 }
 
 .mikey-tab {
-  height: 26px;
+  display:inline-block;
   margin: 2px 12px 0px 0px;
   padding: 0px 10px 0px 10px;
-  display:inline-block;
-  cursor: pointer;
+  height: 26px;
   color: #777;
+  cursor: pointer;
 }
 
 .mikey-tabs .active {
@@ -153,9 +153,9 @@ body.compact .mikey-tab {
 }
 
 .mikey-tabs .active {
-	border-bottom: 3px solid @red;
-	color: @red !important;
-	font-weight: bold;
+  border-bottom: 3px solid @red;
+  color: @red !important;
+  font-weight: bold;
 
 }
 
@@ -168,49 +168,49 @@ body.compact .mikey-tab {
 }
 
 .inbox-table {
-  border: 0px;
-  border-collapse: collapse;
-  width: 100%;
-  border-spacing: 0px;
-  padding: 0px;
-  table-layout: fixed;
-  min-width: 800px;
   margin-top: 4px;
+  padding: 0px;
+  min-width: 800px;
+  width: 100%;
+  border: 0px;
+  border-spacing: 0px;
+  border-collapse: collapse;
+  table-layout: fixed;
 
 }
 
 
 .comfortable .inbox-table td {
-	padding: 10px 10px 10px 10px;
-	border:0px;
+  padding: 10px 10px 10px 10px;
   height: 19px;
+  border:0px;
 }
 
 .cozy .inbox-table td {
   padding: 7px 10px 7px 10px;
-  border:0px;
   height: 19px;
+  border:0px;
 }
 
 .compact .inbox-table td {
   padding: 3px 10px 3px 10px;
-  border:0px;
   height: 19px;
+  border:0px;
 }
 
 .mm-container .labels {
-	font-size: 15px;
-	background-color: @white;
-	border-bottom: none;
-	padding-bottom: 2px;
-	font-weight: normal;
-	cursor: hand;
+  padding-bottom: 2px;
+  border-bottom: none;
+  background-color: @white;
+  font-weight: normal;
+  font-size: 15px;
+  cursor: hand;
 }
 
 .mm-container .labels th {
-  text-align: left;
-  padding-left: 10px;
   padding-bottom: 9px;
+  padding-left: 10px;
+  text-align: left;
 }
 
 th {
@@ -218,11 +218,8 @@ th {
 }
 
 
-/*
-.mm-container .labels th:hover {
-	color: #777;
-}
-*/
+/* .mm-container .labels th:hover {
+  color: #777; */
 
 #mm-attachments-table .files {
   cursor: pointer;
@@ -233,54 +230,54 @@ th {
 }
 
 .mm-container .files {
+  border-bottom: 1px solid #e5e5e5;
   background-color: #f3f3f3;
   font-size: 13px;
-  border-bottom: 1px solid #e5e5e5;
 }
 
 
 .mm-file-text {
-  color: #777;
   margin-left: 6px;
+  color: #777;
 }
 
 
 .mm-toggle-box {
-	width: 30px;
   padding: 6px 0px 6px 5px !important;
+  width: 30px;
 }
 
 
 .mm-sent {
- 	width: 75px;
-	text-align: right;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+  overflow: hidden;
+  width: 75px;
+  text-align: right;
+  text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .labels .mm-sent {
-  text-align: right !important;
   padding-right: 10px;
+  text-align: right !important;
 }
 
 .mm-size {
-  text-align: right;
   width: 65px;
+  text-align: right;
 }
 
 .labels .mm-size {
-  text-align: right !important;
   padding-right: 10px;
+  text-align: right !important;
 }
 
 
 
 .mm-from {
+  overflow: hidden;
   width: 150px;
-		white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+  text-overflow: ellipsis;
+    white-space: nowrap;
 
 }
 
@@ -292,93 +289,89 @@ th {
 }
 
 .inbox-table td.file {
-	margin-right: 30px;
+  margin-right: 30px;
 }
 
 .inbox-table td.source  {
-	padding: 6px 10px 6px 10px;
+  padding: 6px 10px 6px 10px;
 
 }
 
 table tr td .flex {
-	width: 92%;
-	white-space: nowrap;
-	min-width: 200px;
-	padding-left: 20px;
-	overflow:hidden;
+  overflow:hidden;
+  padding-left: 20px;
+  min-width: 200px;
+  width: 92%;
+  white-space: nowrap;
 }
 
 .mm-type {
-	width:70px;
-		white-space: nowrap;
-	overflow: hidden;
+  overflow: hidden;
+  width:70px;
   text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
 .cozy .mm-icon {
-	background-position: 5px 7px !important;
-	background-size: 18px 18px !important;
   padding-left: 5px !important;
   width:18px;
+  background-position: 5px 7px !important;
+  background-size: 18px 18px !important;
 }
 
 .cozy .mm-favicon {
-	background-position: 5px 7px !important;
-	background-size: 18px 18px !important;
   padding-left: 15px !important;
   width:18px;
+  background-position: 5px 7px !important;
+  background-size: 18px 18px !important;
 }
 
  .comfortable .mm-icon {
-  background-position: 5px 10px !important;
-  background-size: 18px 18px !important;
   padding-left: 5px !important;
   width:18px;
+  background-position: 5px 10px !important;
+  background-size: 18px 18px !important;
 }
 
 
 
 .comfortable .mm-favicon {
+  padding-left: 15px !important;
   background-position: 5px 10px !important;
   background-size: 18px 18px !important;
-  padding-left: 15px !important;
 }
 
 .compact .mm-icon {
+padding-left: 16px !important;
 background-position: 11px 3px !important;
 background-size: 18px 18px !important;
-padding-left: 16px !important;
 }
 
 .compact .mm-favicon {
+padding-left: 15px !important;
 background-position: 11px 3px !important;
 background-size: 18px 18px !important;
-padding-left: 15px !important;
 }
 
 
 .mm-download {
   width: 21px;
+  .comfortable & {
+     background-position: 11px 13px !important;
+     background-repeat: no-repeat;
+    }
+
+  .compact & {
+     background-position: 11px 6px !important;
+     background-repeat: no-repeat;
+   }
+
+  .cozy & {
+     background-position: 11px 10px !important;
+     background-repeat: no-repeat;
+    }
 }
-
-.comfortable .mm-download {
-   background-position: 11px 13px !important;
-   background-repeat: no-repeat;
-   
-  }
-
-.compact .mm-download {
-   background-position: 5px 6px !important;
-   background-repeat: no-repeat;
- 
-  }
-
-.cozy .mm-download {
-   background-position: 5px 10px !important;
-   background-repeat: no-repeat;
-   
-  }
 
 .files .mm-download {
   opacity: 0.6;
@@ -388,15 +381,18 @@ padding-left: 15px !important;
   opacity: 1;
 }
 
+.mm-download-tooltip {
+ width:18px;
+}
 
 
 
 .mm-source {
-  width:200px;
-    white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  width:200px;
   color: @black;
+  text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .labels th {
@@ -413,11 +409,11 @@ th.mm-icon {
 }
 
 .mm-file {
-  width:100%;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
   min-width: 200px;
+  width:100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 th.mm-file  {
@@ -439,36 +435,36 @@ th.mm-file  {
 }
 
 .caret {
-  border-style: solid;
-  border-width: 4px 4px 0px 4px;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-  border-top-color: #777;
-  border-right-color: transparent;
-  height: 0px;
-  width: 0px;
   display: inline;
   float: right;
   margin-top: 6px;
   margin-left: 6px;
+  width: 0px;
+  height: 0px;
+  border-width: 4px 4px 0px 4px;
+  border-style: solid;
+  border-top-color: #777;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
 }
 
 
 
 .circle {
-  border-radius: 500px;
-  width: 6px;
-  height: 6px;
-  background-color: #777;
   display: inline;
   float: right;
   margin-top: 6px;
   margin-left: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 500px;
+  background-color: #777;
 }
 
 .file-icon {
-  margin-right: 6px;
   display: inline;
+  margin-right: 6px;
   background-size: 18px 18px;
 }
 
@@ -507,27 +503,27 @@ th.mm-file  {
 }
 
 .wired {
-	background:url("../img/wired.ico") no-repeat;
-	background-position: 10px 5px;
-	background-size: 16px 16px;
+  background:url("../img/wired.ico") no-repeat;
+  background-position: 10px 5px;
+  background-size: 16px 16px;
 
 }
 
 /* ------------ CHECKBOX ----------------- */
 
 .mm-container .checkbox {
+margin: 0 0px 0 0px;
+width: 11px;
+height: 11px;
+outline: 0;
+border: 1px solid #c6c6c6;
+border: 1px solid rgba(155,155,155,.57);
 -webkit-border-radius: 1px;
 -moz-border-radius: 1px;
 border-radius: 1px;
 background-color: rgba(255,255,255,.05);
-border: 1px solid #c6c6c6;
-border: 1px solid rgba(155,155,155,.57);
-font-size: 1px;
-height: 11px;
-margin: 0 0px 0 0px;
-outline: 0;
 vertical-align: text-bottom;
-width: 11px;
+font-size: 1px;
 }
 
 .checkbox:focus {
@@ -539,12 +535,12 @@ background:url("../img/checkmark.png") no-repeat -5px -3px;
 }
 
 .check {
-height: 15px;
-outline: 0;
-width: 15px;
-left: 0;
 position: relative;
 top: -3px;
+left: 0;
+width: 15px;
+height: 15px;
+outline: 0;
 
 }
 
@@ -562,13 +558,13 @@ top: -3px;
 
 #mm-attachments-table {
    margin-top: 6px;
-  border: 0px;
-  border-collapse: collapse;
-  width: 100%;
-  border-spacing: 0px;
   padding: 0px;
-  table-layout: fixed;
   min-width: 800px;
+  width: 100%;
+  border: 0px;
+  border-spacing: 0px;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 
 
@@ -577,13 +573,13 @@ top: -3px;
 
 #mm-links-table {
    margin-top: 6px;
-  border: 0px;
-  border-collapse: collapse;
-  width: 100%;
-  border-spacing: 0px;
   padding: 0px;
-  table-layout: fixed;
   min-width: 800px;
+  width: 100%;
+  border: 0px;
+  border-spacing: 0px;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 
 #mm-links-table {
@@ -598,13 +594,13 @@ top: -3px;
 /* ---------------- POP-UP --------------- */
 
 .button {
+border: 1px solid #3079ed;
 background-color: #4d90fe;
 background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
 background-image: -moz-linear-gradient(top,#4d90fe,#4787ed);
 background-image: -ms-linear-gradient(top,#4d90fe,#4787ed);
 background-image: -o-linear-gradient(top,#4d90fe,#4787ed);
 background-image: linear-gradient(top,#4d90fe,#4787ed);
-border: 1px solid #3079ed;
 color: @white;
 }
 
@@ -615,23 +611,23 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .button:focus {
+outline: 1px solid #4d90fe;
+outline: 0 rgba(0,0,0,0);
+border: 1px solid @white;
+border: 1px solid rgba(0,0,0,0);
 -webkit-box-shadow: inset 0 0 0 1px @white;
 -moz-box-shadow: inset 0 0 0 1px @white;
 box-shadow: inset 0 0 0 1px @white;
-border: 1px solid @white;
-border: 1px solid rgba(0,0,0,0);
-outline: 1px solid #4d90fe;
-outline: 0 rgba(0,0,0,0);
 }
 
 .button:hover {
+border: 1px solid #2f5bb7;
 background-color: #357ae8;
 background-image: -webkit-linear-gradient(top,#4d90fe,#357ae8);
 background-image: -moz-linear-gradient(top,#4d90fe,#357ae8);
 background-image: -ms-linear-gradient(top,#4d90fe,#357ae8);
 background-image: -o-linear-gradient(top,#4d90fe,#357ae8);
 background-image: linear-gradient(top,#4d90fe,#357ae8);
-border: 1px solid #2f5bb7;
 color: @white;
 }
 
@@ -639,6 +635,8 @@ color: @white;
 
 
 .button-grey {
+border: 1px solid #dcdcdc;
+border: 1px solid rgba(0,0,0,0.1);
 background-color: #f5f5f5;
 background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
 background-image: -moz-linear-gradient(top,#f5f5f5,#f1f1f1);
@@ -646,11 +644,10 @@ background-image: -ms-linear-gradient(top,#f5f5f5,#f1f1f1);
 background-image: -o-linear-gradient(top,#f5f5f5,#f1f1f1);
 background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
 color: #444;
-border: 1px solid #dcdcdc;
-border: 1px solid rgba(0,0,0,0.1);
 }
 
 .button-grey:hover {
+border: 1px solid #c6c6c6;
 background-color: #f8f8f8;
 background-image: -webkit-linear-gradient(top,#f8f8f8,#f1f1f1);
 background-image: -moz-linear-gradient(top,#f8f8f8,#f1f1f1);
@@ -658,7 +655,6 @@ background-image: -ms-linear-gradient(top,#f8f8f8,#f1f1f1);
 background-image: -o-linear-gradient(top,#f8f8f8,#f1f1f1);
 background-image: linear-gradient(top,#f8f8f8,#f1f1f1);
 color: #333;
-border: 1px solid #c6c6c6;
 
 }
 
@@ -674,31 +670,31 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 }
 
 .buttons {
+margin-right: 8px;
+margin-right: 0px;
+margin-left: 10px;
+padding: 6px 12px;
+min-width: 54px;
+height: 27px;
+outline: 0;
 -webkit-border-radius: 2px;
 -moz-border-radius: 2px;
 border-radius: 2px;
-cursor: pointer;
-font-size: 12px;
-font-weight: bold;
 text-align: center;
-white-space: nowrap;
-margin-right: 8px;
-height: 27px;
-line-height: 27px;
-min-width: 54px;
-outline: 0;
-padding: 6px 12px;
 text-decoration: none;
-margin-right: 0px;
-margin-left: 10px;
+white-space: nowrap;
+font-weight: bold;
+font-size: 12px;
+line-height: 27px;
+cursor: pointer;
 }
 
 .modal {
+padding: 0px 4px;
 -webkit-border-radius: 2px !important;
 -moz-border-radius: 2px !important;
 border-radius: 2px !important;
 font-size: 13px;
-padding: 0px 4px;
 }
 
 .footer-buttons {
@@ -720,15 +716,15 @@ padding: 0px 4px;
 /* ----------- IMAGES ---------------- */
 
 .image-box {
-width:250px;
-padding: 0px;
 float: left;
-margin-left: 0px;
 margin-right: 20px;
 margin-bottom: 20px;
-border: 1px solid #e0e0e0;
-height: auto;
+margin-left: 0px;
+padding: 0px;
 padding: 10px;
+width:250px;
+height: auto;
+border: 1px solid #e0e0e0;
 background-color: @white;
 font-size: 12px;
 cursor: pointer;
@@ -744,15 +740,15 @@ cursor: pointer;
 }
 
 .mm-image {
-  max-width: 250px;
   margin-bottom: 10px;
+  max-width: 250px;
   text-align: center;
   cursor: pointer;
 }
 
 .mm-images-tab {
-  padding-top: 20px;
   margin-top:10px;
+  padding-top: 20px;
 }
 
 .isotope {
@@ -761,10 +757,11 @@ cursor: pointer;
 }
 
 .image-filename {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  max-width: 250px;
+  display: inline-block;
   overflow: hidden;
+  max-width: 170px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 
@@ -775,8 +772,8 @@ cursor: pointer;
 }
 
 .isotope-hidden.isotope-item {
-  pointer-events: none;
   z-index: 1;
+  pointer-events: none;
 }
 
 /**** Isotope CSS3 transitions ****/
@@ -822,53 +819,53 @@ cursor: pointer;
 /* -------------- ROLL-OVER HOVER BOXES --------------- */
 
 .rollover-box {
+  position: absolute;
+  z-index: 2;
   -webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   -moz-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  color: #8e8e8e;
+  font-size: 12px;
   -webkit-transition: opacity .13s linear;
   -moz-transition: opacity .13s linear;
   -o-transition: opacity .13s linear;
   transition: opacity .13s linear;
-  color: #8e8e8e;
-  font-size: 12px;
-  position: absolute;
-  z-index: 2;
 }
 
 .rollover-main {
-  background-color: @white;
-  border: 1px solid #ccc;
-  border-bottom-color: #bbb;
+  position: relative;
+  display: block;
   overflow: hidden;
   padding: 15px;
-  position: relative;
   width: 348px;
-  display: block;
+  border: 1px solid #ccc;
+  border-bottom-color: #bbb;
+  background-color: @white;
 }
 
 .rollover-footer {
   .footer;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  border-bottom-color: #bbb;
-  border-top: 0;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
+  padding: 6px 15px 6px 15px;
+  width: 348px;
+  border: 1px solid #ccc;
+  border-top: 0;
+  border-bottom-color: #bbb;
+  background-color: #f9f9f9;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 348px;
-  padding: 6px 15px 6px 15px;
   line-height: 16px;
 }
 
 .footer {
   a {
+  margin-right: 0px;
   color: #8e8e8e;
   text-decoration: none;
-  margin-right: 0px;
     &:hover {
-      text-decoration: underline;
       color: #777;
+      text-decoration: underline;
     }
   }
 }
@@ -890,12 +887,12 @@ cursor: pointer;
 }
 
 .rollover-title {
-  color: @black;
-  font-size: 16px;
-  margin-bottom: 10px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
+  margin-bottom: 10px;
+  color: @black;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
 }
 
 .rollover-title a {
@@ -908,10 +905,10 @@ cursor: pointer;
 }
 
 .rollover-body {
+  overflow: hidden;
+  max-height: 152px;
   color: @black;
   font-size: 13px;
-  max-height: 152px;
-  overflow: hidden;
 }
 
 .rollover-powerpoint {
@@ -919,32 +916,32 @@ cursor: pointer;
 }
 
 .rollover-image {
-  max-height: 600px;
   overflow: hidden;
+  max-height: 600px;
 }
 
 
 .rollover-icons {
-  float: right;
   display: inline-block;
+  float: right;
 
 }
 
 .rollover-icon-mail {
+  display: inline-block;
   width: 16px;
   height: 16px;
   background:url("../img/rollover-mail.png") no-repeat;
-  display: inline-block;
 
   opacity: .4;
 
 }
 
 .rollover-icon-download {
+  display: inline-block;
   width: 16px;
   height: 16px;
   background:url("../img/rollover-download.png") no-repeat;
-  display: inline-block;
   opacity: .4;
 }
 
@@ -963,14 +960,14 @@ cursor: pointer;
 
 .image-container {
 
-  margin-right: 15px;
+  z-index: 1;
   display: inline-block;
   float: left;
+  overflow: hidden;
 
-  z-index: 1;
+  margin-right: 15px;
   width: 152px;
   height: 152px;
-  overflow: hidden;
 }
 
 .rollover-actions {
@@ -979,9 +976,9 @@ cursor: pointer;
 
 
 .image-inside {
+ overflow:hidden;
  width: 152px;
  height: auto;
- overflow:hidden;
 
 }
 
@@ -1004,30 +1001,30 @@ cursor: pointer;
 }
 
 .image-text {
-overflow: hidden;
 position: relative;
+overflow: hidden;
 text-overflow: ellipsis;
 white-space: nowrap;
 }
 
 .image-text a {
+  margin-right: 0px;
   color: #8e8e8e;
   text-decoration: none;
-  margin-right: 0px;
 }
 
 .image-text a:hover {
-  text-decoration: underline;
   color: #777;
+  text-decoration: underline;
 }
 
 /* ---------------- PAGINATION ---------------------- */
 
 .pagination-container {
-  float:right;
-  margin-right:16px;
-  margin-top: 1em;
   display: inline-block;
+  float:right;
+  margin-top: 1em;
+  margin-right:16px;
   .compact & {
     margin-top:15px;
   }
@@ -1044,35 +1041,35 @@ white-space: nowrap;
 
 
 .page-count {
-  font-size:13px;
   display:inline-block;
   float:right;
   margin-right: 10px;
   padding-top:7px;
+  font-size:13px;
 }
 
 .arrow-buttons {
-  margin-left: 0px;
   float: right;
+  margin-left: 0px;
   width: 72px;
 
 }
 
 .grey-button {
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  background-color: #f5f5f5;
-  background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
-  background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
-  color: #444;
+  display: inline-block;
   border: 1px solid #dcdcdc;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  font-size: 11px;
-  font-weight: bold;
+  background-color: #f5f5f5;
+  background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+  background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #444;
   text-align: center;
   white-space: nowrap;
-  display: inline-block;
+  font-weight: bold;
+  font-size: 11px;
   cursor: pointer;
   &:hover {
     border: 1px solid #c6c6c6;
@@ -1082,76 +1079,136 @@ white-space: nowrap;
 .page-button {
   .grey-button;
   margin-right: 0px;
+  padding: 3px 0px;
   width: 34px;
   outline: 0;
-  padding: 3px 0px;
 }
 
 
 .page-button:active {
+background: #f8f8f8;
 -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
-background: #f8f8f8;
 }
 
 .forward {
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 0px;
   float:right;
   margin-left: -1px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 
 .back {
-  border-bottom-right-radius: 0px;
-  border-top-right-radius: 0px;
   float:right;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 
 }
 
 .forward .arrow {
-  background: url(img/sprite_black2.png) -42px -21px no-repeat;
+  margin-top: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+  margin-left: auto;
   width: 21px;
   height: 21px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+  background: url(img/sprite_black2.png) -42px -21px no-repeat;
   opacity: .55;
 
 }
 
 .page-button:hover .forward .arrow {
-  background: url(img/sprite_black2.png) -42px -21px no-repeat;
+  margin-top: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+  margin-left: auto;
   width: 21px;
   height: 21px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+  background: url(img/sprite_black2.png) -42px -21px no-repeat;
   opacity: .9;
 }
 
 .back .arrow {
-  background: url(img/sprite_black2.png) -21px -21px no-repeat;
+  margin-top: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+  margin-left: auto;
   width: 21px;
   height: 21px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+  background: url(img/sprite_black2.png) -21px -21px no-repeat;
   opacity: .55;
 
 }
 
 .page-button:hover .back .arrow {
-  background: url(img/sprite_black2.png) -21px -21px no-repeat;
+  margin-top: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+  margin-left: auto;
   width: 21px;
   height: 21px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+  background: url(img/sprite_black2.png) -21px -21px no-repeat;
   opacity: .9;
+}
+
+/* --------------- TOOLTIP -------------- */
+  
+
+.mm-download {
+    .tooltip {
+      position: absolute;
+      z-index: 1030;
+      display: block;
+      visibility: visible;
+      border: none;
+      font-weight: bold;
+      font-size: 11px !important;
+      line-height: 11px;
+      opacity: 0;
+      filter: alpha(opacity=0);
+    }
+
+    .tooltip.in {
+      opacity: 1;
+      filter: alpha(opacity=100);
+    }
+
+
+    .tooltip.bottom {
+      margin-top: 3px;
+      margin-left: 24px;
+      padding: 5px 0;
+    }
+
+    .tooltip-inner {
+      padding: 8px;
+      max-width: 200px;
+      -webkit-border-radius: 0px !important;
+      -moz-border-radius: 0px !important;
+      border-radius: 0px;
+      background-color: #2a2a2a;
+      color: #ffffff;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .tooltip-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-color: transparent;
+      border-style: solid;
+    }
+
+
+.tooltip.bottom .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -30px;
+  border-width: 0 5px 5px;
+  border-bottom-color: #2a2a2a;
+}
+
 }
 
 
