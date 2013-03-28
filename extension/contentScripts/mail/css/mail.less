@@ -224,11 +224,11 @@ th {
 }
 */
 
-#mm-attachments-table tr {
+#mm-attachments-table .files {
   cursor: pointer;
 }
 
-#mm-links-table tr {
+#mm-links-table .files {
   cursor: pointer;
 }
 
@@ -346,33 +346,38 @@ table tr td .flex {
 }
 
 .compact .mm-icon {
-background-position: 5px 3px !important;
+background-position: 11px 3px !important;
 background-size: 18px 18px !important;
 padding-left: 16px !important;
 }
 
 .compact .mm-favicon {
-background-position: 5px 3px !important;
+background-position: 11px 3px !important;
 background-size: 18px 18px !important;
 padding-left: 15px !important;
 }
 
+
+.mm-download {
+  width: 21px;
+}
+
 .comfortable .mm-download {
-   background-position: 5px 10px !important;
+   background-position: 11px 13px !important;
    background-repeat: no-repeat;
-   width:16px;
+   
   }
 
 .compact .mm-download {
-   background-position: 5px 3px !important;
+   background-position: 5px 6px !important;
    background-repeat: no-repeat;
-   width:16px;
+ 
   }
 
 .cozy .mm-download {
-   background-position: 5px 7px !important;
+   background-position: 5px 10px !important;
    background-repeat: no-repeat;
-   width:16px;
+   
   }
 
 .files .mm-download {
@@ -747,10 +752,12 @@ cursor: pointer;
 
 .mm-images-tab {
   padding-top: 20px;
+  margin-top:10px;
 }
 
 .isotope {
   padding-top:10px;
+
 }
 
 .image-filename {

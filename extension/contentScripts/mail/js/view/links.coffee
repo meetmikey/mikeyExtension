@@ -1,6 +1,6 @@
 template = """
   {{#unless models}}
-    <div class="mm-placeholder">Oops. It doesn't look like Mikey has any links for you.</div>
+    <div class="mm-placeholder"></div>
   {{else}}
     <div class="pagination-container"></div>
     <table class="inbox-table" id="mm-links-table" border="0">
@@ -34,14 +34,15 @@ template = """
   {{/unless}}
 """
 
-openIconUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/open-link.png")
+openIconUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/mail.png")
 
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   events:
-    'click .files .mm-file': 'openMessage'
-    'click .files .mm-download': 'openLink'
+    'click .files .mm-file': 'openLink'
+    'click .files .mm-source': 'openLink'
+    'click .files .mm-download': 'openMessage'
     'mouseenter .files': 'startRollover'
     'mouseleave .files': 'cancelRollover'
     'mousemove .files': 'delayRollover'

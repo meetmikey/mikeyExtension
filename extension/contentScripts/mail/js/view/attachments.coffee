@@ -1,6 +1,6 @@
 template = """
   {{#unless models}}
-    <div class="mm-placeholder">Oops. It doesn't look like Mikey has any files for you.</div>
+    <div class="mm-placeholder"></div>
   {{else}}
     <div class="pagination-container"></div>
     <table class="inbox-table" id="mm-attachments-table" border="0">
@@ -38,15 +38,15 @@ template = """
     <div class="rollover-container"></div>
   {{/unless}}
 """
-downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/download.png")
+downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/mail.png")
 
 
 class MeetMikey.View.Attachments extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   events:
-    'click .files .mm-file': 'openMessage'
-    'click .files .mm-download': 'openAttachment'
+    'click .files .mm-file': 'openAttachment'
+    'click .files .mm-download': 'openMessage'
     'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
