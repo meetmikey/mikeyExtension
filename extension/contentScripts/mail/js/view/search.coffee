@@ -2,7 +2,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
   subViews:
     'searchBar':
       viewClass: MeetMikey.View.SearchBar
-      selector: '#gbqf'
+      selector: MeetMikey.Settings.Selectors.searchBarSelector
     'tabs':
       viewClass: MeetMikey.View.Tabs
       selector: '#mm-search-tabs-container'
@@ -34,13 +34,14 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
 
 
   injectSearchResultsContainer: =>
-    selector = '.BltHke.nH.oy8Mbf[role=main] .UI'
+    selector = MeetMikey.Settings.Selectors.inboxContainerSelector
     element =  '<div id="mm-search-container" class="mm-container" style="display: none;"></div>'
     MeetMikey.Helper.DOMManager.injectBeside selector, element
 
   injectTabBarContainer: =>
+    selector = MeetMikey.Settings.Selectors.inboxContainerSelector
     element = '<div id="mm-search-tabs-container" class="mm-tabs-container"></div>'
-    MeetMikey.Helper.DOMManager.injectInto '[id=":ro"] [gh="tm"] .nH.aqK', element, =>
+    MeetMikey.Helper.DOMManager.injectInto selector, element, =>
       @renderSubview 'tabs'
       @subView('tabs').setActiveTab MeetMikey.Globals.tabState
       @$('.AO').addClass 'AO-tabs'
