@@ -1,6 +1,6 @@
 class Setup
-  inboxSelector: '.UI'
-  tabsSelector: "[id=':ro'] .nH.aqK"
+  inboxSelector: MeetMikey.Settings.Selectors.inboxContainer
+  tabsSelector: MeetMikey.Settings.Selectors.tabsContainer
 
   start: =>
     $(window).one('DOMSubtreeModified', @bootstrap)

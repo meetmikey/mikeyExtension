@@ -1,6 +1,6 @@
 template = """
   {{#unless models}}
-    <div class="mm-placeholder">Oops. It doesn't look like Mikey has any links for you.</div>
+    <div class="mm-placeholder"></div>
   {{else}}
     <div class="pagination-container"></div>
     <table class="inbox-table" id="mm-links-table" border="0">
@@ -15,7 +15,12 @@ template = """
       <tbody>
         {{#each models}}
         <tr class="files" data-cid="{{cid}}">
-            <td class="mm-download" style="background-image: url('{{../openIconUrl}}');">&nbsp;</td>
+            <td class="mm-download">
+              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                <div class="list-icon" style="background-image: url('{{../openIconUrl}}');">
+                </div>
+              </div>
+            </td>
             <td class="mm-file mm-favicon truncate" style="background:url({{faviconURL}}) no-repeat;">
               <div class="flex">
                 {{title}}
@@ -34,17 +39,19 @@ template = """
   {{/unless}}
 """
 
-openIconUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/open-link.png")
+openIconUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/sprite.png")
 
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   events:
-    'click .files .mm-file': 'openMessage'
-    'click .files .mm-download': 'openLink'
-    'mouseenter .files': 'startRollover'
-    'mouseleave .files': 'cancelRollover'
-    'mousemove .files': 'delayRollover'
+    'click .files .mm-file': 'openLink'
+    'click .files .mm-source': 'openLink'
+    'click .files .mm-download': 'openMessage'
+    'mouseenter .files .mm-file, .files .mm-source': 'startRollover'
+    'mouseleave .files .mm-file, .files .mm-source': 'cancelRollover'
+    'mousemove .files .mm-file, .files .mm-source': 'delayRollover'
+
 
   pollDelay: 1000*45
 
@@ -61,6 +68,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
+    $('.mm-download-tooltip').tooltip placement: 'bottom'
 
   teardown: =>
     @collection.off 'reset', @render

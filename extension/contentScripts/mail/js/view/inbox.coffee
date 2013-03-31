@@ -23,7 +23,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
       args: {}
 
   tabs:
-    email: '.UI'
+    email: MeetMikey.Settings.Selectors.inboxContainer
     attachments: '.mm-attachments-tab'
     links: '.mm-links-tab'
     images: '.mm-images-tab'
@@ -48,8 +48,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @hideAllTabs()
     @manageInboxDisplay(tab)
     $(@tabs[tab]).show()
-    @subView(tab)?.trigger 'showTab'
     Backbone.trigger 'change:tab', tab
+    @subView(tab)?.trigger 'showTab'
     @trackTabEvent(tab)
 
   hideAllTabs: () =>

@@ -1,6 +1,6 @@
 template = """
   {{#unless models}}
-    <div class="mm-placeholder">Oops. It doesn't look like Mikey has any files for you.</div>
+    <div class="mm-placeholder"></div>
   {{else}}
     <div class="pagination-container"></div>
     <table class="inbox-table" id="mm-attachments-table" border="0">
@@ -23,7 +23,12 @@ template = """
           <div class="checkbox"><div class="check"></div></div>
         </td> -->
 
-        <td class="mm-download" style="background-image: url('{{../downloadUrl}}');">&nbsp;</td>
+         <td class="mm-download">
+              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                <div class="list-icon" style="background-image: url('{{../downloadUrl}}');">
+                </div>
+              </div>
+          </td>
         <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
         <td class="mm-file truncate">{{filename}}&nbsp;</td>
         <td class="mm-from truncate">{{from}}</td>
@@ -38,15 +43,15 @@ template = """
     <div class="rollover-container"></div>
   {{/unless}}
 """
-downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/download.png")
+downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/sprite.png")
 
 
 class MeetMikey.View.Attachments extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   events:
-    'click .files .mm-file': 'openMessage'
-    'click .files .mm-download': 'openAttachment'
+    'click .files .mm-file': 'openAttachment'
+    'click .files .mm-download': 'openMessage'
     'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
@@ -60,6 +65,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @rollover = new MeetMikey.View.AttachmentRollover collection: @collection, search: !@options.fetch
     @pagination = new MeetMikey.Model.PaginationState items: @collection
 
+
     @collection.on 'reset add', _.debounce(@render, 50)
 
     if @options.fetch
@@ -68,6 +74,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
+    $('.mm-download-tooltip').tooltip placement: 'bottom'
 
   teardown: =>
     @collection.off('reset', @render)

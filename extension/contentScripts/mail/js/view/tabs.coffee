@@ -46,10 +46,10 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     $(window).resize @setWidth
 
   setWidth: =>
-    elem = $('.nH.nn > .nH > .nH').parent().parent()
+    selector = MeetMikey.Settings.Selectors.widthElem
+    elem = $(selector).parent().parent()
     width = elem.width()
     @$el.css 'width', width
-
 
   setActiveTab: (tab) =>
     @$('.mikey-tab').removeClass 'active'

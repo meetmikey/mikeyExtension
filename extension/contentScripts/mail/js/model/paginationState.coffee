@@ -6,8 +6,6 @@ class MeetMikey.Model.PaginationState extends MeetMikey.Model.Base
 
   initialize: =>
     @items = @get 'items'
-    # Backbone.on 'change:tab', =>
-    #   @set('page', 0) if @get('page') isnt 0
 
   getStateData: =>
     index = @currentPageIndex()

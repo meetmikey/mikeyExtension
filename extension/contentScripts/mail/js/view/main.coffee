@@ -1,4 +1,5 @@
 class MeetMikey.View.Main extends MeetMikey.View.Base
+  contentSelector: MeetMikey.Settings.Selectors.contentContainer
   subViews:
     'tabs':
       viewClass: MeetMikey.View.Tabs
@@ -10,7 +11,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       args: {fetch: true, name: 'main'}
     'search':
       viewClass: MeetMikey.View.Search
-      selector: '.no .nH.nn'
+      selector: MeetMikey.Settings.Selectors.topLevelSelector
       args: {name: 'search', render: false, renderChildren: false}
     'sidebar':
       viewClass: MeetMikey.View.Sidebar
@@ -40,7 +41,8 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     Backbone.off 'change:tab'
 
   detectLayout: =>
-    padding = parseFloat $('.xY').css('padding-top')
+    $elem = $(MeetMikey.Settings.Selectors.tableCell)
+    padding = parseFloat $elem.css('padding-top')
 
     if padding < 4.5
       'compact'
@@ -60,9 +62,10 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     MeetMikey.Helper.DOMManager.injectBeside @options.inboxTarget, element
 
   injectTabBarContainer: =>
+    selector = MeetMikey.Settings.Selectors.tabsContainer
     element = '<div id="mm-tabs-container" class="mm-tabs-container"></div>'
-    MeetMikey.Helper.DOMManager.injectInto '[id=":ro"] .nH.aqK', element, =>
-      @$('.AO').addClass 'AO-tabs'
+    MeetMikey.Helper.DOMManager.injectInto selector, element, =>
+      @$(@contentSelector).addClass 'AO-tabs'
 
   showEmailTab: =>
     @subView('tabs').setActiveTab 'email'
@@ -71,6 +74,6 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
   pageNavigated: =>
     viewWithTabs = /#search(?!.+\/)|#inbox(?!\/)/.test window.location.hash
     if viewWithTabs
-      @$('.AO').addClass 'AO-tabs'
+      @$(@contentSelector).addClass 'AO-tabs'
     else
-      @$('.AO').removeClass 'AO-tabs'
+      @$(@contentSelector).removeClass 'AO-tabs'
