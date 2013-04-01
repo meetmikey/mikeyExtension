@@ -92,7 +92,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   fetchSuccess: (collection, response) =>
     @fetching = false
-    @endOfImages = true if _.isEmpty(@response)
+    @endOfImages = true if _.isEmpty(response)
     @render()
     @$el.isotope('reloadItems')
     @initIsotope()
