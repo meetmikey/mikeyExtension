@@ -6,7 +6,7 @@ class MeetMikey.Collection.Base extends Backbone.Collection
     opts ?= {}
     apiData =
       userEmail: MeetMikey.globalUser.get('email')
-      refreshToken: MeetMikey.globalUser.get('refreshToken')
+      asymHash: MeetMikey.globalUser.get('asymHash')
     if opts.data?
       _.extend opts.data, apiData
     else

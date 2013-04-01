@@ -42,7 +42,7 @@ MeetMikey.Helper.callAPI = (options) ->
   options.cache = false
   apiData =
     userEmail: MeetMikey.globalUser?.get('email')
-    refreshToken: MeetMikey.globalUser?.get('refreshToken')
+    asymHash: MeetMikey.globalUser?.get('asymHash')
 
   _.extend apiData, options.data if options.data?
   options.data = apiData

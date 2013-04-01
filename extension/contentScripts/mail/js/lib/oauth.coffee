@@ -19,13 +19,13 @@ class OAuth
 
   authorize: (callback) =>
     data = @getUserInfo()
-    if data?.refreshToken?
+    if data?.asymHash?
       @refresh data, callback
     else
       @openAuthWindow callback
 
   authorized: =>
-    @getUserInfo()?.refreshToken?
+    @getUserInfo()?.asymHash?
 
   doNotAsk: =>
     @storeUserInfo email: @getUserEmail(), ignoreAccount: true
@@ -36,13 +36,13 @@ class OAuth
   checkUser: (callback) =>
     data = @getUserInfo()
     return if data?.ignoreAccount
-    return callback null unless data?.refreshToken?
+    return callback null unless data?.asymHash?
 
     MeetMikey.Helper.callAPI
       url: 'user'
       type: 'GET'
       data:
-        refreshToken: data.refreshToken
+        asymHash: data.asymHash
         userEmail: data.email
       success: (res) =>
         @storeUserInfo res
@@ -64,17 +64,17 @@ class OAuth
         @authFail()
 
     $(window).on 'message', handleMessage
-    window.open MeetMikey.Helper.getAPIUrl() + '/auth/google'
+    window.open MeetMikey.Helper.getAPIUrl() + '/auth/google?userEmail=' + @getUserEmail()
 
   refresh: (callback) =>
     data = @getUserInfo()
-    return callback null unless data?.refreshToken?
+    return callback null unless data?.asymHash?
 
     MeetMikey.Helper.callAPI
       url: "auth/refresh"
       type: 'POST'
       data:
-        refreshToken: data.refreshToken
+        asymHash: data.asymHash
         email: data.email
       success: (res) =>
         if @isUserEmail res.email
