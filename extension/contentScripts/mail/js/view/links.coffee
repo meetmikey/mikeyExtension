@@ -15,8 +15,11 @@ template = """
       <tbody>
         {{#each models}}
         <tr class="files" data-cid="{{cid}}">
-            <td class="mm-download" style="background-image: url('{{../openIconUrl}}');">
-              <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">&nbsp;</div>
+            <td class="mm-download">
+              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                <div class="list-icon" style="background-image: url('{{../openIconUrl}}');">
+                </div>
+              </div>
             </td>
             <td class="mm-file mm-favicon truncate" style="background:url({{faviconURL}}) no-repeat;">
               <div class="flex">
@@ -36,7 +39,7 @@ template = """
   {{/unless}}
 """
 
-openIconUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/mail.png")
+openIconUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/sprite.png")
 
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)

@@ -23,9 +23,12 @@ template = """
           <div class="checkbox"><div class="check"></div></div>
         </td> -->
 
-        <td class="mm-download" style="background-image: url('{{../downloadUrl}}');">
-              <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">&nbsp;</div>
-        </td>
+         <td class="mm-download">
+              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                <div class="list-icon" style="background-image: url('{{../downloadUrl}}');">
+                </div>
+              </div>
+          </td>
         <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
         <td class="mm-file truncate">{{filename}}&nbsp;</td>
         <td class="mm-from truncate">{{from}}</td>
@@ -40,7 +43,7 @@ template = """
     <div class="rollover-container"></div>
   {{/unless}}
 """
-downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/mail.png")
+downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/sprite.png")
 
 
 class MeetMikey.View.Attachments extends MeetMikey.View.Base

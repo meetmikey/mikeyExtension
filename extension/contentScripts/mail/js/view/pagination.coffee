@@ -2,13 +2,13 @@ template = """
   <div class="pagination-wrapper" style="display: {{display}};">
   <div class="arrow-buttons">
 
-       <div class="page-button forward next-page">
-        <div class="arrow" style="background: url({{arrowSprite}}) -42px -21px no-repeat">
+       <div class="page-button right-box next-page">
+        <div class="forward arrow" style="background-image: url({{arrowSprite}})">
         </div>
       </div>
 
-      <div class="page-button back prev-page">
-        <div class="arrow" style="background: url({{arrowSprite}}) -21px -21px no-repeat">
+      <div class="page-button left-box prev-page">
+        <div class="back arrow" style="background-image: url({{arrowSprite}})">
         </div>
       </div>
 
@@ -18,7 +18,7 @@ template = """
      </div>
 """
 imgPath = MeetMikey.Settings.imgPath
-arrowSprite = chrome.extension.getURL "#{imgPath}/sprite_black2.png"
+arrowSprite = chrome.extension.getURL "#{imgPath}/sprite.png"
 
 class MeetMikey.View.Pagination extends MeetMikey.View.Base
   template: Handlebars.compile(template)
