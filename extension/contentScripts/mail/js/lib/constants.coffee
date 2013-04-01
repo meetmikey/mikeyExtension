@@ -31,3 +31,18 @@ _.extend MeetMikey.Settings,
 
     # the element that is used to measure the width of the inbox
     widthElem: '.nH.nn > .nH > .nH'
+
+    # links on the sidebar, inbox, starred, etc
+    sideBarLink: '.aim'
+
+    # the non-selected (normal) text in the sidebar
+    sideBarText: ":not(.nZ) > div > div > .nU > .n0"
+
+    # the text found in the inbox on read messages
+    inboxReadText: ".yO"
+
+    # the text found in the inbox on unread messages
+    inboxUnreadText: ".zE"
+
+    # selector on which the button colors are defined
+    buttonColor: '.G-atb .T-I-ax7'

@@ -21,7 +21,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
   preInitialize: =>
     @injectInboxContainer()
     @injectTabBarContainer()
-    @setLayout @detectLayout()
+    MeetMikey.Helper.Theme.setup()
     @options.render = false
 
   postInitialize: =>
@@ -39,6 +39,11 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   teardown: =>
     Backbone.off 'change:tab'
+
+  detectTheme: =>
+    color = $(MeetMikey.Settings.Selectors.sidebarText).css 'color'
+    inboxColor = $(MeetMikey.Settings.Selectors.inboxReadText)
+
 
   detectLayout: =>
     $elem = $(MeetMikey.Settings.Selectors.tableCell)

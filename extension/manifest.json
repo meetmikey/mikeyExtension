@@ -22,6 +22,7 @@
             "contentScripts/mail/js/lib/localstore.js",
             "contentScripts/mail/js/lib/oauth.js",
             "contentScripts/mail/js/lib/dom.js",
+            "contentScripts/mail/js/lib/theme.js",
             "contentScripts/mail/js/lib/mixpanel.js",
             "contentScripts/mail/js/collection/base.js",
             "contentScripts/mail/js/model/base.js",
