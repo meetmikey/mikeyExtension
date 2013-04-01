@@ -13,7 +13,6 @@ class ThemeManager
 
   setTheme: (themeOpts) =>
     classes = _.values(themeOpts).join ' '
-    console.log themeOpts
     @$body.addClass classes
 
   detectLayout: =>
