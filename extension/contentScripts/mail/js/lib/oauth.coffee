@@ -1,6 +1,6 @@
 class OAuth
   getUserEmail: ->
-    $('#gbmpdv .gbps2').text()
+    $(MeetMikey.Settings.Selectors.userEmail).text()
 
   isUserEmail: (email) =>
     email is @getUserEmail()
