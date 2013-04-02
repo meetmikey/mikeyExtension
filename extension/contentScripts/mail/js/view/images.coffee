@@ -101,10 +101,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     console.log 'isotoping'
     @$el.isotope
       filter: '*'
-      animationOptions:
-        duration: 750
-        easing: 'linear'
-        queue: false
+      animationEngine: 'css'
 
   checkAndRunIsotope: =>
     console.log 'checkAndRunIsotope'
