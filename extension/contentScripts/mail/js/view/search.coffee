@@ -34,12 +34,12 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
 
 
   injectSearchResultsContainer: =>
-    selector = MeetMikey.Settings.Selectors.inboxContainerSelector
+    selector = MeetMikey.Settings.Selectors.inboxContainer
     element =  '<div id="mm-search-container" class="mm-container" style="display: none;"></div>'
     MeetMikey.Helper.DOMManager.injectBeside selector, element
 
   injectTabBarContainer: =>
-    selector = MeetMikey.Settings.Selectors.inboxContainerSelector
+    selector = MeetMikey.Settings.Selectors.tabsContainer
     element = '<div id="mm-search-tabs-container" class="mm-tabs-container"></div>'
     MeetMikey.Helper.DOMManager.injectInto selector, element, =>
       @renderSubview 'tabs'
