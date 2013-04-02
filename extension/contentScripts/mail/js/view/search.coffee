@@ -2,7 +2,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
   subViews:
     'searchBar':
       viewClass: MeetMikey.View.SearchBar
-      selector: MeetMikey.Settings.Selectors.searchBarSelector
+      selector: MeetMikey.Settings.Selectors.searchBar
     'tabs':
       viewClass: MeetMikey.View.Tabs
       selector: '#mm-search-tabs-container'
@@ -31,7 +31,6 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     MeetMikey.Helper.Mixpanel.trackEvent 'search',
       query: query
       currentTab: MeetMikey.Globals.tabState
-
 
   injectSearchResultsContainer: =>
     selector = MeetMikey.Settings.Selectors.inboxContainer
