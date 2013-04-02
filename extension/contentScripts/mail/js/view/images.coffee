@@ -9,10 +9,10 @@ template = """
           <div class="image-filename">
             <a href="{{url}}">{{filename}}&nbsp;</a>
           </div>
-         
+
           <div class="rollover-actions">
             <!-- <a href="#">Forward</a> -->
-            
+
              {{#if ../searchQuery}}
                 <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
               {{else}}
@@ -101,10 +101,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     console.log 'isotoping'
     @$el.isotope
       filter: '*'
-      animationOptions:
-        duration: 750
-        easing: 'linear'
-        queue: false
+      animationEngine: 'css'
 
   checkAndRunIsotope: =>
     console.log 'checkAndRunIsotope'
