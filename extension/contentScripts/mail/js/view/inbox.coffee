@@ -3,6 +3,7 @@ template = """
     <div class="mm-attachments-tab" style="display: none;"></div>
     <div class="mm-links-tab" style="display: none;"></div>
     <div class="mm-images-tab transitions-disabled" style="display: none;"></div>
+    <div style="clear: both;"></div>
 """
 
 class MeetMikey.View.Inbox extends MeetMikey.View.Base
