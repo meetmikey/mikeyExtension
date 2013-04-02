@@ -14,6 +14,9 @@ _.extend MeetMikey.Settings,
     # selector that the inbox should be inserted before
     inboxContainer: '.BltHke.nH.oy8Mbf[role=main] .UI'
 
+    # selector for all email views in the dom
+    allInboxes: '.UI'
+
     # top search bar container
     searchBar: '#gbqf'
 

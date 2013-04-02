@@ -23,7 +23,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
       args: {}
 
   tabs:
-    email: MeetMikey.Settings.Selectors.inboxContainer
+    email: MeetMikey.Settings.Selectors.allInboxes
     attachments: '.mm-attachments-tab'
     links: '.mm-links-tab'
     images: '.mm-images-tab'
