@@ -47,5 +47,8 @@ _.extend MeetMikey.Settings,
     # selector on which the button colors are defined
     buttonColor: '.G-atb .T-I-ax7'
 
+    # text for gmail dropdown below logo
+    gmailDropdownText: '[id=":rg"] span'
+
     # element that contains the user's email address
     userEmail: '#gbmpdv .gbps2'
