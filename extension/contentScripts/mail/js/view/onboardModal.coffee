@@ -6,6 +6,7 @@ template = """
     </div>
     <div class="modal-body">
       <p>Mikey needs access to your Gmail in order to perform his magic.</p>
+      <p>Once you connect, it should take a few hours to process.</p>
       
 
 

@@ -1,135 +1,126 @@
 <html lang="en">
-	<head>
-		<link href="css/mail.css" rel="stylesheet">
-
-
+<head>
+	<link href="css/mail.css" rel="stylesheet">
+	<link href="../../lib/css/bootstrap.css" rel="stylesheet">
 	<script src="../../lib/js/underscore.js"></script>
-    <script src="../../lib/js/backbone.js"></script>
+	<script src="../../lib/js/backbone.js"></script>
+	<script src="../../lib/js/jquery.js"></script>
+	<script src="../../lib/js/bootstrap.js"></script>
+	<script src="../../lib/js/handlebars.js"></script>
+	<script src="../../lib/js/isotope.js"></script>
 
-    <script src="../../lib/js/handlebars.js"></script>
-    <script src="../../lib/js/jquery.js"></script>
-    <script src="../../lib/js/isotope.js"></script>
+
+</head>
+<body style="background:url('img/background.png') no-repeat;">
+	<div style="margin: 166px 0px 0px 168px;">
 		
-		<script type="text/javascript">
-	
-$(window).load(function(){
-    var $container = $('#container');
-    $container.isotope({
-        filter: '*',
-        animationOptions: {
-            duration: 750,
-            easing: 'linear',
-            queue: false,
-        }
-    });
-});
+		<div id="example" class="modal hide fade in" style="display: none; ">  
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3>Awesome. Thank you.</h3>
+			</div>
+			<div class="modal-body">
+				<p>Mikey is at work making your Gmail better. It will take a little bit, but once he does, your inbox will have these nifty little tabs.</p>
 
-var $container = $('#container');
+				<div id="myCarousel" class="carousel slide">  
+					<!-- Carousel items -->  
+					<div class="carousel-inner">  
+						<div class="active item"><img src="/update-images/html5_logo.png" alt="HTML5 logo" width="500" height="99" /></div>  
+						<div class="item"><img src="/update-images/javascript-logo.png" alt="JS logo" width="500" height="99" /></div>  
+						<div class="item"><img src="/update-images/javascript-logo.png" alt="JS logo" width="500" height="99" /></div>  
+					</div>  
+					<!-- Carousel nav -->  
+					<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>  
+					<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>  
+				</div>  
 
-$container.imagesLoaded( function(){
-  $container.isotope({
-    // options...
-  });
-});
-		</script>
 
-	</head>
-	<body style="background:url('img/background.png') no-repeat;">
-		<div style="margin: 166px 0px 0px 168px;">
-			<ul class="mikey-tabs">
-				<li class="mikey-tab">
-					<a href="#">Emails</a>
-				</li>
-				<a href="#"><li class="mikey-tab">
-					Files
-				</li></a>
-				<li class="mikey-tab">
-					<a href="#">Links</a>
-				</li>
-				<li class="mikey-tab active">
-					<a href="#">Images</a>
-				</li>
-
-			</ul>
+			</div>
+			<div class="footer-buttons">
+				<a href="#" data-dismiss="modal"  class="button buttons">Cool. Got it.</a>
+			</div>
 		</div>
 
-		<div style="margin:20px 20px 0px 166px; padding-top: 20px;" id="container">
-			
-			<div class="box">
-				<img class="mm-image" src="img/1.png">
-					
-					 chart.png
-			</div>
 
-			<div class="box">
-			<img class="mm-image" src="img/2.JPG">
-				All-the-dipping-sauces.jpg
-			</div>
-
-			<div class="box">
-			<img class="mm-image" src="img/3.jpg">
-				c-5031769769887123-02.jpg
-			</div>
-
-			<div class="box">
-			<img class="mm-image" src="img/4.jpg">
-				jerry-seinfeld.jpg
-			</div>
-
-			<div class="box">
-			<img class="mm-image" src="img/5.jpg">
-				robot-arm-grammy-2012.jpg
-			</div>
-
-
-			<div class="box">
-			<img class="mm-image" src="img/7.jpg">
-				
-			</div>
-
-				<div class="box">
-				<img class="mm-image" src="img/1.png">
-					
-					 chart.png
-			</div>
-
-			<div class="box">
-			<img class="mm-image" src="img/2.JPG">
-				All-the-dipping-sauces.jpg
-			</div>
-
-			<div class="box">
-			<img class="mm-image" src="img/3.jpg">
-				c-5031769769887123-02.jpg
-			</div>
-
-			<div class="box">
-			<img class="mm-image" src="img/4.jpg">
-				jerry-seinfeld.jpg
-			</div>
-
-			<div class="box">
-			<img class="mm-image" src="img/5.jpg">
-				robot-arm-grammy-2012.jpg
-			</div>
-
-			<div class="box">
-			<img class="mm-image" src="img/7.jpg">
-				
-			</div>
-
-
+		<p><a data-toggle="modal" href="#example" class="btn btn-primary btn-large">Thank you</a></p>  
 		
 
-		
+	</div>
 
-
-		</div>
 	
 
+	<div style="margin:20px 20px 0px 166px; padding-top: 20px;" id="container">
 
-  
+		<div class="box">
+			<img class="mm-image" src="img/1.png">
+
+			chart.png
+		</div>
+
+		<div class="box">
+			<img class="mm-image" src="img/2.JPG">
+			All-the-dipping-sauces.jpg
+		</div>
+
+		<div class="box">
+			<img class="mm-image" src="img/3.jpg">
+			c-5031769769887123-02.jpg
+		</div>
+
+		<div class="box">
+			<img class="mm-image" src="img/4.jpg">
+			jerry-seinfeld.jpg
+		</div>
+
+		<div class="box">
+			<img class="mm-image" src="img/5.jpg">
+			robot-arm-grammy-2012.jpg
+		</div>
 
 
-	</body>
+		<div class="box">
+			<img class="mm-image" src="img/7.jpg">
+
+		</div>
+
+		<div class="box">
+			<img class="mm-image" src="img/1.png">
+
+			chart.png
+		</div>
+
+		<div class="box">
+			<img class="mm-image" src="img/2.JPG">
+			All-the-dipping-sauces.jpg
+		</div>
+
+		<div class="box">
+			<img class="mm-image" src="img/3.jpg">
+			c-5031769769887123-02.jpg
+		</div>
+
+		<div class="box">
+			<img class="mm-image" src="img/4.jpg">
+			jerry-seinfeld.jpg
+		</div>
+
+		<div class="box">
+			<img class="mm-image" src="img/5.jpg">
+			robot-arm-grammy-2012.jpg
+		</div>
+
+		<div class="box">
+			<img class="mm-image" src="img/7.jpg">
+
+		</div>
+
+
+		
+
+		
+
+
+	</div>
+	
+</body>
 </html>
