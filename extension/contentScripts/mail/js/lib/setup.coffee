@@ -6,6 +6,9 @@ class Setup
     $(window).one('DOMSubtreeModified', @bootstrap)
 
   bootstrap: =>
+    MeetMikey.Helper.BetaAccess.checkAccess @checkSelectors
+
+  checkSelectors: =>
     MeetMikey.Helper.findSelectors @inboxSelector, @tabsSelector, @setup
 
   setup: (target) =>
