@@ -15,6 +15,9 @@ _.extend MeetMikey.Settings,
     # selector that the inbox should be inserted before
     inboxContainer: '.BltHke.nH.oy8Mbf[role=main] .UI'
 
+    # selector for all email views in the dom
+    allInboxes: '.UI'
+
     # top search bar container
     searchBar: '#gbqf'
 
@@ -47,6 +50,9 @@ _.extend MeetMikey.Settings,
 
     # selector on which the button colors are defined
     buttonColor: '.G-atb .T-I-ax7'
+
+    # text for gmail dropdown below logo
+    gmailDropdownText: '[id=":rg"] span'
 
     # element that contains the user's email address
     userEmail: '#gbmpdv .gbps2'

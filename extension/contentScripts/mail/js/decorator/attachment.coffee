@@ -86,9 +86,8 @@ class AttachmentDecorator
 
   getUrl: (model) =>
     email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
-    refreshToken = MeetMikey.globalUser.get('refreshToken')
-
-    "#{MeetMikey.Helper.getAPIUrl()}/attachmentURL/#{model.id}?userEmail=#{email}&refreshToken=#{refreshToken}"
+    asymHash = MeetMikey.globalUser.get('asymHash')
+    "#{MeetMikey.Helper.getAPIUrl()}/attachmentURL/#{model.id}?userEmail=#{email}&asymHash=#{asymHash}"
 
 
 MeetMikey.Decorator.Attachment = new AttachmentDecorator()

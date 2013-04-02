@@ -2,7 +2,7 @@ template = """
     <div id="mm-tabs"></div>
     <div class="mm-attachments-tab" style="display: none;"></div>
     <div class="mm-links-tab" style="display: none;"></div>
-    <div class="mm-images-tab" style="display: none;"></div>
+    <div class="mm-images-tab transitions-disabled" style="display: none;"></div>
 """
 
 class MeetMikey.View.Inbox extends MeetMikey.View.Base
@@ -23,7 +23,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
       args: {}
 
   tabs:
-    email: MeetMikey.Settings.Selectors.inboxContainer
+    email: MeetMikey.Settings.Selectors.allInboxes
     attachments: '.mm-attachments-tab'
     links: '.mm-links-tab'
     images: '.mm-images-tab'
