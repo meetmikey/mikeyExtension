@@ -14,9 +14,9 @@ class Mixpanel
     @_engage user
 
   trackEvent: (event, props) =>
-    unless @inCorrectEnv
-      console.log 'tracking event:', event, @_buildObj(event,props), @inCorrectEnv
+    unless @inCorrectEnv && @_isRealUser()
       return
+    #console.log 'tracking event:', event, @_buildObj(event,props), @inCorrectEnv
     props = if props? then _.clone(props) else {}
     @_track event, props
 
@@ -24,6 +24,9 @@ class Mixpanel
     # btoa dies on utf-8 strings, escape/unescape fixes
     str = JSON.stringify obj
     window.btoa unescape encodeURIComponent str
+
+  _isRealUser: =>
+    ! _.contains(MeetMikey.Settings.MikeyTeamUserIds, @userId)
 
   _buildObj: (event, props)=>
     metaData = _.extend (@userProps ? {}), {token: @token, time: Date.now(), distinct_id: @userId}
