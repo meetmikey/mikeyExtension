@@ -7,7 +7,7 @@ template = """
         <img class="mm-image" src="{{image}}" />
         <div class="image-text">
           <div class="image-filename">
-            <a href="{{image}}">{{filename}}&nbsp;</a>
+            <a href="{{url}}">{{filename}}&nbsp;</a>
           </div>
          
           <div class="rollover-actions">
