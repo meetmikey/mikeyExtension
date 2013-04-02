@@ -9,10 +9,10 @@ template = """
           <div class="image-filename">
             <a href="{{url}}">{{filename}}&nbsp;</a>
           </div>
-         
+
           <div class="rollover-actions">
             <!-- <a href="#">Forward</a> -->
-            
+
              {{#if ../searchQuery}}
                 <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
               {{else}}
