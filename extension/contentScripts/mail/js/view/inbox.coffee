@@ -47,6 +47,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   showTab: (tab) =>
     @hideAllTabs()
     @manageInboxDisplay(tab)
+    @managePaginationDisplay(tab)
     $(@tabs[tab]).show()
     Backbone.trigger 'change:tab', tab
     @subView(tab)?.trigger 'showTab'
@@ -59,6 +60,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   manageInboxDisplay: (tab) =>
     method = if tab is 'email' then 'hide' else 'show'
     @$el[method]()
+
+  managePaginationDisplay: (tab) =>
+    method = if tab isnt 'email' then 'hide' else 'show'
+    $(MeetMikey.Settings.Selectors.gmailPagination)[method]()
 
   trackTabEvent: (tab) =>
     MeetMikey.Helper.Mixpanel.trackEvent 'tabChange',

@@ -55,3 +55,6 @@ _.extend MeetMikey.Settings,
 
     # element that contains the user's email address
     userEmail: '#gbmpdv .gbps2'
+
+    # gmail's pagination controls
+    gmailPagination: '.Cr.aqJ > .ar5.J-J5-Ji'
