@@ -27,11 +27,16 @@ class ThemeManager
       'cozy'
 
   detectTheme: =>
+    return {} if @isDefaultTheme()
     color = if @colorIsLight(@getTextColor()) then 'light' else 'dark'
     boxColor = if @colorIsLight(@getInboxTextColor()) then 'dark-blocks' else 'light-blocks'
-    buttonColor = if @colorIsLight(@getButtonTextColor()) then 'light-buttons' else 'dark-buttons'
+    buttonColor = if @colorIsLight(@getButtonColor()) then 'light-buttons' else 'dark-buttons'
 
     {color, boxColor, buttonColor}
+
+  isDefaultTheme: =>
+    color = $(MeetMikey.Settings.Selectors.gmailDropdownText).css 'color'
+    @colorIsRed color
 
   getTextColor: =>
     $(MeetMikey.Settings.Selectors.sideBarText).css 'color'
@@ -39,21 +44,26 @@ class ThemeManager
   getInboxTextColor: =>
     $(@inboxReadTextSelector).css('color') ? $(@inboxUnreadTextSelector).css('color')
 
-  getButtonTextColor: =>
+  getButtonColor: =>
     $(MeetMikey.Settings.Selectors.buttonColor).css 'background-image'
 
   parseRGB: (str) =>
-    [match, red, green, blue] = str.match /\((\d+), (\d+), (\d+)/
+    match = str.match /\((\d+), (\d+), (\d+)/
+    colors = match[1..3].map (color) -> parseInt color, 10
 
-    {red, green, blue}
+    {red: colors[0], green: colors[1], blue: colors[2]}
 
   brightnessRGB: (colors) =>
-    numbers = _.chain(colors).values().map (color) -> parseInt color, 10
-    sum = _.reduce numbers.value(), (memo, num) -> memo + num
+    sum = _.reduce _.values(colors), (memo, num) -> memo + num
     sum / 3
 
   colorIsLight: (str) =>
     127.5 < @brightnessRGB @parseRGB(str)
+
+  colorIsRed: (str) =>
+    {red, green, blue} = @parseRGB str
+
+    red > green and red > blue
 
 
 MeetMikey.Helper.Theme = new ThemeManager()
