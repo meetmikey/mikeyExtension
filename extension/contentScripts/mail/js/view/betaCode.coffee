@@ -28,8 +28,8 @@ class MeetMikey.View.BetaCode extends MeetMikey.View.Base
   events:
     'click #betaCodeSubmitButton': 'checkBetaCode'
     'click #not-now-button': 'hide'
-    'click #beta-need-code-button': 'hide'
-    'click #beta-help-me-button': 'hide'
+    'click #beta-need-code-button': 'hideAndNeverAskAgain'
+    'click #beta-help-me-button': 'hideAndNeverAskAgain'
 
   postRender: =>
     @show()
@@ -39,6 +39,10 @@ class MeetMikey.View.BetaCode extends MeetMikey.View.Base
 
   hide: =>
     @$('.modal').modal 'hide'
+
+  hideAndNeverAskAgain: =>
+    @hide()
+    @trigger 'neverAskAgain' 
 
   wrongCode: =>
     console.log 'wrongCode'
