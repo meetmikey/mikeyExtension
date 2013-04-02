@@ -5,14 +5,21 @@ class LocalStore
   supportsLocalStorage: ->
     typeof window.localStorage isnt 'undefined'
 
+  getEnv: -> MeetMikey.Settings.env
+
+  getKey: (key) =>
+    env = @getEnv()
+    if env is 'production' then key
+    else "#{env}-#{key}"
+
   get: (key) =>
-    JSON.parse @store.getItem(key)
+    JSON.parse @store.getItem(@getKey(key))
 
   set: (key, value) =>
-    @store.setItem key, JSON.stringify(value)
+    @store.setItem @getKey(key), JSON.stringify(value)
 
   remove: (key) =>
-    @store.removeItem key
+    @store.removeItem @getKey(key)
 
   clear: =>
     @store.clear()
