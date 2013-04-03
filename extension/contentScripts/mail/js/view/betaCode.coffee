@@ -8,16 +8,16 @@ template = """
     </div>
     <div class="modal-body">
       
-      <p>Have a code? 
-      <input type='text' id='betaCodeInput'>
-      <div id='invalidBetaCodeLabel' style='display:none;'>Invalid code</div>
+      <p>
+      <input type='text' placeholder="What's the secret password?" id='betaCodeInput'>
+      <div id='invalidBetaCodeLabel' style='display:none;'>Sorry, Mikey doesn't know that one. Email <a href="mailto:help@mikey.com">help@mikey.com</a> to get access.</div>
       </p>
       
     </div>
     <div class="footer-buttons">
       <a href="#" id="betaCodeSubmitButton" class="button buttons">Submit</a>
-      <a href="http://www.meetmikey.com" id="beta-need-code-button" class="button-grey buttons">I need a code</a>
-      <a href="mailto:feedback@mikeyteam.com" id="beta-help-me-button" class="button-grey buttons">Help me</a>
+      <a href="http://www.meetmikey.com" id="beta-need-code-button" class="button-grey buttons">I need a password</a>
+      <a href="mailto:help@mikeyteam.com" id="beta-help-me-button" class="button-grey buttons">Help me</a>
     </div>
   </div>
 """
