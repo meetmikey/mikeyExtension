@@ -2,23 +2,24 @@ template = """
 
 
   <div class="modal hide fade">
+    
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Mikey is in private alpha</h3>
     </div>
+    
     <div class="modal-body">
-      
       <p>
       <input type='text' placeholder="What's the secret password?" id='betaCodeInput'>
-      <div id='invalidBetaCodeLabel' style='display:none;'>Sorry, Mikey doesn't know that one. Email <a href="mailto:help@mikey.com">help@mikey.com</a> to get access.</div>
+      <div id='invalidBetaCodeLabel' style='display:none;'>Sorry, Mikey doesn't know that one.</div> 
       </p>
-      
     </div>
+
+    
     <div class="footer-buttons">
       <a href="#" id="betaCodeSubmitButton" class="button buttons">Submit</a>
-      <a href="http://www.meetmikey.com" id="beta-need-code-button" class="button-grey buttons">I need a password</a>
-      <a href="mailto:help@mikeyteam.com" id="beta-help-me-button" class="button-grey buttons">Help me</a>
     </div>
+    
   </div>
 """
 
@@ -28,8 +29,8 @@ class MeetMikey.View.BetaCode extends MeetMikey.View.Base
   events:
     'click #betaCodeSubmitButton': 'checkBetaCode'
     'click #not-now-button': 'hide'
-    'click #beta-need-code-button': 'hideAndNeverAskAgain'
-    'click #beta-help-me-button': 'hideAndNeverAskAgain'
+    'click #beta-need-code-button': 'hide'
+    'click #beta-help-me-button': 'hide'
 
   postRender: =>
     @show()
