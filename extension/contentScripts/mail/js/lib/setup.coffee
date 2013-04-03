@@ -27,6 +27,7 @@ class Setup
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data
     MeetMikey.Helper.Mixpanel.setUser MeetMikey.globalUser
+    MeetMikey.globalUser.checkOnboard()
 
   injectModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')

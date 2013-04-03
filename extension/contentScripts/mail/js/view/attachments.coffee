@@ -56,7 +56,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
 
-  pollDelay: 1000*45
+  pollDelay: MeetMikey.Settings.pollDelay
 
   preInitialize: =>
 
@@ -128,11 +128,15 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     setTimeout @poll, @pollDelay
 
   poll: =>
+    data = if MeetMikey.globalUser.get('onboarding')
+      {}
+    else
+      after: @collection.first()?.get('sentDate')
+
     console.log 'attachments are polling'
     @collection.fetch
       update: true
       remove: false
-      data:
-        after: @collection.first()?.get('sentDate')
+      data: data
       success: @waitAndPoll
       error: @waitAndPoll

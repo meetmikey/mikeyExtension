@@ -123,12 +123,16 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     setTimeout @poll, @pollDelay
 
   poll: =>
+    data = if MeetMikey.globalUser.get('onboarding')
+      {}
+    else
+      after: @collection.first()?.get('sentDate')
+
     console.log 'links are polling'
     @collection.fetch
       update: true
       remove: false
-      data:
-        after: @collection.first()?.get('sentDate')
+      data: data
       success: @waitAndPoll
       error: @waitAndPoll
 
