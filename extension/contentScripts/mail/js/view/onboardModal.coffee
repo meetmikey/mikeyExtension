@@ -7,19 +7,12 @@ template = """
     <div class="modal-body">
       <p>Mikey needs access to your Gmail in order to perform his magic.</p>
       <p>Once you connect, it should take a few hours to process.</p>
-      
-
-
     </div>
-
-
     <div class="footer-buttons">
       <a href="#" id="authorize-button" class="button buttons">Connect</a>
       <a href="#" id="not-now-button" class="button-grey buttons">Not right now</a>
       <a href="#" id="never-button" class="button-grey buttons">Never this account</a>
-
     </div>
-
   </div>
 """
 

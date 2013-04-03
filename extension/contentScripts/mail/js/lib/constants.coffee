@@ -3,6 +3,7 @@ _.extend MeetMikey.Settings,
   imgPath: 'contentScripts/mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   pollDelay: 45*1000
+  betaCodeHash: 205332315
   APIUrls:
     local: "https://local.meetmikey.com"
     development: "https://dev.meetmikey.com"
@@ -59,3 +60,14 @@ _.extend MeetMikey.Settings,
 
     # gmail's pagination controls
     gmailPagination: '.Cr.aqJ > .ar5.J-J5-Ji'
+
+  MikeyTeamUserIds: [
+      '51425e20a8a4db7207000006'
+    , '5153edd7a66e972a10000005'
+    , '5142ac686a9290970a00000a'
+    , '514265596a9290970a000007'
+    , '51425eb6a8a4db7207000007'
+    , '514266e16a9290970a000008'
+    , '5146c99d32a3828c41000005'
+    , '5147afc4f287efc831000005'
+  ]

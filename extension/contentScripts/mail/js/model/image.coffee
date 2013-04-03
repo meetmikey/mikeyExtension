@@ -1,5 +1,2 @@
-class MeetMikey.Model.Image extends MeetMikey.Model.Base
-  idAttribute: "_id"
-  decorator: MeetMikey.Decorator.Attachment
-
+class MeetMikey.Model.Image extends MeetMikey.Model.Attachment
   isImage: -> true

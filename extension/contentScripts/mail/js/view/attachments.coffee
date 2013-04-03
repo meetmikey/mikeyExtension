@@ -92,7 +92,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   openAttachment: (event) =>
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
-    url = MeetMikey.Decorator.Attachment.getUrl model
+    url = model.getUrl()
 
     MeetMikey.Helper.trackResourceEvent 'openResource', model,
       search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
