@@ -1,6 +1,6 @@
 {
   "name": "Mikey for Gmail™",
-  "version": "0.0.91",
+  "version": "0.0.92",
   "manifest_version": 2,
   "description": "Meet Mikey. Start spending less time in your inbox.",
   "background": {
@@ -47,6 +47,7 @@
             "contentScripts/mail/js/view/links.js",
             "contentScripts/mail/js/view/inbox.js",
             "contentScripts/mail/js/view/onboardModal.js",
+            "contentScripts/mail/js/view/welcomeModal.js",
             "contentScripts/mail/js/view/searchBar.js",
             "contentScripts/mail/js/view/searchResults.js",
             "contentScripts/mail/js/view/search.js",

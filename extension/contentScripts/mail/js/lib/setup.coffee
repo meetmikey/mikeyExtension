@@ -14,7 +14,7 @@ class Setup
       if userData?
         @authorized(userData)
       else
-        @injectModal()
+        @injectOnboardModal()
 
   authorized: (userData) =>
     @initalizeGlobalUser userData
@@ -29,12 +29,18 @@ class Setup
     MeetMikey.Helper.Mixpanel.setUser MeetMikey.globalUser
     MeetMikey.globalUser.checkOnboard()
 
-  injectModal: =>
+  injectOnboardModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')
     view = new MeetMikey.View.OnboardModal el: '#mm-onboard-modal'
     view.render()
     view.on 'authorized', (userData) =>
+      @injectWelcomeModal()
       @authorized(userData)
+
+  injectWelcomeModal: =>
+    $('body').append $('<div id="mm-welcome-modal"></div>')
+    view = new MeetMikey.View.WelcomeModal el: '#mm-welcome-modal'
+    view.render()
 
   injectMainView: (target) =>
     target ?= @inboxSelector
