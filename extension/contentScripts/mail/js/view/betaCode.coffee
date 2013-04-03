@@ -10,7 +10,7 @@ template = """
       
       <p>
       <input type='text' placeholder="What's the secret password?" id='betaCodeInput'>
-      <div id='invalidBetaCodeLabel' style='display:none;'>Sorry, Mikey doesn't know that one. Email <a href="mailto:help@mikey.com">help@mikey.com</a> to get access.</div>
+      <div id='invalidBetaCodeLabel' style='display:none;'>Sorry, Mikey doesn't know that one. Email <a id="beta-email-help-link" href="mailto:help@mikey.com">help@mikey.com</a> to get access.</div>
       </p>
       
     </div>
@@ -28,6 +28,7 @@ class MeetMikey.View.BetaCode extends MeetMikey.View.Base
   events:
     'click #betaCodeSubmitButton': 'checkBetaCode'
     'click #not-now-button': 'hide'
+    'click #beta-email-help-link': 'hideAndNeverAskAgain'
     'click #beta-need-code-button': 'hideAndNeverAskAgain'
     'click #beta-help-me-button': 'hideAndNeverAskAgain'
 
