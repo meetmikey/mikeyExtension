@@ -54,7 +54,6 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
   setActiveTab: (tab) =>
     @$('.mikey-tab').removeClass 'active'
     @$(".mikey-tab[data-mm-tab='#{tab}']").addClass 'active'
-    MeetMikey.Globals.tabState = tab
 
   getActiveTab: =>
     @$('.mikey-tab.active').attr('data-mm-tab')

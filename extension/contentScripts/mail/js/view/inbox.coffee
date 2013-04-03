@@ -51,7 +51,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     $(@tabs[tab]).show()
     Backbone.trigger 'change:tab', tab
     @subView(tab)?.trigger 'showTab'
-    @trackTabEvent(tab)
+    @trackTabEvent(tab) if MeetMikey.Globals.tabState isnt tab
+    MeetMikey.Globals.tabState = tab
 
   hideAllTabs: () =>
     contentSelector = _.values(@tabs).join(', ')
