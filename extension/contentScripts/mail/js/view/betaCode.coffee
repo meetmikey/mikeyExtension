@@ -11,7 +11,9 @@ template = """
     <div class="modal-body">
       <p>
       <input type='text' placeholder="What's the secret password?" id='betaCodeInput'>
+
       <div id='invalidBetaCodeLabel' style='display:none;'>Sorry, Mikey doesn't know that one.</div> 
+
       </p>
     </div>
 
@@ -29,8 +31,10 @@ class MeetMikey.View.BetaCode extends MeetMikey.View.Base
   events:
     'click #betaCodeSubmitButton': 'checkBetaCode'
     'click #not-now-button': 'hide'
+    'click #beta-email-help-link': 'hide'
     'click #beta-need-code-button': 'hide'
     'click #beta-help-me-button': 'hide'
+
 
   postRender: =>
     @show()
