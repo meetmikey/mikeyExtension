@@ -19,14 +19,13 @@ class AttachmentDecorator
     object.to = @formatRecipients model
     object.sentDate = @formatDate model
     object.size = @formatFileSize model
-    object.url = @getUrl model
+    object.url = model.getUrl()
     object._id = model.get('_id')
     object.cid = model.cid
     object.type = model.get 'docType'
     object.iconUrl = @iconUrls[model.get 'docType']
     object.image = model.get 'image'
     object.msgHex = model.get('gmMsgHex')
-
 
     object
 
@@ -83,11 +82,5 @@ class AttachmentDecorator
       "#{convert bytes, terabyte} TB"
     else
       "#{bytes} B"
-
-  getUrl: (model) =>
-    email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
-    asymHash = MeetMikey.globalUser.get('asymHash')
-    "#{MeetMikey.Helper.getAPIUrl()}/attachmentURL/#{model.id}?userEmail=#{email}&asymHash=#{asymHash}"
-
 
 MeetMikey.Decorator.Attachment = new AttachmentDecorator()

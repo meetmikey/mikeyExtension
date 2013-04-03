@@ -53,7 +53,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   openImage: (event) =>
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
-    url = model.get 'url'
+    url = model.getUrl()
 
     MeetMikey.Helper.trackResourceEvent 'openResource', model,
       search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
