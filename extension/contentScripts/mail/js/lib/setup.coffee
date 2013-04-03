@@ -6,7 +6,9 @@ class Setup
     $(window).one('DOMSubtreeModified', @bootstrap)
 
   bootstrap: =>
-    localStorage.submittedBetaCode = 'gomikey' #TODO: DELETE ME BEFORE WE OPEN UP TO THE PUBLIC!!!
+    MeetMikey.Helper.BetaAccess.checkAccess @checkSelectors
+
+  checkSelectors: =>
     MeetMikey.Helper.findSelectors @inboxSelector, @tabsSelector, @setup
 
   setup: (target) =>

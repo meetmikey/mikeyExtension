@@ -22,7 +22,6 @@ template = """
         </div>
       </div>
     {{/each}}
-    <div style="clear: both;"></div>
   {{/unless}}
 """
 
@@ -54,7 +53,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   openImage: (event) =>
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
-    url = model.get 'image'
+    url = model.getUrl()
 
     MeetMikey.Helper.trackResourceEvent 'openResource', model,
       search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
@@ -77,7 +76,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   nearBottom: =>
     $scrollElem = @$scrollElem()
-    $scrollElem.scrollTop() + $scrollElem.height() > @$el.height()
+    $scrollElem.scrollTop() + $scrollElem.height() > ( @$el.height() - 1000 )
 
   fetchMoreImages: =>
     console.log 'go and fetch some images!'
@@ -93,9 +92,14 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   fetchSuccess: (collection, response) =>
     @fetching = false
     @endOfImages = true if _.isEmpty(response)
-    @render()
+    @appendNewImageModelTemplates response
     @$el.isotope('reloadItems')
     @initIsotope()
+
+  appendNewImageModelTemplates: (response) =>
+    models = _.map response, (m) -> new MeetMikey.Model.Attachment(m)
+    decoratedModels = _.invoke(models, 'decorate')
+    @$el.append @template(models: decoratedModels)
 
   runIsotope: =>
     console.log 'isotoping'
@@ -106,15 +110,17 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   checkAndRunIsotope: =>
     console.log 'checkAndRunIsotope'
     if @areImagesLoaded
-      console.log 'images loaded, clearing interval'
+      console.log 'images loaded, clearing interval', @isotopeInterval
       clearInterval @isotopeInterval
+      @isotopeInterval = null;
     else
       @runIsotope()
 
   initIsotope: =>
     console.log 'initIsotope'
     @areImagesLoaded = false
-    @isotopeInterval = setInterval @checkAndRunIsotope, 200
+    if ! @isotopeInterval
+      @isotopeInterval = setInterval @checkAndRunIsotope, 200
     @$el.imagesLoaded =>
       @areImagesLoaded = true
       console.log 'images loaded, isotoping one last time'

@@ -73,3 +73,16 @@ MeetMikey.Helper.trackResourceEvent = (event, model, opts) ->
   props = _.extend resourceProps, opts
 
   MeetMikey.Helper.Mixpanel.trackEvent event, props
+
+MeetMikey.Helper.getHash = (input) ->
+  hash = 0
+  if ( ! input ) || ( input.length == 0 )
+    return hash
+  for i in [0..input.length - 1] by 1
+    char = input.charCodeAt i
+    hash = ((hash<<5)-hash)+char
+    hash = hash & hash
+  hash
+
+MeetMikey.Helper.getBetaCodeHash = (betaCodeInput) ->
+  MeetMikey.Helper.getHash betaCodeInput
