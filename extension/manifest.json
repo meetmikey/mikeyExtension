@@ -47,6 +47,7 @@
             "contentScripts/mail/js/view/links.js",
             "contentScripts/mail/js/view/inbox.js",
             "contentScripts/mail/js/view/onboardModal.js",
+            "contentScripts/mail/js/view/welcomeModal.js",
             "contentScripts/mail/js/view/searchBar.js",
             "contentScripts/mail/js/view/searchResults.js",
             "contentScripts/mail/js/view/search.js",
