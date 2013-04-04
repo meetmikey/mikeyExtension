@@ -28,7 +28,7 @@ template = """
 class MeetMikey.View.Images extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
-  pollDelay: 1000*45
+  pollDelay: MeetMikey.Settings.pollDelay
   fetching: false
 
   events:
