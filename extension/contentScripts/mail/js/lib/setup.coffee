@@ -1,15 +1,16 @@
 class Setup
   inboxSelector: MeetMikey.Settings.Selectors.inboxContainer
   tabsSelector: MeetMikey.Settings.Selectors.tabsContainer
+  userEmailSelector: MeetMikey.Settings.Selectors.userEmail
 
   start: =>
     $(window).one('DOMSubtreeModified', @bootstrap)
 
   bootstrap: =>
-    MeetMikey.Helper.BetaAccess.checkAccess @checkSelectors
+    MeetMikey.Helper.BetaAccess.checkAccess @waitAndStartAuthFlow
 
-  checkSelectors: =>
-    MeetMikey.Helper.findSelectors @inboxSelector, @tabsSelector, @startAuthFlow
+  waitAndStartAuthFlow: =>
+    MeetMikey.Helper.findSelectors @userEmailSelector, @startAuthFlow
 
   startAuthFlow: (target) =>
     MeetMikey.Helper.OAuth.checkUser (userData) =>
@@ -43,7 +44,7 @@ class Setup
     console.log 'we are in inbox:', @isInInbox()
     if @isInInbox()
       $(window).off 'hashchange', @checkIfInInbox
-      @injectMainView()
+      MeetMikey.Helper.findSelectors @inboxSelector, @tabsSelector, @injectMainView
 
   injectOnboardModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')
