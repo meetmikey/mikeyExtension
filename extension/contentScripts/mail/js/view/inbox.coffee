@@ -50,7 +50,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @manageInboxDisplay(tab)
     @managePaginationDisplay(tab)
     $(@tabs[tab]).show()
-    @trackTabEvent(tab) if MeetMikey.Globals.tabState isnt tab
     MeetMikey.Globals.tabState = tab
     Backbone.trigger 'change:tab', tab
     @subView(tab)?.trigger 'showTab'
@@ -67,9 +66,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     method = if tab isnt 'email' then 'hide' else 'show'
     $(MeetMikey.Settings.Selectors.gmailPagination)[method]()
 
-  trackTabEvent: (tab) =>
-    MeetMikey.Helper.Mixpanel.trackEvent 'tabChange',
-      search: !@options.fetch, tab: tab
 
   bindPageHandlers: =>
     Backbone.on 'clicked:next-page', @nextPage

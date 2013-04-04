@@ -16,7 +16,7 @@ class Mixpanel
   trackEvent: (event, props) =>
     unless @inCorrectEnv && @_isRealUser()
       return
-    #console.log 'tracking event:', event, @_buildObj(event,props), @inCorrectEnv
+    # console.log 'tracking event:', event, @_buildObj(event,props), @inCorrectEnv
     props = if props? then _.clone(props) else {}
     @_track event, props
 
