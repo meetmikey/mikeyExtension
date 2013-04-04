@@ -13,7 +13,7 @@ class LocalStore
     else "#{env}-#{key}"
 
   get: (key) =>
-    raw = @store.getItem(key)
+    raw = @store.getItem(@getKey key)
     try #temporary to accomodate a snafu with setting the beta key
       val = JSON.parse raw
       return val
