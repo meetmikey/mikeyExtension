@@ -1,5 +1,5 @@
 _.extend MeetMikey.Settings,
-  env: "production"
+  env: "development"
   imgPath: 'contentScripts/mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   pollDelay: 45*1000

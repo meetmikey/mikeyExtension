@@ -9,9 +9,9 @@ class Setup
     MeetMikey.Helper.BetaAccess.checkAccess @checkSelectors
 
   checkSelectors: =>
-    MeetMikey.Helper.findSelectors @inboxSelector, @tabsSelector, @setup
+    MeetMikey.Helper.findSelectors @inboxSelector, @tabsSelector, @startAuthFlow
 
-  setup: (target) =>
+  startAuthFlow: (target) =>
     MeetMikey.Helper.OAuth.checkUser (userData) =>
       if userData?
         @authorized(userData)
@@ -20,8 +20,8 @@ class Setup
 
   authorized: (userData) =>
     @initalizeGlobalUser userData
-    @injectMainView()
     @trackLoginEvent(userData)
+    @waitForInbox()
 
   trackLoginEvent: (user) =>
     MeetMikey.Helper.Mixpanel.trackEvent 'login', user
@@ -30,6 +30,20 @@ class Setup
     MeetMikey.globalUser = new MeetMikey.Model.User data
     MeetMikey.Helper.Mixpanel.setUser MeetMikey.globalUser
     MeetMikey.globalUser.checkOnboard()
+
+  waitForInbox: =>
+    @checkIfInInbox()
+    $(window).on 'hashchange', @checkIfInInbox
+
+  isInInbox: =>
+    hash = window.location.hash
+    hash is '' or hash.match /#(?:inbox)?$/
+
+  checkIfInInbox: =>
+    console.log 'we are in inbox:', @isInInbox()
+    if @isInInbox()
+      $(window).off 'hashchange', @checkIfInInbox
+      @injectMainView()
 
   injectOnboardModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')
@@ -44,9 +58,11 @@ class Setup
     view = new MeetMikey.View.WelcomeModal el: '#mm-welcome-modal'
     view.render()
 
-  injectMainView: (target) =>
-    target ?= @inboxSelector
-    view = new MeetMikey.View.Main el: 'body', inboxTarget: target
+  injectMainView:  =>
+    view = new MeetMikey.View.Main el: 'body', inboxTarget: @inboxSelector
     view.render()
+
+
+
 
 MeetMikey.Helper.Setup = new Setup()
