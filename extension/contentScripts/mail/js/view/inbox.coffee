@@ -50,10 +50,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @manageInboxDisplay(tab)
     @managePaginationDisplay(tab)
     $(@tabs[tab]).show()
-    Backbone.trigger 'change:tab', tab
-    @subView(tab)?.trigger 'showTab'
     @trackTabEvent(tab) if MeetMikey.Globals.tabState isnt tab
     MeetMikey.Globals.tabState = tab
+    Backbone.trigger 'change:tab', tab
+    @subView(tab)?.trigger 'showTab'
 
   hideAllTabs: () =>
     contentSelector = _.values(@tabs).join(', ')
