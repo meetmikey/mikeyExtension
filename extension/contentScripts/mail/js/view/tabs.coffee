@@ -63,8 +63,14 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     target = $(e.currentTarget)
     tab = target.attr('data-mm-tab')
     @setActiveTab tab
+    @trackTabEvent tab
     @trigger('clicked:tab', tab)
 
   updateTabCount: (tab, count) =>
     tab =  @$("[data-mm-tab='#{tab}']")
     tab.find(".mm-count").text "(#{ count })"
+
+  trackTabEvent: (tab) =>
+    return if MeetMikey.Globals.tabState is tab
+    MeetMikey.Helper.Mixpanel.trackEvent 'tabChange',
+      search: @options.search, tab: tab

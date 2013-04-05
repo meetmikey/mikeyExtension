@@ -15,7 +15,6 @@ class MeetMikey.Model.User extends Backbone.Model
       type: 'GET'
       error: @waitAndCheckOnboard
       success: (res) =>
-        console.log 'checking onboards', res
         if res.progress is 1
           @set 'onboarding', false
         else @waitAndCheckOnboard()

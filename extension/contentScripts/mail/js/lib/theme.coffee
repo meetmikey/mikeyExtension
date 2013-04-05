@@ -36,7 +36,13 @@ class ThemeManager
 
   isDefaultTheme: =>
     color = $(MeetMikey.Settings.Selectors.gmailDropdownText).css 'color'
-    @colorIsRed color
+
+    if color?
+      @colorIsRed color
+    else
+      htmlFragment = $(MeetMikey.Settings.Selectors.entireSideBar).html()
+      MeetMikey.Helper.callDebug 'selectorNotFound', {htmlFragment}
+      true
 
   getTextColor: =>
     $(MeetMikey.Settings.Selectors.sideBarText).css 'color'

@@ -86,3 +86,12 @@ MeetMikey.Helper.getHash = (input) ->
 
 MeetMikey.Helper.getBetaCodeHash = (betaCodeInput) ->
   MeetMikey.Helper.getHash betaCodeInput
+
+MeetMikey.Helper.callDebug = (type, data) ->
+  console.log data
+  MeetMikey.Helper.callAPI
+    url: 'debug'
+    method: 'POST'
+    data:
+      type: type
+      data: data

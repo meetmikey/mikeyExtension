@@ -40,22 +40,6 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
   teardown: =>
     Backbone.off 'change:tab'
 
-  detectTheme: =>
-    color = $(MeetMikey.Settings.Selectors.sidebarText).css 'color'
-    inboxColor = $(MeetMikey.Settings.Selectors.inboxReadText)
-
-
-  detectLayout: =>
-    $elem = $(MeetMikey.Settings.Selectors.tableCell)
-    padding = parseFloat $elem.css('padding-top')
-
-    if padding < 4.5
-      'compact'
-    else if 8.5 <= padding
-      'comfortable'
-    else
-      'cozy'
-
   setLayout: (layout='compact') =>
     @$el.addClass layout
 

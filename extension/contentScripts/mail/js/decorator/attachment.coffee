@@ -6,7 +6,7 @@ class AttachmentDecorator
     document: chrome.extension.getURL("#{imgPath}/word.png")
     presentation: chrome.extension.getURL("#{imgPath}/ppt.png")
     other: chrome.extension.getURL("#{imgPath}/unknown.png")
-    code: chrome.extension.getURL("#{imgPath}/unknown.png")
+    code: chrome.extension.getURL("#{imgPath}/code.png")
     image: chrome.extension.getURL("#{imgPath}/image.png")
     music: chrome.extension.getURL("#{imgPath}/music.png")
     video: chrome.extension.getURL("#{imgPath}/video.png")

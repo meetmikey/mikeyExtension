@@ -53,7 +53,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     'mousemove .files .mm-file, .files .mm-source': 'delayRollover'
 
 
-  pollDelay: 1000*45
+  pollDelay:  MeetMikey.Settings.pollDelay
 
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()
