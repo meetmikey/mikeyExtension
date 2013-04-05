@@ -36,7 +36,7 @@ class ThemeManager
 
   isDefaultTheme: =>
     color = $(MeetMikey.Settings.Selectors.gmailDropdownText).css 'color'
-    @colorIsRed color
+    if color? then @colorIsRed color else true
 
   getTextColor: =>
     $(MeetMikey.Settings.Selectors.sideBarText).css 'color'
