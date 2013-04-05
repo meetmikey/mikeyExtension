@@ -35,8 +35,8 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
   events:
     'click li': 'tabClick'
 
-  preInitialize: =>
-    @subViews.pagination.args.render = false if @options.search
+  postInitialize: =>
+    @subView('pagination').options.render = false if @options.search
 
   postRender: =>
     @adjustWidth()
