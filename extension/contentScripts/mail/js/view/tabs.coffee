@@ -71,6 +71,6 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     tab.find(".mm-count").text "(#{ count })"
 
   trackTabEvent: (tab) =>
-    return if MeetMikey.Globals.tabState is tab
+    return if MeetMikey.Globals.tabState is tab or tab is 'email'
     MeetMikey.Helper.Mixpanel.trackEvent 'tabChange',
       search: @options.search, tab: tab
