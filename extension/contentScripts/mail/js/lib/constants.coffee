@@ -53,7 +53,7 @@ _.extend MeetMikey.Settings,
     buttonColor: '.G-atb .T-I-ax7'
 
     # text for gmail dropdown below logo
-    gmailDropdownText: '[id=":rg"] span'
+    gmailDropdownText: '.akh[gh="pb"] span'
 
     # element that contains the user's email address
     userEmail: '#gbmpdv .gbps2'
