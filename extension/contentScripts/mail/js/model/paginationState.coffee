@@ -15,6 +15,8 @@ class MeetMikey.Model.PaginationState extends MeetMikey.Model.Base
     start: index + 1
     end: Math.min(@items.length, index + @itemsPerPage)
     size: size
+    firstPage: @get('page') is 0
+    lastPage: @get('page') is @get('lastPage')
 
   # index of the first item on the current page
   currentPageIndex: =>

@@ -1,14 +1,16 @@
+imgPath = MeetMikey.Settings.imgPath
+arrowSprite = chrome.extension.getURL "#{imgPath}/sprite.png"
 template = """
   <div class="pagination-wrapper" style="display: {{display}};">
   <div class="arrow-buttons">
 
-       <div class="page-button right-box next-page">
-        <div class="forward arrow" style="background-image: url({{arrowSprite}})">
+       <div class="page-button right-box next-page {{nextPageClass}}">
+        <div class="forward arrow" style="background-image: url(#{arrowSprite})">
         </div>
       </div>
 
-      <div class="page-button left-box prev-page">
-        <div class="back arrow" style="background-image: url({{arrowSprite}})">
+      <div class="page-button left-box prev-page {{prevPageClass}}">
+        <div class="back arrow" style="background-image: url(#{arrowSprite})">
         </div>
       </div>
 
@@ -17,8 +19,6 @@ template = """
      <div class="page-count"><strong>{{start}}-{{end}}</strong> of <strong>{{size}}</strong></div>
      </div>
 """
-imgPath = MeetMikey.Settings.imgPath
-arrowSprite = chrome.extension.getURL "#{imgPath}/sprite.png"
 
 class MeetMikey.View.Pagination extends MeetMikey.View.Base
   template: Handlebars.compile(template)
@@ -33,8 +33,12 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
   postInitialize: =>
 
   getTemplateData: =>
-    state = @state?.getStateData() ? {}
-    _.extend state, arrowSprite: arrowSprite, display: @getDisplay()
+    data = @state?.getStateData() ? {}
+    data.display = @getDisplay()
+    data.prevPageClass = if data.firstPage then 'disable' else ''
+    data.nextPageClass = if data.lastPage then 'disable' else ''
+
+    data
 
   setState: (state) =>
     @resetState() if @state?
