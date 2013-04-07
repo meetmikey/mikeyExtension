@@ -15,7 +15,10 @@ class MeetMikey.Model.PaginationState extends MeetMikey.Model.Base
     start: index + 1
     end: Math.min(@items.length, index + @itemsPerPage)
     size: size
+    firstPage: @get('page') is 0
+    lastPage: @get('page') is @get('lastPage')
 
+  # index of the first item on the current page
   currentPageIndex: =>
     @get('page') * @itemsPerPage
 
@@ -34,17 +37,18 @@ class MeetMikey.Model.PaginationState extends MeetMikey.Model.Base
 
   fetchNextPage: (callback) =>
     @fetching = true
+    @itemsExpectedFromFetch = @itemsNeededForNextPage()
     @items.fetch
       silent: true
       update: true
       remove: false
       data:
         before: @items.last()?.get('sentDate')
-        limit: @itemsPerPage
+        limit: @itemsExpectedFromFetch
       success: @pageFetched
 
   pageFetched: (collection, response) =>
-    @set 'lastPage', @get('page') + 1 if response.length < @itemsPerPage
+    @set 'lastPage', @get('page') + 1 if response.length < @itemsExpectedFromFetch
     @increment 'page', 1
     @fetching = false
 
@@ -56,4 +60,11 @@ class MeetMikey.Model.PaginationState extends MeetMikey.Model.Base
     @has('lastPage') and @get('page') >= @get('lastPage')
 
   notEnoughItems: =>
-    @currentPageIndex() + @itemsPerPage >= @items.length
+     @itemsNeededForNextPage() > 0
+
+  itemsNeededForNextPage: =>
+    @lastIndexOfNextPage() + 1 - @items.length
+
+  lastIndexOfNextPage: =>
+    @currentPageIndex() + 2*@itemsPerPage - 1
+
