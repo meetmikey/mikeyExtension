@@ -2,7 +2,7 @@ _.extend MeetMikey.Settings,
   env: "production"
   imgPath: 'contentScripts/mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
-  pollDelay: 45*1000
+  pollDelay: 60*1000
   betaCodeHash: 205332315
   APIUrls:
     local: "https://local.meetmikey.com"
