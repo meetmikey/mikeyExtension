@@ -28,7 +28,8 @@ class Mixpanel
     ! _.contains(MeetMikey.Settings.MikeyTeamUserIds, @userId)
 
   _buildObj: (event, props)=>
-    metaData = _.extend (@userProps ? {}), {token: @token, time: Date.now(), distinct_id: @userId}
+    metaData = _.extend @userProps ? {},
+      token: @token, time: Date.now(), distinct_id: @userId, extensionVersion: MeetMikey.Settings.extensionVersion
     properties = _.extend props, metaData
     {event, properties}
 

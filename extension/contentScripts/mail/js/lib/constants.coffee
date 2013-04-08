@@ -4,6 +4,7 @@ _.extend MeetMikey.Settings,
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   pollDelay: 45*1000
   betaCodeHash: 205332315
+  extensionVersion: chrome.runtime.getManifest()?.version
   APIUrls:
     local: "https://local.meetmikey.com"
     development: "https://dev.meetmikey.com"
