@@ -46,6 +46,9 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   postRender: =>
 
+  teardown: =>
+    @collection.reset()
+
   getTemplateData: =>
     models: _.invoke(@collection.models, 'decorate')
     searchQuery: @searchQuery
