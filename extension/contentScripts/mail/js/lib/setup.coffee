@@ -43,7 +43,7 @@ class Setup
   checkIfInInbox: =>
     if @isInInbox()
       $(window).off 'hashchange', @checkIfInInbox
-      MeetMikey.Helper.findSelectors @inboxSelector, @tabsSelector, @checkAndInjectMainView
+      MeetMikey.Helper.DOMManager.waitAndFindAll @inboxSelector, @tabsSelector, @checkAndInjectMainView
 
   injectOnboardModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')

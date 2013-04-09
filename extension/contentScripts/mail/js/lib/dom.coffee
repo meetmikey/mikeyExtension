@@ -13,7 +13,7 @@ class DOMManager
 
   waitAndFind: (selector, callback) =>
     tries = 0
-    find = ->
+    find = =>
       tries += 1
       if tries > @maxTries
         @error 'selectorNotFound', selector
@@ -27,10 +27,10 @@ class DOMManager
 
   waitAndFindAll: (selectors..., callback) =>
     tries = 0
-    find = ->
+    find = =>
       tries += 1
       if tries > @maxTries
-        @error 'selectorNotFound', selector
+        @error 'selectorNotFound', selectors
         return
       else
         targets = _.map selectors, (s) -> $ s
@@ -47,6 +47,8 @@ class DOMManager
 
       if @existsIn target, elem
         tries += 1
+        console.log 'try', tries
+        console.log 'selector', selector
         if tries > @maxTries
           @error 'elemAlreadyExists', elem.attr('class')
           return
