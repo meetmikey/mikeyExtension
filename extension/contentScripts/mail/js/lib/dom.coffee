@@ -3,7 +3,7 @@ class DOMManager
 
   find: (selector) =>
     target = $(selector)
-    @notFoundError(selector) unless target.length > 0
+    @error('selectorNotFound', selector) unless target.length > 0
     target
 
   waitAndFind: (selector, callback) =>
@@ -11,7 +11,7 @@ class DOMManager
     find = ->
       tries += 1
       if tries > @maxTries
-        console.log "CANNOT find #{selectors} after #{tries} attempts"
+        @error 'selectorNotFound', selector
         return
       else
         target = $(selector)
@@ -26,7 +26,7 @@ class DOMManager
       console.log 'finding'
       tries += 1
       if tries > @maxTries
-        console.log "CANNOT find #{selectors} after #{tries} attempts"
+        @error 'selectorNotFound', selector
         return
       else
         targets = _.map selectors, (s) -> $ s
@@ -44,7 +44,7 @@ class DOMManager
       if @existsIn target, elem
         tries += 1
         if tries > @maxTries
-          console.log "another container already exists", elem
+          @error 'elemAlreadyExists', elem.attr('class')
           return
         else setTimeout tryFind, 200
       else
@@ -61,7 +61,7 @@ class DOMManager
       if @existsBeside target, elem
         tries += 1
         if tries > @maxTries
-          console.log "another container already exists", elem
+          @error 'elemAlreadyExists', elem.attr('class')
           return
         else setTimeout tryFind, 200
       else
@@ -87,18 +87,18 @@ class DOMManager
 
     root.html()
 
-  notFoundError: (selector) =>
+  error: (event, selector) =>
     data = {selector}
-    data.dom = @stripDOM() if @sendDOM()
+    data.dom = @stripDOM() if @sendDOM(event)
 
-    MeetMikey.Helper.callDebug 'selectorNotFound', data
+    MeetMikey.Helper.callDebug event, data
 
-    MeetMikey.Helper.LocalStore.set 'selectorNotFound',
+    MeetMikey.Helper.LocalStore.set "error-#{event}",
       version: MeetMikey.Settings.extensionVersion, timestamp: Date.now()
 
 
-  sendDOM: =>
-    lastError = MeetMikey.Helper.LocalStore.get 'selectorNotFound'
+  sendDOM: (event) =>
+    lastError = MeetMikey.Helper.LocalStore.get "error-#{event}"
     return true unless lastError?
 
     lastError.version isnt MeetMikey.Settings.extensionVersion or
