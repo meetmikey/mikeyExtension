@@ -62,6 +62,9 @@ _.extend MeetMikey.Settings,
     # gmail's pagination controls
     gmailPagination: '.Cr.aqJ > .ar5.J-J5-Ji'
 
+    # inner container that scrolls
+    scrollContainer: '[id=":rp"]'
+
   MikeyTeamUserIds: [
       '51425e20a8a4db7207000006'
     , '5153edd7a66e972a10000005'

@@ -25,6 +25,7 @@ template = """
 
 class MeetMikey.View.Tabs extends MeetMikey.View.Base
   template: Handlebars.compile(template)
+  safeFind: MeetMikey.Helper.DOMManager.find
 
   subViews:
     'pagination':
@@ -47,7 +48,7 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
 
   setWidth: =>
     selector = MeetMikey.Settings.Selectors.widthElem
-    elem = $(selector).parent().parent()
+    elem = @safeFind(selector).parent().parent()
     width = elem.width()
     @$el.css 'width', width
 

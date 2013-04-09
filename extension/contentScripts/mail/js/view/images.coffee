@@ -31,6 +31,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   pollDelay: MeetMikey.Settings.pollDelay
   fetching: false
 
+  safeFind: MeetMikey.Helper.DOMManager.find
+
   events:
     'click .mm-image': 'openImage'
     'click .open-message': 'openMessage'
@@ -70,7 +72,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
 
-  $scrollElem: => $('[id=":rp"]')
+  $scrollElem: => @safeFind(MeetMikey.Settings.Selectors.scrollContainer)
   bindScrollHandler: => @$scrollElem().on 'scroll', @scrollHandler if @options.fetch
   unbindScrollHandler: => @$scrollElem().off 'scroll', @scrollHandler
 
