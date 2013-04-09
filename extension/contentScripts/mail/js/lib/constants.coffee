@@ -4,6 +4,7 @@ _.extend MeetMikey.Settings,
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   pollDelay: 60*1000
   betaCodeHash: 205332315
+  extensionVersion: chrome.runtime.getManifest()?.version
   APIUrls:
     local: "https://local.meetmikey.com"
     development: "https://dev.meetmikey.com"
@@ -60,6 +61,9 @@ _.extend MeetMikey.Settings,
 
     # gmail's pagination controls
     gmailPagination: '.Cr.aqJ > .ar5.J-J5-Ji'
+
+    # inner container that scrolls
+    scrollContainer: '[id=":rp"]'
 
   MikeyTeamUserIds: [
       '51425e20a8a4db7207000006'

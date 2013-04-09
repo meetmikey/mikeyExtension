@@ -41,7 +41,6 @@ class Setup
     hash is '' or hash.match /#(?:inbox)?$/
 
   checkIfInInbox: =>
-    console.log 'we are in inbox:', @isInInbox()
     if @isInInbox()
       $(window).off 'hashchange', @checkIfInInbox
       MeetMikey.Helper.findSelectors @inboxSelector, @tabsSelector, @injectMainView

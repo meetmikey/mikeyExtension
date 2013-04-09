@@ -72,6 +72,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   teardown: =>
     @collection.off 'reset', @render
+    @collection.reset()
 
   getTemplateData: =>
     models: _.invoke(@getModels(), 'decorate')

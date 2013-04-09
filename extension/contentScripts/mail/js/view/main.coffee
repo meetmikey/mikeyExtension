@@ -15,7 +15,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       args: {name: 'search', render: false, renderChildren: false}
     'sidebar':
       viewClass: MeetMikey.View.Sidebar
-      selector: '.nM[role=navigation]'
+      selector: MeetMikey.Settings.Selectors.sideBar
       args: {render: false}
 
   preInitialize: =>

@@ -9,6 +9,8 @@ template = """
 class MeetMikey.View.Inbox extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  safeFind: MeetMikey.Helper.DOMManager.find
+
   subViews:
     'attachments':
       viewClass: MeetMikey.View.Attachments
@@ -56,7 +58,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   hideAllTabs: () =>
     contentSelector = _.values(@tabs).join(', ')
-    $(contentSelector).hide()
+    @safeFind(contentSelector).hide()
 
   manageInboxDisplay: (tab) =>
     method = if tab is 'email' then 'hide' else 'show'

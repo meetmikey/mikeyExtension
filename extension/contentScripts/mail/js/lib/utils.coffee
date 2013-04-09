@@ -43,6 +43,7 @@ MeetMikey.Helper.callAPI = (options) ->
   apiData =
     userEmail: MeetMikey.globalUser?.get('email')
     asymHash: MeetMikey.globalUser?.get('asymHash')
+    extensionVersion: MeetMikey.Settings.extensionVersion
 
   _.extend apiData, options.data if options.data?
   options.data = apiData

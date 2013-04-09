@@ -3,6 +3,7 @@ class ThemeManager
   inboxUnreadTextSelector: MeetMikey.Settings.Selectors.inboxUnreadText
 
   $body: $('body')
+  safeFind: MeetMikey.Helper.DOMManager.find
 
   setup: =>
     @setLayout @detectLayout()
@@ -16,7 +17,7 @@ class ThemeManager
     @$body.addClass classes
 
   detectLayout: =>
-    $elem = $(MeetMikey.Settings.Selectors.tableCell)
+    $elem =  @safeFind MeetMikey.Settings.Selectors.tableCell
     padding = parseFloat $elem.css('padding-top')
 
     if padding < 4.5
@@ -35,23 +36,21 @@ class ThemeManager
     {color, boxColor, buttonColor}
 
   isDefaultTheme: =>
-    color = $(MeetMikey.Settings.Selectors.gmailDropdownText).css 'color'
+    color = @safeFind(MeetMikey.Settings.Selectors.gmailDropdownText).css 'color'
 
     if color?
       @colorIsRed color
     else
-      htmlFragment = $(MeetMikey.Settings.Selectors.entireSideBar).html()
-      MeetMikey.Helper.callDebug 'selectorNotFound', {htmlFragment}
       true
 
   getTextColor: =>
-    $(MeetMikey.Settings.Selectors.sideBarText).css 'color'
+    @safeFind(MeetMikey.Settings.Selectors.sideBarText).css 'color'
 
   getInboxTextColor: =>
-    $(@inboxReadTextSelector).css('color') ? $(@inboxUnreadTextSelector).css('color')
+    $(@inboxReadTextSelector).css('color') ? @safeFind(@inboxUnreadTextSelector).css('color')
 
   getButtonColor: =>
-    $(MeetMikey.Settings.Selectors.buttonColor).css 'background-image'
+    @safeFind(MeetMikey.Settings.Selectors.buttonColor).css 'background-image'
 
   parseRGB: (str) =>
     match = str.match /\((\d+), (\d+), (\d+)/
