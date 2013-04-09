@@ -6,6 +6,11 @@ class DOMManager
     @error('selectorNotFound', selector) unless target.length > 0
     target
 
+  findWithin: ($elem) => (selector) =>
+    target = $elem.find selector
+    @error('selectorNotFound', selector) unless target.length > 0
+    target
+
   waitAndFind: (selector, callback) =>
     tries = 0
     find = ->
