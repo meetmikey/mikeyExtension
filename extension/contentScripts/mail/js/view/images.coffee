@@ -50,7 +50,11 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   postRender: =>
 
   teardown: =>
+    @cachedModels = _.clone @collection.models
     @collection.reset()
+
+  restoreFromCache: =>
+    @collection.reset(@cachedModels)
 
   getTemplateData: =>
     models: _.invoke(@collection.models, 'decorate')
