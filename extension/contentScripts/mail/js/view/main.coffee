@@ -17,6 +17,10 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       viewClass: MeetMikey.View.Sidebar
       selector: '.nM[role=navigation]'
       args: {render: false}
+    'dropdown':
+      viewClass: MeetMikey.View.Dropdown
+      selector:  MeetMikey.Settings.Selectors.navBar
+      args: {append: true}
 
   preInitialize: =>
     @injectInboxContainer()

@@ -56,3 +56,6 @@ _.extend MeetMikey.Settings,
 
     # element that contains the user's email address
     userEmail: '#gbmpdv .gbps2'
+
+    # nav bar at very top of viewport
+    navBar: '#gbzc'
