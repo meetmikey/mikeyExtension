@@ -47,8 +47,6 @@ class DOMManager
 
       if @existsIn target, elem
         tries += 1
-        console.log 'try', tries
-        console.log 'selector', selector
         if tries > @maxTries
           # @error 'elemAlreadyExists', elem.attr('class')
           console.log ' elem already exists '
