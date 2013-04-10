@@ -50,7 +50,8 @@ class DOMManager
         console.log 'try', tries
         console.log 'selector', selector
         if tries > @maxTries
-          @error 'elemAlreadyExists', elem.attr('class')
+          # @error 'elemAlreadyExists', elem.attr('class')
+          console.log ' elem already exists '
           return
         else setTimeout tryFind, 200
       else
