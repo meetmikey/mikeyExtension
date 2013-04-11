@@ -68,6 +68,12 @@ _.extend MeetMikey.Settings,
     # nav bar at very top of viewport
     navBar: '#gbzc'
 
+    # bar containing pagination for app search
+    appsSearchControl: '.Wc'
+
+    # table containing app search stuff
+    appsSearchTable: '.F.cf.zt'
+
   MikeyTeamUserIds: [
       '51425e20a8a4db7207000006'
     , '5153edd7a66e972a10000005'

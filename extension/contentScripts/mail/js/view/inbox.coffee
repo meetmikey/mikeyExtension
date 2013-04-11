@@ -56,6 +56,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @hideAllTabs()
     @manageInboxDisplay(tab)
     @managePaginationDisplay(tab)
+    @manageAppsSearchDisplay(tab) if @inAppsSearch()
     $(@tabs[tab]).show()
     MeetMikey.Globals.tabState = tab
     Backbone.trigger 'change:tab', tab
@@ -72,6 +73,15 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   managePaginationDisplay: (tab) =>
     method = if tab isnt 'email' then 'hide' else 'show'
     $(MeetMikey.Settings.Selectors.gmailPagination)[method]()
+
+  manageAppsSearchDisplay: (tab) =>
+    method = if tab isnt 'email' then 'hide' else 'show'
+    $(MeetMikey.Settings.Selectors.appsSearchControl)[method]()
+    tableSelector = MeetMikey.Settings.Selectors.appsSearchTable
+    _.delay (=> $(tableSelector)[method]()), 200
+
+  inAppsSearch: =>
+     /#apps/.test window.location.hash
 
 
   bindPageHandlers: =>
