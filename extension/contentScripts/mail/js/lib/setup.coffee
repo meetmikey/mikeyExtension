@@ -47,9 +47,10 @@ class Setup
       MeetMikey.Helper.DOMManager.waitAndFindAll @inboxSelector, @tabsSelector, @checkAndInjectMainView
 
   injectDropdown: =>
-    view = new MeetMikey.View.Dropdown
+    return if @dropdownView?
+    @dropdownView = new MeetMikey.View.Dropdown
       el: MeetMikey.Settings.Selectors.navBar, append: true
-    view.render()
+    @dropdownView.render()
 
   injectOnboardModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')
