@@ -2,7 +2,7 @@ _.extend MeetMikey.Settings,
   env: "production"
   imgPath: 'contentScripts/mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
-  pollDelay: 45*1000
+  pollDelay: 60*1000
   betaCodeHash: 205332315
   extensionVersion: chrome.runtime.getManifest()?.version
   APIUrls:
@@ -65,6 +65,9 @@ _.extend MeetMikey.Settings,
     # inner container that scrolls
     scrollContainer: '[id=":rp"]'
 
+    # nav bar at very top of viewport
+    navBar: '#gbzc'
+
   MikeyTeamUserIds: [
       '51425e20a8a4db7207000006'
     , '5153edd7a66e972a10000005'
@@ -74,4 +77,5 @@ _.extend MeetMikey.Settings,
     , '514266e16a9290970a000008'
     , '5146c99d32a3828c41000005'
     , '5147afc4f287efc831000005'
+    , '515b46f4abc4000e2a000010'
   ]

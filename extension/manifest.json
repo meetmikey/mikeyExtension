@@ -1,6 +1,6 @@
 {
   "name": "Mikey for Gmail™",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "manifest_version": 2,
   "description": "Meet Mikey. A better way to find things in your Gmail.",
   "background": {
@@ -54,6 +54,7 @@
             "contentScripts/mail/js/view/searchResults.js",
             "contentScripts/mail/js/view/search.js",
             "contentScripts/mail/js/view/sidebar.js",
+            "contentScripts/mail/js/view/dropdown.js",
             "contentScripts/mail/js/view/main.js",
             "contentScripts/mail/js/lib/setup.js",
             "contentScripts/mail/js/mail.js"],

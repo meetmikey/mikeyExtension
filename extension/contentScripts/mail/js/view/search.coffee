@@ -1,8 +1,11 @@
 class MeetMikey.View.Search extends MeetMikey.View.Base
+  cachedQuery: null
+
   subViews:
     'searchBar':
       viewClass: MeetMikey.View.SearchBar
       selector: MeetMikey.Settings.Selectors.searchBar
+      args: {owned: false}
     'tabs':
       viewClass: MeetMikey.View.Tabs
       selector: '#mm-search-tabs-container'
@@ -24,8 +27,10 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     @subView('searchResults').on 'updateTabCount', @subView('tabs').updateTabCount
     @renderSubview 'searchResults'
     @subView('searchResults').showTab MeetMikey.Globals.tabState
+    return @subView('searchResults').restoreFromCache() if @cachedQuery == query
     @getSearchResults query
     @trackSearchEvent query
+    @cachedQuery = query
 
   trackSearchEvent: (query) =>
     MeetMikey.Helper.Mixpanel.trackEvent 'search',

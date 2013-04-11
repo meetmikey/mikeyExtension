@@ -7,7 +7,7 @@ template = """
         <img class="mm-image" src="{{image}}" />
         <div class="image-text">
           <div class="image-filename">
-            <a href="{{url}}">{{filename}}&nbsp;</a>
+            <a href="#">{{filename}}&nbsp;</a>
           </div>
 
           <div class="rollover-actions">
@@ -35,6 +35,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   events:
     'click .mm-image': 'openImage'
+    'click .image-filename a': 'openImage'
     'click .open-message': 'openMessage'
 
   postInitialize: =>
@@ -49,13 +50,18 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   postRender: =>
 
   teardown: =>
+    @cachedModels = _.clone @collection.models
     @collection.reset()
+
+  restoreFromCache: =>
+    @collection.reset(@cachedModels)
 
   getTemplateData: =>
     models: _.invoke(@collection.models, 'decorate')
     searchQuery: @searchQuery
 
   openImage: (event) =>
+    event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
     url = model.getUrl()
@@ -84,7 +90,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     $scrollElem.scrollTop() + $scrollElem.height() > ( @$el.height() - 1000 )
 
   fetchMoreImages: =>
-    console.log 'go and fetch some images!'
+    #console.log 'go and fetch some images!'
     @fetching = true
     @collection.fetch
       silent: true
@@ -100,35 +106,37 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @appendNewImageModelTemplates response
     @$el.isotope('reloadItems')
     @initIsotope()
+    @delegateEvents()
 
   appendNewImageModelTemplates: (response) =>
-    models = _.map response, (m) -> new MeetMikey.Model.Attachment(m)
+    ids = _.pluck response, '_id'
+    models = _.map ids, (id) => @collection.get(id)
     decoratedModels = _.invoke(models, 'decorate')
     @$el.append @template(models: decoratedModels)
 
   runIsotope: =>
-    console.log 'isotoping'
+    #console.log 'isotoping'
     @$el.isotope
       filter: '*'
       animationEngine: 'css'
 
   checkAndRunIsotope: =>
-    console.log 'checkAndRunIsotope'
+    #console.log 'checkAndRunIsotope'
     if @areImagesLoaded
-      console.log 'images loaded, clearing interval', @isotopeInterval
+      console.log 'images loaded, clearing isotope interval', @isotopeInterval
       clearInterval @isotopeInterval
       @isotopeInterval = null;
     else
       @runIsotope()
 
   initIsotope: =>
-    console.log 'initIsotope'
+    #console.log 'initIsotope'
     @areImagesLoaded = false
     if ! @isotopeInterval
       @isotopeInterval = setInterval @checkAndRunIsotope, 200
     @$el.imagesLoaded =>
       @areImagesLoaded = true
-      console.log 'images loaded, isotoping one last time'
+      #console.log 'images loaded, isotoping one last time'
       @runIsotope()
 
   setResults: (models, query) =>

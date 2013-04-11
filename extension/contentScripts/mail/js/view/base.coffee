@@ -2,6 +2,8 @@ class MeetMikey.View.Base extends Backbone.View
   defaultArgs:
     render: true
     renderChildren: true
+    append: false
+    owned: true
 
   initialize: =>
     @preInitialize()
@@ -28,7 +30,7 @@ class MeetMikey.View.Base extends Backbone.View
     @teardown()
     @trigger 'teardown'
     @off()
-    @remove()
+    @remove() if @options.owned
     @undelegateEvents()
     this
 
@@ -36,7 +38,12 @@ class MeetMikey.View.Base extends Backbone.View
 
   render: =>
     @preRender()
-    @$el.html @template(@getTemplateData()) if @options.render
+    if @options.render
+      renderedTemplate = @template(@getTemplateData())
+      if @options.append
+        @$el.append renderedTemplate
+      else
+        @$el.html renderedTemplate
     @renderSubviews() if @options.renderChildren
     @postRender()
     this

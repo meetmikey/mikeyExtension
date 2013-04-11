@@ -3,6 +3,7 @@ class Mixpanel
 
   inCorrectEnv: MeetMikey.Settings.env is 'production'
   token: MeetMikey.Settings.mixpanelId
+  extensionVersion: MeetMikey.Settings.extensionVersion
 
   userId: null
 
@@ -29,7 +30,7 @@ class Mixpanel
 
   _buildObj: (event, props)=>
     metaData = _.extend @userProps ? {},
-      token: @token, time: Date.now(), distinct_id: @userId, extensionVersion: MeetMikey.Settings.extensionVersion
+      token: @token, time: Date.now(), distinct_id: @userId, extensionVersion: @extensionVersion
     properties = _.extend props, metaData
     {event, properties}
 
@@ -50,6 +51,7 @@ class Mixpanel
       $email: attrs.email
       $first_name: attrs.firstName
       $last_name: attrs.lastName
+      $extension_version: @extensionVersion
 
   _engage: (user) =>
     obj = @_buildUserObj user

@@ -47,6 +47,11 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   postRender: =>
 
+  restoreFromCache: =>
+    @subView('attachments').restoreFromCache()
+    @subView('links').restoreFromCache()
+    @subView('images').restoreFromCache()
+
   showTab: (tab) =>
     @hideAllTabs()
     @manageInboxDisplay(tab)
