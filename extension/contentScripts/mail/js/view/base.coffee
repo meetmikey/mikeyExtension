@@ -3,6 +3,7 @@ class MeetMikey.View.Base extends Backbone.View
     render: true
     renderChildren: true
     append: false
+    owned: true
 
   initialize: =>
     @preInitialize()
@@ -29,7 +30,7 @@ class MeetMikey.View.Base extends Backbone.View
     @teardown()
     @trigger 'teardown'
     @off()
-    @remove()
+    @remove() if @options.owned
     @undelegateEvents()
     this
 

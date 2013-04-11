@@ -12,15 +12,11 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     'search':
       viewClass: MeetMikey.View.Search
       selector: MeetMikey.Settings.Selectors.topLevel
-      args: {name: 'search', render: false, renderChildren: false}
+      args: {name: 'search', render: false, renderChildren: false, owned: false}
     'sidebar':
       viewClass: MeetMikey.View.Sidebar
       selector: '.nM[role=navigation]'
-      args: {render: false}
-    'dropdown':
-      viewClass: MeetMikey.View.Dropdown
-      selector:  MeetMikey.Settings.Selectors.navBar
-      args: {append: true}
+      args: {render: false, owned: false}
 
   preInitialize: =>
     @injectInboxContainer()
@@ -43,6 +39,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   teardown: =>
     Backbone.off 'change:tab'
+    @$(@contentSelector).removeClass 'AO-tabs'
 
   detectTheme: =>
     color = $(MeetMikey.Settings.Selectors.sidebarText).css 'color'

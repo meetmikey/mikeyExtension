@@ -3,6 +3,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     'searchBar':
       viewClass: MeetMikey.View.SearchBar
       selector: MeetMikey.Settings.Selectors.searchBar
+      args: {owned: false}
     'tabs':
       viewClass: MeetMikey.View.Tabs
       selector: '#mm-search-tabs-container'

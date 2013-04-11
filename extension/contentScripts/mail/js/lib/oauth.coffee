@@ -27,15 +27,28 @@ class OAuth
   authorized: =>
     @getUserInfo()?.asymHash?
 
-  doNotAsk: =>
-    @storeUserInfo email: @getUserEmail(), ignoreAccount: true
+  toggle: =>
+    if @isEnabled() then @disable() else @enable()
+
+  disable: =>
+    MeetMikey.Helper.LocalStore.set "#{@userKey()}-disable", true
+    MeetMikey.Helper.Setup.mainView?._teardown()
+
+  enable: =>
+    MeetMikey.Helper.LocalStore.set "#{@userKey()}-disable", false
+    MeetMikey.Helper.Setup.bootstrap()
+
+  isEnabled: =>
+    disabled = MeetMikey.Helper.LocalStore.get "#{@userKey()}-disable"
+
+    not (disabled? and disabled)
 
   trackAuthEvent: (user) =>
     MeetMikey.Helper.Mixpanel.trackEvent 'authorized', user
 
   checkUser: (callback) =>
     data = @getUserInfo()
-    return if data?.ignoreAccount
+    return unless @isEnabled()
     return callback null unless data?.asymHash?
 
     MeetMikey.Helper.callAPI
