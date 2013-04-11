@@ -48,6 +48,10 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @collection.fetch success: @waitAndPoll
 
   postRender: =>
+    if MeetMikey.Globals.tabState == 'images'
+      @initIsotope()
+    else
+      @once 'showTab', @initIsotope
 
   teardown: =>
     @cachedModels = _.clone @collection.models
@@ -116,9 +120,12 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   runIsotope: =>
     #console.log 'isotoping'
+    if @isotopeHasInitialized
+      @$el.isotope('reloadItems')
     @$el.isotope
       filter: '*'
       animationEngine: 'css'
+    @isotopeHasInitialized = true
 
   checkAndRunIsotope: =>
     #console.log 'checkAndRunIsotope'
