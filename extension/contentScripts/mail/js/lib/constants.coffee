@@ -12,7 +12,7 @@ _.extend MeetMikey.Settings,
 
   Selectors:
     # selector that contains controls above inbox where we inject tabs
-    tabsContainer: '[id=":ro"] [gh="tm"] .nH.aqK'
+    tabsContainer: '[id=":ro"] [gh="tm"]'
 
     # selector that the inbox should be inserted before
     inboxContainer: '.BltHke.nH.oy8Mbf[role=main] .UI'
