@@ -13,6 +13,7 @@ class Setup
     MeetMikey.Helper.findSelectors @userEmailSelector, @startAuthFlow
 
   startAuthFlow: (target) =>
+    @injectDropdown()
     MeetMikey.Helper.OAuth.checkUser (userData) =>
       if userData?
         @authorized(userData)
@@ -45,6 +46,11 @@ class Setup
       $(window).off 'hashchange', @checkIfInInbox
       MeetMikey.Helper.DOMManager.waitAndFindAll @inboxSelector, @tabsSelector, @checkAndInjectMainView
 
+  injectDropdown: =>
+    view = new MeetMikey.View.Dropdown
+      el: MeetMikey.Settings.Selectors.navBar, append: true
+    view.render()
+
   injectOnboardModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')
     view = new MeetMikey.View.OnboardModal el: '#mm-onboard-modal'
@@ -58,17 +64,16 @@ class Setup
     view = new MeetMikey.View.WelcomeModal el: '#mm-welcome-modal'
     view.render()
 
+  injectMainView: (target) =>
+    target ?= @inboxSelector
+    @mainView = new MeetMikey.View.Main el: 'body', inboxTarget: target, owned: false
+    @mainView.render()
+
   checkAndInjectMainView: =>
     if @isInInbox()
       @injectMainView()
     else
       @waitForInbox()
-
-  injectMainView:  =>
-    view = new MeetMikey.View.Main el: 'body', inboxTarget: @inboxSelector
-    view.render()
-
-
 
 
 MeetMikey.Helper.Setup = new Setup()

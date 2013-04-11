@@ -65,6 +65,9 @@ _.extend MeetMikey.Settings,
     # inner container that scrolls
     scrollContainer: '[id=":rp"]'
 
+    # nav bar at very top of viewport
+    navBar: '#gbzc'
+
   MikeyTeamUserIds: [
       '51425e20a8a4db7207000006'
     , '5153edd7a66e972a10000005'

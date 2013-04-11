@@ -12,11 +12,11 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     'search':
       viewClass: MeetMikey.View.Search
       selector: MeetMikey.Settings.Selectors.topLevel
-      args: {name: 'search', render: false, renderChildren: false}
+      args: {name: 'search', render: false, renderChildren: false, owned: false}
     'sidebar':
       viewClass: MeetMikey.View.Sidebar
       selector: MeetMikey.Settings.Selectors.sideBar
-      args: {render: false}
+      args: {render: false, owned: false}
 
   preInitialize: =>
     @injectInboxContainer()
@@ -39,6 +39,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   teardown: =>
     Backbone.off 'change:tab'
+    @$(@contentSelector).removeClass 'AO-tabs'
 
   setLayout: (layout='compact') =>
     @$el.addClass layout
