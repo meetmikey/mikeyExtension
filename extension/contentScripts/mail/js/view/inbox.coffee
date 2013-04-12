@@ -76,9 +76,12 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   manageAppsSearchDisplay: (tab) =>
     method = if tab isnt 'email' then 'hide' else 'show'
+    delay = if method is 'hide' then 200 else 0
     $(MeetMikey.Settings.Selectors.appsSearchControl)[method]()
     tableSelector = MeetMikey.Settings.Selectors.appsSearchTable
-    _.delay (=> $(tableSelector)[method]()), 200
+    _.delay (=> @$el.parent().find(tableSelector)[method]()), delay
+    onlySearchDocsSelector = MeetMikey.Settings.Selectors.appsSearchOnlyDocs
+    _.delay (=> @$el.parent().find(onlySearchDocsSelector)[method]()), delay
 
   inAppsSearch: =>
      /#apps/.test window.location.hash

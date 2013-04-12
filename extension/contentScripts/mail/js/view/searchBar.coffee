@@ -10,6 +10,5 @@ class MeetMikey.View.SearchBar extends MeetMikey.View.Base
 
   search: (e) =>
     [match, query] = (window.location.hash.match /#(?:search|apps)\/([^\/]+)(?!.+\/)$/) ? []
-
     return unless match? and query?
     @trigger 'search', query
