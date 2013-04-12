@@ -26,8 +26,10 @@ class DOMManager
     find()
 
   waitAndFindAll: (selectors..., callback) =>
+    console.log 'waitAndFindAll'
     tries = 0
     find = =>
+      console.log 'tries', 1
       tries += 1
       if tries > @maxTries
         @error 'selectorNotFound', selectors
