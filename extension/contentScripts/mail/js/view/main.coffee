@@ -40,6 +40,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
   teardown: =>
     Backbone.off 'change:tab'
     @$(@contentSelector).removeClass 'AO-tabs'
+    $(window).off 'hashchange', @pageNavigated
 
   setLayout: (layout='compact') =>
     @$el.addClass layout
