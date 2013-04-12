@@ -1,3 +1,4 @@
+downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/sprite.png")
 template = """
   {{#unless models}}
 
@@ -16,7 +17,12 @@ template = """
              {{#if ../searchQuery}}
                 <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
               {{else}}
-                <a href="#inbox/{{msgHex}}" class="open-message">Email thread</a>
+                <a href="#inbox/{{msgHex}}" class="open-message">
+                  <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                    <div class="list-icon" style="background-image: url('#{downloadUrl}');">
+                    </div>
+                  </div>
+                </a>
           {{/if}}
           </div>
         </div>
@@ -48,6 +54,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @collection.fetch success: @waitAndPoll
 
   postRender: =>
+      @$('.mm-download-tooltip').tooltip placement: 'bottom'
 
   teardown: =>
     @cachedModels = _.clone @collection.models
