@@ -34,17 +34,19 @@ class Setup
     MeetMikey.globalUser.checkOnboard()
 
   waitForInbox: =>
-    @checkIfInInbox()
-    $(window).on 'hashchange', @checkIfInInbox
+    inboxFound = @checkIfInInbox()
+    $(window).on 'hashchange', @checkIfInInbox unless inboxFound
 
   isInInbox: =>
     hash = window.location.hash
-    hash is '' or hash.match /#(?:inbox)?$/
+    hash is '' or /#(?:inbox)?$/.test hash
 
   checkIfInInbox: =>
-    if @isInInbox()
+    inInbox = @isInInbox()
+    if inInbox
       $(window).off 'hashchange', @checkIfInInbox
       MeetMikey.Helper.DOMManager.waitAndFindAll @inboxSelector, @tabsSelector, @checkAndInjectMainView
+    inInbox
 
   injectDropdown: =>
     return if @dropdownView?
