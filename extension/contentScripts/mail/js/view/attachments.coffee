@@ -25,7 +25,7 @@ template = """
         </td> -->
 
          <td class="mm-download">
-              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email thread">
+              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
                 <div class="list-icon" style="background-image: url('#{downloadUrl}');">
                 </div>
               </div>
