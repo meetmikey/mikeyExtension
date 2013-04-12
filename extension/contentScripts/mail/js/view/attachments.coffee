@@ -1,3 +1,4 @@
+downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/sprite.png")
 template = """
   {{#unless models}}
     <div class="mm-placeholder"></div>
@@ -24,8 +25,8 @@ template = """
         </td> -->
 
          <td class="mm-download">
-              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
-                <div class="list-icon" style="background-image: url('{{../downloadUrl}}');">
+              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email thread">
+                <div class="list-icon" style="background-image: url('#{downloadUrl}');">
                 </div>
               </div>
           </td>
@@ -43,7 +44,6 @@ template = """
     <div class="rollover-container"></div>
   {{/unless}}
 """
-downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/sprite.png")
 
 
 class MeetMikey.View.Attachments extends MeetMikey.View.Base
@@ -86,7 +86,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   getTemplateData: =>
     models: _.invoke(@getModels(), 'decorate')
-    downloadUrl: downloadUrl
 
   getModels: =>
     if @options.fetch
