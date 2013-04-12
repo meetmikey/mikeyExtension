@@ -33,15 +33,25 @@ class OAuth
   disable: =>
     MeetMikey.Helper.LocalStore.set "#{@userKey()}-disable", true
     MeetMikey.Helper.Setup.mainView?._teardown()
+    @trackDisableEvent()
 
   enable: =>
     MeetMikey.Helper.LocalStore.set "#{@userKey()}-disable", false
     MeetMikey.Helper.Setup.bootstrap()
+    @trackEnableEvent()
 
   isEnabled: =>
     disabled = MeetMikey.Helper.LocalStore.get "#{@userKey()}-disable"
 
     not (disabled? and disabled)
+
+  trackEnableEvent: =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'enableExtension',
+      userEmail: @getUserEmail()
+
+  trackDisableEvent: =>
+    MeetMikey.Helper.Mixpanel.trackEvent 'disableExtension',
+      userEmail: @getUserEmail()
 
   trackAuthEvent: (user) =>
     MeetMikey.Helper.Mixpanel.trackEvent 'authorized', user
