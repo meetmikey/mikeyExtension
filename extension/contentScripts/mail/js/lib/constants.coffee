@@ -74,6 +74,9 @@ _.extend MeetMikey.Settings,
     # table containing app search stuff
     appsSearchTable: '.F.cf.zt'
 
+    # bar containing search only docs/sites
+    appsSearchOnlyDocs: '.G-MI .D .E .Qi'
+
   MikeyTeamUserIds: [
       '51425e20a8a4db7207000006'
     , '5153edd7a66e972a10000005'
