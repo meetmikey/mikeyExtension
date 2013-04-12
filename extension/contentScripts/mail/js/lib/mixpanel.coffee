@@ -10,7 +10,8 @@ class Mixpanel
   # TODO: write wrapper for engage endpoint, add distinct_id support with identify
   setUser: (user) =>
     @userId = user.id
-    @userProps = _.pick user.attributes, 'firstName', 'lastName', '_id'
+    @userProps = _.pick user.attributes, 'firstName', 'lastName', 'displayName'
+    @userProps.userId = @userId
     return unless @inCorrectEnv
     @_engage user
 
