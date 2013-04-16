@@ -133,12 +133,9 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     else
       after: @collection.first()?.get('sentDate')
 
-    console.log 'links are polling'
     @collection.fetch
       update: true
       remove: false
       data: data
       success: @waitAndPoll
       error: @waitAndPoll
-
-

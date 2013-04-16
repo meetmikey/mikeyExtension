@@ -52,7 +52,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     selectors = MeetMikey.Settings.Selectors
     if MeetMikey.Globals.multipleInbox
       @inboxSelector = selectors.multipleInboxContainer
-      @tabsSelector = selectors.multipleInboxTabsContianer
+      @tabsSelector = selectors.multipleInboxTabsContainer
     else
       @inboxSelector = selectors.inboxContainer
       @tabsSelector = selectors.tabsContainer
@@ -83,9 +83,8 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   manageMultipleInboxDisplay: =>
     return unless MeetMikey.Globals.multipleInbox
-    inInbox = /#inbox(?!\/)/.test window.location.hash
-
-    if inInbox
+    console.log 'inSearch', @inSearch()
+    if @inInbox()
       @subView('tabs').$el.show()
       @subView('inbox').$el.show()
       @subView('inbox').showTab MeetMikey.Globals.tabState
@@ -93,8 +92,10 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       @subView('tabs').$el.hide()
       @subView('inbox').$el.hide()
       @subView('inbox').resetEmailDisplay()
+      @subView('search').manageEmailContainerDisplay() if @inSearch()
 
   pageNavigated: =>
+    console.log 'pageNavigated'
     @managePushdownDisplay()
     @manageMultipleInboxDisplay()
 

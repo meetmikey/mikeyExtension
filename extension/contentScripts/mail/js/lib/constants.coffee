@@ -84,7 +84,7 @@ _.extend MeetMikey.Settings,
     multipleInboxContainer: "[id=':rr']"
 
     # where multiple inbox tabs should be injected
-    multipleInboxTabsContianer: '[id=":ro"]'
+    multipleInboxTabsContainer: '[id=":ro"]'
 
   MikeyTeamUserIds: [
       '51425e20a8a4db7207000006'

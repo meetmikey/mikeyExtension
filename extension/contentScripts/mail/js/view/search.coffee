@@ -62,3 +62,9 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
         @subView('searchResults').showTab MeetMikey.Globals.tabState
       failure: ->
         console.log 'search failed'
+
+  manageEmailContainerDisplay : =>
+    console.log 'manageEmailContainerDisplay', MeetMikey.Globals.tabState
+    return if MeetMikey.Globals.tabState is 'email'
+    tabsToHide = MeetMikey.Settings.Selectors.allInboxes
+    $(tabsToHide).hide()
