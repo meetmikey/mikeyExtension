@@ -77,6 +77,15 @@ _.extend MeetMikey.Settings,
     # bar containing search only docs/sites
     appsSearchOnlyDocs: '.G-MI .D .E .Qi'
 
+    # bar containing controls above inbox
+    inboxControlsContainer: ".G-atb"
+
+    # where multiple inbox container should be injected
+    multipleInboxContainer: "[id=':rr']"
+
+    # where multiple inbox tabs should be injected
+    multipleInboxTabsContianer: '[id=":ro"]'
+
   MikeyTeamUserIds: [
       '51425e20a8a4db7207000006'
     , '5153edd7a66e972a10000005'

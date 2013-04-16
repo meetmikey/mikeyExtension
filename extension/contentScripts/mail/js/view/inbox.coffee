@@ -37,6 +37,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   tabState: => MeetMikey.Globals.tabState
 
   preInitialize: =>
+    @tabs = $.extend true, {}, @tabs # deep copy tabs
     @subViews.attachments.args.fetch = @options.fetch
     @subViews.links.args.fetch = @options.fetch
     @subViews.attachments.args.name = @options.name
@@ -44,6 +45,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   postInitialize: =>
     @bindCountUpdate() unless @options.fetch
+    if @options.fetch and MeetMikey.Globals.multipleInbox
+      @tabs.email = MeetMikey.Settings.Selectors.multipleInboxContainer + ', ' + @tabs.email
 
   postRender: =>
 
@@ -83,9 +86,12 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     onlySearchDocsSelector = MeetMikey.Settings.Selectors.appsSearchOnlyDocs
     _.delay (=> @$el.parent().find(onlySearchDocsSelector)[method]()), delay
 
+  resetEmailDisplay: =>
+    $(MeetMikey.Settings.Selectors.allInboxes).show()
+    $(MeetMikey.Settings.Selectors.multipleInboxContainer).show()
+
   inAppsSearch: =>
      /#apps/.test window.location.hash
-
 
   bindPageHandlers: =>
     Backbone.on 'clicked:next-page', @nextPage

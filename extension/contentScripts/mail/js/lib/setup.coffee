@@ -23,7 +23,8 @@ class Setup
   authorized: (userData) =>
     @initalizeGlobalUser userData
     @trackLoginEvent(userData)
-    @waitForInbox()
+    @checkMultipleInbox =>
+      @waitForInbox()
 
   trackLoginEvent: (user) =>
     MeetMikey.Helper.Mixpanel.trackEvent 'login', user
@@ -32,6 +33,24 @@ class Setup
     MeetMikey.globalUser = new MeetMikey.Model.User data
     MeetMikey.Helper.Mixpanel.setUser MeetMikey.globalUser
     MeetMikey.globalUser.checkOnboard()
+
+  checkMultipleInbox: (callback) =>
+    selector = MeetMikey.Settings.Selectors.inboxControlsContainer
+    MeetMikey.Helper.DOMManager.waitAndFind selector, (target) =>
+      margin = target.css 'margin-left'
+      @multipleInbox = margin isnt "-400px"
+      MeetMikey.Globals.multipleInbox = @multipleInbox
+      @setSelectors()
+      callback @multipleInbox
+
+  setSelectors: =>
+    selectors = MeetMikey.Settings.Selectors
+    if @multipleInbox
+      @inboxSelector = selectors.multipleInboxContainer
+      @tabsSelector = selectors.multipleInboxTabsContianer
+    else
+      @inboxSelector = selectors.inboxContainer
+      @tabsSelector = selectors.tabsContainer
 
   waitForInbox: =>
     inboxFound = @checkIfInInbox()
@@ -67,9 +86,8 @@ class Setup
     view = new MeetMikey.View.WelcomeModal el: '#mm-welcome-modal'
     view.render()
 
-  injectMainView: (target) =>
-    target ?= @inboxSelector
-    @mainView = new MeetMikey.View.Main el: 'body', inboxTarget: target, owned: false
+  injectMainView: =>
+    @mainView = new MeetMikey.View.Main el: 'body', owned: false, multipleInbox: @multipleInbox
     @mainView.render()
 
   checkAndInjectMainView: =>

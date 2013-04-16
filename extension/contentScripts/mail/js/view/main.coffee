@@ -19,8 +19,8 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       args: {render: false, owned: false}
 
   preInitialize: =>
-    @injectInboxContainer()
-    @injectTabBarContainer()
+    @setSelectors()
+    @injectContainers()
     MeetMikey.Helper.Theme.setup()
     @options.render = false
 
@@ -48,23 +48,58 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
   setPaginationState: (pagination) =>
     @subView('tabs').subView('pagination').setState pagination
 
-  injectInboxContainer: =>
-    element = '<div id="mm-container" class="mm-container" style="display: none;"></div>'
-    MeetMikey.Helper.DOMManager.injectBeside @options.inboxTarget, element
+  setSelectors: =>
+    selectors = MeetMikey.Settings.Selectors
+    if MeetMikey.Globals.multipleInbox
+      @inboxSelector = selectors.multipleInboxContainer
+      @tabsSelector = selectors.multipleInboxTabsContianer
+    else
+      @inboxSelector = selectors.inboxContainer
+      @tabsSelector = selectors.tabsContainer
 
-  injectTabBarContainer: =>
-    selector = MeetMikey.Settings.Selectors.tabsContainer
+  injectContainers: =>
+    @injectInboxContainer()
+    @injectTabBarContainer()
+
+  injectInboxContainer: (selector) =>
+    element = '<div id="mm-container" class="mm-container" style="display: none;"></div>'
+    MeetMikey.Helper.DOMManager.injectBeside @inboxSelector, element
+
+  injectTabBarContainer: (selector) =>
     element = '<div id="mm-tabs-container" class="mm-tabs-container"></div>'
-    MeetMikey.Helper.DOMManager.injectInto selector, element, =>
+    MeetMikey.Helper.DOMManager.injectInto @tabsSelector, element, =>
       @$(@contentSelector).addClass 'AO-tabs'
 
   showEmailTab: =>
     @subView('tabs').setActiveTab 'email'
     @subView('inbox').showTab 'email'
 
-  pageNavigated: =>
-    viewWithTabs = /#(?:search|apps)(?!.+\/)|#inbox(?!\/)/.test window.location.hash
+  managePushdownDisplay: =>
+    viewWithTabs = @inInbox() or @inSearch()
     if viewWithTabs
       @$(@contentSelector).addClass 'AO-tabs'
     else
       @$(@contentSelector).removeClass 'AO-tabs'
+
+  manageMultipleInboxDisplay: =>
+    return unless MeetMikey.Globals.multipleInbox
+    inInbox = /#inbox(?!\/)/.test window.location.hash
+
+    if inInbox
+      @subView('tabs').$el.show()
+      @subView('inbox').$el.show()
+      @subView('inbox').showTab MeetMikey.Globals.tabState
+    else
+      @subView('tabs').$el.hide()
+      @subView('inbox').$el.hide()
+      @subView('inbox').resetEmailDisplay()
+
+  pageNavigated: =>
+    @managePushdownDisplay()
+    @manageMultipleInboxDisplay()
+
+  inSearch: =>
+    /#(?:search|apps)(?!.+\/)/.test window.location.hash
+
+  inInbox: =>
+    /#inbox(?!\/)/.test window.location.hash
