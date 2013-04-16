@@ -53,6 +53,7 @@ class Mixpanel
       $first_name: attrs.firstName
       $last_name: attrs.lastName
       $extension_version: @extensionVersion
+      $multiple_inbox: MeetMikey.Globals.multipleInbox
 
   _engage: (user) =>
     obj = @_buildUserObj user

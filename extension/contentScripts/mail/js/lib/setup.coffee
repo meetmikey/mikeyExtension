@@ -21,9 +21,9 @@ class Setup
         @injectOnboardModal()
 
   authorized: (userData) =>
-    @initalizeGlobalUser userData
-    @trackLoginEvent(userData)
     @checkMultipleInbox =>
+      @initalizeGlobalUser userData
+      @trackLoginEvent(userData)
       @waitForInbox()
 
   trackLoginEvent: (user) =>
