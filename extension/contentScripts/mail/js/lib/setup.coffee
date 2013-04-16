@@ -35,10 +35,12 @@ class Setup
     MeetMikey.globalUser.checkOnboard()
 
   checkMultipleInbox: (callback) =>
-    selector = MeetMikey.Settings.Selectors.inboxControlsContainer
-    MeetMikey.Helper.DOMManager.waitAndFind selector, (target) =>
+    console.log 'checkMultipleInbox'
+    controlSelector = MeetMikey.Settings.Selectors.inboxControlsContainer
+    tabContainerSelector = MeetMikey.Settings.Selectors.multipleInboxTabsContainer
+    MeetMikey.Helper.DOMManager.waitAndFind controlSelector, (target) =>
       margin = target.css 'margin-left'
-      MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px"
+      MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and $(tabContainerSelector).find(controlSelector).length == 0
       @setSelectors()
       callback @multipleInbox
 
@@ -46,7 +48,7 @@ class Setup
     selectors = MeetMikey.Settings.Selectors
     if @multipleInbox
       @inboxSelector = selectors.multipleInboxContainer
-      @tabsSelector = selectors.multipleInboxTabsContianer
+      @tabsSelector = selectors.multipleInboxTabsContainer
       $('body').addClass 'multiple-inbox'
     else
       @inboxSelector = selectors.inboxContainer

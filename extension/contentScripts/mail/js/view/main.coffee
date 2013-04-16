@@ -52,7 +52,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     selectors = MeetMikey.Settings.Selectors
     if MeetMikey.Globals.multipleInbox
       @inboxSelector = selectors.multipleInboxContainer
-      @tabsSelector = selectors.multipleInboxTabsContianer
+      @tabsSelector = selectors.multipleInboxTabsContainer
     else
       @inboxSelector = selectors.inboxContainer
       @tabsSelector = selectors.tabsContainer
