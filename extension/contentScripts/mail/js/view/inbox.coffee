@@ -50,6 +50,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   postRender: =>
 
+  teardown: =>
+    @resetEmailDisplay()
+    @unbindCountUpdate()
+
   restoreFromCache: =>
     @subView('attachments').restoreFromCache()
     @subView('links').restoreFromCache()
@@ -134,6 +138,3 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @subView('attachments').setResults res.attachments, query
     @subView('links').setResults res.links, query
     @subView('images').setResults res.images, query
-
-  teardown: =>
-    @unbindCountUpdate()

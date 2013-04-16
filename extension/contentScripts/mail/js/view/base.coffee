@@ -25,9 +25,9 @@ class MeetMikey.View.Base extends Backbone.View
     @subViews[name]?.view
 
   _teardown: =>
+    @teardown()
     _.chain(@subViews).values().pluck('view').invoke('_teardown')
 
-    @teardown()
     @trigger 'teardown'
     @off()
     @remove() if @options.owned
