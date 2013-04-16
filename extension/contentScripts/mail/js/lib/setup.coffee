@@ -38,8 +38,7 @@ class Setup
     selector = MeetMikey.Settings.Selectors.inboxControlsContainer
     MeetMikey.Helper.DOMManager.waitAndFind selector, (target) =>
       margin = target.css 'margin-left'
-      @multipleInbox = margin isnt "-400px"
-      MeetMikey.Globals.multipleInbox = @multipleInbox
+      MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px"
       @setSelectors()
       callback @multipleInbox
 
