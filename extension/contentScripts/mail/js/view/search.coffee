@@ -57,7 +57,6 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
       data:
         query: query
       success: (res) =>
-        console.log 'search successful', res
         @subView('searchResults').setResults res, query
         @subView('searchResults').showTab MeetMikey.Globals.tabState
       failure: ->

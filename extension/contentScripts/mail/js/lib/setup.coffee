@@ -35,7 +35,6 @@ class Setup
     MeetMikey.globalUser.checkOnboard()
 
   checkMultipleInbox: (callback) =>
-    console.log 'checkMultipleInbox'
     controlSelector = MeetMikey.Settings.Selectors.inboxControlsContainer
     tabContainerSelector = MeetMikey.Settings.Selectors.multipleInboxTabsContainer
     MeetMikey.Helper.DOMManager.waitAndFind controlSelector, (target) =>
