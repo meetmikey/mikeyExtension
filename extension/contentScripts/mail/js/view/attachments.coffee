@@ -137,7 +137,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     else
       after: @collection.first()?.get('sentDate')
 
-    console.log 'attachments are polling'
     @collection.fetch
       update: true
       remove: false

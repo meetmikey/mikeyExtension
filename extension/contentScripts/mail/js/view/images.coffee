@@ -45,7 +45,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     'click .open-message': 'openMessage'
 
   postInitialize: =>
-    @once 'showTab', @initIsotope
+    @on 'showTab', @initIsotope
     @on 'showTab', @bindScrollHandler
     Backbone.on 'change:tab', @unbindScrollHandler
     @collection = new MeetMikey.Collection.Images()
@@ -57,8 +57,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @$('.mm-download-tooltip').tooltip placement: 'bottom'
     if MeetMikey.Globals.tabState == 'images'
       @initIsotope()
-    else
-      @once 'showTab', @initIsotope
 
   teardown: =>
     @cachedModels = _.clone @collection.models
@@ -101,7 +99,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     $scrollElem.scrollTop() + $scrollElem.height() > ( @$el.height() - 1000 )
 
   fetchMoreImages: =>
-    #console.log 'go and fetch some images!'
     @fetching = true
     @collection.fetch
       silent: true
@@ -126,7 +123,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @$el.append @template(models: decoratedModels)
 
   runIsotope: =>
-    #console.log 'isotoping'
     if @isotopeHasInitialized
       @$el.isotope('reloadItems')
     @$el.isotope
@@ -135,16 +131,14 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @isotopeHasInitialized = true
 
   checkAndRunIsotope: =>
-    #console.log 'checkAndRunIsotope'
     if @areImagesLoaded
-      console.log 'images loaded, clearing isotope interval', @isotopeInterval
+      #console.log 'images loaded, clearing isotope interval', @isotopeInterval
       clearInterval @isotopeInterval
       @isotopeInterval = null;
     else
       @runIsotope()
 
   initIsotope: =>
-    #console.log 'initIsotope'
     @areImagesLoaded = false
     if ! @isotopeInterval
       @isotopeInterval = setInterval @checkAndRunIsotope, 200
@@ -166,7 +160,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     else
       after: @collection.first()?.get('sentDate')
 
-    console.log 'images are polling'
     @collection.fetch
       update: true
       remove: false
