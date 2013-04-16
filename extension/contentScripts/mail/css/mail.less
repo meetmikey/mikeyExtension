@@ -57,6 +57,12 @@ padding-top: 24px;
 
 }
 
+.no {
+  .multiple-inbox & {
+  margin-top: 6px;
+  }
+}
+
 
 
 
@@ -103,6 +109,10 @@ body {
   .light & {
     border-bottom: 1px solid rgba(255, 255, 255, .4);
   }
+
+  .grey-blocks & {
+    border-bottom: 1px solid #aaa;
+  }
 }
 
 .mikey-tabs {
@@ -115,13 +125,17 @@ body {
   font-size: 14px;
   -webkit-margin-before: 0em;
   -webkit-margin-after: 0em;
+  .compact & {
+    padding: 21px 0px 0px 0px;
+  }
+  .multiple-inbox & {
+    padding: 13px 0px 0px 0px;
+  }
+  .compact.multiple-inbox & {
+    padding: 13px 0px 0px 0px;
+  }
 }
 
-body.compact .mikey-tabs {
-  padding-top:21px;
-  height:30px;
-
-}
 
 body.compact .mikey-tab {
   margin-top: 0px;
@@ -260,6 +274,15 @@ body.compact .mikey-tab {
   font-weight: normal;
   font-size: 15px;
 
+  .grey-blocks & {
+    border-bottom: 1px solid #aaa;
+  }
+
+  .multiple-inbox & {
+    font-size: 13px;
+    font-weight: bold;
+  }
+
 }
 
 .mm-container .labels th {
@@ -303,6 +326,14 @@ th {
     border-color: rgba(255, 255, 255, .1);
     border-spacing: 2px;
   }
+
+  .grey-blocks & {
+    background: #E5E5E5;
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+  }
+
 }
 
 
@@ -793,10 +824,17 @@ border: 1px solid #e0e0e0;
 background-color: @white;
 font-size: 12px;
 cursor: pointer;
+.grey-blocks & {
+  border: 1px solid #aaa;
+}
+
 }
 
 .image-box:hover {
   border-color: #bbb;
+  .grey-blocks & {
+  border: 1px solid #777;
+  }
 }
 
 
@@ -1107,6 +1145,17 @@ white-space: nowrap;
   .comfortable & {
     margin-top:21px;
     margin-right:44px;
+  }
+  .compact.multiple-inbox & {
+    margin-top: 5px;
+  }
+
+  .cozy.multiple-inbox & {
+    margin-top: 5px;
+  }
+
+   .comfortable.multiple-inbox & {
+    margin-top: 5px;
   }
 
 }

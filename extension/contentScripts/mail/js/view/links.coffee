@@ -8,8 +8,8 @@ template = """
         <th class="mm-download">Link</th>
         <th class="mm-file mm-link"></th>
         <th class="mm-source">Source</th>
-        <th class="mm-from">From</th>
-        <th class="mm-to">To</th>
+        <th class="mm-from">From</th> 
+        <th class="mm-to">To</th> 
         <th class="mm-sent">Sent</th>
       </thead>
       <tbody>
@@ -28,8 +28,8 @@ template = """
               </div>
             </td>
             <td class="mm-source truncate">{{displayUrl}}</td>
-            <td class="mm-from truncate">{{from}}</td>
-            <td class="mm-to truncate">{{to}}</td>
+            <td class="mm-from truncate">{{from}}</td> 
+            <td class="mm-to truncate">{{to}}</td> 
             <td class="mm-sent truncate">{{sentDate}}</td>
           </tr>
         {{/each}}

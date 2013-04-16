@@ -28,7 +28,8 @@ class ThemeManager
       'cozy'
 
   detectTheme: =>
-    return {} if @isDefaultTheme()
+    if @isDefaultTheme()
+      return if @borderIsHighContrast() then {blocks: 'grey-blocks'} else {} 
     color = if @colorIsLight(@getTextColor()) then 'light' else 'dark'
     boxColor = if @colorIsLight(@getInboxTextColor()) then 'dark-blocks' else 'light-blocks'
     buttonColor = if @colorIsLight(@getButtonColor()) then 'light-buttons' else 'dark-buttons'
@@ -43,6 +44,11 @@ class ThemeManager
     else
       true
 
+  borderIsHighContrast: =>
+    {red, green, blue} = @parseRGB @getBorderColor()
+
+    red is 170 and green is 170 and blue is 170
+
   getTextColor: =>
     @safeFind(MeetMikey.Settings.Selectors.sideBarText).css 'color'
 
@@ -51,6 +57,9 @@ class ThemeManager
 
   getButtonColor: =>
     @safeFind(MeetMikey.Settings.Selectors.buttonColor).css 'background-image'
+
+  getBorderColor: =>
+    @safeFind(MeetMikey.Settings.Selectors.appsSearchTable).css 'border-color'
 
   parseRGB: (str) =>
     match = str.match /\((\d+), (\d+), (\d+)/
@@ -69,6 +78,7 @@ class ThemeManager
     {red, green, blue} = @parseRGB str
 
     red > green and red > blue
+
 
 
 MeetMikey.Helper.Theme = new ThemeManager()
