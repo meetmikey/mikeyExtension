@@ -83,7 +83,6 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   manageMultipleInboxDisplay: =>
     return unless MeetMikey.Globals.multipleInbox
-    console.log 'inSearch', @inSearch()
     if @inInbox()
       @subView('tabs').$el.show()
       @subView('inbox').$el.show()
@@ -95,7 +94,6 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       @subView('search').manageEmailContainerDisplay() if @inSearch()
 
   pageNavigated: =>
-    console.log 'pageNavigated'
     @managePushdownDisplay()
     @manageMultipleInboxDisplay()
 

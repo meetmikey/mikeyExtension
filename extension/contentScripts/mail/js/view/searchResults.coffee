@@ -58,6 +58,5 @@ class MeetMikey.View.SearchResults extends MeetMikey.View.Base
     # @unbindCountUpdate()
 
   setResults: (res) =>
-    console.log 'setting results'
     @subView('attachments').collection.reset res.attachments
     @subView('links').collection.reset res.links
