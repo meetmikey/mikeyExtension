@@ -47,6 +47,7 @@ class Setup
     if @multipleInbox
       @inboxSelector = selectors.multipleInboxContainer
       @tabsSelector = selectors.multipleInboxTabsContianer
+      $('body').addClass 'multiple-inbox'
     else
       @inboxSelector = selectors.inboxContainer
       @tabsSelector = selectors.tabsContainer
