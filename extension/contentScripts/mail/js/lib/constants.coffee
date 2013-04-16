@@ -75,7 +75,7 @@ _.extend MeetMikey.Settings,
     appsSearchTable: '.F.cf.zt'
 
     # bar containing search only docs/sites
-    appsSearchOnlyDocs: '.G-MI .D .E .Qi'
+    appsSearchOnlyDocs: '.G-MI.D.E.Qi'
 
     # bar containing controls above inbox
     inboxControlsContainer: ".G-atb"
