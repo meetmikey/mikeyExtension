@@ -5,6 +5,7 @@ _.extend MeetMikey.Settings,
   pollDelay: 60*1000
   betaCodeHash: 205332315
   extensionVersion: chrome.runtime.getManifest()?.version
+
   APIUrls:
     local: "https://local.meetmikey.com"
     development: "https://dev.meetmikey.com"

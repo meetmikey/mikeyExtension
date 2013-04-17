@@ -2,26 +2,26 @@ template = """
 
 
   <div class="modal hide fade">
-    
+
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Mikey is in private alpha</h3>
     </div>
-    
+
     <div class="modal-body">
       <p>
       <input type='text' placeholder="What's the secret password?" id='betaCodeInput'>
 
-      <div id='invalidBetaCodeLabel' style='display:none;'>Sorry, Mikey doesn't know that one.</div> 
+      <div id='invalidBetaCodeLabel' style='display:none;'>Sorry, Mikey doesn't know that one.</div>
 
       </p>
     </div>
 
-    
+
     <div class="footer-buttons">
       <a href="#" id="betaCodeSubmitButton" class="button buttons">Submit</a>
     </div>
-    
+
   </div>
 """
 
