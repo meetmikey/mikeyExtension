@@ -1,4 +1,5 @@
 class MeetMikey.Model.Base extends Backbone.Model
+  logger: MeetMikey.Helper.Logger
 
   decorate: =>
     @decorator.decorate this

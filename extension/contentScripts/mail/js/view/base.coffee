@@ -1,4 +1,6 @@
 class MeetMikey.View.Base extends Backbone.View
+  logger: MeetMikey.Helper.Logger
+
   defaultArgs:
     render: true
     renderChildren: true

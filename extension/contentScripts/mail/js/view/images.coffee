@@ -132,7 +132,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   checkAndRunIsotope: =>
     if @areImagesLoaded
-      #console.log 'images loaded, clearing isotope interval', @isotopeInterval
+      #@logger.info 'images loaded, clearing isotope interval', @isotopeInterval
       clearInterval @isotopeInterval
       @isotopeInterval = null;
     else
@@ -144,7 +144,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @isotopeInterval = setInterval @checkAndRunIsotope, 200
     @$el.imagesLoaded =>
       @areImagesLoaded = true
-      #console.log 'images loaded, isotoping one last time'
+      #@logger.info 'images loaded, isotoping one last time'
       @runIsotope()
 
   setResults: (models, query) =>

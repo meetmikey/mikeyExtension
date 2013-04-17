@@ -1,4 +1,6 @@
 class MeetMikey.Collection.Base extends Backbone.Collection
+  logger: MeetMikey.Helper.Logger
+
   fetch: (opts) ->
     opts.cache = false
     return super opts unless MeetMikey.globalUser?

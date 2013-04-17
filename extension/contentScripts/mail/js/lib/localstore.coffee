@@ -18,7 +18,7 @@ class LocalStore
       val = JSON.parse raw
       return val
     catch e
-      console.log 'local storage get exception'
+      @logger.info 'local storage get exception'
       return raw
 
   set: (key, value) =>
@@ -29,5 +29,7 @@ class LocalStore
 
   clear: =>
     @store.clear()
+
+  logger: MeetMikey.Helper.Logger
 
 MeetMikey.Helper.LocalStore = new LocalStore()

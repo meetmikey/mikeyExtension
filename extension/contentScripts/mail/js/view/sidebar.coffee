@@ -9,4 +9,4 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
 
   showInbox: =>
     @trigger 'clicked:inbox'
-    console.log 'inbox triggered'
+    @logger.info 'inbox triggered'

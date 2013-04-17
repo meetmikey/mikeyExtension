@@ -88,11 +88,6 @@ MeetMikey.Helper.getHash = (input) ->
 MeetMikey.Helper.getBetaCodeHash = (betaCodeInput) ->
   MeetMikey.Helper.getHash betaCodeInput
 
-MeetMikey.Helper.callDebug = (type, data) ->
-  console.log data
-  MeetMikey.Helper.callAPI
-    url: 'debug'
-    method: 'POST'
-    data:
-      type: type
-      data: data
+MeetMikey.Helper.isRealUser = (userId=MeetMikey.globalUser?.id) ->
+  return true unless userId?
+  not _.contains(MeetMikey.Settings.MikeyTeamUserIds, userId)

@@ -19,6 +19,7 @@
             "contentScripts/mail/js/lib/namespace.js",
             "contentScripts/mail/js/lib/constants.js",
             "contentScripts/mail/js/lib/utils.js",
+            "contentScripts/mail/js/lib/logger.js",
             "contentScripts/mail/js/lib/betaAccess.js",
             "contentScripts/mail/js/lib/localstore.js",
             "contentScripts/mail/js/lib/oauth.js",

@@ -7,6 +7,8 @@ class Mixpanel
 
   userId: null
 
+  logger: MeetMikey.Helper.Logger
+
   # TODO: write wrapper for engage endpoint, add distinct_id support with identify
   setUser: (user) =>
     @userId = user.id
@@ -16,7 +18,7 @@ class Mixpanel
     @_engage user
 
   trackEvent: (event, props) =>
-    # console.log 'tracking event:', event, @_buildObj(event,props), @inCorrectEnv
+    # @logger.info 'tracking event:', event, @_buildObj(event,props), @inCorrectEnv
     return unless @inCorrectEnv && @_isRealUser()
     props = if props? then _.clone(props) else {}
     @_track event, props

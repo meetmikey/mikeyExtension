@@ -48,8 +48,7 @@ class DOMManager
       if @existsIn target, elem
         tries += 1
         if tries > @maxTries
-          # @error 'elemAlreadyExists', elem.attr('class')
-          console.log ' elem already exists '
+          @logger.info 'elem already exists'
           return
         else setTimeout tryFind, 200
       else
@@ -66,7 +65,7 @@ class DOMManager
       if @existsBeside target, elem
         tries += 1
         if tries > @maxTries
-          @error 'elemAlreadyExists', elem.attr('class')
+          @logger.info 'elem already exists'
           return
         else setTimeout tryFind, 200
       else
@@ -92,11 +91,13 @@ class DOMManager
 
     root.html()
 
+  logger: MeetMikey.Helper.Logger
+
   error: (event, selector) =>
     data = {selector}
     data.dom = @stripDOM() if @sendDOM(event)
 
-    MeetMikey.Helper.callDebug event, data
+    @logger.error event, data
 
     MeetMikey.Helper.LocalStore.set "error-#{event}",
       version: MeetMikey.Settings.extensionVersion, timestamp: Date.now()

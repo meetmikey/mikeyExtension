@@ -42,7 +42,7 @@ class MeetMikey.View.BetaCode extends MeetMikey.View.Base
     @$('.modal').modal 'hide'
 
   wrongCode: =>
-    console.log 'wrongCode'
+    @logger.info 'wrongCode'
     $('#betaCodeInput').val ''
     $('#invalidBetaCodeLabel').show()
 
