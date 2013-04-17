@@ -35,6 +35,7 @@ class MeetMikey.View.OnboardModal extends MeetMikey.View.Base
 
   doNotAsk: =>
     MeetMikey.Helper.OAuth.disable()
+    @trigger 'disabled'
     @hide()
 
   authorize: =>

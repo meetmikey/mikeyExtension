@@ -78,6 +78,7 @@ class Setup
     $('body').append $('<div id="mm-onboard-modal"></div>')
     view = new MeetMikey.View.OnboardModal el: '#mm-onboard-modal'
     view.render()
+    view.on 'disabled', => @dropdownView.rerender()
     view.on 'authorized', (userData) =>
       @injectWelcomeModal()
       @authorized(userData)
