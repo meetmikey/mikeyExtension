@@ -54,7 +54,7 @@ class OAuth
       userEmail: @getUserEmail()
 
   trackAuthEvent: (user) =>
-    MeetMikey.Helper.Mixpanel.trackEvent 'authorized', user
+    MeetMikey.Helper.Mixpanel.trackEvent 'authorized', _.omit(user, 'asymHash')
 
   checkUser: (callback) =>
     data = @getUserInfo()
