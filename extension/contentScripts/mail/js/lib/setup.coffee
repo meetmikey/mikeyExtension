@@ -27,7 +27,7 @@ class Setup
       @waitForInbox()
 
   trackLoginEvent: (user) =>
-    MeetMikey.Helper.Mixpanel.trackEvent 'login', user
+    MeetMikey.Helper.Mixpanel.trackEvent 'login', _.omit(user, 'asymHash')
 
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data
