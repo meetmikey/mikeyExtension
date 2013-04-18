@@ -29,10 +29,17 @@ class ThemeManager
 
   detectTheme: =>
     if @isDefaultTheme()
-      return if @borderIsHighContrast() then {blocks: 'grey-blocks'} else {} 
-    color = if @colorIsLight(@getTextColor()) then 'light' else 'dark'
-    boxColor = if @colorIsLight(@getInboxTextColor()) then 'dark-blocks' else 'light-blocks'
-    buttonColor = if @colorIsLight(@getButtonColor()) then 'light-buttons' else 'dark-buttons'
+      return if @borderIsHighContrast() then {blocks: 'grey-blocks'} else {}
+
+    color = @getTextColor()
+    boxColor = @getInboxTextColor()
+    buttonColor = @getButtonColor()
+
+    return {} unless color? and boxColor? and buttonColor?
+
+    color = if @colorIsLight(color) then 'light' else 'dark'
+    boxColor = if @colorIsLight(boxColor) then 'dark-blocks' else 'light-blocks'
+    buttonColor = if @colorIsLight(buttonColor) then 'light-buttons' else 'dark-buttons'
 
     {color, boxColor, buttonColor}
 
