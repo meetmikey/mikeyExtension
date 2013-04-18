@@ -29,7 +29,8 @@ class ThemeManager
 
   detectTheme: =>
     if @isDefaultTheme()
-      return if @borderIsHighContrast() then {blocks: 'grey-blocks'} else {} 
+      return if @borderIsHighContrast() then {blocks: 'grey-blocks'} else {}
+
     color = if @colorIsLight(@getTextColor()) then 'light' else 'dark'
     boxColor = if @colorIsLight(@getInboxTextColor()) then 'dark-blocks' else 'light-blocks'
     buttonColor = if @colorIsLight(@getButtonColor()) then 'light-buttons' else 'dark-buttons'
