@@ -28,8 +28,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @subView('sidebar').on 'clicked:inbox', @showEmailTab
     @subView('tabs').on 'clicked:tab', @subView('inbox').showTab
     @subView('inbox').on 'updateTabCount', @subView('tabs').updateTabCount
-    Backbone.on 'change:tab', (tab) =>
-      @setPaginationState @subView('inbox').paginationForTab(tab)
+    Backbone.on 'change:tab', @setPaginationStateForTab
     $(window).on 'hashchange', @pageNavigated
     MeetMikey.Globals.tabState = 'email'
 
@@ -44,6 +43,9 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   setLayout: (layout='compact') =>
     @$el.addClass layout
+
+  setPaginationStateForTab: (tab) =>
+    @setPaginationState @subView('inbox').paginationForTab(tab)
 
   setPaginationState: (pagination) =>
     @subView('tabs').subView('pagination').setState pagination
@@ -75,7 +77,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @subView('inbox').showTab 'email'
 
   managePushdownDisplay: =>
-    viewWithTabs = @inInbox() or @inSearch()
+    viewWithTabs = @inViewWithTabs()
     if viewWithTabs
       @$(@contentSelector).addClass 'AO-tabs'
     else
@@ -97,8 +99,9 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @managePushdownDisplay()
     @manageMultipleInboxDisplay()
 
-  inSearch: =>
-    /#(?:search|apps)(?!.+\/)/.test window.location.hash
+  inInbox: MeetMikey.Helper.Url.inInbox
 
-  inInbox: =>
-    /#inbox(?!\/)/.test window.location.hash
+  inSearch: MeetMikey.Helper.Url.inSearch
+
+  inViewWithTabs: MeetMikey.Helper.Url.inViewWithTabs
+

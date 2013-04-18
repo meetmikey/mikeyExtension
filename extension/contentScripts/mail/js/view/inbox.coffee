@@ -94,8 +94,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     $(MeetMikey.Settings.Selectors.allInboxes).show()
     $(MeetMikey.Settings.Selectors.multipleInboxContainer).show()
 
-  inAppsSearch: =>
-     /#apps/.test window.location.hash
+  inAppsSearch: MeetMikey.Helper.Url.inAppsSearch
 
   bindPageHandlers: =>
     Backbone.on 'clicked:next-page', @nextPage

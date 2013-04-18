@@ -116,7 +116,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
 
-    window.location = hash
+    MeetMikey.Helper.Url.setHash hash
 
 
   setResults: (models, query) =>

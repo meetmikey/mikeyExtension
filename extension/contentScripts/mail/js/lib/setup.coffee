@@ -57,12 +57,10 @@ class Setup
     inboxFound = @checkIfInInbox()
     $(window).on 'hashchange', @checkIfInInbox unless inboxFound
 
-  isInInbox: =>
-    hash = window.location.hash
-    hash is '' or /#(?:inbox)?$/.test hash
+  inInbox: MeetMikey.Helper.Url.inInbox
 
   checkIfInInbox: =>
-    inInbox = @isInInbox()
+    inInbox = @inInbox()
     if inInbox
       $(window).off 'hashchange', @checkIfInInbox
       MeetMikey.Helper.DOMManager.waitAndFindAll @inboxSelector, @tabsSelector, @checkAndInjectMainView
@@ -93,7 +91,7 @@ class Setup
     @mainView.render()
 
   checkAndInjectMainView: =>
-    if @isInInbox()
+    if @inInbox()
       @injectMainView()
     else
       @waitForInbox()
