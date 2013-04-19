@@ -134,7 +134,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     if @areImagesLoaded
       #@logger.info 'images loaded, clearing isotope interval', @isotopeInterval
       clearInterval @isotopeInterval
-      @isotopeInterval = null;
+      @isotopeInterval = null
     else
       @runIsotope()
 
