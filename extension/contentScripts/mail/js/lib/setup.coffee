@@ -32,7 +32,6 @@ class Setup
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data
     MeetMikey.Helper.Mixpanel.setUser MeetMikey.globalUser
-    MeetMikey.globalUser.checkOnboard()
 
   checkMultipleInbox: (callback) =>
     controlSelector = MeetMikey.Settings.Selectors.inboxControlsContainer
@@ -72,18 +71,20 @@ class Setup
       el: MeetMikey.Settings.Selectors.navBar, append: true
     @dropdownView.render()
 
+  # Rename Auth modal
   injectOnboardModal: =>
     $('body').append $('<div id="mm-onboard-modal"></div>')
     view = new MeetMikey.View.OnboardModal el: '#mm-onboard-modal'
     view.render()
     view.on 'disabled', => @dropdownView.rerender()
     view.on 'authorized', (userData) =>
-      @injectWelcomeModal()
+      # @injectThanksModal()
       @authorized(userData)
 
-  injectWelcomeModal: =>
-    $('body').append $('<div id="mm-welcome-modal"></div>')
-    view = new MeetMikey.View.WelcomeModal el: '#mm-welcome-modal'
+  # Rename Welcome Modal
+  injectThanksModal: =>
+    $('body').append $('<div id="mm-thanks-modal"></div>')
+    view = new MeetMikey.View.ThanksModal el: '#mm-thanks-modal'
     view.render()
 
   injectMainView: =>

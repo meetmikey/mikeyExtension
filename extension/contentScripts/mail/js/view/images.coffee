@@ -50,8 +50,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     Backbone.on 'change:tab', @unbindScrollHandler
     @collection = new MeetMikey.Collection.Images()
     @collection.on 'reset add', _.debounce(@render, 50)
-    if @options.fetch
-      @collection.fetch success: @waitAndPoll
 
   postRender: =>
     @$('.mm-download-tooltip').tooltip placement: 'bottom'
@@ -61,6 +59,9 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   teardown: =>
     @cachedModels = _.clone @collection.models
     @collection.reset()
+
+  initialFetch: =>
+    @collection.fetch success: @waitAndPoll if @options.fetch
 
   restoreFromCache: =>
     @collection.reset(@cachedModels)

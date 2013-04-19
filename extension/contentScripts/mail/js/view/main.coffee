@@ -1,5 +1,6 @@
 class MeetMikey.View.Main extends MeetMikey.View.Base
   contentSelector: MeetMikey.Settings.Selectors.contentContainer
+  showWelcomeModal: false
   subViews:
     'tabs':
       viewClass: MeetMikey.View.Tabs
@@ -26,11 +27,11 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   postInitialize: =>
     @subView('sidebar').on 'clicked:inbox', @showEmailTab
-    @subView('tabs').on 'clicked:tab', @subView('inbox').showTab
     @subView('inbox').on 'updateTabCount', @subView('tabs').updateTabCount
     Backbone.on 'change:tab', @setPaginationStateForTab
     $(window).on 'hashchange', @pageNavigated
     MeetMikey.Globals.tabState = 'email'
+    @setupWhenUserOnboards()
 
   preRender: =>
 
@@ -41,8 +42,16 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @$(@contentSelector).removeClass 'AO-tabs'
     $(window).off 'hashchange', @pageNavigated
 
-  setLayout: (layout='compact') =>
-    @$el.addClass layout
+  setupWhenUserOnboards: =>
+    if MeetMikey.globalUser.get('onboarding')
+      MeetMikey.globalUser.once 'change:onboarding', @setupWhenUserOnboards
+      @subView('tabs').disable()
+      @showWelcomeModal = true
+    else
+      @injectWelcomeModal() if @showWelcomeModal
+      @subView('tabs').on 'clicked:tab', @subView('inbox').showTab
+      @subView('tabs').enable()
+      @subView('inbox').initialFetch()
 
   setPaginationStateForTab: (tab) =>
     @setPaginationState @subView('inbox').paginationForTab(tab)
@@ -71,6 +80,12 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     element = '<div id="mm-tabs-container" class="mm-tabs-container"></div>'
     MeetMikey.Helper.DOMManager.injectInto @tabsSelector, element, =>
       @$(@contentSelector).addClass 'AO-tabs'
+
+  # Rename Onboarded modal ?
+  injectWelcomeModal: =>
+    $('body').append $('<div id="mm-welcome-modal"></div>')
+    view = new MeetMikey.View.WelcomeModal el: '#mm-welcome-modal'
+    view.render()
 
   showEmailTab: =>
     @subView('tabs').setActiveTab 'email'

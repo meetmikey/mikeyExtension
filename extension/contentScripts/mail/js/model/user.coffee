@@ -5,16 +5,25 @@ class MeetMikey.Model.User extends Backbone.Model
     'onboarding': true
 
   initialize: ->
+    @checkOnboard()
 
-  waitAndCheckOnboard: =>
-    setTimeout @checkOnboard, MeetMikey.Settings.pollDelay
+  waitAndFetchOnboard: =>
+    setTimeout @fetchOnboard, MeetMikey.Settings.pollDelay
 
   checkOnboard: =>
+    if MeetMikey.Helper.LocalStore.get('onboarded')
+      @set 'onboarding', false
+    else
+      @fetchOnboard()
+
+  fetchOnboard: =>
     MeetMikey.Helper.callAPI
       url: 'onboarding'
       type: 'GET'
-      error: @waitAndCheckOnboard
+      error: @waitAndFetchOnboard
       success: (res) =>
         if res.progress is 1
+          MeetMikey.Helper.LocalStore.set 'onboarded', true
           @set 'onboarding', false
-        else @waitAndCheckOnboard()
+        else @waitAndFetchOnboard()
+

@@ -38,6 +38,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   preInitialize: =>
     @tabs = $.extend true, {}, @tabs # deep copy tabs
+    if @options.fetch and MeetMikey.Globals.multipleInbox
+      @tabs.email = MeetMikey.Settings.Selectors.multipleInboxContainer + ', ' + @tabs.email
     @subViews.attachments.args.fetch = @options.fetch
     @subViews.links.args.fetch = @options.fetch
     @subViews.attachments.args.name = @options.name
@@ -45,14 +47,19 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   postInitialize: =>
     @bindCountUpdate() unless @options.fetch
-    if @options.fetch and MeetMikey.Globals.multipleInbox
-      @tabs.email = MeetMikey.Settings.Selectors.multipleInboxContainer + ', ' + @tabs.email
 
   postRender: =>
 
   teardown: =>
     @resetEmailDisplay()
     @unbindCountUpdate()
+
+  initialFetch: =>
+    console.log 'fetching!'
+    return unless @options.fetch
+    @subView('attachments').initialFetch()
+    @subView('links').initialFetch()
+    @subView('images').initialFetch()
 
   restoreFromCache: =>
     @subView('attachments').restoreFromCache()

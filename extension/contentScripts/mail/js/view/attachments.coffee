@@ -65,12 +65,8 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @rollover = new MeetMikey.View.AttachmentRollover collection: @collection, search: !@options.fetch
     @pagination = new MeetMikey.Model.PaginationState items: @collection
 
-
     @collection.on 'reset add', _.debounce(@render, 50)
-
-    if @options.fetch
-      @pagination.on 'change:page', @render
-      @collection.fetch success: @waitAndPoll
+    @pagination.on 'change:page', @render
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
@@ -80,6 +76,9 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @collection.off('reset', @render)
     @cachedModels = _.clone @collection.models
     @collection.reset()
+
+  initialFetch: =>
+    @collection.fetch success: @waitAndPoll if @options.fetch
 
   restoreFromCache: =>
     @collection.reset(@cachedModels)

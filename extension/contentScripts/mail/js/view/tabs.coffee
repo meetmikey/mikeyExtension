@@ -1,5 +1,5 @@
 template = """
-<ul class="mikey-tabs">
+<ul class="mikey-tabs {{disabledClass}}">
   <li class="mikey-tab active" data-mm-tab="email">
     <a href="#">Email</a>
   </li>
@@ -27,6 +27,8 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
   template: Handlebars.compile(template)
   safeFind: MeetMikey.Helper.DOMManager.find
 
+  disabled: false
+
   subViews:
     'pagination':
       selector: '.pagination-container'
@@ -41,6 +43,14 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
 
   postRender: =>
     @adjustWidth()
+
+  enable: =>
+    @disabled = false
+    @$('.mikey-tabs').removeClass 'tabs-disabled'
+
+  disable: =>
+    @disabled = true
+    @$('.mikey-tabs').addClass 'tabs-disabled'
 
   adjustWidth: =>
     @setWidth()

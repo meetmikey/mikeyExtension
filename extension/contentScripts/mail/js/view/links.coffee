@@ -63,9 +63,6 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.on 'reset add', _.debounce(@render, 50)
     @pagination.on 'change:page', @render
 
-    if @options.fetch
-      @collection.fetch success: @waitAndPoll
-
   postRender: =>
     @rollover.setElement @$('.rollover-container')
     $('.mm-download-tooltip').tooltip placement: 'bottom'
@@ -74,6 +71,9 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.off 'reset', @render
     @cachedModels = _.clone @collection.models
     @collection.reset()
+
+  initialFetch: =>
+    @collection.fetch success: @waitAndPoll if @options.fetch
 
   restoreFromCache: =>
     @collection.reset(@cachedModels)
