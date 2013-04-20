@@ -78,7 +78,7 @@ class Setup
     view.render()
     view.on 'disabled', => @dropdownView.rerender()
     view.on 'authorized', (userData) =>
-      # @injectThanksModal()
+      @injectThanksModal()
       @authorized(userData)
 
   # Rename Welcome Modal
