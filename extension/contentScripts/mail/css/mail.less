@@ -134,6 +134,49 @@ body {
   .compact.multiple-inbox & {
     padding: 13px 0px 0px 0px;
   }
+
+  .dark & a {
+      color: rgba(0, 0, 0, .5);
+        &:hover {
+          color: @black; 
+        }
+    }
+
+  .light & a {
+      color: rgba(255, 255, 255, .5);
+        &:hover {
+        color: #fff;
+        }
+  }
+
+  &.tabs-disable a {
+      &:hover {
+        color: #777;
+        text-decoration: none;
+      }
+    }
+
+    .dark &.tabs-disable a {
+        &:hover {
+          color: rgba(0, 0, 0, .5);
+        }
+    }
+
+  .light &.tabs-disable a {
+    &:hover {
+    color: rgba(255, 255, 255, .5);
+    }
+  }
+
+  & a {
+    color: #777;
+    text-decoration: none;
+      &:hover {
+        color: @black;
+        text-decoration: none;
+      }
+    }
+
 }
 
 
@@ -143,27 +186,6 @@ body.compact .mikey-tab {
 }
 
 
-.mikey-tabs a {
-  color: #777;
-  text-decoration: none;
-
-  .dark & {
-    color: rgba(0, 0, 0, .5);
-  }
-
-  .light & {
-    color: rgba(255, 255, 255, .5);
-  }
-
-}
-
-.mikey-tabs a:hover {
-  color: @black;
-
-  .light & {
-    color: #fff !important;
-  }
-}
 
 .mikey-tabs active:active {
   color: @red;

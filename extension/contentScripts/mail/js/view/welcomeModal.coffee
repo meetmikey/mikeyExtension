@@ -7,10 +7,10 @@ template = """
   <div id="example" class="modal hide fade modal-wide" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Awesome. Thank you. Mikey is on the job.</h3>
+      <h3>Mikey is ready!</h3>
     </div>
     <div class="modal-body">
-      <p>Mikey is at work making your Gmail better. It will take a few hours, but once he's done, your inbox will be supercharged.</p>
+      <p>Mikey has now organized some of your most recent stuff, which you can browse in the tabs or search using the Gmail search bar.</p>
 
       <div id="myCarousel" class="carousel slide">
         <!-- Carousel items -->
@@ -46,7 +46,7 @@ template = """
 
     </div>
     <div class="footer-buttons">
-      <a href="#" data-dismiss="modal" class="button buttons thanks-button">Thanks</a>
+      <a href="#" data-dismiss="modal" class="button buttons thanks-button">Cool</a>
     </div>
   </div>
 """
