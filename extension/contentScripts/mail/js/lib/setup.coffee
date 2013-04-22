@@ -102,11 +102,14 @@ class Setup
 
   checkForUpdate: =>
     chrome.runtime.requestUpdateCheck (status, details) =>
-      @restartApp() if status is "update_available"
+      if status is "update_available"
+        @restartApp()
+        MeetMikey.Helper.Mixpanel.trackEvent 'updateExtension', version: details.version
 
   restartApp: =>
     @mainView?._teardown()
     chrome.runtime.reload()
     @bootstrap()
+
 
 MeetMikey.Helper.Setup = new Setup()
