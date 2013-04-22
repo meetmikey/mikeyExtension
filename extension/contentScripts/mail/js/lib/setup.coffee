@@ -4,6 +4,7 @@ class Setup
   userEmailSelector: MeetMikey.Settings.Selectors.userEmail
 
   start: =>
+    @pollForUpdate()
     $(window).one('DOMSubtreeModified', @bootstrap)
 
   bootstrap: =>
@@ -106,5 +107,6 @@ class Setup
   restartApp: =>
     @mainView?._teardown()
     chrome.runtime.reload()
+    @bootstrap()
 
 MeetMikey.Helper.Setup = new Setup()
