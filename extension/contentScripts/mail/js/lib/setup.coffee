@@ -96,5 +96,15 @@ class Setup
     else
       @waitForInbox()
 
+  pollForUpdate: =>
+    setInterval @checkForUpdate, 45*1000
+
+  checkForUpdate: =>
+    chrome.runtime.requestUpdateCheck (status, details) =>
+      @restartApp() if status is "update_available"
+
+  restartApp: =>
+    @mainView?._teardown()
+    chrome.runtime.reload()
 
 MeetMikey.Helper.Setup = new Setup()
