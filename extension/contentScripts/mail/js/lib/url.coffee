@@ -1,5 +1,5 @@
 class Url
-  hashRegex: /#([^?]+)/
+  hashRegex: /#([^?]*)/
   queryRegex: /\?(.+)/
 
   inboxHashRegex: /^#inbox(?!\/)/
