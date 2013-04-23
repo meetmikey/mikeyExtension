@@ -13,17 +13,18 @@ class Url
     afterHash = window.location.hash
     match = afterHash.match @hashRegex
 
-    match[0]
+    match?[0]
 
   setHash: (hash) =>
-    url = '' + hash + @getQueryString()
+    query = @getQueryString()
+    url = if query? then '' + hash + query else hash
     window.location.hash = url
 
   getQueryString: =>
     afterHash = window.location.hash
     match = afterHash.match @queryRegex
 
-    match[0]
+    match?[0]
 
   getSearchQuery: =>
     afterHash = window.location.hash
