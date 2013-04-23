@@ -4,17 +4,17 @@ template = """
     <a href="#">Email</a>
   </li>
   <li class="mikey-tab" data-mm-tab="attachments">
-    <a href="#" title="mikey is doing his thing!">
+    <a href="#" title="Almost ready... Mikey is putting together all your files.">
       Files <span class="mm-count"></span>
     </a>
   </li>
   <li class="mikey-tab" data-mm-tab="links">
-    <a href="#" title="mikey is doing his thing!">
+    <a href="#" title="Coming soon... Mikey is hunting down your links.">
       Links <span class="mm-count"></span>
     </a>
   </li>
   <li class="mikey-tab" data-mm-tab="images">
-    <a href="#" title="mikey is doing his thing!">
+    <a href="#" title="Just a little longer... Mikey is fetching your images.">
       Images <span class="mm-count"></span>
     </a>
   </li>
