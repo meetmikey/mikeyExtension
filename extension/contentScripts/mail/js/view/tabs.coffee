@@ -73,6 +73,7 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
 
   tabClick: (e) =>
     e.preventDefault()
+    return if @disabled
     target = $(e.currentTarget)
     tab = target.attr('data-mm-tab')
     @setActiveTab tab
