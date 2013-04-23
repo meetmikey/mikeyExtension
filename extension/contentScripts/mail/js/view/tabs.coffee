@@ -4,18 +4,17 @@ template = """
     <a href="#">Email</a>
   </li>
   <li class="mikey-tab" data-mm-tab="attachments">
-    <a href="#">
+    <a href="#" title="mikey is doing his thing!">
       Files <span class="mm-count"></span>
     </a>
-
   </li>
   <li class="mikey-tab" data-mm-tab="links">
-    <a href="#">
+    <a href="#" title="mikey is doing his thing!">
       Links <span class="mm-count"></span>
     </a>
   </li>
   <li class="mikey-tab" data-mm-tab="images">
-    <a href="#">
+    <a href="#" title="mikey is doing his thing!">
       Images <span class="mm-count"></span>
     </a>
   </li>
@@ -47,10 +46,12 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
   enable: =>
     @disabled = false
     @$('.mikey-tabs').removeClass 'tabs-disabled'
+    @$('.mikey-tab a').tooltip('disable')
 
   disable: =>
     @disabled = true
     @$('.mikey-tabs').addClass 'tabs-disabled'
+    @$('.mikey-tab a').tooltip('enable')
 
   adjustWidth: =>
     @setWidth()
