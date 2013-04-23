@@ -42,16 +42,17 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
 
   postRender: =>
     @adjustWidth()
+    @manageTooltipDisplay()
 
   enable: =>
     @disabled = false
     @$('.mikey-tabs').removeClass 'tabs-disabled'
-    @$('.mikey-tab a').tooltip('disable')
+    @manageTooltipDisplay()
 
   disable: =>
     @disabled = true
     @$('.mikey-tabs').addClass 'tabs-disabled'
-    @$('.mikey-tab a').tooltip('enable')
+    @manageTooltipDisplay()
 
   adjustWidth: =>
     @setWidth()
@@ -86,3 +87,7 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     return if MeetMikey.Globals.tabState is tab or tab is 'email'
     MeetMikey.Helper.Mixpanel.trackEvent 'tabChange',
       search: @options.search, tab: tab
+
+  manageTooltipDisplay: =>
+    method = if @disabled then 'enable' else 'disable'
+    @$('.mikey-tab a').tooltip(method)
