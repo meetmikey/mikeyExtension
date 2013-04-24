@@ -10,7 +10,7 @@ class MeetMikey.Model.User extends Backbone.Model
     setTimeout @fetchOnboard, MeetMikey.Settings.pollDelay
 
   checkOnboard: =>
-    if MeetMikey.Helper.LocalStore.get('onboarded')
+    if MeetMikey.Helper.LocalStore.get @onboardKey()
       @set 'onboarding', false
     else
       @fetchOnboard()
@@ -22,7 +22,8 @@ class MeetMikey.Model.User extends Backbone.Model
       error: @waitAndFetchOnboard
       success: (res) =>
         if res.progress is 1
-          MeetMikey.Helper.LocalStore.set 'onboarded', true
+          MeetMikey.Helper.LocalStore.set @onboardKey(), true
           @set 'onboarding', false
         else @waitAndFetchOnboard()
 
+  onboardKey: => "meetmikey-#{@get('email')}-onboarded"
