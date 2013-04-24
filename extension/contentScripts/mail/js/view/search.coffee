@@ -4,7 +4,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
   subViews:
     'searchBar':
       viewClass: MeetMikey.View.SearchBar
-      selector: MeetMikey.Settings.Selectors.searchBar
+      selector: MeetMikey.Constants.Selectors.searchBar
       args: {owned: false}
     'tabs':
       viewClass: MeetMikey.View.Tabs
@@ -40,12 +40,12 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
       currentTab: MeetMikey.Globals.tabState
 
   injectSearchResultsContainer: =>
-    selector = MeetMikey.Settings.Selectors.inboxContainer
+    selector = MeetMikey.Constants.Selectors.inboxContainer
     element =  '<div id="mm-search-container" class="mm-container" style="display: none;"></div>'
     MeetMikey.Helper.DOMManager.injectBeside selector, element
 
   injectTabBarContainer: =>
-    selector = MeetMikey.Settings.Selectors.tabsContainer
+    selector = MeetMikey.Constants.Selectors.tabsContainer
     element = '<div id="mm-search-tabs-container" class="mm-tabs-container"></div>'
     MeetMikey.Helper.DOMManager.injectInto selector, element, =>
       @renderSubview 'tabs'
@@ -67,5 +67,5 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
   manageEmailContainerDisplay : =>
     @logger.info 'manageEmailContainerDisplay', MeetMikey.Globals.tabState
     return if MeetMikey.Globals.tabState is 'email'
-    tabsToHide = MeetMikey.Settings.Selectors.allInboxes
+    tabsToHide = MeetMikey.Constants.Selectors.allInboxes
     $(tabsToHide).hide()

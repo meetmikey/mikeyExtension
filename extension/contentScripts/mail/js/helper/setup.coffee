@@ -1,7 +1,7 @@
 class Setup
-  inboxSelector: MeetMikey.Settings.Selectors.inboxContainer
-  tabsSelector: MeetMikey.Settings.Selectors.tabsContainer
-  userEmailSelector: MeetMikey.Settings.Selectors.userEmail
+  inboxSelector: MeetMikey.Constants.Selectors.inboxContainer
+  tabsSelector: MeetMikey.Constants.Selectors.tabsContainer
+  userEmailSelector: MeetMikey.Constants.Selectors.userEmail
 
   start: =>
     $(window).one('DOMSubtreeModified', @bootstrap)
@@ -35,8 +35,8 @@ class Setup
     MeetMikey.globalUser.checkOnboard()
 
   checkMultipleInbox: (callback) =>
-    controlSelector = MeetMikey.Settings.Selectors.inboxControlsContainer
-    tabContainerSelector = MeetMikey.Settings.Selectors.multipleInboxTabsContainer
+    controlSelector = MeetMikey.Constants.Selectors.inboxControlsContainer
+    tabContainerSelector = MeetMikey.Constants.Selectors.multipleInboxTabsContainer
     MeetMikey.Helper.DOMManager.waitAndFind controlSelector, (target) =>
       margin = target.css 'margin-left'
       MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and $(tabContainerSelector).find(controlSelector)?.length == 0
@@ -44,7 +44,7 @@ class Setup
       callback @multipleInbox
 
   setSelectors: =>
-    selectors = MeetMikey.Settings.Selectors
+    selectors = MeetMikey.Constants.Selectors
     if @multipleInbox
       @inboxSelector = selectors.multipleInboxContainer
       @tabsSelector = selectors.multipleInboxTabsContainer
@@ -69,7 +69,7 @@ class Setup
   injectDropdown: =>
     return if @dropdownView?
     @dropdownView = new MeetMikey.View.Dropdown
-      el: MeetMikey.Settings.Selectors.navBar, append: true
+      el: MeetMikey.Constants.Selectors.navBar, append: true
     @dropdownView.render()
 
   # Rename Auth modal

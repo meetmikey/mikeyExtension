@@ -100,14 +100,14 @@ class DOMManager
     @logger.error event, data
 
     MeetMikey.Helper.LocalStore.set "error-#{event}",
-      version: MeetMikey.Settings.extensionVersion, timestamp: Date.now()
+      version: MeetMikey.Constants.extensionVersion, timestamp: Date.now()
 
 
   sendDOM: (event) =>
     lastError = MeetMikey.Helper.LocalStore.get "error-#{event}"
     return true unless lastError?
 
-    lastError.version isnt MeetMikey.Settings.extensionVersion or
+    lastError.version isnt MeetMikey.Constants.extensionVersion or
     MeetMikey.Helper.hoursSince(lastError.timestamp) >= 24
 
 

@@ -1,6 +1,6 @@
 class OAuth
   getUserEmail: ->
-    $(MeetMikey.Settings.Selectors.userEmail).text()
+    $(MeetMikey.Constants.Selectors.userEmail).text()
 
   isUserEmail: (email) =>
     email is @getUserEmail()

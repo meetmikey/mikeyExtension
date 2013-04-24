@@ -1,9 +1,9 @@
 class Mixpanel
   apiUrl: 'https://api.mixpanel.com'
 
-  inCorrectEnv: MeetMikey.Settings.env is 'production'
-  token: MeetMikey.Settings.mixpanelId
-  extensionVersion: MeetMikey.Settings.extensionVersion
+  inCorrectEnv: MeetMikey.Constants.env is 'production'
+  token: MeetMikey.Constants.mixpanelId
+  extensionVersion: MeetMikey.Constants.extensionVersion
 
   userId: null
 
@@ -29,7 +29,7 @@ class Mixpanel
     window.btoa unescape encodeURIComponent str
 
   _isRealUser: =>
-    ! _.contains(MeetMikey.Settings.MikeyTeamUserIds, @userId)
+    ! _.contains(MeetMikey.Constants.MikeyTeamUserIds, @userId)
 
   _buildObj: (event, props)=>
     metaData = _.extend @userProps ? {},

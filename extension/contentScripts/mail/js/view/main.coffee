@@ -1,5 +1,5 @@
 class MeetMikey.View.Main extends MeetMikey.View.Base
-  contentSelector: MeetMikey.Settings.Selectors.contentContainer
+  contentSelector: MeetMikey.Constants.Selectors.contentContainer
   showWelcomeModal: false
   subViews:
     'tabs':
@@ -12,11 +12,11 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       args: {fetch: true, name: 'main'}
     'search':
       viewClass: MeetMikey.View.Search
-      selector: MeetMikey.Settings.Selectors.topLevel
+      selector: MeetMikey.Constants.Selectors.topLevel
       args: {name: 'search', render: false, renderChildren: false, owned: false}
     'sidebar':
       viewClass: MeetMikey.View.Sidebar
-      selector: MeetMikey.Settings.Selectors.sideBar
+      selector: MeetMikey.Constants.Selectors.sideBar
       args: {render: false, owned: false}
 
   preInitialize: =>
@@ -61,7 +61,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @subView('tabs').subView('pagination').setState pagination
 
   setSelectors: =>
-    selectors = MeetMikey.Settings.Selectors
+    selectors = MeetMikey.Constants.Selectors
     if MeetMikey.Globals.multipleInbox
       @inboxSelector = selectors.multipleInboxContainer
       @tabsSelector = selectors.multipleInboxTabsContainer

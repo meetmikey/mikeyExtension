@@ -9,7 +9,7 @@ class MeetMikey.Collection.Base extends Backbone.Collection
     apiData =
       userEmail: MeetMikey.globalUser.get('email')
       asymHash: MeetMikey.globalUser.get('asymHash')
-      extensionVersion: MeetMikey.Settings.extensionVersion
+      extensionVersion: MeetMikey.Constants.extensionVersion
     if opts.data?
       _.extend opts.data, apiData
     else

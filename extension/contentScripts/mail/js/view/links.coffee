@@ -39,7 +39,7 @@ template = """
   {{/unless}}
 """
 
-openIconUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/sprite.png")
+openIconUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
@@ -53,7 +53,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     'mousemove .files .mm-file, .files .mm-source': 'delayRollover'
 
 
-  pollDelay:  MeetMikey.Settings.pollDelay
+  pollDelay:  MeetMikey.Constants.pollDelay
 
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()

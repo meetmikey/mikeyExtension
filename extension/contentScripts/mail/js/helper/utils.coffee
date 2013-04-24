@@ -1,5 +1,5 @@
 MeetMikey.Helper.getAPIUrl = ->
-  settings = MeetMikey.Settings
+  settings = MeetMikey.Constants
   settings.APIUrls[settings.env]
 
 Handlebars.registerHelper 'getAPIUrl', MeetMikey.Helper.getAPIUrl
@@ -43,7 +43,7 @@ MeetMikey.Helper.callAPI = (options) ->
   apiData =
     userEmail: MeetMikey.globalUser?.get('email')
     asymHash: MeetMikey.globalUser?.get('asymHash')
-    extensionVersion: MeetMikey.Settings.extensionVersion
+    extensionVersion: MeetMikey.Constants.extensionVersion
 
   _.extend apiData, options.data if options.data?
   options.data = apiData
@@ -90,4 +90,4 @@ MeetMikey.Helper.getBetaCodeHash = (betaCodeInput) ->
 
 MeetMikey.Helper.isRealUser = (userId=MeetMikey.globalUser?.id) ->
   return true unless userId?
-  not _.contains(MeetMikey.Settings.MikeyTeamUserIds, userId)
+  not _.contains(MeetMikey.Constants.MikeyTeamUserIds, userId)

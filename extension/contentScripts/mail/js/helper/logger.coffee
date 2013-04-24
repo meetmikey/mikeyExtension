@@ -1,5 +1,5 @@
 class Logger
-  inProductionEnv: MeetMikey.Settings.env is 'production'
+  inProductionEnv: MeetMikey.Constants.env is 'production'
 
   shouldLogToConsole: =>
     not MeetMikey.Helper.isRealUser()

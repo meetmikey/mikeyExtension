@@ -26,7 +26,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
       args: {}
 
   tabs:
-    email: MeetMikey.Settings.Selectors.allInboxes
+    email: MeetMikey.Constants.Selectors.allInboxes
     attachments: '.mm-attachments-tab'
     links: '.mm-links-tab'
     images: '.mm-images-tab'
@@ -39,7 +39,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   preInitialize: =>
     @tabs = $.extend true, {}, @tabs # deep copy tabs
     if @options.fetch and MeetMikey.Globals.multipleInbox
-      @tabs.email = MeetMikey.Settings.Selectors.multipleInboxContainer + ', ' + @tabs.email
+      @tabs.email = MeetMikey.Constants.Selectors.multipleInboxContainer + ', ' + @tabs.email
     @subViews.attachments.args.fetch = @options.fetch
     @subViews.links.args.fetch = @options.fetch
     @subViews.attachments.args.name = @options.name
@@ -71,7 +71,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @managePaginationDisplay(tab)
     @manageAppsSearchDisplay(tab) if @inAppsSearch()
     $(@tabs[tab]).show()
-    $(MeetMikey.Settings.Selectors.scrollContainer).scrollTop 0
+    $(MeetMikey.Constants.Selectors.scrollContainer).scrollTop 0
     MeetMikey.Globals.tabState = tab
     Backbone.trigger 'change:tab', tab
     @subView(tab)?.trigger 'showTab'
@@ -86,20 +86,20 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   managePaginationDisplay: (tab) =>
     method = if tab isnt 'email' then 'hide' else 'show'
-    $(MeetMikey.Settings.Selectors.gmailPagination)[method]()
+    $(MeetMikey.Constants.Selectors.gmailPagination)[method]()
 
   manageAppsSearchDisplay: (tab) =>
     method = if tab isnt 'email' then 'hide' else 'show'
     delay = if method is 'hide' then 400 else 0
-    $(MeetMikey.Settings.Selectors.appsSearchControl)[method]()
-    tableSelector = MeetMikey.Settings.Selectors.appsSearchTable
+    $(MeetMikey.Constants.Selectors.appsSearchControl)[method]()
+    tableSelector = MeetMikey.Constants.Selectors.appsSearchTable
     _.delay (=> @$el.parent().find(tableSelector)[method]()), delay
-    onlySearchDocsSelector = MeetMikey.Settings.Selectors.appsSearchOnlyDocs
+    onlySearchDocsSelector = MeetMikey.Constants.Selectors.appsSearchOnlyDocs
     _.delay (=> @$el.parent().find(onlySearchDocsSelector)[method]()), delay
 
   resetEmailDisplay: =>
-    $(MeetMikey.Settings.Selectors.allInboxes).show()
-    $(MeetMikey.Settings.Selectors.multipleInboxContainer).show()
+    $(MeetMikey.Constants.Selectors.allInboxes).show()
+    $(MeetMikey.Constants.Selectors.multipleInboxContainer).show()
 
   inAppsSearch: MeetMikey.Helper.Url.inAppsSearch
 

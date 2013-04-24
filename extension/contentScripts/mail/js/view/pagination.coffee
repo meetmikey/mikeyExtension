@@ -1,4 +1,4 @@
-imgPath = MeetMikey.Settings.imgPath
+imgPath = MeetMikey.Constants.imgPath
 arrowSprite = chrome.extension.getURL "#{imgPath}/sprite.png"
 template = """
   <div class="pagination-wrapper" style="display: {{display}};">

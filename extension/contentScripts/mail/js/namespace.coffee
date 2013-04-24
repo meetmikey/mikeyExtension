@@ -6,4 +6,4 @@ window.MeetMikey =
   Template: {} # Dynamic HTML templates
   Helper: {} # Helper libraries
   Globals: {} # Global state shared across the application
-  Settings: {} # Constants
+  Constants: {} # Constants

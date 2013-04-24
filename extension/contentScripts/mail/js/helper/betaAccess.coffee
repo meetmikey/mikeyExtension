@@ -29,6 +29,6 @@ class BetaAccess
       return false
     MeetMikey.Helper.LocalStore.set 'submittedBetaCode', betaCodeInput
     betaCodeHash = MeetMikey.Helper.getBetaCodeHash betaCodeInput
-    betaCodeHash == MeetMikey.Settings.betaCodeHash
+    betaCodeHash == MeetMikey.Constants.betaCodeHash
 
 MeetMikey.Helper.BetaAccess = new BetaAccess()

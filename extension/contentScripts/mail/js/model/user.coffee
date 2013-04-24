@@ -7,7 +7,7 @@ class MeetMikey.Model.User extends Backbone.Model
   initialize: ->
 
   waitAndFetchOnboard: =>
-    setTimeout @fetchOnboard, MeetMikey.Settings.pollDelay
+    setTimeout @fetchOnboard, MeetMikey.Constants.pollDelay
 
   checkOnboard: =>
     if MeetMikey.Helper.LocalStore.get @onboardKey()

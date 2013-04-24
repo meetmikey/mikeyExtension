@@ -60,7 +60,7 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     $(window).resize @setWidth
 
   setWidth: =>
-    selector = MeetMikey.Settings.Selectors.widthElem
+    selector = MeetMikey.Constants.Selectors.widthElem
     elem = @safeFind(selector).parent().parent()
     width = elem.width()
     @$el.css 'width', width

@@ -5,7 +5,7 @@ class LocalStore
   supportsLocalStorage: ->
     typeof window.localStorage isnt 'undefined'
 
-  getEnv: -> MeetMikey.Settings.env
+  getEnv: -> MeetMikey.Constants.env
 
   getKey: (key) =>
     env = @getEnv()

@@ -1,4 +1,4 @@
-_.extend MeetMikey.Settings,
+_.extend MeetMikey.Constants,
   env: "production"
   imgPath: 'contentScripts/mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"

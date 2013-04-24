@@ -1,4 +1,4 @@
-downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/sprite.png")
+downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 template = """
   {{#unless models}}
     <div class="mm-placeholder"></div>
@@ -56,7 +56,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
 
-  pollDelay: MeetMikey.Settings.pollDelay
+  pollDelay: MeetMikey.Constants.pollDelay
 
   preInitialize: =>
 

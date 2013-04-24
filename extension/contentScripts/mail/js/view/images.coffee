@@ -1,4 +1,4 @@
-downloadUrl = chrome.extension.getURL("#{MeetMikey.Settings.imgPath}/sprite.png")
+downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 template = """
   {{#unless models}}
 
@@ -34,7 +34,7 @@ template = """
 class MeetMikey.View.Images extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
-  pollDelay: MeetMikey.Settings.pollDelay
+  pollDelay: MeetMikey.Constants.pollDelay
   fetching: false
 
   safeFind: MeetMikey.Helper.DOMManager.find
@@ -88,7 +88,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
 
-  $scrollElem: => @safeFind(MeetMikey.Settings.Selectors.scrollContainer)
+  $scrollElem: => @safeFind(MeetMikey.Constants.Selectors.scrollContainer)
   bindScrollHandler: => @$scrollElem().on 'scroll', @scrollHandler if @options.fetch
   unbindScrollHandler: => @$scrollElem().off 'scroll', @scrollHandler
 

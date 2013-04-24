@@ -1,4 +1,4 @@
-imgPath = MeetMikey.Settings.imgPath
+imgPath = MeetMikey.Constants.imgPath
 class AttachmentDecorator
   iconUrls:
     pdf: chrome.extension.getURL("#{imgPath}/pdf.png")

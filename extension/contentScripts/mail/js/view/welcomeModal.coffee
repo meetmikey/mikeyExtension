@@ -1,4 +1,4 @@
-imgPath = MeetMikey.Settings.imgPath
+imgPath = MeetMikey.Constants.imgPath
 image1 = chrome.extension.getURL "#{imgPath}/welcome-1.png"
 image2 = chrome.extension.getURL "#{imgPath}/welcome-2.png"
 image3 = chrome.extension.getURL "#{imgPath}/welcome-3.png"
