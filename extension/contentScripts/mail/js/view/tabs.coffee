@@ -3,18 +3,18 @@ template = """
   <li class="mikey-tab active" data-mm-tab="email">
     <a href="#">Email</a>
   </li>
-  <li class="mikey-tab" data-mm-tab="attachments">
-    <a href="#" title="Almost ready... Mikey is putting together all your files.">
+  <li class="mikey-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your files are ready." data-mm-tab="attachments">
+    <a href="#">
       Files <span class="mm-count"></span>
     </a>
   </li>
-  <li class="mikey-tab" data-mm-tab="links">
-    <a href="#" title="Coming soon... Mikey is hunting down your links.">
+  <li class="mikey-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your links are ready." data-mm-tab="links">
+    <a href="#">
       Links <span class="mm-count"></span>
     </a>
   </li>
-  <li class="mikey-tab" data-mm-tab="images">
-    <a href="#" title="Just a little longer... Mikey is fetching your images.">
+  <li class="mikey-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your images are ready." data-mm-tab="images">
+    <a href="#">
       Images <span class="mm-count"></span>
     </a>
   </li>
@@ -92,7 +92,7 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
 
   manageTooltipDisplay: =>
     method = if @disabled then 'enable' else 'disable'
-    @$('.mikey-tab a').tooltip(method)
+    @$('.mikey-tab').tooltip(method)
 
   manageDisabledDisplay: =>
     method = if @disabled then 'addClass' else 'removeClass'
