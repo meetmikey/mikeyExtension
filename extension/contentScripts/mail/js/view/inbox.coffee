@@ -55,7 +55,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @unbindCountUpdate()
 
   initialFetch: =>
-    console.log 'fetching!'
     return unless @options.fetch
     @subView('attachments').initialFetch()
     @subView('links').initialFetch()

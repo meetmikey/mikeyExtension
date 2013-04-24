@@ -61,7 +61,6 @@ class Setup
 
   checkIfInInbox: =>
     inInbox = @inInbox()
-    console.log 'checking inbox', inInbox
     if inInbox
       $(window).off 'hashchange', @checkIfInInbox
       MeetMikey.Helper.DOMManager.waitAndFindAll @inboxSelector, @tabsSelector, @checkAndInjectMainView
