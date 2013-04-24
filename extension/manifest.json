@@ -10,12 +10,12 @@
   "content_scripts": [
     {"matches": ["*://mail.google.com/*"
                 ],
-     "js": ["lib/js/jquery.js",
-            "lib/js/underscore.js",
-            "lib/js/backbone.js",
-            "lib/js/handlebars.js",
-            "lib/js/bootstrap.js",
-            "lib/js/isotope.js",
+     "js": ["vendor/js/jquery.js",
+            "vendor/js/underscore.js",
+            "vendor/js/backbone.js",
+            "vendor/js/handlebars.js",
+            "vendor/js/bootstrap.js",
+            "vendor/js/isotope.js",
             "contentScripts/mail/js/namespace.js",
             "contentScripts/mail/js/constants.js",
             "contentScripts/mail/js/helper/utils.js",
@@ -61,7 +61,7 @@
             "contentScripts/mail/js/view/main.js",
             "contentScripts/mail/js/helper/setup.js",
             "contentScripts/mail/js/mail.js"],
-      "css": ["lib/css/bootstrap.css",
+      "css": ["vendor/css/bootstrap.css",
               "contentScripts/mail/css/mail.css"]
     }
   ],
