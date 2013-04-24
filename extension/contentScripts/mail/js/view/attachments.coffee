@@ -11,7 +11,7 @@ template = """
         <th class="mm-download">File</th>
         <th class="mm-icon">&nbsp;</th>
         <th class="mm-file">&nbsp;</th>
-       <th class="mm-from">From</th>
+        <th class="mm-from">From</th>
         <th class="mm-to">To</th>
         <th class="mm-type">Type</th>
         <th class="mm-size">Size</th>
@@ -32,7 +32,7 @@ template = """
           </td>
         <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
         <td class="mm-file truncate">{{filename}}&nbsp;</td>
-        <td class="mm-from truncate">{{from}}</td> 
+        <td class="mm-from truncate">{{from}}</td>
         <td class="mm-to truncate">{{to}}</td>
         <td class="mm-type truncate">{{type}}</td>
         <td class="mm-size truncate">{{size}}</td>
