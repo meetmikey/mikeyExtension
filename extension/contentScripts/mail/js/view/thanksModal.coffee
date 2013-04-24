@@ -21,6 +21,7 @@ class MeetMikey.View.ThanksModal extends MeetMikey.View.Base
     @show()
 
   show: =>
+    $('.modal').modal 'hide'
     @$('.modal').modal 'show'
 
   hide: =>

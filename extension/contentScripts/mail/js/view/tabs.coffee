@@ -43,16 +43,17 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
   postRender: =>
     @adjustWidth()
     @manageTooltipDisplay()
+    @manageDisabledDisplay()
 
   enable: =>
     @disabled = false
-    @$('.mikey-tabs').removeClass 'tabs-disabled'
     @manageTooltipDisplay()
+    @manageDisabledDisplay()
 
   disable: =>
     @disabled = true
-    @$('.mikey-tabs').addClass 'tabs-disabled'
     @manageTooltipDisplay()
+    @manageDisabledDisplay()
 
   adjustWidth: =>
     @setWidth()
@@ -92,3 +93,7 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
   manageTooltipDisplay: =>
     method = if @disabled then 'enable' else 'disable'
     @$('.mikey-tab a').tooltip(method)
+
+  manageDisabledDisplay: =>
+    method = if @disabled then 'addClass' else 'removeClass'
+    @$('.mikey-tabs')[method] 'tabs-disabled'

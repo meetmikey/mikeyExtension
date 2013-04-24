@@ -2,7 +2,7 @@ class Url
   hashRegex: /#([^?]*)/
   queryRegex: /\?(.+)/
 
-  inboxHashRegex: /^#inbox(?!\/)/
+  inboxHashRegex: /^(?:$|#inbox(?!\/))/
   searchHashRegex: /^#(?:search|apps)(?!.+\/)/
   appsSearchHashRegex: /^#apps/
 
@@ -11,6 +11,7 @@ class Url
 
   getHash: =>
     afterHash = window.location.hash
+    return '' if afterHash is ''
     match = afterHash.match @hashRegex
 
     match?[0]

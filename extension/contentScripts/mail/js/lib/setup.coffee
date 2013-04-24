@@ -32,6 +32,7 @@ class Setup
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data
     MeetMikey.Helper.Mixpanel.setUser MeetMikey.globalUser
+    MeetMikey.globalUser.checkOnboard()
 
   checkMultipleInbox: (callback) =>
     controlSelector = MeetMikey.Settings.Selectors.inboxControlsContainer
@@ -60,6 +61,7 @@ class Setup
 
   checkIfInInbox: =>
     inInbox = @inInbox()
+    console.log 'checking inbox', inInbox
     if inInbox
       $(window).off 'hashchange', @checkIfInInbox
       MeetMikey.Helper.DOMManager.waitAndFindAll @inboxSelector, @tabsSelector, @checkAndInjectMainView
@@ -78,8 +80,8 @@ class Setup
     view.render()
     view.on 'disabled', => @dropdownView.rerender()
     view.on 'authorized', (userData) =>
-      @injectThanksModal()
       @authorized(userData)
+      @injectThanksModal() if MeetMikey.globalUser.get('onboarding')
 
   # Rename Welcome Modal
   injectThanksModal: =>

@@ -5,7 +5,6 @@ class MeetMikey.Model.User extends Backbone.Model
     'onboarding': true
 
   initialize: ->
-    @checkOnboard()
 
   waitAndFetchOnboard: =>
     setTimeout @fetchOnboard, MeetMikey.Settings.pollDelay
