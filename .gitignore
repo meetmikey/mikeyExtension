@@ -4,4 +4,4 @@
 *.js
 !extension/lib/js/*.js
 
-extension/contentScripts/mail/css/mail.css
+extension/mail/css/mail.css
