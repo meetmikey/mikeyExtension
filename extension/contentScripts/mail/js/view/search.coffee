@@ -16,6 +16,8 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
       args: {fetch: false, name: 'searchResult'}
 
   postInitialize: =>
+
+  enableSearch: =>
     @subView('searchBar').on 'search', @handleSearch
 
   handleSearch: (query) =>

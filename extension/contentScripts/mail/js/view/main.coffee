@@ -51,6 +51,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       @injectWelcomeModal() if @showWelcomeModal
       @subView('tabs').on 'clicked:tab', @subView('inbox').showTab
       @subView('tabs').enable()
+      @subView('search').enableSearch()
       @subView('inbox').initialFetch()
 
   setPaginationStateForTab: (tab) =>
