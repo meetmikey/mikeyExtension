@@ -1,6 +1,6 @@
 _.extend MeetMikey.Constants,
   env: "production"
-  imgPath: 'contentScripts/mail/img'
+  imgPath: 'mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   pollDelay: 60*1000
   betaCodeHash: 205332315
