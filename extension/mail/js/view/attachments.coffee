@@ -8,7 +8,7 @@ template = """
       <thead class="labels">
         <!-- <th class="mm-toggle-box"></th> -->
 
-        <th class="mm-download">File</th>
+        <th class="mm-download">File<div class="sort-carat"></div></th>
         <th class="mm-icon">&nbsp;</th>
         <th class="mm-file">&nbsp;</th>
         <th class="mm-from">From</th>

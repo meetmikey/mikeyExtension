@@ -319,18 +319,20 @@ body.compact .mikey-tab {
 
 }
 
-.mm-container .labels th {
-  padding-bottom: 9px;
+.labels th {
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 10px;
   text-align: left;
   font-weight: normal;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
-  color: #555;
+  color: #777;
+
 
   .light & {
-    color: #aaa;
+    color: rgba(255, 255, 255, .5);
     &.active {
     color: #fff;
     } 
@@ -340,22 +342,32 @@ body.compact .mikey-tab {
   .dark & {
     color: #444;
     &.active {
-    color: #222;
+    color: #dd4b39;
     }  
   }
 
-  & .active {
+  .search-results & .active {
     color: #dd4b39;
   } 
 
+  .search-results &:hover {
+  cursor: pointer;
+  color: #222;
+  }
+
+  .light .search-results &:hover {
+  color: #fff;
+  }
+
+  .dark .search-results &:hover {
+  color: #222;
+  }
+
 }
 
-  .search-results & {
-    cursor: pointer;
-    &:hover {
-    background-color: #eee;
-    }
-  }
+    
+
+
 
 
 /* .mm-container .labels th:hover {
@@ -549,7 +561,6 @@ background-size: 18px 18px !important;
 }
 
 .labels th {
-  padding-bottom: 5px;
   background: none !important;
 }
 
@@ -659,6 +670,19 @@ th.mm-file  {
   background:url("../img/wired.ico") no-repeat;
   background-position: 10px 5px;
   background-size: 16px 16px;
+
+}
+
+.sort-carat {
+  background-position: -42px -191px;
+  opacity: 0.55;
+  width: 21px;
+  display: inline-block;
+
+  .labels th:hover & {
+    opacity: 0.9;
+  }
+
 
 }
 
