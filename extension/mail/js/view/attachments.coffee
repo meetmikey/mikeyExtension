@@ -4,7 +4,7 @@ template = """
     <div class="mm-placeholder"></div>
   {{else}}
     <div class="pagination-container"></div>
-    <table class="inbox-table" id="mm-attachments-table" border="0">
+    <table class="inbox-table search-results" id="mm-attachments-table" border="0">
       <thead class="labels">
         <!-- <th class="mm-toggle-box"></th> -->
 
@@ -73,6 +73,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   postRender: =>
     @rollover.setElement @$('.rollover-container')
     $('.mm-download-tooltip').tooltip placement: 'bottom'
+    @setActiveColumn()
 
   teardown: =>
     @collection.off('reset', @render)
@@ -119,8 +120,16 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     window.location = hash
 
   sortByColumn: (event) =>
-    field = $(event.currentTarget).attr('data-mm-field')
+    target = $(event.currentTarget)
+    field = target.attr('data-mm-field')
+
     @collection.sortByField(field) if field?
+    true
+
+  setActiveColumn: =>
+    field = @collection.sortKey
+    @$("th[data-mm-field='#{field}']").addClass 'active'
+
 
   startRollover: (event) => @rollover.startSpawn event
 
