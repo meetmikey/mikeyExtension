@@ -130,7 +130,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     field = @collection.sortKey
     @$("th[data-mm-field='#{field}']").addClass 'active'
 
-
   startRollover: (event) => @rollover.startSpawn event
 
   delayRollover: (event) => @rollover.delaySpawn event

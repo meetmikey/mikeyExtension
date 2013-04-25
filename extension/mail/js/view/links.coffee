@@ -3,7 +3,7 @@ template = """
     <div class="mm-placeholder"></div>
   {{else}}
     <div class="pagination-container"></div>
-    <table class="inbox-table" id="mm-links-table" border="0">
+    <table class="inbox-table search-results" id="mm-links-table" border="0">
       <thead class="labels">
         <th class="mm-download">Link</th>
         <th class="mm-file mm-link"></th>
@@ -68,6 +68,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   postRender: =>
     @rollover.setElement @$('.rollover-container')
     $('.mm-download-tooltip').tooltip placement: 'bottom'
+    @setActiveColumn()
 
   teardown: =>
     @collection.off 'reset', @render
@@ -125,6 +126,9 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     field = $(event.currentTarget).attr('data-mm-field')
     @collection.sortByField(field) if field?
 
+  setActiveColumn: =>
+    field = @collection.sortKey
+    @$("th[data-mm-field='#{field}']").addClass 'active'
 
   setResults: (models, query) =>
     @searchQuery = query
