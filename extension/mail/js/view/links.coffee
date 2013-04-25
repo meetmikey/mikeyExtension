@@ -1,3 +1,4 @@
+spriteUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 template = """
   {{#unless models}}
     <div class="mm-placeholder"></div>
@@ -7,10 +8,10 @@ template = """
       <thead class="labels">
         <th class="mm-download" data-mm-field="title">Link</th>
         <th class="mm-file mm-link"></th>
-        <th class="mm-source" data-mm-field="url">Source</th>
-        <th class="mm-from" data-mm-field="sender">From</th>
-        <th class="mm-to" data-mm-field="recipients">To</th>
-        <th class="mm-sent" data-mm-field="sentDate">Sent</th>
+        <th class="mm-source" data-mm-field="url">Source<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-to" data-mm-field="recipients">To<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-sent" data-mm-field="sentDate">Sent<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
       </thead>
       <tbody>
         {{#each models}}
@@ -127,7 +128,9 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   setActiveColumn: =>
     field = @collection.sortKey
-    @$("th[data-mm-field='#{field}']").addClass 'active'
+    target = @$("th[data-mm-field='#{field}']")
+    target.addClass 'active'
+    target.find('.sort-carat').addClass 'ascending' if @collection.sortOrder is 'asc'
 
   setResults: (models, query) =>
     @searchQuery = query

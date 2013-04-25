@@ -127,7 +127,9 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   setActiveColumn: =>
     field = @collection.sortKey
-    @$("th[data-mm-field='#{field}']").addClass 'active'
+    target = @$("th[data-mm-field='#{field}']")
+    target.addClass 'active'
+    target.find('.sort-carat').addClass 'ascending' if @collection.sortOrder is 'asc'
 
   startRollover: (event) => @rollover.startSpawn event
 
