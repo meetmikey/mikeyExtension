@@ -10,5 +10,6 @@ class MeetMikey.Collection.Links extends MeetMikey.Collection.Base
     recipients: (model) -> model.decorator.formatRecipients(model)
     sender: (model) -> model.decorator.formatSender(model)
     url: (model) -> model.decorator.formatUrl(model)
+    title: (model) -> model.get('title') ? model.get('url')
 
 

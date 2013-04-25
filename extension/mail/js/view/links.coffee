@@ -5,7 +5,7 @@ template = """
     <div class="pagination-container"></div>
     <table class="inbox-table search-results" id="mm-links-table" border="0">
       <thead class="labels">
-        <th class="mm-download">Link</th>
+        <th class="mm-download" data-mm-field="title">Link</th>
         <th class="mm-file mm-link"></th>
         <th class="mm-source" data-mm-field="url">Source</th>
         <th class="mm-from" data-mm-field="sender">From</th>
