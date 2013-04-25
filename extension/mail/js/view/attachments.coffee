@@ -9,9 +9,8 @@ template = """
         <!-- <th class="mm-toggle-box"></th> -->
 
 
-        <th class="mm-download" data-mm-field="filename">File</th>
-        <th class="mm-icon">&nbsp;<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-file">&nbsp;<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-download" colspan="2" data-mm-field="filename">File<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-file">&nbsp;</th>
         <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-to" data-mm-field="recipients">To<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-type" data-mm-field="docType">Type<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>

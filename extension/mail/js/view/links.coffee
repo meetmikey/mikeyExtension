@@ -6,7 +6,7 @@ template = """
     <div class="pagination-container"></div>
     <table class="inbox-table search-results" id="mm-links-table" border="0">
       <thead class="labels">
-        <th class="mm-download" data-mm-field="title">Link</th>
+        <th class="mm-download" colspan="2" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-file mm-link"></th>
         <th class="mm-source" data-mm-field="url">Source<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
@@ -22,7 +22,8 @@ template = """
                 </div>
               </div>
             </td>
-            <td class="mm-file mm-favicon truncate" style="background:url({{faviconURL}}) no-repeat;">
+            <td class="mm-favicon" style="background:url({{faviconURL}}) no-repeat;">&nbsp;</td>
+            <td class="mm-file truncate">
               <div class="flex">
                 {{title}}
                 <span class="mm-file-text">{{summary}}</span>
