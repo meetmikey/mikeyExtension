@@ -159,7 +159,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     data = if MeetMikey.globalUser.get('onboarding')
       {}
     else
-      after: @collection.first()?.get('sentDate')
+      after: @collection.latestSentDate()
 
     @collection.fetch
       update: true

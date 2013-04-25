@@ -4,16 +4,20 @@ template = """
     <div class="mm-placeholder"></div>
   {{else}}
     <div class="pagination-container"></div>
-    <table class="inbox-table" id="mm-attachments-table" border="0">
+    <table class="inbox-table search-results" id="mm-attachments-table" border="0">
       <thead class="labels">
         <!-- <th class="mm-toggle-box"></th> -->
 
-        <th colspan="2" class="mm-file">File<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-from">From<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-to">To<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-type">Type<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-size">Size<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-sent">Sent<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+
+        <th class="mm-download" data-mm-field="filename">File</th>
+        <th class="mm-icon">&nbsp;<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-file">&nbsp;<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-to" data-mm-field="recipients">To<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-type" data-mm-field="docType">Type<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-size" data-mm-field="fileSize">Size<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-sent" data-mm-field="sentDate">Sent<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+
       </thead>
       <tbody>
     {{#each models}}
@@ -50,6 +54,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   events:
     'click .files .mm-file': 'openAttachment'
     'click .files .mm-download': 'openMessage'
+    'click th': 'sortByColumn'
     'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
@@ -65,10 +70,12 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
     @collection.on 'reset add', _.debounce(@render, 50)
     @pagination.on 'change:page', @render
+    @collection.on 'sort', @render
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
     $('.mm-download-tooltip').tooltip placement: 'bottom'
+    @setActiveColumn()
 
   teardown: =>
     @collection.off('reset', @render)
@@ -114,6 +121,14 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
     window.location = hash
 
+  sortByColumn: (event) =>
+    field = $(event.currentTarget).attr('data-mm-field')
+    @collection.sortByField(field) if field?
+
+  setActiveColumn: =>
+    field = @collection.sortKey
+    @$("th[data-mm-field='#{field}']").addClass 'active'
+
   startRollover: (event) => @rollover.startSpawn event
 
   delayRollover: (event) => @rollover.delaySpawn event
@@ -132,7 +147,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     data = if MeetMikey.globalUser.get('onboarding')
       {}
     else
-      after: @collection.first()?.get('sentDate')
+      after: @collection.latestSentDate()
 
     @collection.fetch
       update: true
