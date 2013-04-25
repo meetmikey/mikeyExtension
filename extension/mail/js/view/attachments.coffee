@@ -8,14 +8,14 @@ template = """
       <thead class="labels">
         <!-- <th class="mm-toggle-box"></th> -->
 
-        <th class="mm-download">File</th>
+        <th class="mm-download" >File</th>
         <th class="mm-icon">&nbsp;</th>
         <th class="mm-file">&nbsp;</th>
-        <th class="mm-from">From</th>
-        <th class="mm-to">To</th>
-        <th class="mm-type">Type</th>
-        <th class="mm-size">Size</th>
-        <th class="mm-sent">Sent</th>
+        <th class="mm-from" data-mm-field="sender">From</th>
+        <th class="mm-to" data-mm-field="recipients">To</th>
+        <th class="mm-type" data-mm-field="docType">Type</th>
+        <th class="mm-size" data-mm-field="fileSize">Size</th>
+        <th class="mm-sent" data-mm-field="sentDate">Sent</th>
       </thead>
       <tbody>
     {{#each models}}
@@ -52,6 +52,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   events:
     'click .files .mm-file': 'openAttachment'
     'click .files .mm-download': 'openMessage'
+    'click th': 'sortByColumn'
     'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
@@ -67,6 +68,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
     @collection.on 'reset add', _.debounce(@render, 50)
     @pagination.on 'change:page', @render
+    @collection.on 'sort', @render
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
@@ -116,6 +118,10 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
     window.location = hash
 
+  sortByColumn: (event) =>
+    field = $(event.currentTarget).attr('data-mm-field')
+    @collection.sortByField(field) if field?
+
   startRollover: (event) => @rollover.startSpawn event
 
   delayRollover: (event) => @rollover.delaySpawn event
@@ -134,7 +140,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     data = if MeetMikey.globalUser.get('onboarding')
       {}
     else
-      after: @collection.first()?.get('sentDate')
+      after: @collection.latestSentDate()
 
     @collection.fetch
       update: true

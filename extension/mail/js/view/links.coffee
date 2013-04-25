@@ -7,10 +7,10 @@ template = """
       <thead class="labels">
         <th class="mm-download">Link</th>
         <th class="mm-file mm-link"></th>
-        <th class="mm-source">Source</th>
-        <th class="mm-from">From</th>
-        <th class="mm-to">To</th>
-        <th class="mm-sent">Sent</th>
+        <th class="mm-source" data-mm-field="url">Source</th>
+        <th class="mm-from" data-mm-field="sender">From</th>
+        <th class="mm-to" data-mm-field="recipients">To</th>
+        <th class="mm-sent" data-mm-field="sentDate">Sent</th>
       </thead>
       <tbody>
         {{#each models}}
@@ -48,6 +48,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     'click .files .mm-file': 'openLink'
     'click .files .mm-source': 'openLink'
     'click .files .mm-download': 'openMessage'
+    'click th': 'sortByColumn'
     'mouseenter .files .mm-file, .files .mm-source': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-source': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-source': 'delayRollover'
@@ -61,6 +62,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @pagination = new MeetMikey.Model.PaginationState items: @collection
 
     @collection.on 'reset add', _.debounce(@render, 50)
+    @collection.on 'sort', @render
     @pagination.on 'change:page', @render
 
   postRender: =>
@@ -118,6 +120,11 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
     MeetMikey.Helper.Url.setHash hash
 
+  sortByColumn: (event) =>
+    console.log 'sortByColumn'
+    field = $(event.currentTarget).attr('data-mm-field')
+    @collection.sortByField(field) if field?
+
 
   setResults: (models, query) =>
     @searchQuery = query
@@ -131,7 +138,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     data = if MeetMikey.globalUser.get('onboarding')
       {}
     else
-      after: @collection.first()?.get('sentDate')
+      after: @collection.latestSentDate()
 
     @collection.fetch
       update: true
