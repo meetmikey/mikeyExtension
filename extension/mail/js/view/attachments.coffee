@@ -120,11 +120,8 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     window.location = hash
 
   sortByColumn: (event) =>
-    target = $(event.currentTarget)
-    field = target.attr('data-mm-field')
-
+    field = $(event.currentTarget).attr('data-mm-field')
     @collection.sortByField(field) if field?
-    true
 
   setActiveColumn: =>
     field = @collection.sortKey

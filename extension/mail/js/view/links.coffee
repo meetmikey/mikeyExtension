@@ -122,7 +122,6 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     MeetMikey.Helper.Url.setHash hash
 
   sortByColumn: (event) =>
-    console.log 'sortByColumn'
     field = $(event.currentTarget).attr('data-mm-field')
     @collection.sortByField(field) if field?
 
