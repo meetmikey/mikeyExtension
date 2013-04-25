@@ -39,6 +39,7 @@ class Setup
     tabContainerSelector = MeetMikey.Constants.Selectors.multipleInboxTabsContainer
     MeetMikey.Helper.DOMManager.waitAndFind controlSelector, (target) =>
       margin = target.css 'margin-left'
+      # move 400px into named constant
       MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and $(tabContainerSelector).find(controlSelector)?.length == 0
       @setSelectors()
       callback @multipleInbox

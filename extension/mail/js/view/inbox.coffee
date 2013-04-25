@@ -117,6 +117,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     view = @subView @tabState()
     view.pagination.prevPage()
 
+  # not needed anymore ?
   bindCountUpdate: =>
     _.each @getTabs(), @bindCountUpdateForTab
 
