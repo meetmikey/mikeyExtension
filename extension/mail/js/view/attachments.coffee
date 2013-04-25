@@ -9,13 +9,13 @@ template = """
         <!-- <th class="mm-toggle-box"></th> -->
 
         <th class="mm-download">File<div class="sort-carat"></div></th>
-        <th class="mm-icon">&nbsp;</th>
-        <th class="mm-file">&nbsp;</th>
-        <th class="mm-from">From</th>
-        <th class="mm-to">To</th>
-        <th class="mm-type">Type</th>
-        <th class="mm-size">Size</th>
-        <th class="mm-sent">Sent</th>
+        <th class="mm-icon">&nbsp;<div class="sort-carat"></div></th>
+        <th class="mm-file">&nbsp;<div class="sort-carat"></div></th>
+        <th class="mm-from">From<div class="sort-carat"></div></th>
+        <th class="mm-to">To<div class="sort-carat"></div></th>
+        <th class="mm-type">Type<div class="sort-carat"></div></th>
+        <th class="mm-size">Size<div class="sort-carat"></div></th>
+        <th class="mm-sent">Sent<div class="sort-carat"></div></th>
       </thead>
       <tbody>
     {{#each models}}
