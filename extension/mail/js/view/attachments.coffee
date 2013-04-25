@@ -1,4 +1,4 @@
-downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
+spriteUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 template = """
   {{#unless models}}
     <div class="mm-placeholder"></div>
@@ -10,13 +10,13 @@ template = """
 
 
         <th class="mm-download" data-mm-field="filename">File</th>
-        <th class="mm-icon">&nbsp;<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-file">&nbsp;<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-to" data-mm-field="recipients">To<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-type" data-mm-field="docType">Type<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-size" data-mm-field="fileSize">Size<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
-        <th class="mm-sent" data-mm-field="sentDate">Sent<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-icon">&nbsp;<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-file">&nbsp;<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-to" data-mm-field="recipients">To<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-type" data-mm-field="docType">Type<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-size" data-mm-field="fileSize">Size<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-sent" data-mm-field="sentDate">Sent<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
 
       </thead>
       <tbody>
@@ -28,7 +28,7 @@ template = """
 
          <td class="mm-download">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
-                <div class="list-icon" style="background-image: url('#{downloadUrl}');">
+                <div class="list-icon" style="background-image: url('#{spriteUrl}');">
                 </div>
               </div>
           </td>
