@@ -429,7 +429,6 @@ body.compact .mikey-tab {
 
 .labels .mm-sent {
   padding-right: 10px;
-  text-align: right !important;
 }
 
 .mm-size {
@@ -439,7 +438,6 @@ body.compact .mikey-tab {
 
 .labels .mm-size {
   padding-right: 10px;
-  text-align: right !important;
 }
 
 
@@ -674,18 +672,35 @@ th.mm-file  {
 }
 
 .sort-carat {
-  background-position: -42px -86px;
+  background-position: -42px -89px;
   opacity: 0.55;
-  width: 21px;
-  display: inline-block;
-  margin-left: 6px;
+  width: 0px;
+  display: none;
+  margin-left: 0px;
+  height: 12px;
+
+  .active & {
+    width: 21px;
+    display: inline-block;
+    margin-left: 0px;
+    height: 12px;
+  }
+
 
   .labels th:hover & {
   opacity: 0.9;
   }
 
   .light & {
-  background-position: -42px -86px;
+  background-position: -42px -194px;
+  }
+
+  &.ascending {
+    background-position: -85px -89px;
+  }
+
+  .light &.ascending {
+    background-position: -85px -194px;
   }
 }
 

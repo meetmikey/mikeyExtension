@@ -8,14 +8,12 @@ template = """
       <thead class="labels">
         <!-- <th class="mm-toggle-box"></th> -->
 
-        <th class="mm-download">File<div class="sort-carat"></div></th>
-        <th class="mm-icon">&nbsp;<div class="sort-carat"></div></th>
-        <th class="mm-file">&nbsp;<div class="sort-carat"></div></th>
-        <th class="mm-from">From<div class="sort-carat"></div></th>
-        <th class="mm-to">To<div class="sort-carat"></div></th>
-        <th class="mm-type">Type<div class="sort-carat"></div></th>
-        <th class="mm-size">Size<div class="sort-carat"></div></th>
-        <th class="mm-sent">Sent<div class="sort-carat"></div></th>
+        <th colspan="2" class="mm-file">File<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-from">From<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-to">To<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-type">Type<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-size">Size<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-sent">Sent<div style="background-image: url('#{downloadUrl}');" class="sort-carat">&nbsp;</div></th>
       </thead>
       <tbody>
     {{#each models}}
