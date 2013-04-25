@@ -8,14 +8,14 @@ template = """
       <thead class="labels">
         <!-- <th class="mm-toggle-box"></th> -->
 
-        <th class="mm-download">File<div class="sort-carat"></div></th>
+        <th class="mm-download" >File</th>
         <th class="mm-icon">&nbsp;<div class="sort-carat"></div></th>
         <th class="mm-file">&nbsp;<div class="sort-carat"></div></th>
-        <th class="mm-from">From<div class="sort-carat"></div></th>
-        <th class="mm-to">To<div class="sort-carat"></div></th>
-        <th class="mm-type">Type<div class="sort-carat"></div></th>
-        <th class="mm-size">Size<div class="sort-carat"></div></th>
-        <th class="mm-sent">Sent<div class="sort-carat"></div></th>
+        <th class="mm-from" data-mm-field="sender">From<div class="sort-carat"></div></th>
+        <th class="mm-to" data-mm-field="recipients">To<div class="sort-carat"></div></th>
+        <th class="mm-type" data-mm-field="docType">Type<div class="sort-carat"></div></th>
+        <th class="mm-size" data-mm-field="fileSize">Size<div class="sort-carat"></div></th>
+        <th class="mm-sent" data-mm-field="sentDate">Sent<div class="sort-carat"></div></th>
       </thead>
       <tbody>
     {{#each models}}
@@ -52,6 +52,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   events:
     'click .files .mm-file': 'openAttachment'
     'click .files .mm-download': 'openMessage'
+    'click th': 'sortByColumn'
     'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
@@ -67,6 +68,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
     @collection.on 'reset add', _.debounce(@render, 50)
     @pagination.on 'change:page', @render
+    @collection.on 'sort', @render
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
@@ -116,6 +118,10 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
     window.location = hash
 
+  sortByColumn: (event) =>
+    field = $(event.currentTarget).attr('data-mm-field')
+    @collection.sortByField(field) if field?
+
   startRollover: (event) => @rollover.startSpawn event
 
   delayRollover: (event) => @rollover.delaySpawn event
@@ -134,7 +140,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     data = if MeetMikey.globalUser.get('onboarding')
       {}
     else
-      after: @collection.first()?.get('sentDate')
+      after: @collection.latestSentDate()
 
     @collection.fetch
       update: true

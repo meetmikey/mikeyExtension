@@ -8,7 +8,7 @@ class LinkDecorator
     object.image = model.get('image')
     object.msgHex = model.get('gmMsgHex')
     object.url = model.get 'url'
-    object.displayUrl = @stripHttp model.get('url')
+    object.displayUrl = @formatUrl model
     object.from = @formatSender model
     object.to = @formatRecipients model
     object.sentDate = @formatDate model
@@ -25,6 +25,9 @@ class LinkDecorator
 
   formatDate: (model) =>
     MeetMikey.Helper.formatDate model.get('sentDate')
+
+  formatUrl: (model) =>
+    @stripHttp model.get('url')
 
   stripHttp: (url) =>
     match = url.match @httpRegex

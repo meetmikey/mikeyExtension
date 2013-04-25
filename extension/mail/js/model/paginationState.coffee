@@ -45,7 +45,7 @@ class MeetMikey.Model.PaginationState extends MeetMikey.Model.Base
       update: true
       remove: false
       data:
-        before: @items.last()?.get('sentDate')
+        before: @items.earliestSentDate()
         limit: @itemsExpectedFromFetch
       success: @pageFetched
 
@@ -69,4 +69,3 @@ class MeetMikey.Model.PaginationState extends MeetMikey.Model.Base
 
   lastIndexOfNextPage: =>
     @currentPageIndex() + 2*@itemsPerPage - 1
-
