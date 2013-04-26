@@ -59,6 +59,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   teardown: =>
     @cachedModels = _.clone @collection.models
     @collection.reset()
+    @unbindScrollHandler()
 
   initialFetch: =>
     @collection.fetch success: @waitAndPoll if @options.fetch
@@ -133,22 +134,24 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   checkAndRunIsotope: =>
     if @areImagesLoaded
-      #@logger.info 'images loaded, clearing isotope interval', @isotopeInterval
+      # @logger.info 'images loaded, clearing isotope interval', @isotopeInterval
       clearInterval @isotopeInterval
       @isotopeInterval = null
     else
       @runIsotope()
 
   initIsotope: =>
+    # @logger.info 'init isotope'
     @areImagesLoaded = false
     if ! @isotopeInterval
       @isotopeInterval = setInterval @checkAndRunIsotope, 200
     @$el.imagesLoaded =>
       @areImagesLoaded = true
-      #@logger.info 'images loaded, isotoping one last time'
+      # @logger.info 'images loaded, isotoping one last time'
       @runIsotope()
 
   setResults: (models, query) =>
+    @on 'showTab', @initIsotope
     @searchQuery = query
     @collection.reset models, sort: false
 
