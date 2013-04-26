@@ -2,6 +2,6 @@
 .DS_STORE
 
 *.js
-!extension/lib/js/*.js
+!extension/vendor/js/*.js
 
 extension/mail/css/mail.css
