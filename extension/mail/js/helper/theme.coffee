@@ -52,9 +52,13 @@ class ThemeManager
       true
 
   borderIsHighContrast: =>
-    {red, green, blue} = @parseRGB @getBorderColor()
+    color = @getBorderColor()
 
-    red is 170 and green is 170 and blue is 170
+    if color?
+      {red, green, blue} = @parseRGB
+      red is 170 and green is 170 and blue is 170
+    else
+      false
 
   getTextColor: =>
     @safeFind(MeetMikey.Constants.Selectors.sideBarText).css 'color'
@@ -85,6 +89,7 @@ class ThemeManager
     {red, green, blue} = @parseRGB str
 
     red > green and red > blue
+
 
 
 
