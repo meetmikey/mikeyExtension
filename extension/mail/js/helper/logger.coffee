@@ -1,8 +1,10 @@
 class Logger
   inProductionEnv: MeetMikey.Constants.env is 'production'
 
+  isNotRealUser: not MeetMikey.Helper.isRealUser()
+
   shouldLogToConsole: =>
-    not MeetMikey.Helper.isRealUser()
+    @isNotRealUser
 
   info: (info...) =>
     console.log(info...) if @shouldLogToConsole()
