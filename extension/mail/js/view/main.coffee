@@ -9,11 +9,11 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     'inbox':
       viewClass: MeetMikey.View.Inbox
       selector: '#mm-container'
-      args: {fetch: true, name: 'main'}
+      args: {fetch: true}
     'search':
       viewClass: MeetMikey.View.Search
       selector: MeetMikey.Constants.Selectors.topLevel
-      args: {name: 'search', render: false, renderChildren: false, owned: false}
+      args: {render: false, renderChildren: false, owned: false}
     'sidebar':
       viewClass: MeetMikey.View.Sidebar
       selector: MeetMikey.Constants.Selectors.sideBar

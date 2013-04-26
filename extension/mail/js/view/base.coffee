@@ -2,10 +2,10 @@ class MeetMikey.View.Base extends Backbone.View
   logger: MeetMikey.Helper.Logger
 
   defaultArgs:
-    render: true
-    renderChildren: true
-    append: false
-    owned: true
+    render: true # should we replace content of $el with a template
+    renderChildren: true # should we render our subViews on render
+    append: false # should we append the template to $el rather than replace
+    owned: true # do we own $el? can we destroy it on teardown?
 
   initialize: =>
     @preInitialize()

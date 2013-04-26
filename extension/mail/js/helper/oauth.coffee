@@ -108,6 +108,7 @@ class OAuth
         callback null
 
   authFail: =>
+    # put messaging about authorizing wrong email in here
 
 
 MeetMikey.Helper.OAuth = new OAuth()

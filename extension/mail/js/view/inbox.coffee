@@ -42,7 +42,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
       @tabs.email = MeetMikey.Constants.Selectors.multipleInboxContainer + ', ' + @tabs.email
     @subViews.attachments.args.fetch = @options.fetch
     @subViews.links.args.fetch = @options.fetch
-    @subViews.attachments.args.name = @options.name
     @subViews.images.args.fetch = @options.fetch
 
   postInitialize: =>
@@ -118,6 +117,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     view = @subView @tabState()
     view.pagination.prevPage()
 
+  # not needed anymore ?
   bindCountUpdate: =>
     _.each @getTabs(), @bindCountUpdateForTab
 

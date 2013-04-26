@@ -13,7 +13,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     'searchResults':
       viewClass: MeetMikey.View.Inbox
       selector: '#mm-search-container'
-      args: {fetch: false, name: 'searchResult'}
+      args: {fetch: false}
 
   postInitialize: =>
 
