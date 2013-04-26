@@ -333,22 +333,11 @@ body.compact .mikey-tab {
 
   .light & {
     color: rgba(255, 255, 255, .5);
-    &.active {
-    color: #fff;
-    } 
-
   }
 
   .dark & {
-    color: #444;
-    &.active {
-    color: #dd4b39;
-    }  
+    color: #777; 
   }
-
-  .search-results & .active {
-    color: #dd4b39;
-  } 
 
   .search-results &:hover {
   cursor: pointer;
@@ -691,7 +680,7 @@ th.mm-file  {
   }
 
 
-  .labels th:hover & {
+  .labels th.active:hover & {
   opacity: 0.9;
   width: 21px;
   display: inline-block;
