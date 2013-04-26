@@ -1,1 +1,0 @@
-MeetMikey.Helper.Setup.start()
