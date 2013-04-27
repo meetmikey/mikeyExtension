@@ -43,6 +43,7 @@
             "mail/js/view/pagination.js",
             "mail/js/view/tabs.js",
             "mail/js/view/betaCode.js",
+            "mail/js/view/imageModal.js",
             "mail/js/view/images.js",
             "mail/js/view/rollover.js",
             "mail/js/view/attachmentRollover.js",

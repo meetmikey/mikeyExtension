@@ -28,6 +28,7 @@ template = """
         </div>
       </div>
     {{/each}}
+    <div class="image-modal"></div>
   {{/unless}}
 """
 
@@ -50,6 +51,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     Backbone.on 'change:tab', @unbindScrollHandler
     @collection = new MeetMikey.Collection.Images()
     @collection.on 'reset add', _.debounce(@render, 50)
+    @injectImageModal()
 
   postRender: =>
     @$('.mm-download-tooltip').tooltip placement: 'bottom'
@@ -59,7 +61,12 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   teardown: =>
     @cachedModels = _.clone @collection.models
     @collection.reset()
+    @imageModal._teardown()
     @unbindScrollHandler()
+
+  injectImageModal: =>
+    $('body').append('<div class="image-modal"></div>')
+    @imageModal = new MeetMikey.View.ImageModal el: '.image-modal', collection: @collection
 
   initialFetch: =>
     @collection.fetch success: @waitAndPoll if @options.fetch
@@ -75,12 +82,14 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
-    url = model.getUrl()
+    # url = model.getUrl()
 
     MeetMikey.Helper.trackResourceEvent 'openResource', model,
       search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
 
-    window.open url
+    @imageModal.showImage cid
+
+    # window.open url
 
   openMessage: (event) =>
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
