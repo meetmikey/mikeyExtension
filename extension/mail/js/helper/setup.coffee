@@ -6,7 +6,6 @@ class Setup
   logger: MeetMikey.Helper.Logger
 
   start: =>
-    @pollForMissingTabs()
     $(window).one('DOMSubtreeModified', @bootstrap)
 
   bootstrap: =>
@@ -95,6 +94,7 @@ class Setup
   injectMainView: =>
     @mainView = new MeetMikey.View.Main el: 'body', owned: false, multipleInbox: @multipleInbox
     @mainView.render()
+    @pollForMissingTabs()
 
   checkAndInjectMainView: =>
     if @inInbox()
@@ -103,10 +103,10 @@ class Setup
       @waitForInbox()
 
   pollForMissingTabs: =>
-    setInterval @checkForMissingTabs, 25*1000
+    setInterval @checkForMissingTabs, 15*1000
 
   checkForMissingTabs: =>
-    if ! $('.mikey-tabs')
+    if ! ( $('#mm-tabs-container, #mm-container').length == 2 )
       @logger.info 'tabs are missing, reloading view'
       @reloadView()
 
