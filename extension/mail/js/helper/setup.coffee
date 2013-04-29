@@ -3,7 +3,10 @@ class Setup
   tabsSelector: MeetMikey.Constants.Selectors.tabsContainer
   userEmailSelector: MeetMikey.Constants.Selectors.userEmail
 
+  logger: MeetMikey.Helper.Logger
+
   start: =>
+    @pollForMissingTabs()
     $(window).one('DOMSubtreeModified', @bootstrap)
 
   bootstrap: =>
@@ -98,6 +101,18 @@ class Setup
       @injectMainView()
     else
       @waitForInbox()
+
+  pollForMissingTabs: =>
+    setInterval @checkForMissingTabs, 25*1000
+
+  checkForMissingTabs: =>
+    if ! $('.mikey-tabs')
+      @logger.info 'tabs are missing, reloading view'
+      @reloadView()
+
+  reloadView: =>
+    @mainView?._teardown()
+    @bootstrap()
 
 
 MeetMikey.Helper.Setup = new Setup()
