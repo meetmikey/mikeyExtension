@@ -35,7 +35,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     @cachedQuery = query
 
   trackSearchEvent: (query) =>
-    MeetMikey.Helper.Mixpanel.trackEvent 'search',
+    MeetMikey.Helper.Analytics.trackEvent 'search',
       query: query
       currentTab: MeetMikey.Globals.tabState
 

@@ -73,7 +73,7 @@ MeetMikey.Helper.trackResourceEvent = (event, model, opts) ->
   resourceProps = MeetMikey.Helper.getResourceProperties(model)
   props = _.extend resourceProps, opts
 
-  MeetMikey.Helper.Mixpanel.trackEvent event, props
+  MeetMikey.Helper.Analytics.trackEvent event, props
 
 MeetMikey.Helper.getHash = (input) ->
   hash = 0

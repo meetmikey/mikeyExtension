@@ -59,11 +59,11 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
     @trackPrevPageEvent()
 
   trackNextPageEvent: =>
-    MeetMikey.Helper.Mixpanel.trackEvent 'nextPage',
+    MeetMikey.Helper.Analytics.trackEvent 'nextPage',
       currentTab: MeetMikey.Globals.tabState, page: @page
 
   trackPrevPageEvent: =>
-    MeetMikey.Helper.Mixpanel.trackEvent 'prevPage',
+    MeetMikey.Helper.Analytics.trackEvent 'prevPage',
       currentTab: MeetMikey.Globals.tabState, page: @page
 
   getDisplay: =>

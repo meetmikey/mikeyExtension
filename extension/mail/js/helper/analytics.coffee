@@ -15,9 +15,8 @@ class Analytics
   userProps: {}
 
   setUser: (user) =>
-    #@logger.info 'setUser:', user
     @userProps = _.pick user.attributes, 'email', 'firstName', 'lastName', 'displayName'
-    @userProps.userId = user._id
+    @userProps.userId = user.id
     #return unless @inCorrectEnv
     @mixpanel.setUser  @userProps unless @mixpanelOff
     @piwik.setUser  @userProps unless @piwikOff

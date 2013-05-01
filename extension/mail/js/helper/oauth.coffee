@@ -46,15 +46,15 @@ class OAuth
     not (disabled? and disabled)
 
   trackEnableEvent: =>
-    MeetMikey.Helper.Mixpanel.trackEvent 'enableExtension',
+    MeetMikey.Helper.Analytics.trackEvent 'enableExtension',
       userEmail: @getUserEmail()
 
   trackDisableEvent: =>
-    MeetMikey.Helper.Mixpanel.trackEvent 'disableExtension',
+    MeetMikey.Helper.Analytics.trackEvent 'disableExtension',
       userEmail: @getUserEmail()
 
   trackAuthEvent: (user) =>
-    MeetMikey.Helper.Mixpanel.trackEvent 'authorized', _.omit(user, 'asymHash')
+    MeetMikey.Helper.Analytics.trackEvent 'authorized', _.omit(user, 'asymHash')
 
   checkUser: (callback) =>
     data = @getUserInfo()

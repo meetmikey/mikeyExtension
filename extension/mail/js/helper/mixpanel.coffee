@@ -27,10 +27,8 @@ class Mixpanel
     }
 
     allProps = _.extend allProps, customProps
-    eventProps = _.filter allProps, (field) ->
-      contains = _.contains @eventFields, field
-      console.log 'field: ', field, ', contains: ', contains
-      _.contains @eventFields, field
+    eventProps = _.pick allProps, @eventFields
+
     console.log 'allProps: ', allProps, ', eventFields: ', @eventFields, ', eventProps: ', eventProps
 
     eventObj: {

@@ -27,11 +27,11 @@ class Setup
       @waitForInbox()
 
   trackLoginEvent: (user) =>
-    MeetMikey.Helper.Mixpanel.trackEvent 'login', _.omit(user, 'asymHash')
+    MeetMikey.Helper.Analytics.trackEvent 'login', _.omit(user, 'asymHash')
 
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data
-    MeetMikey.Helper.Mixpanel.setUser MeetMikey.globalUser
+    MeetMikey.Helper.Analytics.setUser MeetMikey.globalUser
     MeetMikey.globalUser.checkOnboard()
 
   checkMultipleInbox: (callback) =>
