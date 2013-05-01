@@ -4,6 +4,7 @@ class Setup
   userEmailSelector: MeetMikey.Constants.Selectors.userEmail
 
   logger: MeetMikey.Helper.Logger
+  checkTabsInterval: null
 
   start: =>
     $(window).one('DOMSubtreeModified', @bootstrap)
@@ -103,9 +104,11 @@ class Setup
       @waitForInbox()
 
   pollForMissingTabs: =>
-    setInterval @checkForMissingTabs, 15*1000
+    if ! @checkTabsInterval
+      @checkTabsInterval = setInterval @checkForMissingTabs, 10*1000
 
   checkForMissingTabs: =>
+    #console.log "checking for tabs..."
     if ! ( $('#mm-tabs-container, #mm-container').length == 2 )
       @logger.info 'tabs are missing, reloading view'
       @reloadView()
