@@ -1,51 +1,51 @@
 class Mixpanel
   apiUrl: 'https://api.mixpanel.com'
-
-  inCorrectEnv: MeetMikey.Constants.env is 'production'
   token: MeetMikey.Constants.mixpanelId
-  extensionVersion: MeetMikey.Constants.extensionVersion
+  eventFields: ['userId', 'token', 'time']
 
-  userId: null
+  setUser: (allProps) =>
+    userObj = @_buildUserObj allProps
+    console.log 'user obj:', userObj
+    #$.ajax
+      #url: "#{@apiUrl}/engage"
+      #data: {data: MeetMikey.Helper.encodeB64(userObj)}
 
-  logger: MeetMikey.Helper.Logger
+  trackEvent: (event, allProps) =>
+    eventObj = @_buildEventObj event, allProps
+    console.log 'event obj:', eventObj
+    #$.ajax
+     # url: "#{@apiUrl}/track"
+        #data:
+        #data: MeetMikey.Helper.encodeB64(eventObj)
+        #ip: 1
 
-  # TODO: write wrapper for engage endpoint, add distinct_id support with identify
-  setUser: (user) =>
-    eventObj = @_buildUserObj user
-    $.ajax
-      url: "#{@apiUrl}/engage"
-      data: {data: @encodeB64(eventObj)}
+  _buildEventObj: (event, allProps)=>
+    customProps = {
+      token: @token
+      time: Date.now()
+      distinct_id: allProps.userId
+    }
 
-  trackEvent: (event, props) =>
-    obj = @_buildEventObj event, props
-    $.ajax
-      url: "#{@apiUrl}/track"
-      data:
-        data: @encodeB64(obj)
-        ip: 1
+    allProps = _.extend allProps, customProps
+    eventProps = _.filter allProps, (field) ->
+      contains = _.contains @eventFields, field
+      console.log 'field: ', field, ', contains: ', contains
+      _.contains @eventFields, field
+    console.log 'allProps: ', allProps, ', eventFields: ', @eventFields, ', eventProps: ', eventProps
 
-  encodeB64: (obj) ->
-    # btoa dies on utf-8 strings, escape/unescape fixes
-    str = JSON.stringify obj
-    window.btoa unescape encodeURIComponent str
+    eventObj: {
+      event
+      properties: eventProps
+    }
 
-  _buildEventObj: (event, props)=>
-    metaData = _.extend @userProps ? {},
-      token: @token, time: Date.now(), distinct_id: @userId, extensionVersion: @extensionVersion
-    properties = _.extend props, metaData
-    {event, properties}
-
-  _buildUserObj: (user) =>
-    attrs = user.attributes
-
+  _buildUserObj: (allProps) =>
     $token: @token
-    $distinct_id: @userId
+    $distinct_id: allProps.userId
     $set:
-      $email: attrs.email
-      $first_name: attrs.firstName
-      $last_name: attrs.lastName
-      $extension_version: @extensionVersion
-      $multiple_inbox: MeetMikey.Globals.multipleInbox
-
+      $email: allProps.email
+      $first_name: allProps.firstName
+      $last_name: allProps.lastName
+      $extension_version: allProps.extensionVersion
+      $multiple_inbox: allProps.multipleInbox
 
 MeetMikey.Helper.Mixpanel = new Mixpanel()

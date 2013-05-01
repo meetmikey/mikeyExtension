@@ -91,3 +91,8 @@ MeetMikey.Helper.getBetaCodeHash = (betaCodeInput) ->
 MeetMikey.Helper.isRealUser = (userId=MeetMikey.globalUser?.id) ->
   return true unless userId?
   not _.contains(MeetMikey.Constants.MikeyTeamUserIds, userId)
+
+MeetMikey.Helper.encodeB64 = (obj) ->
+  # btoa dies on utf-8 strings, escape/unescape fixes
+  str = JSON.stringify obj
+  window.btoa unescape encodeURIComponent str

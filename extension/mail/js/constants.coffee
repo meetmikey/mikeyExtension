@@ -3,7 +3,7 @@ _.extend MeetMikey.Constants,
   imgPath: 'mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   mixpanelOff: false
-  piwikOff: false
+  piwikOff: true
   pollDelay: 60*1000
   betaCodeHash: 205332315
   extensionVersion: chrome.runtime.getManifest()?.version
