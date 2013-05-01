@@ -13,7 +13,6 @@ class Mixpanel
     eventObj = @_buildEventObj event, eventProps, allProps
     $.ajax
       url: "#{@apiUrl}/track"
-        data:
         data: MeetMikey.Helper.encodeB64(eventObj)
         ip: 1
 
