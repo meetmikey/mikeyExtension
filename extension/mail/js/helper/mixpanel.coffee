@@ -1,35 +1,31 @@
 class Mixpanel
   apiUrl: 'https://api.mixpanel.com'
   token: MeetMikey.Constants.mixpanelId
-  eventFields: ['userId', 'token', 'time']
+  eventFields: ['userId', 'email', 'firstName', 'lastName', 'displayName', 'distinct_id', 'extensionVersion', 'token', 'locale', 'gender', 'userCreatedTimestamp']
 
   setUser: (allProps) =>
     userObj = @_buildUserObj allProps
-    console.log 'user obj:', userObj
-    #$.ajax
-      #url: "#{@apiUrl}/engage"
-      #data: {data: MeetMikey.Helper.encodeB64(userObj)}
+    $.ajax
+      url: "#{@apiUrl}/engage"
+      data: {data: MeetMikey.Helper.encodeB64(userObj)}
 
-  trackEvent: (event, allProps) =>
-    eventObj = @_buildEventObj event, allProps
-    console.log 'event obj:', eventObj
-    #$.ajax
-     # url: "#{@apiUrl}/track"
-        #data:
-        #data: MeetMikey.Helper.encodeB64(eventObj)
-        #ip: 1
+  trackEvent: (event, eventProps, allProps) =>
+    eventObj = @_buildEventObj event, eventProps, allProps
+    $.ajax
+      url: "#{@apiUrl}/track"
+        data:
+        data: MeetMikey.Helper.encodeB64(eventObj)
+        ip: 1
 
-  _buildEventObj: (event, allProps)=>
+  _buildEventObj: (event, eventProps, allProps)=>
     customProps = {
       token: @token
-      time: Date.now()
       distinct_id: allProps.userId
     }
 
     allProps = _.extend allProps, customProps
-    eventProps = _.pick allProps, @eventFields
-
-    console.log 'allProps: ', allProps, ', eventFields: ', @eventFields, ', eventProps: ', eventProps
+    fields = _.extend @eventFields, _.keys eventProps
+    eventProps = _.pick allProps, fields
 
     eventObj: {
       event

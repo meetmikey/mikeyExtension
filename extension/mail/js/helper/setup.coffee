@@ -30,7 +30,7 @@ class Setup
       @waitForInbox()
 
   trackLoginEvent: (user) =>
-    MeetMikey.Helper.Analytics.trackEvent 'login', _.omit(user, 'asymHash')
+    MeetMikey.Helper.Analytics.trackEvent 'login'
 
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data

@@ -17,19 +17,28 @@ class Analytics
   setUser: (user) =>
     @userProps = _.pick user.attributes, 'email', 'firstName', 'lastName', 'displayName'
     @userProps.userId = user.id
-    #return unless @inCorrectEnv
-    @mixpanel.setUser  @userProps unless @mixpanelOff
-    @piwik.setUser  @userProps unless @piwikOff
+    @userProps.userCreatedTimestamp = user.get('timestamp')
+
+    #update these, in case they weren't set earlier
+    @globalProps.extensionVersion = MeetMikey.Constants.extensionVersion
+    @globalProps.multipleInbox = MeetMikey.Globals.multipleInbox
+
+    allProps = @_buildAllProps()
+
+    return unless @inCorrectEnv
+    @mixpanel.setUser allProps unless @mixpanelOff
+    @piwik.setUser allProps unless @piwikOff
 
   trackEvent: (event, eventProps) =>
     #@logger.info 'trackEvent:', event, eventProps
-    #return unless @inCorrectEnv && MeetMikey.Helper.isRealUser()
+    return unless @inCorrectEnv && MeetMikey.Helper.isRealUser()
+    eventProps = eventProps || {}
     allProps = @_buildAllProps eventProps
-    @mixpanel.trackEvent event, allProps unless @mixpanelOff
-    @piwik.trackEvent event, allProps unless @piwikOff
+    @mixpanel.trackEvent event, eventProps, allProps unless @mixpanelOff
+    @piwik.trackEvent event, eventProps, allProps unless @piwikOff
 
   _buildAllProps: (eventProps) =>
-    allProps = if eventProps? then _.clone(eventProps) else {}
+    eventProps = _.clone( eventProps || {} )
     allProps = _.extend eventProps, @globalProps
     allProps = _.extend allProps, @userProps
     allProps
