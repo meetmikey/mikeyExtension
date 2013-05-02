@@ -1,8 +1,8 @@
 class Piwik
 
   apiURL: 'https://tools.meetmikey.com/piwik/piwik.php'
-  piwik: _paq || []
-  eventFields: ['userId', 'email', 'firstName', 'lastName', 'displayName', 'distinct_id', 'extensionVersion', 'token', 'locale', 'gender', 'userCreatedTimestamp']
+  piwik: _paq
+  eventFields: ['userId', 'email', 'firstName', 'lastName', 'displayName', 'extensionVersion', 'locale', 'gender', 'userCreatedTimestamp']
   hasSetup: false
 
   setup: () =>
@@ -10,10 +10,9 @@ class Piwik
       @hasSetup = true
       @piwik.push ['setTrackerUrl', @apiURL]
       @piwik.push ['setSiteId', '1']
-      #@piwik.push ['trackPageView']
-      #@piwik.push ['enableLinkTracking']
 
   setUser: (allProps) =>
+    @setup()
     @_setCustomVariable 1, 'userId', allProps.userId
     @_setCustomVariable 2, 'email', allProps.email
     @_setCustomVariable 3, 'firstName', allProps.firstName
@@ -26,9 +25,8 @@ class Piwik
     @setup()
     fields = _.extend @eventFields, _.keys eventProps
     eventProps = _.pick allProps, fields
-    console.log 'trackEvent, event: ', event
+    #console.log 'trackEvent, event: ', event
     @piwik.push ['trackPageView', event]
-    #@piwik.push ['enableLinkTracking']
 
   _setCustomVariable: (index, name, value) =>
     @piwik.push ['setCustomVariable', index, name, value, 'visit']

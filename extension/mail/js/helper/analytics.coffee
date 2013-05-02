@@ -25,13 +25,13 @@ class Analytics
 
     allProps = @_buildAllProps()
 
-    #return unless @inCorrectEnv
+    return unless @inCorrectEnv
     @mixpanel.setUser allProps unless @mixpanelOff
     @piwik.setUser allProps unless @piwikOff
 
   trackEvent: (event, eventProps) =>
     #@logger.info 'trackEvent:', event, eventProps
-    #return unless @inCorrectEnv && MeetMikey.Helper.isRealUser()
+    return unless @inCorrectEnv && MeetMikey.Helper.isRealUser()
     eventProps = eventProps || {}
     allProps = @_buildAllProps eventProps
     @mixpanel.trackEvent event, eventProps, allProps unless @mixpanelOff
