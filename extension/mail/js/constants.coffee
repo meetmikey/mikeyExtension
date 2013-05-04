@@ -90,6 +90,8 @@ _.extend MeetMikey.Constants,
     # where multiple inbox tabs should be injected
     multipleInboxTabsContainer: '[id=":ro"]'
 
+    previewPaneSelector: '.apJ'
+
   MikeyTeamUserIds: [
       '51425e20a8a4db7207000006'
     , '5153edd7a66e972a10000005'
