@@ -54,6 +54,7 @@ class Setup
       MeetMikey.Globals.previewPane = true
       $('body').addClass('preview-pane')
     else
+      $('body').removeClass('preview-pane')
       MeetMikey.Globals.previewPane = false
 
   setSelectors: =>
