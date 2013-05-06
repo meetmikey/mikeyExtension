@@ -24,6 +24,7 @@ class Setup
         @injectOnboardModal()
 
   authorized: (userData) =>
+    @checkPreviewPane()
     @checkMultipleInbox =>
       @initalizeGlobalUser userData
       @trackLoginEvent(userData)
@@ -46,6 +47,15 @@ class Setup
       MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and $(tabContainerSelector).find(controlSelector)?.length == 0
       @setSelectors()
       callback @multipleInbox
+
+  checkPreviewPane: (callback) =>
+    previewPaneSelector = MeetMikey.Constants.Selectors.previewPaneSelector
+    if $(previewPaneSelector) && $(previewPaneSelector).length
+      MeetMikey.Globals.previewPane = true
+      $('body').addClass('preview-pane')
+    else
+      $('body').removeClass('preview-pane')
+      MeetMikey.Globals.previewPane = false
 
   setSelectors: =>
     selectors = MeetMikey.Constants.Selectors
@@ -105,7 +115,7 @@ class Setup
 
   pollForMissingTabs: =>
     if ! @checkTabsInterval
-      @checkTabsInterval = setInterval @checkForMissingTabs, 10*1000
+      @checkTabsInterval = setInterval @checkForMissingTabs, 5*1000
 
   checkForMissingTabs: =>
     #console.log "checking for tabs..."

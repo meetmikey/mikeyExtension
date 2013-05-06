@@ -16,7 +16,8 @@ _.extend MeetMikey.Constants,
 
   Selectors:
     # selector that contains controls above inbox where we inject tabs
-    tabsContainer: '[id=":ro"] [gh="tm"]'
+    #tabsContainer: '[id=":ro"] [gh="tm"]'
+    tabsContainer: '[gh="tm"]'
 
     # selector that the inbox should be inserted before
     inboxContainer: '.BltHke.nH.oy8Mbf[role=main] .UI'
@@ -89,6 +90,8 @@ _.extend MeetMikey.Constants,
 
     # where multiple inbox tabs should be injected
     multipleInboxTabsContainer: '[id=":ro"]'
+
+    previewPaneSelector: '.apJ'
 
   MikeyTeamUserIds: [
       '51425e20a8a4db7207000006'
