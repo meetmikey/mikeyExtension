@@ -34,6 +34,18 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   getTabs: =>
     _.chain(@tabs).keys().without('email').value()
 
+  adjustHeight: =>
+    bodyHeight = parseInt( @safeFind('body').css('height'), 10 )
+    offset = 214
+    if MeetMikey.Globals.layout == 'compact'
+      offset = 158
+    height = bodyHeight - offset
+    height = height + 'px'
+    MeetMikey.Helper.DOMManager.waitAndFindAll ['.mm-attachments-tab', '.mm-links-tab', '.mm-images-tab'], =>
+      @$('.mm-attachments-tab').css 'height', height
+      @$('.mm-links-tab').css 'height', height
+      @$('.mm-images-tab').css 'height', height
+
   tabState: => MeetMikey.Globals.tabState
 
   preInitialize: =>
@@ -48,6 +60,11 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @bindCountUpdate() unless @options.fetch
 
   postRender: =>
+    @adjustHeight()
+    @bindWindowResize()
+
+  bindWindowResize: =>
+    $(window).on 'resize', @adjustHeight
 
   teardown: =>
     @resetEmailDisplay()

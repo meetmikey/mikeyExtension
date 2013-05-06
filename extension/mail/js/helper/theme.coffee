@@ -10,6 +10,7 @@ class ThemeManager
     @setTheme @detectTheme()
 
   setLayout: (layout='compact') =>
+    MeetMikey.Globals.layout = layout
     @$body.addClass layout
 
   setTheme: (themeOpts) =>
