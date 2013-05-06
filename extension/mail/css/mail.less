@@ -64,9 +64,6 @@ padding-top: 24px;
 }
 
 .preview-pane {
-  & .mikey-tabs {
-    top: 38px;
-  }
   
   & .D.E.G-atb {
     margin-top: -35px;
@@ -74,6 +71,27 @@ padding-top: 24px;
   & .aia {
     padding-top: 46px;
   }
+  & .mm-attachments-tab, & .mm-links-tab, & .mm-images-tab {
+    max-height: 690px !important;
+    overflow: scroll !important;
+
+  }
+
+  &.compact {
+  
+    & .D.E.G-atb {
+    margin-top: -42px;
+    }
+    & .aia {
+    padding-top: 39px;
+    }
+  }
+
+  & .isotope {
+    padding-top: 0px;
+    margin-top: 0px;
+  }
+
 }
 
 
@@ -132,6 +150,11 @@ body {
   .compact & {
     height: 52px;
   }
+
+  .preview-pane.compact & {
+    height: 45px;
+  }
+  
   .cozy & {
     height: 59px;
   }
@@ -162,6 +185,10 @@ body {
   }
   .compact.multiple-inbox & {
     padding: 13px 0px 0px 0px;
+  }
+
+  .preview-pane.compact & {
+    padding-top: 17px;
   }
 
   .dark & a {
@@ -210,9 +237,13 @@ body {
 }
 
 
-body.compact .mikey-tab {
+.compact .mikey-tab {
   margin-top: 0px;
   height:28px;
+}
+
+.preview-pane.compact .mikey-tab {
+  height: 26px;
 }
 
 
@@ -1261,6 +1292,10 @@ white-space: nowrap;
   }
   .compact.multiple-inbox & {
     margin-top: 5px;
+  }
+
+  .preview-pane.compact & {
+    margin-top: 12px;
   }
 
   .cozy.multiple-inbox & {
