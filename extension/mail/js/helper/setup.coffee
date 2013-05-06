@@ -115,7 +115,7 @@ class Setup
 
   pollForMissingTabs: =>
     if ! @checkTabsInterval
-      @checkTabsInterval = setInterval @checkForMissingTabs, 10*1000
+      @checkTabsInterval = setInterval @checkForMissingTabs, 5*1000
 
   checkForMissingTabs: =>
     #console.log "checking for tabs..."
