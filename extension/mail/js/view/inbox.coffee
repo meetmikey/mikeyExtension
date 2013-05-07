@@ -2,7 +2,7 @@ template = """
     <div id="mm-tabs"></div>
     <div class="mm-attachments-tab" style="display: none;"></div>
     <div class="mm-links-tab" style="display: none;"></div>
-    <div class="mm-images-tab transitions-disabled" style="display: none;"></div>
+    <div class="mm-images-tab transitions-disabled" style="display: none;"><div class="mm-images-tab-inner"></div></div>
     <div style="clear: both;"></div>
 """
 
@@ -22,7 +22,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
       args: {}
     'images':
       viewClass: MeetMikey.View.Images
-      selector: '.mm-images-tab'
+      selector: '.mm-images-tab-inner'
       args: {}
 
   tabs:
@@ -36,9 +36,9 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   adjustHeight: =>
     bodyHeight = parseInt( @safeFind('body').css('height'), 10 )
-    offset = 214
+    offset = 191
     if MeetMikey.Globals.layout == 'compact'
-      offset = 158
+      offset = 138
     height = bodyHeight - offset
     height = height + 'px'
     MeetMikey.Helper.DOMManager.waitAndFindAll ['.mm-attachments-tab', '.mm-links-tab', '.mm-images-tab'], =>
