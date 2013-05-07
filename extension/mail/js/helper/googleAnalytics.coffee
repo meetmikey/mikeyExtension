@@ -1,4 +1,4 @@
-class Piwik
+class GoogleAnalytics
 
   apiURL: 'https://tools.meetmikey.com/piwik/piwik.php'
   piwik: _paq
@@ -8,8 +8,14 @@ class Piwik
   setup: () =>
     if ! @hasSetup
       @hasSetup = true
-      @piwik.push ['setTrackerUrl', @apiURL]
-      @piwik.push ['setSiteId', '1']
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-39249462-1');
+      ga('send', 'pageview');
 
   setUser: (allProps) =>
     @setup()
@@ -31,4 +37,4 @@ class Piwik
   _setCustomVariable: (index, name, value) =>
     @piwik.push ['setCustomVariable', index, name, value, 'visit']
 
-MeetMikey.Helper.Piwik = new Piwik()
+MeetMikey.Helper.GoogleAnalytics = new GoogleAnalytics()
