@@ -35,7 +35,7 @@ class Analytics
 
   trackEvent: (event, eventProps) =>
     #@logger.info 'trackEvent:', event, eventProps
-    #return unless @inCorrectEnv && MeetMikey.Helper.isRealUser()
+    return unless @inCorrectEnv && MeetMikey.Helper.isRealUser()
     eventProps = eventProps || {}
     allProps = @_buildAllProps eventProps
     @mixpanel.trackEvent event, eventProps, allProps unless @mixpanelOff

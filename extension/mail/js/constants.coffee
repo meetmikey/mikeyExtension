@@ -2,8 +2,8 @@ _.extend MeetMikey.Constants,
   env: "production"
   imgPath: 'mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
-  mixpanelOff: true
-  piwikOff: true
+  mixpanelOff: false
+  piwikOff: false
   googleAnalyticsOff: false
   pollDelay: 60*1000
   betaCodeHash: 205332315
