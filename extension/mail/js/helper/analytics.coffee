@@ -28,7 +28,7 @@ class Analytics
 
     allProps = @_buildAllProps()
 
-    return unless @inCorrectEnv
+    return unless @inCorrectEnv && MeetMikey.Helper.isRealUser()
     @mixpanel.setUser allProps unless @mixpanelOff
     @piwik.setUser allProps unless @piwikOff
     @googleAnalytics.setUser allProps unless @googleAnalyticsOff
