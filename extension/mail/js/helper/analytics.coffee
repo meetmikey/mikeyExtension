@@ -8,6 +8,9 @@ class Analytics
   piwik: MeetMikey.Helper.Piwik
   piwikOff: MeetMikey.Constants.piwikOff
 
+  googleAnalytics: MeetMikey.Helper.GoogleAnalytics
+  googleAnalyticsOff: MeetMikey.Constants.googleAnalyticsOff
+
   globalProps:
     extensionVersion: MeetMikey.Constants.extensionVersion
     multipleInbox: MeetMikey.Globals.multipleInbox
@@ -25,9 +28,10 @@ class Analytics
 
     allProps = @_buildAllProps()
 
-    return unless @inCorrectEnv
+    return unless @inCorrectEnv && MeetMikey.Helper.isRealUser()
     @mixpanel.setUser allProps unless @mixpanelOff
     @piwik.setUser allProps unless @piwikOff
+    @googleAnalytics.setUser allProps unless @googleAnalyticsOff
 
   trackEvent: (event, eventProps) =>
     #@logger.info 'trackEvent:', event, eventProps
@@ -36,6 +40,7 @@ class Analytics
     allProps = @_buildAllProps eventProps
     @mixpanel.trackEvent event, eventProps, allProps unless @mixpanelOff
     @piwik.trackEvent event, eventProps, allProps unless @piwikOff
+    @googleAnalytics.trackEvent event, eventProps, allProps unless @googleAnalyticsOff
 
   _buildAllProps: (eventProps) =>
     eventProps = _.clone( eventProps || {} )

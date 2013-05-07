@@ -7,14 +7,17 @@ class Mixpanel
     userObj = @_buildUserObj allProps
     $.ajax
       url: "#{@apiUrl}/engage"
-      data: {data: MeetMikey.Helper.encodeB64(userObj)}
+      data:
+        data: MeetMikey.Helper.encodeB64(userObj)
 
   trackEvent: (event, eventProps, allProps) =>
     eventObj = @_buildEventObj event, eventProps, allProps
     $.ajax
       url: "#{@apiUrl}/track"
+      data:
         data: MeetMikey.Helper.encodeB64(eventObj)
         ip: 1
+        verbose: 1
 
   _buildEventObj: (event, eventProps, allProps)=>
     customProps = {
@@ -22,13 +25,13 @@ class Mixpanel
       distinct_id: allProps.userId
     }
 
-    allProps = _.extend allProps, customProps
-    fields = _.extend @eventFields, _.keys eventProps
+    allProps = _.extend _.clone(allProps), customProps
+    fields = _.union @eventFields, _.keys eventProps
     eventProps = _.pick allProps, fields
 
-    eventObj: {
+    {
       event
-      properties: eventProps
+      , properties: eventProps
     }
 
   _buildUserObj: (allProps) =>
