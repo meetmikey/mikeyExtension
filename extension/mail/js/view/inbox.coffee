@@ -2,7 +2,7 @@ template = """
     <div id="mm-tabs"></div>
     <div class="mm-attachments-tab" style="display: none;"></div>
     <div class="mm-links-tab" style="display: none;"></div>
-    <div class="mm-images-tab transitions-disabled" style="display: none;"><div class="mm-images-tab-inner"></div></div>
+    <div class="mm-images-tab" style="display: none;"><div class="mm-images-tab-inner transitions-disabled"></div></div>
     <div style="clear: both;"></div>
 """
 
@@ -42,9 +42,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     height = bodyHeight - offset
     height = height + 'px'
     MeetMikey.Helper.DOMManager.waitAndFindAll ['.mm-attachments-tab', '.mm-links-tab', '.mm-images-tab'], =>
-      @$('.mm-attachments-tab').css 'height', height
-      @$('.mm-links-tab').css 'height', height
-      @$('.mm-images-tab').css 'height', height
+      if MeetMikey.Globals.previewPane
+        @$('.mm-attachments-tab').css 'height', height
+        @$('.mm-links-tab').css 'height', height
+        @$('.mm-images-tab').css 'height', height
 
   tabState: => MeetMikey.Globals.tabState
 

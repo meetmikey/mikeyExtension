@@ -89,8 +89,18 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
 
-  $scrollElem: => @safeFind(MeetMikey.Constants.Selectors.scrollContainer)
-  bindScrollHandler: => @$scrollElem().on 'scroll', @scrollHandler if @options.fetch
+  $scrollElem: =>
+    if MeetMikey.Globals.previewPane
+      @$el.parent()
+    else
+      @safeFind(MeetMikey.Constants.Selectors.scrollContainer)
+
+
+  bindScrollHandler: =>
+    @$scrollElem().on 'scroll', () =>
+      if @options.fetch
+        @scrollHandler()
+
   unbindScrollHandler: => @$scrollElem().off 'scroll', @scrollHandler
 
   scrollHandler: (event)=>
