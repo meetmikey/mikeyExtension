@@ -4,6 +4,7 @@ _.extend MeetMikey.Constants,
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   mixpanelOff: false
   piwikOff: false
+  googleAnalyticsOff: false
   pollDelay: 60*1000
   betaCodeHash: 205332315
   extensionVersion: chrome.runtime.getManifest()?.version

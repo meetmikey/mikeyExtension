@@ -42,9 +42,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     height = bodyHeight - offset
     height = height + 'px'
     MeetMikey.Helper.DOMManager.waitAndFindAll ['.mm-attachments-tab', '.mm-links-tab', '.mm-images-tab'], =>
-      @$('.mm-attachments-tab').css 'height', height
-      @$('.mm-links-tab').css 'height', height
-      @$('.mm-images-tab').css 'height', height
+      if MeetMikey.Globals.previewPane
+        @$('.mm-attachments-tab').css 'height', height
+        @$('.mm-links-tab').css 'height', height
+        @$('.mm-images-tab').css 'height', height
 
   tabState: => MeetMikey.Globals.tabState
 
