@@ -36,9 +36,9 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   adjustHeight: =>
     bodyHeight = parseInt( @safeFind('body').css('height'), 10 )
-    offset = 191
+    offset = 208
     if MeetMikey.Globals.layout == 'compact'
-      offset = 138
+      offset = 155
     height = bodyHeight - offset
     height = height + 'px'
     MeetMikey.Helper.DOMManager.waitAndFindAll ['.mm-attachments-tab', '.mm-links-tab', '.mm-images-tab'], =>
