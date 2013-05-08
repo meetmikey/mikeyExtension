@@ -120,7 +120,7 @@ class Setup
   checkForMissingTabs: =>
     #console.log "checking for tabs..."
     numContainers = $('#mm-tabs-container, #mm-container').length
-    if ( numContainers > 2 )
+    #if ( numContainers > 2 )
       #@logger.info 'too many containers: ', numContainers
     if ! ( numContainers >= 2 )
       @logger.info 'tabs are missing, reloading view'
