@@ -119,8 +119,12 @@ class Setup
 
   checkForMissingTabs: =>
     #console.log "checking for tabs..."
-    if ! ( $('#mm-tabs-container, #mm-container').length == 2 )
+    numContainers = $('#mm-tabs-container, #mm-container').length
+    if ( numContainers > 2 )
+      #@logger.info 'too many containers: ', numContainers
+    if ! ( numContainers >= 2 )
       @logger.info 'tabs are missing, reloading view'
+      MeetMikey.Helper.Analytics.trackEvent 'missingTabs'
       @reloadView()
 
   reloadView: =>
