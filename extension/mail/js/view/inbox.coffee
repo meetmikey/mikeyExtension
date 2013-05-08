@@ -2,7 +2,7 @@ template = """
     <div id="mm-tabs"></div>
     <div class="mm-attachments-tab" style="display: none;"></div>
     <div class="mm-links-tab" style="display: none;"></div>
-    <div class="mm-images-tab transitions-disabled" style="display: none;"><div class="mm-images-tab-inner"></div></div>
+    <div class="mm-images-tab" style="display: none;"><div class="mm-images-tab-inner transitions-disabled"></div></div>
     <div style="clear: both;"></div>
 """
 

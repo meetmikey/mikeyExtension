@@ -11,6 +11,7 @@ template = """
         <th class="mm-source" data-mm-field="url">Source<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-to" data-mm-field="recipients">To<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-from" style="width:90px;">Importance<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-sent" data-mm-field="sentDate">Sent<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
       </thead>
       <tbody>
@@ -32,6 +33,7 @@ template = """
             <td class="mm-source truncate">{{displayUrl}}</td>
             <td class="mm-from truncate">{{from}}</td>
             <td class="mm-to truncate">{{to}}</td>
+            <td class="mm-from truncate">   </td>
             <td class="mm-sent truncate">{{sentDate}}</td>
           </tr>
         {{/each}}
