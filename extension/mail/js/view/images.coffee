@@ -123,6 +123,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       remove: false
       data:
         before: @collection.last()?.get('sentDate')
+        limit: 5
       success: @fetchSuccess
 
   fetchSuccess: (collection, response) =>
