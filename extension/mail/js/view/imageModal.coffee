@@ -6,7 +6,7 @@ template = """
     <div style="text-align: center; height: 100%; overflow: hidden; margin: 20px;" class="modal-body">
       <a href="#" class="prev-button" style="display: inline-block;">Prev</a>
 
-      <div class="image-container" style="margin:auto;">
+      <div class="image-modal-container" style="margin:auto;">
         <img class="image-preview"></img>
       </div>
 
