@@ -15,7 +15,12 @@ template = """
             <!-- <a href="#">Forward</a> -->
 
              {{#if ../searchQuery}}
-                <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
+                <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">
+                  <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                    <div class="list-icon" style="background-image: url('#{downloadUrl}');">
+                    </div>
+                  </div>
+                </a>
               {{else}}
                 <a href="#inbox/{{msgHex}}" class="open-message">
                   <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
