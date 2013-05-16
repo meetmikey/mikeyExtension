@@ -47,9 +47,8 @@ class Setup
       
       count = 0
       if controlSelectorArray && controlSelectorArray.length
-        for element in controlSelectorArray
-          if $(element).css('display') != "none"
-            count++
+        nonDispNone = _.filter controlSelectorArray, (element) -> $(element).css('display') != "none"
+        count = nonDispNone.length
 
       # move 400px into named constant
       MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and count == 0

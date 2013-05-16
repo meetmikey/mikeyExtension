@@ -57,6 +57,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @initIsotope()
 
   teardown: =>
+    @clearTimeout()
     @cachedModels = _.clone @collection.models
     @collection.reset()
     @unbindScrollHandler()
@@ -168,6 +169,9 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   waitAndPoll: =>
     setTimeout @poll, @pollDelay
+
+  clearTimeout: =>
+    clearTimeout @timeoutId if @timeoutId
 
   poll: =>
     data = if MeetMikey.globalUser.get('onboarding')
