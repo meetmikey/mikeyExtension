@@ -5,6 +5,7 @@ class Setup
 
   logger: MeetMikey.Helper.Logger
   checkTabsInterval: null
+  hasLoggedIn : false
 
   start: =>
     $(window).one('DOMSubtreeModified', @bootstrap)
@@ -31,7 +32,9 @@ class Setup
       @waitForInbox()
 
   trackLoginEvent: (user) =>
-    MeetMikey.Helper.Analytics.trackEvent 'login'
+    if !@hasLoggedIn
+      MeetMikey.Helper.Analytics.trackEvent 'login'
+      @hasLoggedIn = true
 
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data
