@@ -73,6 +73,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @setActiveColumn()
 
   teardown: =>
+    @clearTimeout()
     @collection.off 'reset', @render
     @cachedModels = _.clone @collection.models
     @collection.reset()
@@ -139,7 +140,10 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.reset models, sort: false
 
   waitAndPoll: =>
-    setTimeout @poll, @pollDelay
+    @timeoutId = setTimeout @poll, @pollDelay
+
+  clearTimeout: =>
+    clearTimeout @timeoutId if @timeoutId
 
   poll: =>
     data = if MeetMikey.globalUser.get('onboarding')

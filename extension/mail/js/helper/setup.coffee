@@ -43,8 +43,16 @@ class Setup
     tabContainerSelector = MeetMikey.Constants.Selectors.multipleInboxTabsContainer
     MeetMikey.Helper.DOMManager.waitAndFind controlSelector, (target) =>
       margin = target.css 'margin-left'
+      controlSelectorArray = $(tabContainerSelector).find(controlSelector)
+      
+      count = 0
+      if controlSelectorArray && controlSelectorArray.length
+        for element in controlSelectorArray
+          if $(element).css('display') != "none"
+            count++
+
       # move 400px into named constant
-      MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and $(tabContainerSelector).find(controlSelector)?.length == 0
+      MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and count == 0
       @setSelectors()
       callback @multipleInbox
 
@@ -118,14 +126,14 @@ class Setup
       @checkTabsInterval = setInterval @checkForMissingTabs, 5*1000
 
   checkForMissingTabs: =>
-    #console.log "checking for tabs..."
-    numContainers = $('#mm-tabs-container, #mm-container').length
-    #if ( numContainers > 2 )
-      #@logger.info 'too many containers: ', numContainers
-    if ! ( numContainers >= 2 )
-      @logger.info 'tabs are missing, reloading view'
-      MeetMikey.Helper.Analytics.trackEvent 'missingTabs'
-      @reloadView()
+    if @inInbox()
+      numContainers = $('#mm-tabs-container, #mm-container').length
+      #if ( numContainers > 2 )
+        #@logger.info 'too many containers: ', numContainers
+      if ! ( numContainers >= 2 )
+        @logger.info 'tabs are missing, reloading view'
+        MeetMikey.Helper.Analytics.trackEvent 'missingTabs'
+        @reloadView()
 
   reloadView: =>
     @mainView?._teardown()
