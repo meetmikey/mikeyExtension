@@ -168,7 +168,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @collection.reset models, sort: false
 
   waitAndPoll: =>
-    setTimeout @poll, @pollDelay
+    @timeoutId = setTimeout @poll, @pollDelay
 
   clearTimeout: =>
     clearTimeout @timeoutId if @timeoutId
