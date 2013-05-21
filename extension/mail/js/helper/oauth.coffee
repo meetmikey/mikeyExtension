@@ -33,6 +33,7 @@ class OAuth
   disable: =>
     MeetMikey.Helper.LocalStore.set "#{@userKey()}-disable", true
     MeetMikey.Helper.Setup.mainView?._teardown()
+    MeetMikey.Helper.clearCheckTabsInterval()
     @trackDisableEvent()
 
   enable: =>

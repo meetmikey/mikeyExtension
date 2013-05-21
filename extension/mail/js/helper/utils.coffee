@@ -96,3 +96,8 @@ MeetMikey.Helper.encodeB64 = (obj) ->
   # btoa dies on utf-8 strings, escape/unescape fixes
   str = JSON.stringify obj
   window.btoa unescape encodeURIComponent str
+
+MeetMikey.Helper.clearCheckTabsInterval = ->
+  if MeetMikey.Globals.checkTabsInterval
+    clearInterval MeetMikey.Globals.checkTabsInterval
+    MeetMikey.Globals.checkTabsInterval = null

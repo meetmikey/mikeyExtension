@@ -2,9 +2,9 @@ class Setup
   inboxSelector: MeetMikey.Constants.Selectors.inboxContainer
   tabsSelector: MeetMikey.Constants.Selectors.tabsContainer
   userEmailSelector: MeetMikey.Constants.Selectors.userEmail
+  inInbox: MeetMikey.Helper.Url.inInbox
 
   logger: MeetMikey.Helper.Logger
-  checkTabsInterval: null
   hasLoggedIn : false
 
   start: =>
@@ -12,6 +12,7 @@ class Setup
 
   bootstrap: =>
     MeetMikey.Helper.BetaAccess.checkAccess @waitAndStartAuthFlow
+    MeetMikey.Globals.checkTabsInterval = null
 
   waitAndStartAuthFlow: =>
     MeetMikey.Helper.findSelectors @userEmailSelector, @startAuthFlow
@@ -81,8 +82,6 @@ class Setup
     inboxFound = @checkIfInInbox()
     $(window).on 'hashchange', @checkIfInInbox unless inboxFound
 
-  inInbox: MeetMikey.Helper.Url.inInbox
-
   checkIfInInbox: =>
     inInbox = @inInbox()
     if inInbox
@@ -124,8 +123,8 @@ class Setup
       @waitForInbox()
 
   pollForMissingTabs: =>
-    if ! @checkTabsInterval
-      @checkTabsInterval = setInterval @checkForMissingTabs, 5*1000
+    if ! MeetMikey.Globals.checkTabsInterval
+      MeetMikey.Globals.checkTabsInterval = setInterval @checkForMissingTabs, 5*1000
 
   checkForMissingTabs: =>
     if @inInbox()
@@ -139,10 +138,7 @@ class Setup
 
   reloadView: =>
     @mainView?._teardown()
-    if @checkTabsInterval
-      clearInterval @checkTabsInterval
-      @checkTabsInterval = null
+    MeetMikey.Helper.clearCheckTabsInterval()
     @bootstrap()
-
 
 MeetMikey.Helper.Setup = new Setup()

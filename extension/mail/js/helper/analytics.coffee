@@ -18,7 +18,7 @@ class Analytics
   userProps: {}
 
   setUser: (user) =>
-    @userProps = _.pick user.attributes, 'email', 'firstName', 'lastName', 'displayName'
+    @userProps = _.pick user.attributes, 'email', 'firstName', 'lastName', 'displayName', 'timestamp'
     @userProps.userId = user.id
     @userProps.userCreatedTimestamp = user.get('timestamp')
 
