@@ -75,7 +75,6 @@
   ],
   "permissions": [
     "*://mail.google.com/*",
-    "*://*.meetmikey.com/*",
-    "tabs"
+    "*://*.meetmikey.com/*"
   ]
 }
