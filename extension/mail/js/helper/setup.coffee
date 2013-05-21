@@ -139,6 +139,9 @@ class Setup
 
   reloadView: =>
     @mainView?._teardown()
+    if @checkTabsInterval
+      clearInterval @checkTabsInterval
+      @checkTabsInterval = null
     @bootstrap()
 
 
