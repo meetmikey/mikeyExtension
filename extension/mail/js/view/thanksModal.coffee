@@ -9,13 +9,17 @@ template = """
 
     </div>
     <div class="footer-buttons">
-      <a href="#" data-dismiss="modal" class="button buttons thanks-button">Thanks</a>
+      <a href="#" id="done" data-dismiss="modal" class="button buttons thanks-button">Thanks</a>
     </div>
   </div>
 """
 
 class MeetMikey.View.ThanksModal extends MeetMikey.View.Base
   template: Handlebars.compile(template)
+
+  events:
+    'click #done': 'hide'
+    'click .close' : 'hide'
 
   postRender: =>
     @show()
@@ -26,3 +30,4 @@ class MeetMikey.View.ThanksModal extends MeetMikey.View.Base
 
   hide: =>
     @$('.modal').modal 'hide'
+    @remove()

@@ -67,6 +67,7 @@ class MeetMikey.View.WelcomeModal extends MeetMikey.View.Base
 
   hide: =>
     @$('.modal').modal 'hide'
+    @remove()
 
   prev: =>
     @$('.carousel').carousel 'prev'
