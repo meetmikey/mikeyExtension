@@ -56,6 +56,8 @@
             "mail/js/view/links.js",
             "mail/js/view/inbox.js",
             "mail/js/view/onboardModal.js",
+            "mail/js/view/reAuthModal.js",
+            "mail/js/view/feedbackModal.js",
             "mail/js/view/welcomeModal.js",
             "mail/js/view/thanksModal.js",
             "mail/js/view/searchBar.js",

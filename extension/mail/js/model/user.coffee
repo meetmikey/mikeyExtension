@@ -15,6 +15,9 @@ class MeetMikey.Model.User extends Backbone.Model
     else
       @fetchOnboard()
 
+  checkInvalidToken: =>
+    @.get('invalidToken') == true
+
   fetchOnboard: =>
     MeetMikey.Helper.callAPI
       url: 'onboarding'
@@ -27,3 +30,17 @@ class MeetMikey.Model.User extends Backbone.Model
         else @waitAndFetchOnboard()
 
   onboardKey: => "meetmikey-#{@get('email')}-onboarded"
+
+  deleteUser: (callback) =>
+    return callback null unless @get ('asymHash')
+
+    MeetMikey.Helper.callAPI
+      url: 'user'
+      type: 'DELETE'
+      data:
+        asymHash: @get('asymHash')
+        userEmail: @get('email')
+      success: (res) =>
+        callback res
+      error: (err) =>
+        callback err

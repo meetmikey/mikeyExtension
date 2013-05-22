@@ -40,6 +40,8 @@ class Setup
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data
     MeetMikey.Helper.Analytics.setUser MeetMikey.globalUser
+    if MeetMikey.globalUser.checkInvalidToken()
+      @injectReauthModal()
     MeetMikey.globalUser.checkOnboard()
 
   checkMultipleInbox: (callback) =>
@@ -105,10 +107,25 @@ class Setup
       @authorized(userData)
       @injectThanksModal() if MeetMikey.globalUser.get('onboarding')
 
+  # ReAuth modal
+  injectReauthModal: =>
+    $('body').append $('<div id="mm-reauth-modal"></div>')
+    view = new MeetMikey.View.ReAuthModal el: '#mm-reauth-modal'
+    view.render()
+    view.on 'disabled', => @dropdownView.rerender()
+    view.on 'deleted', =>  @injectFeedbackModal()
+    view.on 'authorized', (userData) =>
+      @authorized(userData)
+
   # Rename Welcome Modal
   injectThanksModal: =>
     $('body').append $('<div id="mm-thanks-modal"></div>')
     view = new MeetMikey.View.ThanksModal el: '#mm-thanks-modal'
+    view.render()
+
+  injectFeedbackModal: =>
+    $('body').append $('<div id="mm-feedback-modal"></div>')
+    view = new MeetMikey.View.FeedbackModal el: '#mm-feedback-modal'
     view.render()
 
   injectMainView: =>
