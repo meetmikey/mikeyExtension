@@ -80,12 +80,14 @@ class OAuth
       return unless event.origin is MeetMikey.Helper.getAPIUrl()
       $(window).off 'message', handleMessage
       userObject = JSON.parse event.data
-      @storeUserInfo userObject
-      @trackAuthEvent userObject
-      if @isUserEmail userObject.email
-        callback userObject
+
+      if !userObject.error
+        @storeUserInfo userObject
+        @trackAuthEvent userObject
+        if @isUserEmail userObject.email
+          callback null, userObject
       else
-        @authFail()
+        callback userObject.message
 
     $(window).on 'message', handleMessage
     window.open MeetMikey.Helper.getAPIUrl() + '/auth/google?userEmail=' + @getUserEmail()
@@ -107,9 +109,6 @@ class OAuth
           callback null
       error: =>
         callback null
-
-  authFail: =>
-    # put messaging about authorizing wrong email in here
 
 
 MeetMikey.Helper.OAuth = new OAuth()

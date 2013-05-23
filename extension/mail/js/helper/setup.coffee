@@ -98,14 +98,19 @@ class Setup
     @dropdownView.render()
 
   # Rename Auth modal
-  injectOnboardModal: =>
+  injectOnboardModal: (errMsg) =>
+    console.log 'err', errMsg
+
     $('body').append $('<div id="mm-onboard-modal"></div>')
-    view = new MeetMikey.View.OnboardModal el: '#mm-onboard-modal'
+    view = new MeetMikey.View.OnboardModal el: '#mm-onboard-modal', model: new MeetMikey.Model.OnboardModal ({errMsg : errMsg})
     view.render()
     view.on 'disabled', => @dropdownView.rerender()
     view.on 'authorized', (userData) =>
       @authorized(userData)
       @injectThanksModal() if MeetMikey.globalUser.get('onboarding')
+    view.on 'emailMismatch', (error) =>
+      view.remove()
+      @injectOnboardModal (error)
 
   # ReAuth modal
   injectReauthModal: =>

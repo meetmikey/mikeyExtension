@@ -1,10 +1,17 @@
 template = """
   <div class="modal hide fade">
-    <div class="modal-header">
+    <div class="modal-header onboardError" style=display:none>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Oops! Is that the email you meant to select?</h3>
+    </div>
+    <div class="modal-header normalModal">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Connect Mikey to your Gmail</h3>
     </div>
-    <div class="modal-body">
+    <div class="modal-body onboardError" style=display:none;>
+      <p>{{errMsg}}</p>
+    </div>
+    <div class="modal-body normalModal">
       <p>Mikey needs access to your Gmail in order to perform his magic.</p>
       <p>Once you connect, it should take a few hours to process.</p>
     </div>
@@ -25,6 +32,9 @@ class MeetMikey.View.OnboardModal extends MeetMikey.View.Base
     'click #never-button': 'doNotAsk'
 
   postRender: =>
+    if @model.get('errMsg')
+      @$('.onboardError').show()
+      @$('.normalModal').hide()
     @show()
 
   show: =>
@@ -39,7 +49,13 @@ class MeetMikey.View.OnboardModal extends MeetMikey.View.Base
     @trigger 'disabled'
     @hide()
 
+  getTemplateData: =>
+    @model.decorate()
+
   authorize: =>
     @hide()
-    MeetMikey.Helper.OAuth.openAuthWindow (data) =>
-      @trigger 'authorized', data
+    MeetMikey.Helper.OAuth.openAuthWindow (errMsg, data) =>
+      if errMsg
+        @trigger 'emailMismatch', errMsg
+      else
+        @trigger 'authorized', data
