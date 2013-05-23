@@ -99,8 +99,6 @@ class Setup
 
   # Rename Auth modal
   injectOnboardModal: (errMsg) =>
-    console.log 'err', errMsg
-
     $('body').append $('<div id="mm-onboard-modal"></div>')
     view = new MeetMikey.View.OnboardModal el: '#mm-onboard-modal', model: new MeetMikey.Model.OnboardModal ({errMsg : errMsg})
     view.render()
