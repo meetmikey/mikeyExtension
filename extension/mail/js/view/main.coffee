@@ -82,7 +82,6 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     MeetMikey.Helper.DOMManager.injectInto @tabsSelector, element, =>
       @$(@contentSelector).addClass 'AO-tabs'
 
-  # Rename Onboarded modal ?
   injectWelcomeModal: =>
     $('body').append $('<div id="mm-welcome-modal"></div>')
     view = new MeetMikey.View.WelcomeModal el: '#mm-welcome-modal'

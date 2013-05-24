@@ -120,7 +120,6 @@ class Setup
     view.on 'authorized', (userData) =>
       @authorized(userData)
 
-  # Rename Welcome Modal
   injectThanksModal: =>
     $('body').append $('<div id="mm-thanks-modal"></div>')
     view = new MeetMikey.View.ThanksModal el: '#mm-thanks-modal'
