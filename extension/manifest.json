@@ -42,6 +42,8 @@
             "mail/js/model/link.js",
             "mail/js/decorator/onboardModal.js",
             "mail/js/model/onboardModal.js",
+            "mail/js/decorator/reAuthModal.js",
+            "mail/js/model/reAuthModal.js",
             "mail/js/collection/links.js",
             "mail/js/model/image.js",
             "mail/js/collection/images.js",

@@ -111,14 +111,18 @@ class Setup
       @injectOnboardModal (error)
 
   # ReAuth modal
-  injectReauthModal: =>
+  injectReauthModal: (errMsg) =>
     $('body').append $('<div id="mm-reauth-modal"></div>')
-    view = new MeetMikey.View.ReAuthModal el: '#mm-reauth-modal'
+    view = new MeetMikey.View.ReAuthModal el: '#mm-reauth-modal', model: new MeetMikey.Model.ReAuthModal ({errMsg : errMsg})
     view.render()
     view.on 'disabled', => @dropdownView.rerender()
     view.on 'deleted', =>  @injectFeedbackModal()
+    #TODO: inject some thanks modal on auth here... (but not the thanksModal above)
     view.on 'authorized', (userData) =>
       @authorized(userData)
+    view.on 'emailMismatch', (error) =>
+      view.remove()
+      @injectReauthModal (error)
 
   injectThanksModal: =>
     $('body').append $('<div id="mm-thanks-modal"></div>')

@@ -1,10 +1,17 @@
 template = """
   <div class="modal hide fade">
-    <div class="modal-header">
+    <div class="modal-header reAuthError" style=display:none>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Oops! Is that the email you meant to select?</h3>
+    </div>
+    <div class="modal-header normalModal">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Re-Connect Mikey to your Gmail</h3>
     </div>
-    <div class="modal-body">
+    <div class="modal-body reAuthError" style=display:none;>
+      <p>{{errMsg}}</p>
+    </div>
+    <div class="modal-body normalModal">
       <p>Oops, the token Mikey uses to access your Gmail account expired or was revoked.</p>
       <p>To continue using Mikey you'll need to reconnect your gmail.</p>
     </div>
@@ -26,7 +33,13 @@ class MeetMikey.View.ReAuthModal extends MeetMikey.View.Base
     'click .close' : 'hide'
 
   postRender: =>
+    if @model.get('errMsg')
+      @$('.reAuthError').show()
+      @$('.normalModal').hide()
     @show()
+
+  getTemplateData: =>
+    @model.decorate()
 
   show: =>
     @$('.modal').modal 'show'
@@ -46,5 +59,8 @@ class MeetMikey.View.ReAuthModal extends MeetMikey.View.Base
 
   authorize: =>
     @hide()
-    MeetMikey.Helper.OAuth.openAuthWindow (data) =>
-      @trigger 'authorized', data
+    MeetMikey.Helper.OAuth.openAuthWindow (errMsg, data) =>
+      if errMsg
+        @trigger 'emailMismatch', errMsg
+      else
+        @trigger 'authorized', data
