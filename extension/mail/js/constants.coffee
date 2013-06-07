@@ -1,11 +1,12 @@
 _.extend MeetMikey.Constants,
-  env: "production"
+  env: "local"
   imgPath: 'mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   mixpanelOff: false
   piwikOff: false
   googleAnalyticsOff: false
   pollDelay: 60*1000
+  msPerDay: 1000 * 60 * 60 * 24
   betaCodeHash: 205332315
   extensionVersion: chrome.runtime.getManifest()?.version
 
@@ -72,6 +73,8 @@ _.extend MeetMikey.Constants,
 
     # nav bar at very top of viewport
     navBar: '#gbzc'
+
+    mikeyDropdown: ''
 
     # bar containing pagination for app search
     appsSearchControl: '.Wc'

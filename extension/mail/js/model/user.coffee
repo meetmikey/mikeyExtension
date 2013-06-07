@@ -18,6 +18,35 @@ class MeetMikey.Model.User extends Backbone.Model
   checkInvalidToken: =>
     @.get('invalidToken') == true
 
+  getMailProcessedDays: =>
+    if @get('minMRProcessedDate')
+      currentDate = Date.now()
+      minProcessedDate = new Date( @get('minMRProcessedDate') )
+      mailProcessedDateDiff = new Date( currentDate - minProcessedDate )
+      mailProcessedDays = mailProcessedDateDiff.getTime() / MeetMikey.Constants.msPerDay
+      Math.round( mailProcessedDays )
+    else
+      0
+
+  getMailTotalDays: =>
+    if @get('minMailDate')
+      currentDate = Date.now()
+      minMailDate = new Date( @get('minMailDate') )
+      mailTotalDateDiff = new Date( currentDate - minMailDate )
+      mailTotalDays = mailTotalDateDiff.getTime() / MeetMikey.Constants.msPerDay
+      Math.round( mailTotalDays )
+    else
+      0
+
+  getMailLimitDays: =>
+    if ( @isPremium() )
+      -1
+    else
+      @get('daysLimit')
+
+  isPremium: =>
+    @get('isPremium')
+
   fetchOnboard: =>
     MeetMikey.Helper.callAPI
       url: 'onboarding'

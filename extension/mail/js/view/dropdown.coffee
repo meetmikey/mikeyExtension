@@ -1,5 +1,5 @@
 template = """
-	<li class="dropdown gbt">
+	<li class="dropdown gbt" id="mikeyDropdown">
     <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">Mikey <span class="mm-carat"></span></a>
     <ul id="menu1" class="dropdown-menu mm-menu" role="menu" aria-labelledby="drop4">
       <li><a tabindex="-1" href="http://mikey.uservoice.com">Suggest a feature</a></li>

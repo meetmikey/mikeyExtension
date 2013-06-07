@@ -17,20 +17,18 @@ template = """
     </div>
     <div class="footer-buttons">
       <a href="#" id="authorize-button" class="button buttons">Re-Connect</a>
-      <a href="#" id="not-now-button" class="button-grey buttons">Not right now</a>
+      <a href="#" data-dismiss="modal" class="button-grey buttons">Not right now</a>
       <a href="#" id="delete" class="button-grey buttons">Delete account</a>
     </div>
   </div>
 """
 
-class MeetMikey.View.ReAuthModal extends MeetMikey.View.Base
+class MeetMikey.View.ReAuthModal extends MeetMikey.View.BaseModal
   template: Handlebars.compile(template)
 
   events:
     'click #authorize-button': 'authorize'
-    'click #not-now-button': 'hide'
     'click #delete': 'delete'
-    'click .close' : 'hide'
 
   postRender: =>
     if @model.get('errMsg')
@@ -40,13 +38,6 @@ class MeetMikey.View.ReAuthModal extends MeetMikey.View.Base
 
   getTemplateData: =>
     @model.decorate()
-
-  show: =>
-    @$('.modal').modal 'show'
-
-  hide: =>
-    @$('.modal').modal 'hide'
-    @remove()
 
   delete: =>
     MeetMikey.Helper.OAuth.disable()

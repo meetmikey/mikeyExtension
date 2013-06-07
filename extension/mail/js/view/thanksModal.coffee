@@ -1,5 +1,5 @@
 template = """
-<div id="example" class="modal hide fade modal-wide" style="display: none; ">
+<div class="modal hide fade modal-wide" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Awesome. Thanks for connecting!</h3>
@@ -9,25 +9,10 @@ template = """
 
     </div>
     <div class="footer-buttons">
-      <a href="#" id="done" data-dismiss="modal" class="button buttons thanks-button">Thanks</a>
+      <a href="#" data-dismiss="modal" class="button buttons">Thanks</a>
     </div>
   </div>
 """
 
 class MeetMikey.View.ThanksModal extends MeetMikey.View.Base
   template: Handlebars.compile(template)
-
-  events:
-    'click #done': 'hide'
-    'click .close' : 'hide'
-
-  postRender: =>
-    @show()
-
-  show: =>
-    $('.modal').modal 'hide'
-    @$('.modal').modal 'show'
-
-  hide: =>
-    @$('.modal').modal 'hide'
-    @remove()
