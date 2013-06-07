@@ -5,9 +5,10 @@ template = """
       <li><a tabindex="-1" href="http://mikey.uservoice.com">Suggest a feature</a></li>
       <li><a tabindex="-1" href="mailto:support@mikeyteam.com">Mikey support</a></li>
       <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
-
-      <!-- <li class="divider"></li>
-      <li><div class="index-status">Index depth<div class="index-number">30 days</div></div></li> -->
+      {{#if showGetMoreDays}}
+      <li class="divider"></li>
+      <li><div class="index-status">{{mailProcessedDays}}/{{mailTotalDays}} <a href="#" class="get-more-link">get more days</a></li>
+      {{/if}}
     </ul>
   </li>
 """
@@ -17,11 +18,15 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
 
   events:
     'click .toggle-mikey': 'toggleMikey'
+    'click .get-more-link': 'openGetMoreModal'
 
   getTemplateData: =>
-    toggleAction = if MeetMikey.Helper.OAuth.isEnabled() then 'Disable' else 'Enable'
-
-    {toggleAction}
+    object = {}
+    object.toggleAction = if MeetMikey.Helper.OAuth.isEnabled() then 'Disable' else 'Enable'
+    object.showGetMoreDays = MeetMikey.globalUser && ! MeetMikey.globalUser.isPremium()
+    object.mailProcessedDays = MeetMikey.globalUser?.getMailProcessedDays()
+    object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
+    object
 
   rerender: =>
     @$('.dropdown').remove()
@@ -31,3 +36,8 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
     event.preventDefault()
     MeetMikey.Helper.OAuth.toggle()
     @rerender()
+
+  openGetMoreModal: =>
+    $('body').append $('<div id="mm-get-more-modal"></div>')
+    @getMoreModal = new MeetMikey.View.GetMoreModal el: '#mm-get-more-modal'
+    @getMoreModal.render()

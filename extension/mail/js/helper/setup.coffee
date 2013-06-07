@@ -40,6 +40,7 @@ class Setup
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data
     MeetMikey.Helper.Analytics.setUser MeetMikey.globalUser
+    @dropdownView.rerender()
     if MeetMikey.globalUser.checkInvalidToken()
       @injectReauthModal()
     MeetMikey.globalUser.checkOnboard()

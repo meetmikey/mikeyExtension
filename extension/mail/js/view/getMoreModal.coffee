@@ -11,6 +11,7 @@ template = """
       <input id="directReferralLinkText" type="text" value="{{directReferralLink}}"><a href="#" id="copyButton" class="button buttons">Copy</a>
       <a href="#" onclick="window.open('{{twitterShareLink}}', 'sharer', 'width=626,height=236');">tweet it</a>
       <a href="#" onclick="window.open('{{facebookShareLink}}', 'sharer', 'width=626,height=436');">share on facebook</a>
+      <a href="#">upgrade to premium</a>
     </div>
     <div class="footer-buttons">
       <a href="#" data-dismiss="modal" class="button buttons">Nice</a>
@@ -31,7 +32,6 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     link = 'https://twitter.com/intent/tweet'
     link += '?text=' + encodeURIComponent @shareTitle + ': ' + @shareSummary
     link += '&url=' + encodeURIComponent @getReferralURL 'twitter'
-    console.log 'twitter share link: ' + link
     link
 
   getFacebookShareLink: =>
@@ -39,7 +39,6 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     link += '&p[url]=' + encodeURIComponent @getReferralURL 'facebook'
     link += '&p[title]=' + encodeURIComponent @shareTitle
     link += '&p[summary]=' + encodeURIComponent @shareSummary
-    console.log 'facebook share link: ' + link
     link
 
   getTemplateData: =>
