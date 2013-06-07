@@ -59,20 +59,10 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
       when 'direct' then url = MeetMikey.globalUser.get 'directReferralLink'
     url
 
-  copyToClipboard_test: =>
-    console.log 'copying'
-    
-    document.execCommand 'SelectAll'
-    document.execCommand 'Copy', false, null
-
   copyTextToClipboard: =>
     linkText = $('#directReferralLinkText').val()
     messageData =
       type: "copyTextToClipboard"
       text: linkText
-    console.log 'copying text to clipboard: ' + linkText
     chrome.runtime.sendMessage messageData, (response) ->
-      if ! response || ! response.isSuccess
-        console.log 'error while copying text to clipboard, response: ', response
-      else
-        console.log 'successfully copied text to clipboard: ', linkText
+      #console.log 'copied text to clipboard: ', linkText
