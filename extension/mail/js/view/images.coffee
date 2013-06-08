@@ -15,7 +15,7 @@ template = """
             {{else}}
               <div class="active item" data-cid="{{cid}}">
             {{/if}}
-              <img class="mm-image" src="{{image}}"/>
+              <img class="mm-image" src="{{url}}"/>
               <div class="carousel-caption">
                 {{#if ../searchQuery}}
                   <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message" data-dismiss="modal">View email thread</a>
