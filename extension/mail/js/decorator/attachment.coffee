@@ -26,6 +26,7 @@ class AttachmentDecorator
     object.iconUrl = @iconUrls[model.get 'docType']
     object.image = model.get 'image'
     object.msgHex = model.get('gmMsgHex')
+    object.subject = model.get('mailCleanSubject')
 
     object
 
