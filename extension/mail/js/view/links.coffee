@@ -63,9 +63,10 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @rollover = new MeetMikey.View.LinkRollover collection: @collection, search: !@options.fetch
     @pagination = new MeetMikey.Model.PaginationState items: @collection
 
-    @collection.on 'reset add', _.debounce(@render, 50)
+    @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
     @collection.on 'sort', @render
     @pagination.on 'change:page', @render
+    @collection.on 'remove', @render
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
@@ -146,7 +147,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     clearTimeout @timeoutId if @timeoutId
 
   poll: =>
-    data = if MeetMikey.globalUser.get('onboarding')
+    data = if MeetMikey.globalUser.get('onboarding') or @collection.length < MeetMikey.Constants.paginationSize
       {}
     else
       after: @collection.latestSentDate()

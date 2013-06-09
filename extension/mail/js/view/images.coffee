@@ -49,7 +49,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @on 'showTab', @bindScrollHandler
     Backbone.on 'change:tab', @unbindScrollHandler
     @collection = new MeetMikey.Collection.Images()
-    @collection.on 'reset add', _.debounce(@render, 50)
+    @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
 
   postRender: =>
     @$('.mm-download-tooltip').tooltip placement: 'bottom'
@@ -174,7 +174,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     clearTimeout @timeoutId if @timeoutId
 
   poll: =>
-    data = if MeetMikey.globalUser.get('onboarding')
+    data = if MeetMikey.globalUser.get('onboarding') or @collection.length < MeetMikey.Constants.paginationSize
       {}
     else
       after: @collection.latestSentDate()

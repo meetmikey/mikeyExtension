@@ -28,8 +28,7 @@ template = """
         <a class="rollover-message-link" href="#inbox/{{msgHex}}">View email thread</a>
       {{/if}}
       <div class="rollover-actions">
-        <!-- <a href="#">Forward</a> -->
-        <!-- <a class="rollover-resource-link" href="{{url}}">Download</a> -->
+        <a class="rollover-resource-delete" href="#">Hide</a>
       </div>
     </div>
   </div>

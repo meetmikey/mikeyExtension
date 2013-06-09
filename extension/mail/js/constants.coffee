@@ -7,6 +7,7 @@ _.extend MeetMikey.Constants,
   googleAnalyticsOff: false
   pollDelay: 60*1000
   msPerDay: 1000 * 60 * 60 * 24
+  paginationSize: 50
   betaCodeHash: 205332315
   extensionVersion: chrome.runtime.getManifest()?.version
 

@@ -24,7 +24,8 @@ template = """
 
       <div class="rollover-actions">
         <!-- <a href="#">Forward</a> -->
-        <a class="rollover-resource-link" href="{{url}}">Download</a>
+        <!-- <a class="rollover-resource-link" href="{{url}}">Download</a> -->
+        <a class="rollover-resource-delete" href="#">Hide</a>
       </div>
     </div>
   </div>

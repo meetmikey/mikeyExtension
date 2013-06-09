@@ -6,6 +6,7 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
     'mouseenter': 'cancelHide'
     'click .rollover-resource-link': 'trackOpenResourceEvent'
     'click .rollover-message-link': 'trackOpenMessageEvent'
+    'click .rollover-resource-delete' : 'deleteResource'
 
   getTemplateData: =>
     _.extend @model.decorate(), {searchQuery: @searchQuery}
@@ -16,6 +17,11 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
   postRender: =>
     $(document).one 'mousemove', @startHide
     @$('.rollover-box').css left: @cursorInfo.x + 5, top: @cursorInfo.y
+
+  deleteResource: (event) =>
+    event.preventDefault()
+    @collection.remove(@model)
+    @model.delete()
 
   startSpawn: (event) =>
     cid = $(event.target).closest('tr').attr('data-cid')
