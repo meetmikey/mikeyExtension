@@ -86,6 +86,12 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     @trackTabEvent tab
     @trigger('clicked:tab', tab)
 
+    if MeetMikey.Globals.gmailTabs && tab is 'email'
+      $(MeetMikey.Constants.Selectors.gmailTabsSelector).show()
+    else if MeetMikey.Globals.gmailTabs
+      $(MeetMikey.Constants.Selectors.gmailTabsSelector).hide()
+
+
   updateTabCount: (tab, count) =>
     tab =  @$("[data-mm-tab='#{tab}']")
     tab.find(".mm-count").text "(#{ count })"

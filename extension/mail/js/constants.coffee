@@ -95,6 +95,9 @@ _.extend MeetMikey.Constants,
     # where multiple inbox tabs should be injected
     multipleInboxTabsContainer: '[id=":ro"]'
 
+    # existence of gmail tabs
+    gmailTabsSelector: '.aKh'
+
     previewPaneSelector: '.apJ'
 
   MikeyTeamUserIds: [

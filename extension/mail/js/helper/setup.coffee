@@ -27,6 +27,7 @@ class Setup
 
   authorized: (userData) =>
     @checkPreviewPane()
+    @checkGmailTabs()
     @checkMultipleInbox =>
       @initalizeGlobalUser userData
       @trackLoginEvent(userData)
@@ -61,6 +62,13 @@ class Setup
       MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and count == 0
       @setSelectors()
       callback @multipleInbox
+
+  checkGmailTabs: (callback) =>
+    gmailTabsSelector = MeetMikey.Constants.Selectors.gmailTabsSelector
+    if $(gmailTabsSelector) && $(gmailTabsSelector).length
+      MeetMikey.Globals.gmailTabs = true
+    else
+      MeetMikey.Globals.gmailTabs = false
 
   checkPreviewPane: (callback) =>
     previewPaneSelector = MeetMikey.Constants.Selectors.previewPaneSelector
