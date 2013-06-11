@@ -6,7 +6,8 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
     'mouseenter': 'cancelHide'
     'click .rollover-resource-link': 'trackOpenResourceEvent'
     'click .rollover-message-link': 'trackOpenMessageEvent'
-    'click .rollover-resource-delete' : 'deleteResource'
+    'click .rollover-resource-delete' : 'deleteResource',
+    'click .rollover-resource-undo' : 'unDeleteResource'
 
   getTemplateData: =>
     _.extend @model.decorate(), {searchQuery: @searchQuery}
@@ -18,10 +19,29 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
     $(document).one 'mousemove', @startHide
     @$('.rollover-box').css left: @cursorInfo.x + 5, top: @cursorInfo.y
 
+  unDeleteResource: (event) =>
+    console.log 'undo delete', @model
+
+    @collection.trigger('undoDelete', @model)
+
+    $('.rollover-resource-delete').show()
+    $('.rollover-resource-undo').hide()
+
   deleteResource: (event) =>
     event.preventDefault()
-    @collection.remove(@model)
-    @model.delete()
+    # remove on delay
+    @collection.trigger('delete', @model)
+    $('.rollover-resource-delete').hide()
+    $('.rollover-resource-undo').show()
+    @deleteAfterDelay (@model.cid)
+
+  deleteAfterDelay: (modelId) =>
+    setTimeout =>
+      model = @collection.get(modelId)
+      if model.get('deleting')
+        @collection.remove(model)
+        model.delete()
+    , 10000
 
   startSpawn: (event) =>
     cid = $(event.target).closest('tr').attr('data-cid')
