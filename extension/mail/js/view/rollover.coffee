@@ -41,7 +41,7 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
       if model.get('deleting')
         @collection.remove(model)
         model.delete()
-    , 10000
+    , 8000
 
   startSpawn: (event) =>
     cid = $(event.target).closest('tr').attr('data-cid')

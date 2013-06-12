@@ -85,6 +85,12 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     @setActiveColumn()
 
+  teardown: =>
+    @clearTimeout()
+    @collection.off('reset', @render)
+    @cachedModels = _.clone @collection.models
+    @collection.reset()
+
   markDeleting: (model) =>
     model.set('deleting', true)
     element = $('.files[data-cid='+model.cid+']')
@@ -101,12 +107,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     element = $('.files[data-cid='+model.cid+']')
     element.children('.mm-undo').hide()
     element.css('opacity', 1) if element?
-
-  teardown: =>
-    @clearTimeout()
-    @collection.off('reset', @render)
-    @cachedModels = _.clone @collection.models
-    @collection.reset()
 
   initialFetch: =>
     @collection.fetch success: @waitAndPoll if @options.fetch

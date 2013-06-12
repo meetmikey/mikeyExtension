@@ -14,6 +14,7 @@ class LinkDecorator
     object.sentDate = @formatDate model
     object.faviconURL = MeetMikey.Helper.getFaviconURL(model.get('resolvedURL') ? model.get('url'))
     object.cid = model.cid
+    object.deleting = model.get('deleting')
 
     object
 
