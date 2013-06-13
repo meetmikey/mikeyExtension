@@ -36,8 +36,8 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
   shareSummary: 'Mikey makes your gmail great'
 
   postRender: =>
-    MeetMikey.Helper.Analytics.trackEvent 'viewGetMoreModal'
     super
+    MeetMikey.Helper.Analytics.trackEvent 'viewGetMoreModal'
 
   twitterReferralClick: =>
     MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'twitter'
