@@ -10,9 +10,9 @@ template = """
     </div>
     <div class="modal-body">
       <div class="buttons-cluster">
-        <a href="#" style="background-image:url('http://i.imgur.com/kLKxTs0.png')" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">twitter</div></a>
-        <a href="#" style="background-image:url('http://i.imgur.com/3GOV3CY.png')" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">facebook</div></a>
-        <a href="#" style="background-image:url('http://i.imgur.com/n2juxQ5.png')" id="upgradeButton" class="share-modal-button premium"><div class="referral-button-text">upgrade</div></a>
+        <a href="#" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">twitter</div></a>
+        <a href="#" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">facebook</div></a>
+        <a href="#" id="upgradeButton" class="share-modal-button premium"><div class="referral-button-text">upgrade</div></a>
       </div>
       Or share this URL<br>
       <input style="padding-bottom: 5px;" id="directReferralLinkText" type="text" value="{{directReferralLink}}"><a href="#" id="copyButton" style="margin-left:-2px;" class="button buttons">Copy</a>
