@@ -10,9 +10,9 @@ template = """
     </div>
     <div class="modal-body">
       <div class="buttons-cluster">
-        <a href="#" style="background-image:url('http://i.imgur.com/kLKxTs0.png')" onclick="window.open('{{twitterShareLink}}', 'sharer', 'width=626,height=236');" class="share-modal-button twitter-share"><div class="referral-button-text">twitter</div></a>
-        <a href="#" style="background-image:url('http://i.imgur.com/3GOV3CY.png')" onclick="window.open('{{facebookShareLink}}', 'sharer', 'width=626,height=436');" class="share-modal-button facebook-share"><div class="referral-button-text">facebook</div></a>
-        <a href="#" style="background-image:url('http://i.imgur.com/n2juxQ5.png')" class="share-modal-button premium"><div class="referral-button-text">upgrade</div></a>
+        <a href="#" style="background-image:url('http://i.imgur.com/kLKxTs0.png')" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">twitter</div></a>
+        <a href="#" style="background-image:url('http://i.imgur.com/3GOV3CY.png')" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">facebook</div></a>
+        <a href="#" style="background-image:url('http://i.imgur.com/n2juxQ5.png')" id="upgradeButton" class="share-modal-button premium"><div class="referral-button-text">upgrade</div></a>
       </div>
       Or share this URL<br>
       <input style="padding-bottom: 5px;" id="directReferralLinkText" type="text" value="{{directReferralLink}}"><a href="#" id="copyButton" style="margin-left:-2px;" class="button buttons">Copy</a>
@@ -27,11 +27,25 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
   template: Handlebars.compile(template)
 
   events:
+    'click #twitterReferralButton': 'twitterReferralClick'
+    'click #facebookReferralButton': 'facebookReferralClick'
+    'click #upgradeButton': 'showUpgradeModal'
     'click #copyButton': 'copyTextToClipboard'
-    'click .premium': 'showUpgradeModal'
 
   shareTitle: 'Meet Mikey'
   shareSummary: 'Mikey makes your gmail great'
+
+  postRender: =>
+    MeetMikey.Helper.Analytics.trackEvent 'viewGetMoreModal'
+    super
+
+  twitterReferralClick: =>
+    MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'twitter'
+    window.open @getTwitterShareLink(), 'sharer', 'width=626,height=236'
+
+  facebookReferralClick: =>
+    MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'facebook'
+    window.open @getFacebookShareLink(), 'sharer', 'width=626,height=436'
 
   getTwitterShareLink: =>
     link = 'https://twitter.com/intent/tweet'
@@ -50,10 +64,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     object = {}
     object.mailDaysLimit = MeetMikey.globalUser.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser.getMailTotalDays()
-    object.twitterShareLink = @getTwitterShareLink()
-    object.facebookShareLink = @getFacebookShareLink()
     object.directReferralLink = @getReferralURL 'direct'
-    object.userId = MeetMikey.globalUser.get('_id')
     object
 
   getReferralURL: (type) =>
@@ -71,6 +82,8 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
       text: linkText
     chrome.runtime.sendMessage messageData, (response) ->
       #console.log 'copied text to clipboard: ', linkText
+
+    MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'direct'
 
   showUpgradeModal: =>
     @hide()
