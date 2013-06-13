@@ -5,7 +5,7 @@ template = """
   {{else}}
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
-        <div class="hide-image-x">x</div>
+        <div class="hide-image-x"><div class="close-x">x</div></div>
         <img class="mm-image" src="{{image}}" />
         <div class="image-text">
           <div class="image-filename">
