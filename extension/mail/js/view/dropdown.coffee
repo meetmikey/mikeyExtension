@@ -7,7 +7,7 @@ template = """
       <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
       {{#if showGetMoreDays}}
       <li class="divider"></li>
-      <li><div class="index-status">{{mailProcessedDays}}/{{mailTotalDays}} <a href="#" class="get-more-link">get more days</a></li>
+      <li><div class="index-status">{{mailDaysLimit}}/{{mailTotalDays}} <a href="#" class="get-more-link">get more days</a></li>
       {{/if}}
     </ul>
   </li>
@@ -24,7 +24,7 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
     object = {}
     object.toggleAction = if MeetMikey.Helper.OAuth.isEnabled() then 'Disable' else 'Enable'
     object.showGetMoreDays = MeetMikey.globalUser && ! MeetMikey.globalUser.isPremium()
-    object.mailProcessedDays = MeetMikey.globalUser?.getMailProcessedDays()
+    object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
     object
 

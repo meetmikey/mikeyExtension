@@ -5,7 +5,7 @@ template = """
       <h3>Get more Mikey</h3>
     </div>
     <div class="modal-body">
-      <p>Mikey has gone through {{mailProcessedDays}} of your {{mailTotalDays}} gmail days.  Get more days by sharing with friends.</p>
+      <p>Mikey has gone through {{mailDaysLimit}} of your {{mailTotalDays}} gmail days.  Get more days by sharing with friends.</p>
     </div>
     <div class="modal-body">
       <input id="directReferralLinkText" type="text" value="{{directReferralLink}}"><a href="#" id="copyButton" class="button buttons">Copy</a>
@@ -43,7 +43,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
 
   getTemplateData: =>
     object = {}
-    object.mailProcessedDays = MeetMikey.globalUser.getMailProcessedDays()
+    object.mailDaysLimit = MeetMikey.globalUser.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser.getMailTotalDays()
     object.twitterShareLink = @getTwitterShareLink()
     object.facebookShareLink = @getFacebookShareLink()
