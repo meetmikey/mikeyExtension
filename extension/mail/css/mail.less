@@ -966,6 +966,27 @@ font-size: 13px;
 
 /* ----------- IMAGES ---------------- */
 
+
+.hide-image-x {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 8px 10px;
+  background-color: white;
+  display: none;
+  z-index: 2;
+  color: #8e8e8e;
+  font-size: 16px;
+  .image-box:hover & {
+    float:right;
+    display: inline-block;
+  }
+  &:hover {
+    color: #222;
+  }
+
+}
+
 .image-box {
 float: left;
 margin-right: 20px;
@@ -1866,6 +1887,73 @@ body::-webkit-scrollbar-corner {
     box-shadow: inset 1px 1px 0 rgba(0,0,0,.14);
 }
 
+/* ---------------- COUNTERS AND REFERRALS -------------------- */
+
+.mail-counts-container {
+  display: inline-block;
+}
+
+.share-modal-button {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 11px;
+  margin-right: 10px;
+  background-repeat: no-repeat;
+  background-position: 50% 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: #fff;
+
+  
+  &.facebook-share {
+    background-color: #3D5B99;
+  
+    &:hover {
+      background-color: #4B6BA3;
+
+    }
+  }
+
+  &.twitter-share {
+    background-color: #2CAAE1;
+    &:hover {
+      background-color: #3DBBE8;
+    }
+  }
+  &.premium {
+     background-color: #3079ED;
+    &:hover {
+      background-color: #4A90F4;
+    }
+
+  }
+
+  a& {
+    color: #fff;
+
+  }
+  a:hover& {
+    color: #fff;
+  }
+}
+
+.buttons-cluster {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.referral-button-text {
+  text-align: center;
+  margin-top: 70px;
+  display: block;
+}
 
 
 

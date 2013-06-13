@@ -7,7 +7,7 @@ template = """
       <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
       {{#if showGetMoreDays}}
       <li class="divider"></li>
-      <li><div class="index-status">{{mailProcessedDays}}/{{mailTotalDays}} <a href="#" class="get-more-link">get more days</a></li>
+      <li><a tabindex="-1" href="#" class="get-more-link"><!-- <div class="index-status">{{mailProcessedDays}}/{{mailTotalDays}}-->Get more Mikey</a></li>
       {{/if}}
     </ul>
   </li>
