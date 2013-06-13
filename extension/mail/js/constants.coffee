@@ -6,6 +6,10 @@ _.extend MeetMikey.Constants,
   piwikOff: false
   googleAnalyticsOff: false
   pollDelay: 60*1000
+  onboardCheckPollDelay: 10*1000
+  msPerDay: 1000 * 60 * 60 * 24
+  paginationSize: 50
+  deleteDelay: 8000
   betaCodeHash: 205332315
   extensionVersion: chrome.runtime.getManifest()?.version
 
@@ -73,6 +77,8 @@ _.extend MeetMikey.Constants,
     # nav bar at very top of viewport
     navBar: '#gbzc'
 
+    mikeyDropdown: ''
+
     # bar containing pagination for app search
     appsSearchControl: '.Wc'
 
@@ -90,6 +96,9 @@ _.extend MeetMikey.Constants,
 
     # where multiple inbox tabs should be injected
     multipleInboxTabsContainer: '[id=":ro"]'
+
+    # existence of gmail tabs
+    gmailTabsSelector: '.aKh'
 
     previewPaneSelector: '.apJ'
 

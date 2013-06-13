@@ -17,18 +17,17 @@ template = """
     </div>
     <div class="footer-buttons">
       <a href="#" id="authorize-button" class="button buttons">Connect</a>
-      <a href="#" id="not-now-button" class="button-grey buttons">Not right now</a>
+      <a href="#" data-dismiss="modal" class="button-grey buttons">Not right now</a>
       <a href="#" id="never-button" class="button-grey buttons">Never this account</a>
     </div>
   </div>
 """
 
-class MeetMikey.View.OnboardModal extends MeetMikey.View.Base
+class MeetMikey.View.OnboardModal extends MeetMikey.View.BaseModal
   template: Handlebars.compile(template)
 
   events:
     'click #authorize-button': 'authorize'
-    'click #not-now-button': 'hide'
     'click #never-button': 'doNotAsk'
 
   postRender: =>
@@ -36,14 +35,7 @@ class MeetMikey.View.OnboardModal extends MeetMikey.View.Base
       @$('.onboardError').show()
       @$('.normalModal').hide()
     @show()
-
-  show: =>
-    @$('.modal').modal 'show'
-
-  hide: =>
-    @$('.modal').modal 'hide'
-    @remove()
-
+    
   doNotAsk: =>
     MeetMikey.Helper.OAuth.disable()
     @trigger 'disabled'

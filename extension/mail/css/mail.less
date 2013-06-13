@@ -1,6 +1,10 @@
 
 /*--------------- COLORS ----------------- */
 
+@extensionId : ~"__MSG_@@extension_id__";
+
+@pathPrefix: "chrome-extension://@{extensionId}";
+
 @black: #222;
 
 
@@ -23,7 +27,7 @@
 
 .aeI .G-atb {
 -webkit-box-shadow: none !important;
--moz-box-shadow: none !imoportant;
+-moz-box-shadow: none !important;
 box-shadow: none !important;
 }
 
@@ -298,7 +302,9 @@ body {
 
 }
 
-
+.mail-counts {
+  
+}
 
 
 /* -------- INBOX --------- */
@@ -963,6 +969,35 @@ font-size: 13px;
 
 
 /* ----------- IMAGES ---------------- */
+
+
+.hide-image-x {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 8px 12px;
+  background-color: white;
+  display: none;
+  z-index: 2;
+  
+  .image-box:hover & {
+    float:right;
+    display: inline-block;
+  }
+  &:hover {
+    
+  }
+
+}
+
+.close-x {
+  color: #000;
+  font-size: 20px;
+  opacity: 0.2;
+  .hide-image-x:hover & {
+    opacity: 0.4;
+  }
+}
 
 .image-box {
 float: left;
@@ -1864,6 +1899,75 @@ body::-webkit-scrollbar-corner {
     box-shadow: inset 1px 1px 0 rgba(0,0,0,.14);
 }
 
+/* ---------------- COUNTERS AND REFERRALS -------------------- */
+
+.mail-counts-container {
+  display: inline-block;
+}
+
+.share-modal-button {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 11px;
+  margin-right: 10px;
+  background-repeat: no-repeat;
+  background-position: 50% 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: #fff;
+
+  
+  &.facebook-share {
+    background-color: #3D5B99;
+    background-image: url('@{pathPrefix}/mail/img/facebookShare.png');
+    &:hover {
+      background-color: #4B6BA3;
+
+    }
+  }
+
+  &.twitter-share {
+    background-color: #2CAAE1;
+    background-image: url('@{pathPrefix}/mail/img/twitterShare.png');
+    &:hover {
+      background-color: #3DBBE8;
+    }
+  }
+  &.premium {
+    background-color: #3079ED;
+    background-image: url('@{pathPrefix}/mail/img/premiumUpgrade.png');
+    &:hover {
+      background-color: #4A90F4;
+    }
+
+  }
+
+  a& {
+    color: #fff;
+
+  }
+  a:hover& {
+    color: #fff;
+  }
+}
+
+.buttons-cluster {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.referral-button-text {
+  text-align: center;
+  margin-top: 70px;
+  display: block;
+}
 
 
 

@@ -27,6 +27,7 @@ class AttachmentDecorator
     object.image = model.get 'image'
     object.msgHex = model.get('gmMsgHex')
     object.subject = model.get('mailCleanSubject')
+    object.deleting = model.get('deleting')
 
     object
 

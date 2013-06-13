@@ -38,6 +38,7 @@ template = """
     <div id="mmImagesIsotope">
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
+        <div class="hide-image-x"><div class="close-x">x</div></div>
         <img class="mm-image" src="{{image}}" />
         <div class="image-text">
           <div class="image-filename">
@@ -77,13 +78,15 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     'click .mm-image': 'openImage'
     'click .image-filename a': 'openImage'
     'click .open-message': 'openMessage'
+    'click .hide-image-x' : 'markDeletingEvent'
 
   postInitialize: =>
     @on 'showTab', @initIsotope
     @on 'showTab', @bindScrollHandler
     Backbone.on 'change:tab', @unbindScrollHandler
     @collection = new MeetMikey.Collection.Images()
-    @collection.on 'reset add', _.debounce(@render, 50)
+    @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
+    @collection.on 'remove', @render
 
   postRender: =>
     @$('.mm-download-tooltip').tooltip placement: 'bottom'
@@ -109,6 +112,31 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   getTemplateData: =>
     models: _.invoke(@collection.models, 'decorate')
     searchQuery: @searchQuery
+
+  markDeletingEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
+    model = @collection.get(cid)
+    model.set('deleting', true)
+    element = $('.image-box[data-cid='+model.cid+']')
+    element.css('opacity', .1) if element?
+
+    @deleteAfterDelay (model.cid)
+    MeetMikey.Helper.trackResourceEvent 'deleteResource', model,
+      search: @searchQuery?, currentTab: MeetMikey.Globals.tabState, rollover: false
+
+  unMarkDeleting: (event) =>
+    model.set('deleting', false)
+    element = $('.image-box[data-cid='+model.cid+']')
+    element.css('opacity', 1) if element?
+
+  deleteAfterDelay: (modelId) =>
+    setTimeout =>
+      model = @collection.get(modelId)
+      if model.get('deleting')
+        @collection.remove(model)
+        model.delete()
+    , MeetMikey.Constants.deleteDelay
 
   openImage: (event) =>
     event.preventDefault()
@@ -215,7 +243,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     clearTimeout @timeoutId if @timeoutId
 
   poll: =>
-    data = if MeetMikey.globalUser.get('onboarding')
+    data = if MeetMikey.globalUser.get('onboarding') or @collection.length < MeetMikey.Constants.paginationSize
       {}
     else
       after: @collection.latestSentDate()

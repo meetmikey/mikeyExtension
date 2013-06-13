@@ -15,7 +15,11 @@ template = """
       </thead>
       <tbody>
         {{#each models}}
-        <tr class="files" data-cid="{{cid}}">
+          {{#if deleting}}
+            <tr class="files" data-cid="{{cid}}" style="opacity:.1;">
+          {{else}}
+            <tr class="files" data-cid="{{cid}}">
+          {{/if}}
             <td class="mm-download">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
                 <div class="list-icon" style="background-image: url('{{../openIconUrl}}');">
@@ -50,6 +54,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     'click .files .mm-file': 'openLink'
     'click .files .mm-source': 'openLink'
     'click .files .mm-download': 'openMessage'
+    'click .files .mm-undo' : 'unMarkDeletingEvent'
     'click th': 'sortByColumn'
     'mouseenter .files .mm-file, .files .mm-source': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-source': 'cancelRollover'
@@ -63,9 +68,12 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @rollover = new MeetMikey.View.LinkRollover collection: @collection, search: !@options.fetch
     @pagination = new MeetMikey.Model.PaginationState items: @collection
 
-    @collection.on 'reset add', _.debounce(@render, 50)
+    @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
     @collection.on 'sort', @render
     @pagination.on 'change:page', @render
+    @collection.on 'remove', @render
+    @collection.on 'delete', @markDeleting
+    @collection.on 'undoDelete', @unMarkDeleting
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
@@ -77,6 +85,23 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.off 'reset', @render
     @cachedModels = _.clone @collection.models
     @collection.reset()
+
+  markDeleting: (model) =>
+    model.set('deleting', true)
+    element = $('.files[data-cid='+model.cid+']')
+    element.children('.mm-undo').show()
+    element.css('opacity', .1) if element?
+
+  unMarkDeletingEvent: (event) =>
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
+    model = @collection.get(cid)
+    @unMarkDeleting(model)
+
+  unMarkDeleting: (model) =>
+    model.set('deleting', false)
+    element = $('.files[data-cid='+model.cid+']')
+    element.children('.mm-undo').hide()
+    element.css('opacity', 1) if element?
 
   initialFetch: =>
     @collection.fetch success: @waitAndPoll if @options.fetch
@@ -146,7 +171,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     clearTimeout @timeoutId if @timeoutId
 
   poll: =>
-    data = if MeetMikey.globalUser.get('onboarding')
+    data = if MeetMikey.globalUser.get('onboarding') or @collection.length < MeetMikey.Constants.paginationSize
       {}
     else
       after: @collection.latestSentDate()

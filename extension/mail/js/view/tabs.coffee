@@ -19,6 +19,7 @@ template = """
     </a>
   </li>
 </ul>
+<div class="mail-counts-container"></div>
 <div class="pagination-container"></div>
 """
 
@@ -32,6 +33,10 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     'pagination':
       selector: '.pagination-container'
       viewClass: MeetMikey.View.Pagination
+      args: {}
+    'mailCounts':
+      selector: '.mail-counts-container'
+      viewClass: MeetMikey.View.MailCounts
       args: {}
 
   events:
@@ -80,6 +85,12 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     @setActiveTab tab
     @trackTabEvent tab
     @trigger('clicked:tab', tab)
+
+    if MeetMikey.Globals.gmailTabs && tab is 'email'
+      $(MeetMikey.Constants.Selectors.gmailTabsSelector).show()
+    else if MeetMikey.Globals.gmailTabs
+      $(MeetMikey.Constants.Selectors.gmailTabsSelector).hide()
+
 
   updateTabCount: (tab, count) =>
     tab =  @$("[data-mm-tab='#{tab}']")

@@ -20,10 +20,14 @@ template = """
       </thead>
       <tbody>
     {{#each models}}
-      <tr class="files" data-cid="{{cid}}">
-        <!-- <td class="mm-toggle-box">
-          <div class="checkbox"><div class="check"></div></div>
-        </td> -->
+      {{#if deleting}}
+        <tr class="files" data-cid="{{cid}}" style="opacity:.1;">
+      {{else}}
+        <tr class="files" data-cid="{{cid}}">
+      {{/if}}
+          <!-- <td class="mm-toggle-box">
+            <div class="checkbox"><div class="check"></div></div>
+          </td> -->
 
          <td class="mm-download">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
@@ -31,14 +35,15 @@ template = """
                 </div>
               </div>
           </td>
-        <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
-        <td class="mm-file truncate">{{filename}}&nbsp;</td>
-        <td class="mm-from truncate">{{from}}</td>
-        <td class="mm-to truncate">{{to}}</td>
-        <td class="mm-type truncate">{{type}}</td>
-        <td class="mm-size truncate">{{size}}</td>
-        <td class="mm-sent truncate">{{sentDate}}</td>
-      </tr>
+          <!-- <td class="mm-undo btn" type="button" style="display:none;">UNDO</td> -->
+          <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
+          <td class="mm-file truncate">{{filename}}&nbsp;</td>
+          <td class="mm-from truncate">{{from}}</td>
+          <td class="mm-to truncate">{{to}}</td>
+          <td class="mm-type truncate">{{type}}</td>
+          <td class="mm-size truncate">{{size}}</td>
+          <td class="mm-sent truncate">{{sentDate}}</td>
+        </tr>
     {{/each}}
     </tbody>
     </table>
@@ -53,6 +58,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   events:
     'click .files .mm-file': 'openAttachment'
     'click .files .mm-download': 'openMessage'
+    'click .files .mm-undo' : 'unMarkDeletingEvent'
     'click th': 'sortByColumn'
     'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
@@ -67,9 +73,12 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @rollover = new MeetMikey.View.AttachmentRollover collection: @collection, search: !@options.fetch
     @pagination = new MeetMikey.Model.PaginationState items: @collection
 
-    @collection.on 'reset add', _.debounce(@render, 50)
+    @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
     @pagination.on 'change:page', @render
     @collection.on 'sort', @render
+    @collection.on 'remove', @render
+    @collection.on 'delete', @markDeleting
+    @collection.on 'undoDelete', @unMarkDeleting
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
@@ -81,6 +90,23 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @collection.off('reset', @render)
     @cachedModels = _.clone @collection.models
     @collection.reset()
+
+  markDeleting: (model) =>
+    model.set('deleting', true)
+    element = $('.files[data-cid='+model.cid+']')
+    element.children('.mm-undo').show()
+    element.css('opacity', .1) if element?
+
+  unMarkDeletingEvent: (event) =>
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
+    model = @collection.get(cid)
+    @unMarkDeleting(model)
+
+  unMarkDeleting: (model) =>
+    model.set('deleting', false)
+    element = $('.files[data-cid='+model.cid+']')
+    element.children('.mm-undo').hide()
+    element.css('opacity', 1) if element?
 
   initialFetch: =>
     @collection.fetch success: @waitAndPoll if @options.fetch
@@ -149,7 +175,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     clearTimeout @timeoutId if @timeoutId
 
   poll: =>
-    data = if MeetMikey.globalUser.get('onboarding')
+    data = if MeetMikey.globalUser.get('onboarding') or @collection.length < MeetMikey.Constants.paginationSize
       {}
     else
       after: @collection.latestSentDate()
