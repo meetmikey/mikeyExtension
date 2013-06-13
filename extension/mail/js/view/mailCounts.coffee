@@ -1,6 +1,6 @@
 template = """
   <div class="mail-counts">
-    {{mailProcessedDays}}/{{mailTotalDays}} <a href="#" class="get-more-link">get more days</a>
+    {{mailDaysLimit}}/{{mailTotalDays}} <a href="#" class="get-more-link">get more days</a>
   </div>
 """
 
@@ -12,7 +12,7 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
 
   getTemplateData: =>
     object = {}
-    object.mailProcessedDays = MeetMikey.globalUser.getMailProcessedDays()
+    object.mailDaysLimit = MeetMikey.globalUser.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser.getMailTotalDays()
     object
 

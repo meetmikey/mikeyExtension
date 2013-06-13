@@ -24,7 +24,7 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
     object = {}
     object.toggleAction = if MeetMikey.Helper.OAuth.isEnabled() then 'Disable' else 'Enable'
     object.showGetMoreDays = MeetMikey.globalUser && ! MeetMikey.globalUser.isPremium()
-    object.mailProcessedDays = MeetMikey.globalUser?.getMailProcessedDays()
+    object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
     object
 

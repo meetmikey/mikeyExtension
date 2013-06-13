@@ -47,7 +47,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
 
   getTemplateData: =>
     object = {}
-    object.mailProcessedDays = MeetMikey.globalUser.getMailProcessedDays()
+    object.mailDaysLimit = MeetMikey.globalUser.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser.getMailTotalDays()
     object.twitterShareLink = @getTwitterShareLink()
     object.facebookShareLink = @getFacebookShareLink()
