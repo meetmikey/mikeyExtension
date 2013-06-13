@@ -14,5 +14,5 @@ template = """
   </div>
 """
 
-class MeetMikey.View.ThanksModal extends MeetMikey.View.Base
+class MeetMikey.View.ThanksModal extends MeetMikey.View.BaseModal
   template: Handlebars.compile(template)

@@ -6,7 +6,7 @@ image4 = chrome.extension.getURL "#{imgPath}/welcome-4.png"
 template = """
   <div class="modal hide fade modal-wide" style="display: none; ">
     <div class="modal-header">
-      <button type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Mikey is ready!</h3>
     </div>
     <div class="modal-body">
@@ -50,7 +50,7 @@ template = """
     </div>
   </div>
 """
-class MeetMikey.View.WelcomeModal extends MeetMikey.View.Base
+class MeetMikey.View.WelcomeModal extends MeetMikey.View.BaseModal
   template: Handlebars.compile(template)
 
   events:

@@ -41,10 +41,10 @@ class Setup
   initalizeGlobalUser: (data) =>
     MeetMikey.globalUser = new MeetMikey.Model.User data
     MeetMikey.Helper.Analytics.setUser MeetMikey.globalUser
-    @dropdownView.rerender()
     if MeetMikey.globalUser.checkInvalidToken()
       @injectReauthModal()
     MeetMikey.globalUser.checkOnboard()
+    @dropdownView.globalUserUpdated()
 
   checkMultipleInbox: (callback) =>
     controlSelector = MeetMikey.Constants.Selectors.inboxControlsContainer

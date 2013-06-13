@@ -7,11 +7,12 @@ class MeetMikey.Model.User extends Backbone.Model
   initialize: ->
 
   waitAndFetchOnboard: =>
-    setTimeout @fetchOnboard, MeetMikey.Constants.pollDelay
+    setTimeout @fetchOnboard, MeetMikey.Constants.onboardCheckPollDelay
 
   checkOnboard: =>
     if MeetMikey.Helper.LocalStore.get @onboardKey()
       @set 'onboarding', false
+      @trigger 'doneOnboarding'
     else
       @fetchOnboard()
 
@@ -25,6 +26,12 @@ class MeetMikey.Model.User extends Backbone.Model
       @get('daysLimit')
     else
       0
+
+  refreshFromServer: (callback) =>
+    MeetMikey.Helper.OAuth.checkUser (userData) =>
+      if userData?
+        @set userData
+      callback()
 
   getMailTotalDays: =>
     if @get('minMailDate')
@@ -54,7 +61,10 @@ class MeetMikey.Model.User extends Backbone.Model
         if res.progress is 1
           MeetMikey.Helper.LocalStore.set @onboardKey(), true
           @set 'onboarding', false
-        else @waitAndFetchOnboard()
+          @refreshFromServer () =>
+            @trigger 'doneOnboarding'
+        else
+          @waitAndFetchOnboard()
 
   onboardKey: => "meetmikey-#{@get('email')}-onboarded"
 
