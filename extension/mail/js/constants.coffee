@@ -1,5 +1,5 @@
 _.extend MeetMikey.Constants,
-  env: "local"
+  env: "production"
   imgPath: 'mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   mixpanelOff: false
@@ -8,6 +8,7 @@ _.extend MeetMikey.Constants,
   pollDelay: 60*1000
   msPerDay: 1000 * 60 * 60 * 24
   paginationSize: 50
+  deleteDelay: 8000
   betaCodeHash: 205332315
   extensionVersion: chrome.runtime.getManifest()?.version
 
