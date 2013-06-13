@@ -1,5 +1,5 @@
 template = """
-  <div class="modal hide fade modal-wide" style="display: none; ">
+  <div class="modal hide fade modal-wide" style="display: none;">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Get more out of Mikey</h3>
@@ -28,6 +28,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
 
   events:
     'click #copyButton': 'copyTextToClipboard'
+    'click .premium': 'showUpgradeModal'
 
   shareTitle: 'Meet Mikey'
   shareSummary: 'Mikey makes your gmail great'
@@ -70,3 +71,9 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
       text: linkText
     chrome.runtime.sendMessage messageData, (response) ->
       #console.log 'copied text to clipboard: ', linkText
+
+  showUpgradeModal: =>
+    @hide()
+    $('body').append $('<div id="mm-upgrade-modal"></div>')
+    @upgradeModal = new MeetMikey.View.UpgradeModal el: '#mm-upgrade-modal'
+    @upgradeModal.render()
