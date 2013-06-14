@@ -1,6 +1,7 @@
 template = """
   <div class="mail-counts">
-    {{mailDaysLimit}}/{{mailTotalDays}} <a href="#" class="get-more-link">get more days</a>
+    <div class="mail-days mm-download-tooltip" data-toggle="tooltip" title="This is how much of your Gmail Mikey is showing you">{{mailDaysLimit}} out of {{mailTotalDays}} possible days</div><a href="#" class="get-more-link">get more</a>
+
   </div>
 """
 
@@ -27,10 +28,11 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
     MeetMikey.globalUser.getDaysLimit() &&
     MeetMikey.globalUser.getMailTotalDays() > MeetMikey.globalUser.getDaysLimit()
       true
-    else 
+    else
       false
 
   postRender: =>
+    $('.mm-download-tooltip').tooltip placement: 'bottom'
     if @shouldShow()
       @$el.show()
     else
