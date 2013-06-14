@@ -7,11 +7,11 @@ template = """
       <div class="image-box" data-cid="{{cid}}">
         <div class="hide-image-x"><div class="close-x">x</div></div>
         {{#if deleting}}
-          <div class="undo-delete" style="display:none;">UNDO</div>
-          <div class="image-subbox">
-        {{else}}
           <div class="undo-delete">UNDO</div>
           <div class="image-subbox" style="opacity.1">
+        {{else}}
+          <div class="undo-delete" style="display:none;">UNDO</div>
+          <div class="image-subbox">
         {{/if}}
           <img class="mm-image" src="{{image}}"/>
           <div class="image-text">
