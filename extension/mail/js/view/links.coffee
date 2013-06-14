@@ -33,7 +33,6 @@ template = """
             <td class="mm-undo truncate"">
               <div class="flex">
                 {{title}} won't be shown anymore! Click to UNDO 
-                <span class="mm-file-text">{{summary}}</span>
               </div>
             </td>
             <td class="mm-source truncate" style="opacity:0.1">{{displayUrl}}</td>
@@ -57,7 +56,6 @@ template = """
             <td class="mm-undo truncate" style="display:none;">
               <div class="flex">
                 {{title}} won't be shown anymore! Click to UNDO 
-                <span class="mm-file-text">{{summary}}</span>
               </div>
             </td>
             <td class="mm-source truncate">{{displayUrl}}</td>
