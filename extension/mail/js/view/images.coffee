@@ -53,7 +53,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
 
   postRender: =>
-    @$('.mm-download-tooltip').tooltip placement: 'bottom'
+    $('.mm-download-tooltip').tooltip placement: 'bottom'
     if MeetMikey.Globals.tabState == 'images'
       @initIsotope()
 
