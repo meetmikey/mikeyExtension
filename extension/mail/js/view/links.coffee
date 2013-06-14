@@ -15,11 +15,32 @@ template = """
       </thead>
       <tbody>
         {{#each models}}
+          <tr class="files" data-cid="{{cid}}">
           {{#if deleting}}
-            <tr class="files" data-cid="{{cid}}" style="opacity:.1;">
+            <td class="mm-download" style="opacity:0.1">
+              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                <div class="list-icon" style="background-image: url('{{../openIconUrl}}');">
+                </div>
+              </div>
+            </td>
+            <td class="mm-favicon" style="background:url({{faviconURL}} style="opacity:0.1") no-repeat;">&nbsp;</td>
+            <td class="mm-file truncate" style="display:none;>
+              <div class="flex">
+                {{title}}
+                <span class="mm-file-text">{{summary}}</span>
+              </div>
+            </td>
+            <td class="mm-undo truncate"">
+              <div class="flex">
+                {{title}} won't be shown anymore! Click to UNDO 
+                <span class="mm-file-text">{{summary}}</span>
+              </div>
+            </td>
+            <td class="mm-source truncate" style="opacity:0.1">{{displayUrl}}</td>
+            <td class="mm-from truncate" style="opacity:0.1">{{from}}</td>
+            <td class="mm-to truncate" style="opacity:0.1">{{to}}</td>
+            <td class="mm-sent truncate" style="opacity:0.1">{{sentDate}}</td>
           {{else}}
-            <tr class="files" data-cid="{{cid}}">
-          {{/if}}
             <td class="mm-download">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
                 <div class="list-icon" style="background-image: url('{{../openIconUrl}}');">
@@ -33,10 +54,17 @@ template = """
                 <span class="mm-file-text">{{summary}}</span>
               </div>
             </td>
+            <td class="mm-undo truncate" style="display:none;">
+              <div class="flex">
+                {{title}} won't be shown anymore! Click to UNDO 
+                <span class="mm-file-text">{{summary}}</span>
+              </div>
+            </td>
             <td class="mm-source truncate">{{displayUrl}}</td>
             <td class="mm-from truncate">{{from}}</td>
             <td class="mm-to truncate">{{to}}</td>
             <td class="mm-sent truncate">{{sentDate}}</td>
+          {{/if}}
           </tr>
         {{/each}}
       </tbody>
@@ -90,7 +118,9 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     model.set('deleting', true)
     element = $('.files[data-cid='+model.cid+']')
     element.children('.mm-undo').show()
-    element.css('opacity', .1) if element?
+    element.children('.mm-file').hide()
+    for child in element.children()
+      $(child).css('opacity', .1) if not $(child).hasClass('mm-undo')
 
   unMarkDeletingEvent: (event) =>
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
@@ -101,7 +131,9 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     model.set('deleting', false)
     element = $('.files[data-cid='+model.cid+']')
     element.children('.mm-undo').hide()
-    element.css('opacity', 1) if element?
+    element.children('.mm-file').show()
+    for child in element.children()
+      $(child).css('opacity', 1) if not $(child).hasClass('mm-undo')
 
   initialFetch: =>
     @collection.fetch success: @waitAndPoll if @options.fetch

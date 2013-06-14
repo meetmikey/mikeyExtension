@@ -28,7 +28,7 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
     MeetMikey.globalUser.getDaysLimit() &&
     MeetMikey.globalUser.getMailTotalDays() > MeetMikey.globalUser.getDaysLimit()
       true
-    else 
+    else
       false
 
   postRender: =>
