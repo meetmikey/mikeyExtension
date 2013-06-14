@@ -12,7 +12,7 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
     'click .get-more-link': 'openGetMoreModal'
 
   postInitialize: =>
-    MeetMikey.globalUser?.once 'doneOnboarding', @render
+    MeetMikey.globalUser?.on 'change', @render
 
   getTemplateData: =>
     object = {}
