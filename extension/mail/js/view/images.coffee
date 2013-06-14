@@ -47,7 +47,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     'click .mm-image': 'openImage'
     'click .image-filename a': 'openImage'
     'click .open-message': 'openMessage'
-    'click .hide-image-x' : 'markDeletingEvent'
+    'click .hide-image-x' : 'markDeleting'
+    'click .undo-delete' : 'unMarkDeleting'
 
   postInitialize: =>
     @on 'showTab', @initIsotope
@@ -78,14 +79,13 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     models: _.invoke(@collection.models, 'decorate')
     searchQuery: @searchQuery
 
-  markDeletingEvent: (event) =>
+  markDeleting: (event) =>
     event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
     model.set('deleting', true)
-    element = $('.mm-image[data-cid='+model.cid+']')
+    element = $('.image-box[data-cid='+model.cid+']')
     imageElement = element.children('.image-subbox')
-    console.log('imageElement', imageElement)
     imageElement.css('opacity', .1) if imageElement?
     element.children('.undo-delete').show()
 
@@ -94,8 +94,11 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       search: @searchQuery?, currentTab: MeetMikey.Globals.tabState, rollover: false
 
   unMarkDeleting: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
+    model = @collection.get(cid)
     model.set('deleting', false)
-    element = $('.mm-image[data-cid='+model.cid+']')
+    element = $('.image-box[data-cid='+model.cid+']')
     imageElement = element.children('.image-subbox')
     imageElement.css('opacity', 1) if imageElement?
     element.children('.undo-delete').hide()
