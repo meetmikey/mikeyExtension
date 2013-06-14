@@ -979,16 +979,25 @@ font-size: 13px;
   background-color: white;
   display: none;
   z-index: 2;
-  
+
   .image-box:hover & {
     float:right;
     display: inline-block;
   }
-  &:hover {
-    
-  }
-
 }
+
+
+.undo-delete {
+  color: #777;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 15px;
+
+  &:hover {
+    color: #222;
+  }
+}
+
 
 .close-x {
   color: #000;
@@ -1503,7 +1512,7 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 /* --------------- TOOLTIP -------------- */
 
 
-.mm-download, .mikey-tabs, .mail-counts {
+.mm-download, .mikey-tabs, .mail-counts, .image-box {
     & .tooltip {
       position: absolute;
       z-index: 1030;
@@ -1523,15 +1532,9 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
     }
 
 
-    & .tooltip.bottom {
-      margin-top: 3px;
-      margin-left: 24px;
-      padding: 5px 0;
-    }
-
     & .tooltip-inner {
       padding: 8px;
-      max-width: 400px;
+      max-width: 500px;
       -webkit-border-radius: 0px !important;
       -moz-border-radius: 0px !important;
       border-radius: 0px;
@@ -1546,19 +1549,50 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 
     }
 
-    & .tooltip-arrow {
+.mikey-tabs, .mm-download, .image-box {
+      & .tooltip.bottom {
+      margin-top: -4px !important;
+      margin-left: 24px;
+      padding: 5px 0;
+    }
+      & .tooltip-arrow {
       position: absolute;
       width: 0;
       height: 0;
       border-color: transparent;
       border-style: solid;
     }
+}
 
-.mikey-tabs {
+.image-box {
       & .tooltip.bottom {
       margin-top: -4px !important;
-      margin-left: 24px;
       padding: 5px 0;
+      margin-left: 0px !important;
+      font-size: 60px;
+    }
+      & .tooltip-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-color: transparent;
+      border-style: solid;
+      margin: 0px;
+    }
+}
+
+.mail-counts {
+       & .tooltip.bottom {
+      margin-top: -4px !important;
+      margin-left: -90px !important;
+      padding: 5px 0;
+    }
+        & .tooltip-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-color: transparent;
+      border-style: solid;
     }
 }
 
@@ -1905,6 +1939,10 @@ body::-webkit-scrollbar-corner {
   display: inline-block;
 }
 
+.mail-counts {
+  margin-left: 10px;
+}
+
 .share-modal-button {
   display: inline-block;
   width: 90px;
@@ -1970,7 +2008,7 @@ body::-webkit-scrollbar-corner {
 }
 
 .mail-days {
-  font-size: 12px;
+  font-size: 13px;
   color: #222;
   margin-right: 10px;
   display: inline-block;
@@ -1980,7 +2018,7 @@ body::-webkit-scrollbar-corner {
 }
 
 a.get-more-link {
-  color: #8e8e8e;
+  color: #777;
   font-size: 10px;
   text-transform: uppercase;
   text-decoration: none;
