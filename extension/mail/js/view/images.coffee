@@ -30,8 +30,8 @@ template = """
         </div>
 
         <!-- Carousel nav -->
-        <a class="carousel-control left" href="#mmCarousel" data-slide="prev">&lsaquo;</a>
-        <a class="carousel-control right" href="#mmCarousel" data-slide="next">&rsaquo;</a>
+        <div class="carousel-control left" href="#mmCarousel" style="cursor:pointer;" data-slide="prev">&lsaquo;</div>
+        <div class="carousel-control right" href="#mmCarousel" style="cursor:pointer;" data-slide="next">&rsaquo;</div>
       </div>
     </div>
 
@@ -97,10 +97,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     $('#mmCarouselModal').modal
       show: false
     $('#mmCarouselModal').on 'shown', () =>
-      console.log 'modal show'
       @carouselVisible = true
     $('#mmCarouselModal').on 'hidden', () =>
-      console.log 'modal hide'
       @carouselVisible = false
     @bindCarouselKeys()
 
@@ -160,12 +158,10 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     $(document).keydown (e) =>
       if e.keyCode == 37
         if @carouselVisible
-          console.log 'carousel prev'
           $('.carousel').carousel 'prev'
           return false
       if e.keyCode == 39
         if @carouselVisible
-          console.log 'carousel next'
           $('.carousel').carousel 'next'
           return false
 
@@ -174,9 +170,16 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     if ! cid
       cid = $(event.currentTarget).closest('.item').attr('data-cid')
     model = @collection.get(cid)
+    msgHex = model.get 'gmMsgHex'
+    if @options.fetch
+      hash = "#inbox/#{msgHex}"
+    else
+      hash = "#search/#{@searchQuery}/#{msgHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
+
+    window.location = hash
 
   $scrollElem: =>
     if MeetMikey.Globals.previewPane
