@@ -20,29 +20,38 @@ template = """
       </thead>
       <tbody>
     {{#each models}}
-      {{#if deleting}}
-        <tr class="files" data-cid="{{cid}}" style="opacity:.1;">
-      {{else}}
         <tr class="files" data-cid="{{cid}}">
-      {{/if}}
-          <!-- <td class="mm-toggle-box">
-            <div class="checkbox"><div class="check"></div></div>
-          </td> -->
-
-         <td class="mm-download">
+        {{#if deleting}}
+          <td class="mm-download" style="opacity:0.1">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
                 <div class="list-icon" style="background-image: url('#{spriteUrl}');">
                 </div>
               </div>
           </td>
-          <!-- <td class="mm-undo btn" type="button" style="display:none;">UNDO</td> -->
+          <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat; opacity:0.1">&nbsp;</td>
+          <td class="mm-undo">{{filename}} won't be shown anymore! Click to UNDO </td>
+          <td class="mm-file truncate" style="display:none;">{{filename}}&nbsp;</td>
+          <td class="mm-from truncate" style="opacity:0.1">{{from}}</td>
+          <td class="mm-to truncate" style="opacity:0.1">{{to}}</td>
+          <td class="mm-type truncate" style="opacity:0.1">{{type}}</td>
+          <td class="mm-size truncate" style="opacity:0.1">{{size}}</td>
+          <td class="mm-sent truncate" style="opacity:0.1">{{sentDate}}</td>
+        {{else}}
+          <td class="mm-download">
+              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                <div class="list-icon" style="background-image: url('#{spriteUrl}');">
+                </div>
+              </div>
+          </td>
           <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
+          <td class="mm-undo" style="display:none;">{{filename}} won't be shown anymore! Click to UNDO </td>
           <td class="mm-file truncate">{{filename}}&nbsp;</td>
           <td class="mm-from truncate">{{from}}</td>
           <td class="mm-to truncate">{{to}}</td>
           <td class="mm-type truncate">{{type}}</td>
           <td class="mm-size truncate">{{size}}</td>
           <td class="mm-sent truncate">{{sentDate}}</td>
+        {{/if}}
         </tr>
     {{/each}}
     </tbody>
@@ -95,7 +104,9 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     model.set('deleting', true)
     element = $('.files[data-cid='+model.cid+']')
     element.children('.mm-undo').show()
-    element.css('opacity', .1) if element?
+    element.children('.mm-file').hide()
+    for child in element.children()
+      $(child).css('opacity', .1) if not $(child).hasClass('mm-undo')
 
   unMarkDeletingEvent: (event) =>
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
@@ -106,7 +117,9 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     model.set('deleting', false)
     element = $('.files[data-cid='+model.cid+']')
     element.children('.mm-undo').hide()
-    element.css('opacity', 1) if element?
+    element.children('.mm-file').show()
+    for child in element.children()
+      $(child).css('opacity', 1) if not $(child).hasClass('mm-undo')
 
   initialFetch: =>
     @collection.fetch success: @waitAndPoll if @options.fetch

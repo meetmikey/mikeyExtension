@@ -5,9 +5,15 @@ template = """
   {{else}}
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
-        <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide image"><div class="close-x">x</div></div>
-        <div class="undo-delete" style="display:none;">Click here to undo.</div>
-        <div class="image-subbox">
+
+        <div class="hide-image-x"><div class="close-x">x</div></div>
+        {{#if deleting}}
+          <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click here to undo.</div>
+          <div class="image-subbox">
+        {{else}}
+          <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click here to undo.</div>
+          <div class="image-subbox" style="opacity.1">
+        {{/if}}
           <img class="mm-image" src="{{image}}"/>
           <div class="image-text">
             <div class="image-filename">
