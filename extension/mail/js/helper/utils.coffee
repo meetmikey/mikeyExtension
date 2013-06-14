@@ -60,14 +60,17 @@ MeetMikey.Helper.hoursSince = (timestamp) ->
 
 
 MeetMikey.Helper.getResourceProperties = (resource) ->
-  hoursSinceSent = MeetMikey.Helper.hoursSince resource.get('sentDate')
-  listPosition = resource.collection.indexOf(resource)
-  resourceId = resource.id
+  if ! resource
+    {}
+  else
+    hoursSinceSent = MeetMikey.Helper.hoursSince resource.get('sentDate')
+    listPosition = resource.collection.indexOf(resource)
+    resourceId = resource.id
 
-  props = {hoursSinceSent, listPosition, resourceId}
-  _.extend props, {fileType: resource.get('docType')} if resource instanceof MeetMikey.Model.Attachment
+    props = {hoursSinceSent, listPosition, resourceId}
+    _.extend props, {fileType: resource.get('docType')} if resource instanceof MeetMikey.Model.Attachment
 
-  props
+    props
 
 MeetMikey.Helper.trackResourceEvent = (event, model, opts) ->
   resourceProps = MeetMikey.Helper.getResourceProperties(model)

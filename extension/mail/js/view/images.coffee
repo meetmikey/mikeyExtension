@@ -96,6 +96,13 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       interval: false
     $('#mmCarouselModal').modal
       show: false
+    $('#mmCarouselModal').on 'shown', () =>
+      console.log 'modal show'
+      @carouselVisible = true
+    $('#mmCarouselModal').on 'hidden', () =>
+      console.log 'modal hide'
+      @carouselVisible = false
+    @bindCarouselKeys()
 
   teardown: =>
     @clearTimeout()
@@ -149,6 +156,18 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     MeetMikey.Helper.trackResourceEvent 'openResource', model,
       search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
 
+  bindCarouselKeys: =>
+    $(document).keydown (e) =>
+      if e.keyCode == 37
+        if @carouselVisible
+          console.log 'carousel prev'
+          $('.carousel').carousel 'prev'
+          return false
+      if e.keyCode == 39
+        if @carouselVisible
+          console.log 'carousel next'
+          $('.carousel').carousel 'next'
+          return false
 
   openMessage: (event) =>
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
