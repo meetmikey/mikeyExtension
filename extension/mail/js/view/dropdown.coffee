@@ -20,13 +20,31 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
     'click .toggle-mikey': 'toggleMikey'
     'click .get-more-link': 'openGetMoreModal'
 
+  postInitialize: =>
+    MeetMikey.globalUser?.once 'doneOnboarding', @rerender
+
+  globalUserUpdated: =>
+    MeetMikey.globalUser?.once 'doneOnboarding', @rerender
+    @rerender()
+
   getTemplateData: =>
     object = {}
     object.toggleAction = if MeetMikey.Helper.OAuth.isEnabled() then 'Disable' else 'Enable'
-    object.showGetMoreDays = MeetMikey.globalUser && ! MeetMikey.globalUser.isPremium()
+    object.showGetMoreDays = @shouldShow()
     object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
     object
+
+  shouldShow: =>
+    if MeetMikey.globalUser &&
+    ! MeetMikey.globalUser.isPremium() &&
+    ! MeetMikey.globalUser.get('onboarding') &&
+    MeetMikey.globalUser.getMailTotalDays() &&
+    MeetMikey.globalUser.getDaysLimit() &&
+    MeetMikey.globalUser.getMailTotalDays() > MeetMikey.globalUser.getDaysLimit()
+      true
+    else 
+      false
 
   rerender: =>
     @$('.dropdown').remove()

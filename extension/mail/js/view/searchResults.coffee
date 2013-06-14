@@ -8,9 +8,6 @@ class MeetMikey.View.SearchResults extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   subViews:
-    # 'tabs':
-    #   view: MeetMikey.View.Tabs
-    #   selector: '#mm-search-tabs'
     'attachments':
       viewClass: MeetMikey.View.Attachments
       selector: '#mm-search-attachments-tab'

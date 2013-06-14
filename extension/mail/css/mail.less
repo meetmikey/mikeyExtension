@@ -3,6 +3,8 @@
 
 @extensionId : ~"__MSG_@@extension_id__";
 
+@pathPrefix: "chrome-extension://@{extensionId}";
+
 @black: #222;
 
 
@@ -1921,7 +1923,7 @@ body::-webkit-scrollbar-corner {
   
   &.facebook-share {
     background-color: #3D5B99;
-    background-image: url('chrome-extension://@{extensionId}/mail/img/facebookShare.png');
+    background-image: url('@{pathPrefix}/mail/img/facebookShare.png');
     &:hover {
       background-color: #4B6BA3;
 
@@ -1930,14 +1932,14 @@ body::-webkit-scrollbar-corner {
 
   &.twitter-share {
     background-color: #2CAAE1;
-    background-image: url('chrome-extension://@{extensionId}/mail/img/twitterShare.png');
+    background-image: url('@{pathPrefix}/mail/img/twitterShare.png');
     &:hover {
       background-color: #3DBBE8;
     }
   }
   &.premium {
     background-color: #3079ED;
-    background-image: url('chrome-extension://@{extensionId}/mail/img/premiumUpgrade.png');
+    background-image: url('@{pathPrefix}/mail/img/premiumUpgrade.png');
     &:hover {
       background-color: #4A90F4;
     }

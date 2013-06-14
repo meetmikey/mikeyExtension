@@ -11,16 +11,31 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
   events:
     'click .get-more-link': 'openGetMoreModal'
 
+  postInitialize: =>
+    MeetMikey.globalUser?.once 'doneOnboarding', @render
+
   getTemplateData: =>
     object = {}
     object.mailDaysLimit = MeetMikey.globalUser.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser.getMailTotalDays()
     object
 
+  shouldShow: =>
+    if MeetMikey.globalUser &&
+    ! MeetMikey.globalUser.isPremium() &&
+    ! MeetMikey.globalUser.get('onboarding') &&
+    MeetMikey.globalUser.getMailTotalDays() &&
+    MeetMikey.globalUser.getDaysLimit() &&
+    MeetMikey.globalUser.getMailTotalDays() > MeetMikey.globalUser.getDaysLimit()
+      true
+    else 
+      false
+
   postRender: =>
     console.log ('tooltip', $('.mm-download-tooltip'))
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     if MeetMikey.globalUser && MeetMikey.globalUser.getMailTotalDays() && ! MeetMikey.globalUser.isPremium()
+    if @shouldShow()
       @$el.show()
     else
       @$el.hide()

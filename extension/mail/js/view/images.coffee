@@ -6,25 +6,28 @@ template = """
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
         <div class="hide-image-x"><div class="close-x">x</div></div>
-        <img class="mm-image" src="{{image}}" />
-        <div class="image-text">
-          <div class="image-filename">
-            <a href="#">{{filename}}&nbsp;</a>
-          </div>
+        <div class="undo-delete" style="display:none;">UNDO</div>
+        <div class="image-subbox">
+          <img class="mm-image" src="{{image}}"/>
+          <div class="image-text">
+            <div class="image-filename">
+              <a href="#">{{filename}}&nbsp;</a>
+            </div>
 
-          <div class="rollover-actions">
-            <!-- <a href="#">Forward</a> -->
+            <div class="rollover-actions">
+              <!-- <a href="#">Forward</a> -->
 
-             {{#if ../searchQuery}}
-                <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
-              {{else}}
-                <a href="#inbox/{{msgHex}}" class="open-message">
-                  <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
-                    <div class="list-icon" style="background-image: url('#{downloadUrl}');">
+               {{#if ../searchQuery}}
+                  <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
+                {{else}}
+                  <a href="#inbox/{{msgHex}}" class="open-message">
+                    <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                      <div class="list-icon" style="background-image: url('#{downloadUrl}');">
+                      </div>
                     </div>
-                  </div>
-                </a>
-          {{/if}}
+                  </a>
+            {{/if}}
+            </div>
           </div>
         </div>
       </div>
@@ -44,6 +47,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     'click .mm-image': 'openImage'
     'click .image-filename a': 'openImage'
     'click .open-message': 'openMessage'
+    'click .hide-image-x' : 'markDeleting'
+    'click .undo-delete' : 'unMarkDeleting'
 
   postInitialize: =>
     @on 'showTab', @initIsotope
@@ -51,6 +56,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     Backbone.on 'change:tab', @unbindScrollHandler
     @collection = new MeetMikey.Collection.Images()
     @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
+    @collection.on 'remove', @render
 
   postRender: =>
     $('.mm-download-tooltip').tooltip placement: 'bottom'
@@ -72,6 +78,38 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   getTemplateData: =>
     models: _.invoke(@collection.models, 'decorate')
     searchQuery: @searchQuery
+
+  markDeleting: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
+    model = @collection.get(cid)
+    model.set('deleting', true)
+    element = $('.image-box[data-cid='+model.cid+']')
+    imageElement = element.children('.image-subbox')
+    imageElement.css('opacity', .1) if imageElement?
+    element.children('.undo-delete').show()
+
+    @deleteAfterDelay (model.cid)
+    MeetMikey.Helper.trackResourceEvent 'deleteResource', model,
+      search: @searchQuery?, currentTab: MeetMikey.Globals.tabState, rollover: false
+
+  unMarkDeleting: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
+    model = @collection.get(cid)
+    model.set('deleting', false)
+    element = $('.image-box[data-cid='+model.cid+']')
+    imageElement = element.children('.image-subbox')
+    imageElement.css('opacity', 1) if imageElement?
+    element.children('.undo-delete').hide()
+
+  deleteAfterDelay: (modelId) =>
+    setTimeout =>
+      model = @collection.get(modelId)
+      if model.get('deleting')
+        @collection.remove(model)
+        model.delete()
+    , MeetMikey.Constants.deleteDelay
 
   openImage: (event) =>
     event.preventDefault()
