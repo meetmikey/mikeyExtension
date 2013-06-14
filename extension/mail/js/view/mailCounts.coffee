@@ -32,7 +32,6 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
       false
 
   postRender: =>
-    console.log ('tooltip', $('.mm-download-tooltip'))
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     if MeetMikey.globalUser && MeetMikey.globalUser.getMailTotalDays() && ! MeetMikey.globalUser.isPremium()
       if @shouldShow()
