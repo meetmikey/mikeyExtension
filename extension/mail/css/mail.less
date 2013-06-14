@@ -1509,11 +1509,12 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 
 
 
-/* --------------- TOOLTIP -------------- */
+/* --------------- TABLES TOOLTIP -------------- */
 
 
 
-.tooltip {
+.mm-download {
+    .tooltip {
       position: absolute;
       z-index: 1030;
       display: block;
@@ -1524,19 +1525,38 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
       line-height: 11px;
       opacity: 0;
       filter: alpha(opacity=0);
-    
     }
 
-.tooltip.in {
+    .tooltip.in {
       opacity: 1 !important;
       filter: alpha(opacity=100) !important;
     }
 
-.tooltip.bottom {
+
+    .tooltip.bottom {
+      margin-top: 3px;
+      margin-left: 24px;
       padding: 5px 0;
     }
 
-.tooltip-arrow {
+    .tooltip-inner {
+      padding: 8px;
+      max-width: 200px;
+      -webkit-border-radius: 0px !important;
+      -moz-border-radius: 0px !important;
+      border-radius: 0px;
+      background-color: #2a2a2a;
+      color: #ffffff;
+      text-align: center;
+      text-decoration: none;
+      .dark-blocks & {
+        color: #222;
+        background-color: #fff;
+      }
+
+    }
+
+    .tooltip-arrow {
       position: absolute;
       width: 0;
       height: 0;
@@ -1545,7 +1565,51 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
     }
 
 
-.tooltip-inner {
+  .tooltip.bottom .tooltip-arrow {
+    top: 0;
+    left: 50%;
+    margin-left: -30px;
+    border-width: 0 5px 5px;
+    border-bottom-color: #2a2a2a;
+    .dark-blocks & {
+          color: #222;
+          border-bottom-color: #fff;
+        }
+  }
+
+}
+
+/* --------------- MAILCOUNT TOOLTIP -------------- */
+
+
+
+.mail-counts, .image-box {
+    .tooltip {
+      position: absolute;
+      z-index: 1030;
+      display: block;
+      visibility: visible;
+      border: none;
+      font-weight: bold;
+      font-size: 11px !important;
+      line-height: 11px;
+      opacity: 0;
+      filter: alpha(opacity=0);
+    }
+
+    .tooltip.in {
+      opacity: 1 !important;
+      filter: alpha(opacity=100) !important;
+    }
+
+
+    .tooltip.bottom {
+      margin-top: 3px;
+      margin-left: 0px;
+      padding: 5px 0;
+    }
+
+    .tooltip-inner {
       padding: 8px;
       max-width: 500px;
       -webkit-border-radius: 0px !important;
@@ -1560,30 +1624,31 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
         background-color: #fff;
       }
 
-.mm-download {
-  & .tooltip.bottom {
-    margin-left: 24px !important;
+    }
+
+    .tooltip-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-color: transparent;
+      border-style: solid;
+    }
+
+
+  .tooltip.bottom .tooltip-arrow {
+    top: 0;
+    left: 50%;
+    margin-left: 0px;
+    border-width: 0 5px 5px;
+    border-bottom-color: #2a2a2a;
+    .dark-blocks & {
+          color: #222;
+          border-bottom-color: #fff;
+        }
   }
 
 }
 
-
-
-
-
-
-.tooltip.bottom .tooltip-arrow {
-  top: 0;
-  left: 50%;
-  border-width: 0 5px 5px;
-  border-bottom-color: #2a2a2a;
-  .dark-blocks & {
-        color: #222;
-        border-bottom-color: #fff;
-      }
-}
-
-}
 
 
 
