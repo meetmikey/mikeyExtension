@@ -21,10 +21,10 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
     'click .get-more-link': 'openGetMoreModal'
 
   postInitialize: =>
-    MeetMikey.globalUser?.once 'doneOnboarding', @rerender
+    MeetMikey.globalUser?.on 'change', @rerender
 
   globalUserUpdated: =>
-    MeetMikey.globalUser?.once 'doneOnboarding', @rerender
+    MeetMikey.globalUser?.on 'change', @rerender
     @rerender()
 
   getTemplateData: =>

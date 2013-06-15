@@ -12,7 +12,6 @@ class MeetMikey.Model.User extends Backbone.Model
   checkOnboard: =>
     if MeetMikey.Helper.LocalStore.get @onboardKey()
       @set 'onboarding', false
-      @trigger 'doneOnboarding'
     else
       @fetchOnboard()
 
@@ -62,7 +61,7 @@ class MeetMikey.Model.User extends Backbone.Model
           MeetMikey.Helper.LocalStore.set @onboardKey(), true
           @set 'onboarding', false
           @refreshFromServer () =>
-            @trigger 'doneOnboarding'
+            #console.log 'done onboarding, refreshed user'
         else
           @waitAndFetchOnboard()
 

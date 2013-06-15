@@ -12,7 +12,7 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
     'click .get-more-link': 'openGetMoreModal'
 
   postInitialize: =>
-    MeetMikey.globalUser?.once 'doneOnboarding', @render
+    MeetMikey.globalUser?.on 'change', @render
 
   getTemplateData: =>
     object = {}
@@ -33,11 +33,10 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
 
   postRender: =>
     $('.mm-download-tooltip').tooltip placement: 'bottom'
-    if MeetMikey.globalUser && MeetMikey.globalUser.getMailTotalDays() && ! MeetMikey.globalUser.isPremium()
-      if @shouldShow()
-        @$el.show()
-      else
-        @$el.hide()
+    if @shouldShow()
+      @$el.show()
+    else
+      @$el.hide()
 
   openGetMoreModal: =>
     $('body').append $('<div id="mm-get-more-modal"></div>')
