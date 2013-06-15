@@ -1,4 +1,6 @@
 spriteUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
+openIconUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
+
 template = """
   {{#unless models}}
     <div class="mm-placeholder"></div>
@@ -19,7 +21,7 @@ template = """
           {{#if deleting}}
             <td class="mm-download" style="opacity:0.1">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
-                <div class="list-icon" style="background-image: url('{{../openIconUrl}}');">
+                <div class="list-icon" style="background-image: url('#{spriteUrl}');">
                 </div>
               </div>
             </td>
@@ -42,7 +44,7 @@ template = """
           {{else}}
             <td class="mm-download">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
-                <div class="list-icon" style="background-image: url('{{../openIconUrl}}');">
+                <div class="list-icon" style="background-image: url('#{spriteUrl}');">
                 </div>
               </div>
             </td>
@@ -70,8 +72,6 @@ template = """
     <div class="rollover-container"></div>
   {{/unless}}
 """
-
-openIconUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
