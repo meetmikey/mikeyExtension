@@ -3,16 +3,65 @@ template = """
   {{#unless models}}
 
   {{else}}
+
+    <div id="mmCarouselModal" class="modal fade">
+      <div id="mmCarousel" class="carousel slide">
+        
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+          {{#each models}}
+            {{#if @index}}
+              <div class="item" data-cid="{{cid}}">
+            {{else}}
+              <div class="active item" data-cid="{{cid}}">
+            {{/if}}
+              <img class="max-image" src="{{url}}"/>
+              <div class="image-info">
+                <div class="image-sender">{{from}}</div>
+                <div class="image-subject">{{subject}}</div>
+
+                {{#if ../searchQuery}}
+                
+
+                     <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message" data-dismiss="modal">
+                      <div class="list-icon" style="float:right; display:inline-blocks;">
+                        <div class="list-icon" style="background-image: url('#{downloadUrl}');">
+                        </div>
+                     </div>
+                    </a>
+                {{else}}
+              
+                    <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">
+                      <div class="list-icon" style="float:right; display:inline-blocks;">
+                        <div class="list-icon" style="background-image: url('#{downloadUrl}');">
+                        </div>
+                     </div>
+                    </a>
+                {{/if}}
+               
+              </div>
+            </div>
+          {{/each}}
+        </div>
+
+        <!-- Carousel nav -->
+        <div class="carousel-control left" href="#mmCarousel" style="cursor:pointer;" data-slide="prev">&lsaquo;</div>
+        <div class="carousel-control right" href="#mmCarousel" style="cursor:pointer;" data-slide="next">&rsaquo;</div>
+      </div>
+    </div>
+
+    <div id="mmImagesIsotope">
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
 
-        <div class="hide-image-x" mm-download-tooltip" data-toggle="tooltip" title="Hide this image"><div class="close-x">x</div></div>
+        <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide this image"><div class="close-x">x</div></div>
         {{#if deleting}}
-          <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click here to undo.</div>
-          <div class="image-subbox">
+
+          <div class="undo-delete">This image will no longer appear.<br>Click here to undo.</div>
+          <div class="image-subbox" style="opacity.1">
         {{else}}
           <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click here to undo.</div>
-          <div class="image-subbox" style="opacity.1">
+          <div class="image-subbox">
         {{/if}}
           <img class="mm-image" src="{{image}}"/>
           <div class="image-text">
@@ -27,7 +76,7 @@ template = """
                   <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
                 {{else}}
                   <a href="#inbox/{{msgHex}}" class="open-message">
-                    <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                    <div class="list-icon image-box-tooltip" data-toggle="tooltip" title="View email">
                       <div class="list-icon" style="background-image: url('#{downloadUrl}');">
                       </div>
                     </div>
@@ -38,6 +87,7 @@ template = """
         </div>
       </div>
     {{/each}}
+    </div>
   {{/unless}}
 """
 
@@ -66,8 +116,18 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   postRender: =>
     $('.mm-download-tooltip').tooltip placement: 'bottom'
+    $('.image-box-tooltip').tooltip placement: 'top'
     if MeetMikey.Globals.tabState == 'images'
       @initIsotope()
+    $('.carousel').carousel
+      interval: false
+    $('#mmCarouselModal').modal
+      show: false
+    $('#mmCarouselModal').on 'shown', () =>
+      @carouselVisible = true
+    $('#mmCarouselModal').on 'hidden', () =>
+      @carouselVisible = false
+    @bindCarouselKeys()
 
   teardown: =>
     @clearTimeout()
@@ -121,19 +181,39 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
-    url = model.getUrl()
+    index = @collection.indexOf model
+    $('#mmCarouselModal').modal 'show'
+    $('.carousel').carousel index
 
     MeetMikey.Helper.trackResourceEvent 'openResource', model,
       search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
 
-    window.open url
+  bindCarouselKeys: =>
+    $(document).keydown (e) =>
+      if e.keyCode == 37
+        if @carouselVisible
+          $('.carousel').carousel 'prev'
+          return false
+      if e.keyCode == 39
+        if @carouselVisible
+          $('.carousel').carousel 'next'
+          return false
 
   openMessage: (event) =>
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
+    if ! cid
+      cid = $(event.currentTarget).closest('.item').attr('data-cid')
     model = @collection.get(cid)
+    msgHex = model.get 'gmMsgHex'
+    if @options.fetch
+      hash = "#inbox/#{msgHex}"
+    else
+      hash = "#search/#{@searchQuery}/#{msgHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
+
+    window.location = hash
 
   $scrollElem: =>
     if MeetMikey.Globals.previewPane
@@ -171,7 +251,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @fetching = false
     @endOfImages = true if _.isEmpty(response)
     @appendNewImageModelTemplates response
-    @$el.isotope('reloadItems')
+    $('#mmImagesIsotope').isotope('reloadItems')
     @initIsotope()
     @delegateEvents()
 
@@ -183,8 +263,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   runIsotope: =>
     if @isotopeHasInitialized
-      @$el.isotope('reloadItems')
-    @$el.isotope
+      $('#mmImagesIsotope').isotope('reloadItems')
+    $('#mmImagesIsotope').isotope
       filter: '*'
       animationEngine: 'css'
     @isotopeHasInitialized = true
