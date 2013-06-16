@@ -15,15 +15,30 @@ template = """
             {{else}}
               <div class="active item" data-cid="{{cid}}">
             {{/if}}
-              <img class="mm-image" src="{{url}}"/>
-              <div class="carousel-caption">
+              <img class="max-image" src="{{url}}"/>
+              <div class="image-info">
+                <div class="image-sender">{{from}}</div>
+                <div class="image-subject">{{subject}}</div>
+
                 {{#if ../searchQuery}}
-                  <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message" data-dismiss="modal">View email thread</a>
+                
+
+                     <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message" data-dismiss="modal">
+                      <div class="list-icon" style="float:right; display:inline-blocks;">
+                        <div class="list-icon" style="background-image: url('#{downloadUrl}');">
+                        </div>
+                     </div>
+                    </a>
                 {{else}}
-                  <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">View email thread</a>
+              
+                    <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">
+                      <div class="list-icon" style="float:right; display:inline-blocks;">
+                        <div class="list-icon" style="background-image: url('#{downloadUrl}');">
+                        </div>
+                     </div>
+                    </a>
                 {{/if}}
-                from: {{from}}
-                subject: {{subject}}
+               
               </div>
             </div>
           {{/each}}
@@ -38,12 +53,14 @@ template = """
     <div id="mmImagesIsotope">
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
-        <div class="hide-image-x"><div class="close-x">x</div></div>
+
+        <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide this image"><div class="close-x">x</div></div>
         {{#if deleting}}
-          <div class="undo-delete">UNDO</div>
+
+          <div class="undo-delete">This image will no longer appear.<br>Click here to undo.</div>
           <div class="image-subbox" style="opacity.1">
         {{else}}
-          <div class="undo-delete" style="display:none;">UNDO</div>
+          <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click here to undo.</div>
           <div class="image-subbox">
         {{/if}}
           <img class="mm-image" src="{{image}}"/>
@@ -59,7 +76,7 @@ template = """
                   <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
                 {{else}}
                   <a href="#inbox/{{msgHex}}" class="open-message">
-                    <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+                    <div class="list-icon image-box-tooltip" data-toggle="tooltip" title="View email">
                       <div class="list-icon" style="background-image: url('#{downloadUrl}');">
                       </div>
                     </div>
@@ -99,6 +116,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   postRender: =>
     $('.mm-download-tooltip').tooltip placement: 'bottom'
+    $('.image-box-tooltip').tooltip placement: 'top'
     if MeetMikey.Globals.tabState == 'images'
       @initIsotope()
     $('.carousel').carousel

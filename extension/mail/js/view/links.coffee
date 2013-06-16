@@ -25,7 +25,7 @@ template = """
                 </div>
               </div>
             </td>
-            <td class="mm-favicon" style="background:url({{faviconURL}} style="opacity:0.1") no-repeat;">&nbsp;</td>
+            <td class="mm-favicon" style="background:url({{faviconURL}}) no-repeat;">&nbsp;</td>
             <td class="mm-file truncate" style="display:none;>
               <div class="flex">
                 {{title}}
@@ -34,7 +34,7 @@ template = """
             </td>
             <td class="mm-undo truncate"">
               <div class="flex">
-                {{title}} won't be shown anymore! Click to UNDO 
+                <div class="undo-title-truncate">{{title}}</div> will not be shown anymore. <strong>Click here to undo.</strong> 
               </div>
             </td>
             <td class="mm-source truncate" style="opacity:0.1">{{displayUrl}}</td>
@@ -57,7 +57,7 @@ template = """
             </td>
             <td class="mm-undo truncate" style="display:none;">
               <div class="flex">
-                {{title}} won't be shown anymore! Click to UNDO 
+                <div class="undo-title-truncate">{{title}}</div> will not be shown anymore. <strong>Click here to undo.</strong> 
               </div>
             </td>
             <td class="mm-source truncate">{{displayUrl}}</td>
