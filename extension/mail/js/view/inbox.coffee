@@ -158,7 +158,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
       @updateCountForTab(tab) @subView(tab).collection.length
 
   setResults: (res, query) =>
-    @logger.info 'setting results'
     @subView('attachments').setResults res.attachments, query
     @subView('links').setResults res.links, query
     @subView('images').setResults res.images, query
