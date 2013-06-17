@@ -4,7 +4,7 @@ template = """
 
   {{else}}
 
-    <div id="mmCarouselModal-{{idSuffix}} class="modal fade">
+    <div id="mmCarouselModal-{{idSuffix}}" class="modal fade">
       <div id="mmCarousel-{{idSuffix}}" class="carousel slide">
         
         <!-- Carousel items -->
