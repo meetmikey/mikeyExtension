@@ -4,8 +4,8 @@ template = """
 
   {{else}}
 
-    <div id="mmCarouselModal" class="modal fade">
-      <div id="mmCarousel" class="carousel slide">
+    <div id="mmCarouselModal-{{idSuffix}} class="modal fade">
+      <div id="mmCarousel-{{idSuffix}}" class="carousel slide">
         
         <!-- Carousel items -->
         <div class="carousel-inner">
@@ -45,12 +45,12 @@ template = """
         </div>
 
         <!-- Carousel nav -->
-        <div class="carousel-control left" href="#mmCarousel" style="cursor:pointer;" data-slide="prev">&lsaquo;</div>
-        <div class="carousel-control right" href="#mmCarousel" style="cursor:pointer;" data-slide="next">&rsaquo;</div>
+        <div class="carousel-control left" href="#mmCarousel-{{idSuffix}}" style="cursor:pointer;" data-slide="prev">&lsaquo;</div>
+        <div class="carousel-control right" href="#mmCarousel-{{idSuffix}}" style="cursor:pointer;" data-slide="next">&rsaquo;</div>
       </div>
     </div>
 
-    <div id="mmImagesIsotope">
+    <div id="mmImagesIsotope-{{idSuffix}}">
     {{#each models}}
       <div class="image-box" data-cid="{{cid}}">
 
@@ -113,19 +113,20 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @collection = new MeetMikey.Collection.Images()
     @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
     @collection.on 'remove', @render
+    @idSuffix = Math.random().toString().substring(2,8)
 
   postRender: =>
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     $('.image-box-tooltip').tooltip placement: 'top'
     if MeetMikey.Globals.tabState == 'images'
       @initIsotope()
-    $('.carousel').carousel
+    $('#mmCarousel-' + @idSuffix).carousel
       interval: false
-    $('#mmCarouselModal').modal
+    $('#mmCarouselModal-' + @idSuffix).modal
       show: false
-    $('#mmCarouselModal').on 'shown', () =>
+    $('#mmCarouselModal-' + @idSuffix).on 'shown', () =>
       @carouselVisible = true
-    $('#mmCarouselModal').on 'hidden', () =>
+    $('#mmCarouselModal-' + @idSuffix).on 'hidden', () =>
       @carouselVisible = false
     @bindCarouselKeys()
 
@@ -143,6 +144,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   getTemplateData: =>
     models: _.invoke(@collection.models, 'decorate')
+    idSuffix: @idSuffix
     searchQuery: @searchQuery
 
   markDeleting: (event) =>
@@ -182,8 +184,10 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
     index = @collection.indexOf model
-    $('#mmCarouselModal').modal 'show'
-    $('.carousel').carousel index
+    $('#mmCarouselModal-' + @idSuffix).modal 'show'
+    $('#mmCarousel-' + @idSuffix).carousel index
+    $('#mmCarouselModal-' + @idSuffix).trigger('mouseover')
+    $('#mmCarousel-' + @idSuffix).trigger('mouseover')
 
     MeetMikey.Helper.trackResourceEvent 'openResource', model,
       search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
@@ -192,11 +196,15 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     $(document).keydown (e) =>
       if e.keyCode == 37
         if @carouselVisible
-          $('.carousel').carousel 'prev'
+          $('#mmCarousel-' + @idSuffix).carousel 'prev'
           return false
       if e.keyCode == 39
         if @carouselVisible
-          $('.carousel').carousel 'next'
+          $('#mmCarousel-' + @idSuffix).carousel 'next'
+          return false
+      if e.keyCode == 27
+        if @carouselVisible
+          $('#mmCarouselModal-' + @idSuffix).modal 'hide'
           return false
 
   openMessage: (event) =>
@@ -251,7 +259,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @fetching = false
     @endOfImages = true if _.isEmpty(response)
     @appendNewImageModelTemplates response
-    $('#mmImagesIsotope').isotope('reloadItems')
+    $('#mmImagesIsotope-' + @idSuffix).isotope('reloadItems')
     @initIsotope()
     @delegateEvents()
 
@@ -263,8 +271,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   runIsotope: =>
     if @isotopeHasInitialized
-      $('#mmImagesIsotope').isotope('reloadItems')
-    $('#mmImagesIsotope').isotope
+      $('#mmImagesIsotope-' + @idSuffix).isotope('reloadItems')
+    $('#mmImagesIsotope-' + @idSuffix).isotope
       filter: '*'
       animationEngine: 'css'
     @isotopeHasInitialized = true
