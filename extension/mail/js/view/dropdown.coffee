@@ -7,7 +7,7 @@ template = """
       <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
       {{#if showGetMoreDays}}
       <li class="divider"></li>
-      <li><a tabindex="-1" href="#" class="get-more-link"><!-- <div class="index-status">{{mailProcessedDays}}/{{mailTotalDays}}-->Get more Mikey</a></li>
+      <li><a tabindex="-1" href="#" class="get-more"><!-- <div class="index-status">{{mailProcessedDays}}/{{mailTotalDays}}-->Get more Mikey</a></li>
       {{/if}}
     </ul>
   </li>
@@ -18,7 +18,7 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
 
   events:
     'click .toggle-mikey': 'toggleMikey'
-    'click .get-more-link': 'openGetMoreModal'
+    'click .get-more': 'openGetMoreModal'
 
   postInitialize: =>
     MeetMikey.globalUser?.on 'change', @rerender
