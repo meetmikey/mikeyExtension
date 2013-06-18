@@ -56,6 +56,7 @@
             "mail/js/view/mailCounts.js",
             "mail/js/view/tabs.js",
             "mail/js/view/betaCode.js",
+            "mail/js/view/imageCarousel.js",
             "mail/js/view/images.js",
             "mail/js/view/rollover.js",
             "mail/js/view/attachmentRollover.js",

@@ -17,6 +17,7 @@ class MeetMikey.View.Base extends Backbone.View
     for name, obj of @subViews
       obj.view = new obj.viewClass(obj.args)
       obj.view.setElement obj.selector
+      obj.view.parentView = this
     @postInitialize()
     this
 

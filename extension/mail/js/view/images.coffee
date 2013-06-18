@@ -5,49 +5,7 @@ template = """
   {{else}}
 
     <div id="mmCarouselModal-{{idSuffix}}" class="modal fade">
-      <div id="mmCarousel-{{idSuffix}}" class="carousel slide">
-        
-        <!-- Carousel items -->
-        <div class="carousel-inner">
-          {{#each models}}
-            {{#if @index}}
-              <div class="item" data-cid="{{cid}}">
-            {{else}}
-              <div class="active item" data-cid="{{cid}}">
-            {{/if}}
-              <img class="max-image" src="{{url}}"/>
-              <div class="image-info">
-                <div class="image-sender">{{from}}</div>
-                <div class="image-subject">{{subject}}</div>
-
-                {{#if ../searchQuery}}
-                
-
-                     <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message" data-dismiss="modal">
-                      <div class="list-icon" style="float:right; display:inline-blocks;">
-                        <div class="list-icon" style="background-image: url('#{downloadUrl}');">
-                        </div>
-                     </div>
-                    </a>
-                {{else}}
-              
-                    <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">
-                      <div class="list-icon" style="float:right; display:inline-blocks;">
-                        <div class="list-icon" style="background-image: url('#{downloadUrl}');">
-                        </div>
-                     </div>
-                    </a>
-                {{/if}}
-               
-              </div>
-            </div>
-          {{/each}}
-        </div>
-
-        <!-- Carousel nav -->
-        <div class="carousel-control left" href="#mmCarousel-{{idSuffix}}" style="cursor:pointer;" data-slide="prev">&lsaquo;</div>
-        <div class="carousel-control right" href="#mmCarousel-{{idSuffix}}" style="cursor:pointer;" data-slide="next">&rsaquo;</div>
-      </div>
+      <div class="mmImageCarousel"></div>
     </div>
 
     <div id="mmImagesIsotope-{{idSuffix}}">
@@ -99,6 +57,12 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   safeFind: MeetMikey.Helper.DOMManager.find
 
+  subViews:
+    'imageCarousel':
+      viewClass: MeetMikey.View.ImageCarousel
+      selector: '.mmImageCarousel'
+      args: {}
+
   events:
     'click .mm-image': 'openImage'
     'click .image-filename a': 'openImage'
@@ -109,26 +73,36 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   postInitialize: =>
     @on 'showTab', @initIsotope
     @on 'showTab', @bindScrollHandler
+    @idSuffix = Math.random().toString().substring(2,8)
     Backbone.on 'change:tab', @unbindScrollHandler
     @collection = new MeetMikey.Collection.Images()
     @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
     @collection.on 'remove', @render
-    @idSuffix = Math.random().toString().substring(2,8)
+    @subViews.imageCarousel.view.setImageCollection @collection
+    @setupModal()
+
+  setupModal: =>
+    $('#mmCarouselModal-' + @idSuffix).modal
+      show: false
+
+  isModalVisible: =>
+    true
+    
+  openModal: =>
+    $('#mmCarouselModal-' + @idSuffix).modal 'show'
+    $('#mmCarouselModal-' + @idSuffix).trigger('mouseover')
+
+  hideModal: =>
+    $('#mmCarouselModal-' + @idSuffix).modal 'hide'
 
   postRender: =>
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     $('.image-box-tooltip').tooltip placement: 'top'
     if MeetMikey.Globals.tabState == 'images'
       @initIsotope()
-    $('#mmCarousel-' + @idSuffix).carousel
-      interval: false
-    $('#mmCarouselModal-' + @idSuffix).modal
-      show: false
-    $('#mmCarouselModal-' + @idSuffix).on 'shown', () =>
-      @carouselVisible = true
-    $('#mmCarouselModal-' + @idSuffix).on 'hidden', () =>
-      @carouselVisible = false
-    @bindCarouselKeys()
+
+  openImage: (event) =>
+    @subViews.imageCarousel.view.openImage event
 
   teardown: =>
     @clearTimeout()
@@ -178,34 +152,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         @collection.remove(model)
         model.delete()
     , MeetMikey.Constants.deleteDelay
-
-  openImage: (event) =>
-    event.preventDefault()
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    model = @collection.get(cid)
-    index = @collection.indexOf model
-    $('#mmCarouselModal-' + @idSuffix).modal 'show'
-    $('#mmCarousel-' + @idSuffix).carousel index
-    $('#mmCarouselModal-' + @idSuffix).trigger('mouseover')
-    $('#mmCarousel-' + @idSuffix).trigger('mouseover')
-
-    MeetMikey.Helper.trackResourceEvent 'openResource', model,
-      search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
-
-  bindCarouselKeys: =>
-    $(document).keydown (e) =>
-      if e.keyCode == 37
-        if @carouselVisible
-          $('#mmCarousel-' + @idSuffix).carousel 'prev'
-          return false
-      if e.keyCode == 39
-        if @carouselVisible
-          $('#mmCarousel-' + @idSuffix).carousel 'next'
-          return false
-      if e.keyCode == 27
-        if @carouselVisible
-          $('#mmCarouselModal-' + @idSuffix).modal 'hide'
-          return false
 
   openMessage: (event) =>
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
