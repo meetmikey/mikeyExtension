@@ -53,6 +53,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   pollDelay: MeetMikey.Constants.pollDelay
+  defaultNumImagesToFetch: 8
   fetching: false
 
   safeFind: MeetMikey.Helper.DOMManager.find
@@ -181,25 +182,34 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       if @options.fetch
         @scrollHandler()
 
-  unbindScrollHandler: => @$scrollElem().off 'scroll', @scrollHandler
+  unbindScrollHandler: =>
+    @$scrollElem().off 'scroll', @scrollHandler
 
   scrollHandler: (event)=>
-    @fetchMoreImages() if not @fetching and not @endOfImages and @nearBottom()
+    @fetchMoreImages() if not @fetching and @nearBottom()
 
   nearBottom: =>
     $scrollElem = @$scrollElem()
-    $scrollElem.scrollTop() + $scrollElem.height() > ( @$el.height() - 1000 )
+    nearBottom = $scrollElem.scrollTop() + $scrollElem.height() > ( @$el.height() - 1000 )
+    if nearBottom
+      #console.log 'nearBottom, scrollTop: ', $scrollElem.scrollTop(), ', height: ', $scrollElem.height(), ', elHeight: ', @$el.height()
+    nearBottom
 
-  fetchMoreImages: =>
-    @fetching = true
-    @collection.fetch
-      silent: true
-      update: true
-      remove: false
-      data:
-        before: @collection.last()?.get('sentDate')
-        limit: 5
-      success: @fetchSuccess
+  fetchMoreImages: (forceNumToFetch) =>
+    numToFetch = @defaultNumImagesToFetch
+    if forceNumToFetch
+      numToFetch = forceNumToFetch
+    #console.log 'fetchMoreImages, numToFetch: ', numToFetch
+    if not @endOfImages
+      @fetching = true
+      @collection.fetch
+        silent: true
+        update: true
+        remove: false
+        data:
+          before: @collection.last()?.get('sentDate')
+          limit: numToFetch
+        success: @fetchSuccess
 
   fetchSuccess: (collection, response) =>
     @fetching = false
@@ -212,6 +222,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   appendNewImageModelTemplates: (response) =>
     ids = _.pluck response, '_id'
     models = _.map ids, (id) => @collection.get(id)
+    #console.log 'appendNewImageModelTemplates, numNewModels: ', models.length
     decoratedModels = _.invoke(models, 'decorate')
     @$el.append @template(models: decoratedModels)
 

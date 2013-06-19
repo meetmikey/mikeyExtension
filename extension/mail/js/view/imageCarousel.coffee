@@ -41,6 +41,8 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
   carouselVisible: false
   numPreloadImagesEachWay: 4
+  bufferToFetchMoreImages: 10
+  numImagesToFetch: 15
 
   events:
     'click .open-message': 'openMessage'
@@ -73,10 +75,21 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     activeIndex: @activeIndex
     idSuffix: @idSuffix
 
+
+  getActiveIndexInFullCollection: =>
+    if ! @activeModel
+      #console.log 'ERROR: getActiveIndexInFullCollection. no activeModel'
+      return
+    fullCollectionModel = @fullCollection.find (testModel) =>
+      testModel.id == @activeModel.id
+    fullCollectionIndex = @fullCollection.indexOf fullCollectionModel
+    fullCollectionIndex
+
   getNearbyImages: =>
     @nearbyImagesCollection.reset []
-    @lowIndex = @modelIndex - @numPreloadImagesEachWay
-    @highIndex = @modelIndex + @numPreloadImagesEachWay
+    fullCollectionIndex = @getActiveIndexInFullCollection()
+    @lowIndex = fullCollectionIndex - @numPreloadImagesEachWay
+    @highIndex = fullCollectionIndex + @numPreloadImagesEachWay
     if @lowIndex < 0
       @lowIndex = 0
     if @highIndex > ( @fullCollection.length - 1 )
@@ -85,19 +98,20 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     curIndex = 0
     while ( index <= @highIndex )
       model = @fullCollection.at index
-      @nearbyImagesCollection.add model
-      if model._id = @activeModel._id
+      newModel = model.clone()
+      @nearbyImagesCollection.add newModel
+      if model.id == @activeModel.id
         @activeIndex = curIndex
+        @activeModel = newModel
       curIndex++
       index++
-    @activeIndex = @nearbyImagesCollection.indexOf @activeModel
 
   openImage: (event) =>
     event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    @activeModel = @fullCollection.get(cid)
-    @modelIndex = @fullCollection.indexOf @activeModel
+    activeModelInFullCollection = @fullCollection.get(cid)
     @nearbyImagesCollection.reset []
+    @activeModel = activeModelInFullCollection.clone()
     @nearbyImagesCollection.add @activeModel
     @parentView.openModal()
     @render()
@@ -116,36 +130,53 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     $(document).off 'keydown', @keyHandler
 
   goLeft: =>
+    #console.log 'goLeft'
     if @activeIndex > 0
       @activeIndex--
       @activeModel = @nearbyImagesCollection.at @activeIndex
-      fullIndex = @fullCollection.indexOf @activeModel
-      newLowIndex = fullIndex - @numPreloadImagesEachWay
+      fullCollectionIndex = @getActiveIndexInFullCollection()
+      newLowIndex = fullCollectionIndex - @numPreloadImagesEachWay
       if newLowIndex < 0
         newLowIndex = 0
+      #console.log 'goLeft: newLowIndex: ', newLowIndex, ', fullCollectionIndexOfActiveModel', fullCollectionIndex, ', activeModel cid: ', @activeModel.cid, ', activeIndex: ', @activeIndex
       if newLowIndex < @lowIndex
         @lowIndex = newLowIndex
         model = @fullCollection.at @lowIndex
-        @nearbyImagesCollection.unshift model
+        @nearbyImagesCollection.unshift model.clone()
         @render()
       @activateModel()
 
   goRight: =>
+    #console.log 'goRight'
     if @activeIndex < ( @nearbyImagesCollection.length - 1 )
       @activeIndex++
       @activeModel = @nearbyImagesCollection.at @activeIndex
-      fullIndex = @fullCollection.indexOf @activeModel
-      newHighIndex = fullIndex + @numPreloadImagesEachWay
+      fullCollectionIndex = @getActiveIndexInFullCollection()
+      newHighIndex = fullCollectionIndex + @numPreloadImagesEachWay
       if newHighIndex > ( @fullCollection.length - 1 )
         newHighIndex = ( @fullCollection.length - 1 )
+      #console.log 'goRight, activeIndex: ', @activeIndex, ', newHighIndex: ', newHighIndex, ', fullCollectionIndex', fullCollectionIndex, ', fullCollection length: ', @fullCollection.length
       if newHighIndex > @highIndex
         @highIndex = newHighIndex
         model = @fullCollection.at @highIndex
-        @nearbyImagesCollection.add model
+        @nearbyImagesCollection.add model.clone()
         @render()
+        if ( @fullCollection.length - @highIndex ) < @bufferToFetchMoreImages
+          #console.log 'fetching more...'
+          @parentView.fetchMoreImages @numImagesToFetch
+        else
+          #console.log 'not fetching more, buffer: ', @fullCollection.length - @highIndex
       @activateModel()
 
+  printFullCollectionsIds: =>
+    index = 0
+    console.log 'fullCollection IDs, activeModel id: ', @activeModel?.id, ', fullCollectionIndex: ', @getActiveIndexInFullCollection()
+    while ( index < @fullCollection.length )
+      console.log 'index: ', index, ', id: ', @fullCollection.at(index).id
+      index++
+
   keyHandler: (e) =>
+    #console.log 'keyHandler, keyCode: ', e.keyCode
     if e.keyCode == 37
       if @parentView.isModalVisible()
         @goLeft()
@@ -157,6 +188,10 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     if e.keyCode == 27
       if @parentView.isModalVisible()
         @parentView.hideModal()
+        return false
+    if e.keyCode == 80
+      if @parentView.isModalVisible()
+        @printFullCollectionsIds()
         return false
 
   openMessage: (event) =>
