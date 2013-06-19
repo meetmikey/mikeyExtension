@@ -86,7 +86,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       show: false
 
   isModalVisible: =>
-    true
+    $('#mmCarouselModal-' + @idSuffix).hasClass 'fade-in'
     
   openModal: =>
     $('#mmCarouselModal-' + @idSuffix).modal 'show'
