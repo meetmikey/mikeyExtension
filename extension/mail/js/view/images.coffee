@@ -53,7 +53,9 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   pollDelay: MeetMikey.Constants.pollDelay
+  hasInitializedIsotope: false
   defaultNumImagesToFetch: 8
+  infiniteScrollThreshold: 1000
   fetching: false
 
   safeFind: MeetMikey.Helper.DOMManager.find
@@ -77,8 +79,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @idSuffix = Math.random().toString().substring(2,8)
     Backbone.on 'change:tab', @unbindScrollHandler
     @collection = new MeetMikey.Collection.Images()
-    @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
-    @collection.on 'remove', @render
+    @collection.on 'reset', _.debounce(@render, MeetMikey.Constants.paginationSize)
     @subViews.imageCarousel.view.setImageCollection @collection
     @setupModal()
 
@@ -97,6 +98,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     $('#mmCarouselModal-' + @idSuffix).modal 'hide'
 
   postRender: =>
+    @hasInitializedIsotope = false
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     $('.image-box-tooltip').tooltip placement: 'top'
     if MeetMikey.Globals.tabState == 'images'
@@ -176,7 +178,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     else
       @safeFind(MeetMikey.Constants.Selectors.scrollContainer)
 
-
   bindScrollHandler: =>
     @$scrollElem().on 'scroll', () =>
       if @options.fetch
@@ -186,37 +187,44 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @$scrollElem().off 'scroll', @scrollHandler
 
   scrollHandler: (event)=>
-    @fetchMoreImages() if not @fetching and @nearBottom()
+    @fetchMoreImages() if @nearBottom()
 
   nearBottom: =>
     $scrollElem = @$scrollElem()
-    nearBottom = $scrollElem.scrollTop() + $scrollElem.height() > ( @$el.height() - 1000 )
-    if nearBottom
-      #console.log 'nearBottom, scrollTop: ', $scrollElem.scrollTop(), ', height: ', $scrollElem.height(), ', elHeight: ', @$el.height()
+    elHeight = @$el.parent().parent().height()
+    nearBottom = $scrollElem.scrollTop() + $scrollElem.height() > ( elHeight - @infiniteScrollThreshold )
     nearBottom
 
   fetchMoreImages: (forceNumToFetch) =>
     numToFetch = @defaultNumImagesToFetch
     if forceNumToFetch
       numToFetch = forceNumToFetch
-    #console.log 'fetchMoreImages, numToFetch: ', numToFetch
-    if not @endOfImages
+    if not @endOfImages and not @fetching
       @fetching = true
-      @collection.fetch
-        silent: true
-        update: true
-        remove: false
+      MeetMikey.Helper.callAPI
+        url: '/image'
         data:
+          userEmail: MeetMikey.globalUser.get('email')
+          asymHash: MeetMikey.globalUser.get('asymHash')
+          extensionVersion: MeetMikey.Constants.extensionVersion
           before: @collection.last()?.get('sentDate')
           limit: numToFetch
-        success: @fetchSuccess
+        success: (res) =>
+          @addImagesFromFetchResponse res
+        #error: (err) =>
+          #console.log 'fetch error: ', err
 
-  fetchSuccess: (collection, response) =>
+  addImagesFromFetchResponse: (res) =>
+    _.each res, (imageData) =>
+      newModel = new MeetMikey.Model.Image imageData
+      @collection.push newModel
+    @fetchSuccess res
+
+  fetchSuccess: (response) =>
     @fetching = false
     @endOfImages = true if _.isEmpty(response)
     @appendNewImageModelTemplates response
-    $('#mmImagesIsotope-' + @idSuffix).isotope('reloadItems')
-    @initIsotope()
+    @runIsotope()
     @delegateEvents()
 
   appendNewImageModelTemplates: (response) =>
@@ -227,12 +235,14 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @$el.append @template(models: decoratedModels)
 
   runIsotope: =>
-    if @isotopeHasInitialized
-      $('#mmImagesIsotope-' + @idSuffix).isotope('reloadItems')
-    $('#mmImagesIsotope-' + @idSuffix).isotope
-      filter: '*'
-      animationEngine: 'css'
-    @isotopeHasInitialized = true
+    #console.log 'runIsotope'
+    if ! @hasInitializedIsotope
+      #console.log 'initializing isotope'
+      $('#mmImagesIsotope-' + @idSuffix).isotope
+        filter: '*'
+        animationEngine: 'css'
+      @hasInitializedIsotope = true
+    $('#mmImagesIsotope-' + @idSuffix).isotope('reloadItems')
 
   checkAndRunIsotope: =>
     if @areImagesLoaded
@@ -243,6 +253,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @runIsotope()
 
   initIsotope: =>
+    #console.log 'initIsotope!!'
     # @logger.info 'init isotope'
     @areImagesLoaded = false
     if ! @isotopeInterval
