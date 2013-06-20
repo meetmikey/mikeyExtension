@@ -64,7 +64,8 @@ MeetMikey.Helper.getResourceProperties = (resource) ->
     {}
   else
     hoursSinceSent = MeetMikey.Helper.hoursSince resource.get('sentDate')
-    listPosition = resource.collection.indexOf(resource)
+    if resource.collection
+      listPosition = resource.collection.indexOf(resource)
     resourceId = resource.id
 
     props = {hoursSinceSent, listPosition, resourceId}
