@@ -249,6 +249,12 @@ body {
 
 }
 
+.mm-count {
+  font-size: 13px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
 
 .compact .mikey-tab {
   margin-top: 0px;
@@ -1583,7 +1589,7 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 
 
 
-.mail-counts {
+.mail-counts, .mikey-tabs {
     .tooltip {
       position: absolute;
       z-index: 1030;
@@ -2156,6 +2162,9 @@ a.get-more-link {
   line-height: 15px;
   margin-top: 20px;
   padding: 0px 20px 0px 20px;
+  background-color: #fff;
+  margin-top: -55px;
+  z-index: 999999999;
 }
 
 .image-subject {
@@ -2188,10 +2197,10 @@ a.get-more-link {
 .max-image {
   margin-left: auto;
   margin-right: auto;
-  max-width: 800px;
+  max-width: 80%;
   padding: 0px;
   border-bottom: 1px solid #e0e0e0;
-  max-height: 600px;
+  max-height: 80%;
 }
 
 .carousel-inner img {
@@ -2199,9 +2208,13 @@ width: auto;
 }
 
 .mm-images-tab .modal {
-  width: 800px;
+  width: auto;
+  max-width: 80%;
   padding: 0px;
-  margin-left: -400px;
+  margin-left: 0px;
+  height: auto;
+  max-height: 80%;
+  left: 10%;
 }
 
 .carousel .carousel-control { visibility: hidden; }
