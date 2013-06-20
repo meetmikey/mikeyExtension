@@ -1,6 +1,6 @@
 downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 template = """
-  <div id="mmCarousel-{{idSuffix}}" class="carousel slide">
+  <div class="mmCarousel carousel slide">
     
     <!-- Carousel items -->
     <div class="carousel-inner">
@@ -40,7 +40,7 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   carouselVisible: false
-  numPreloadImagesEachWay: 4
+  numPreloadImagesEachWay: 5
   bufferToFetchMoreImages: 10
   numImagesToFetch: 15
 
@@ -50,14 +50,13 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     'click .right': 'goRight'
 
   postInitialize: =>
-    @idSuffix = Math.random().toString().substring(2,8)
     @localCollection = new MeetMikey.Collection.Images()
 
   setImageCollection: (collection) =>
     @fullCollection = collection
 
   postRender: =>
-    $('#mmCarousel-' + @idSuffix).carousel
+    $('.mmCarousel').carousel
       interval: false
     @bindCarouselKeys()
 
@@ -72,16 +71,12 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
   getTemplateData: =>
     models: _.invoke(@localCollection.models, 'decorate')
-    activeIndex: @activeIndex
-    idSuffix: @idSuffix
-
 
   getModelIndexInFullCollection: (forceModel) =>
     model = @activeModel
     if forceModel
       model = forceModel
     if ! model
-      #console.log 'ERROR: getModelIndexInFullCollection. no activeModel'
       return
     fullCollectionModel = @fullCollection.find (testModel) =>
       testModel.id == model.id
@@ -110,7 +105,6 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
       index++
 
   openImage: (event) =>
-    @sanityCheck 'openImage start'
     event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     activeModelInFullCollection = @fullCollection.get(cid)
@@ -125,8 +119,6 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
     MeetMikey.Helper.trackResourceEvent 'openResource', @activeModel,
       search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
-
-    @sanityCheck 'openImage end'
 
   bindCarouselKeys: =>
     @unbindCarouselKeys()
@@ -146,15 +138,11 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
         matches = ( fullCollectionIndex - previousFullCollectionIndex ) == 1
         if ! matches
           console.log 'sanityCheck warning: ' + where + ': previousFullCollectionIndex: ', previousFullCollectionIndex, ', previousModelId: ', previousModelId, ', current fullCollectionIndex: ', fullCollectionIndex, ', current model.id: ', model.id
-          @printFullCollectionsIds()
-          @printLocalCollectionsIds()
       previousFullCollectionIndex = fullCollectionIndex
       previousModelId = model.id
       localIndex++
 
   goLeft: =>
-    @sanityCheck 'goLeft start'
-    #console.log 'goLeft'
     if @activeIndex > 0
       @activeIndex--
       @activeModel = @localCollection.at @activeIndex
@@ -162,18 +150,14 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
       newLowIndex = fullCollectionIndex - @numPreloadImagesEachWay
       if newLowIndex < 0
         newLowIndex = 0
-      #console.log 'goLeft: newLowIndex: ', newLowIndex, ', fullCollectionIndexOfActiveModel', fullCollectionIndex, ', activeModel cid: ', @activeModel.cid, ', activeIndex: ', @activeIndex
       if newLowIndex < @lowIndex
         @lowIndex = newLowIndex
         model = @fullCollection.at @lowIndex
         @localCollection.unshift model.clone()
         @render()
       @activateModel()
-      @sanityCheck 'goLeft end'
 
   goRight: =>
-    #console.log 'goRight start'
-    @sanityCheck 'goRight start'
     if @activeIndex < ( @localCollection.length - 1 )
       @activeIndex++
       @activeModel = @localCollection.at @activeIndex
@@ -181,36 +165,16 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
       newHighIndex = fullCollectionIndex + @numPreloadImagesEachWay
       if newHighIndex > ( @fullCollection.length - 1 )
         newHighIndex = ( @fullCollection.length - 1 )
-      #console.log 'goRight, activeIndex: ', @activeIndex, ', newHighIndex: ', newHighIndex, ', fullCollectionIndex', fullCollectionIndex, ', fullCollection length: ', @fullCollection.length
       if newHighIndex > @highIndex
         @highIndex = newHighIndex
         model = @fullCollection.at @highIndex
         @localCollection.push model.clone()
         @render()
         if ( @fullCollection.length - @highIndex ) < @bufferToFetchMoreImages
-          #console.log 'fetching more...'
           @parentView.fetchMoreImages @numImagesToFetch
-        #else
-          #console.log 'not fetching more, buffer: ', @fullCollection.length - @highIndex
       @activateModel()
-      @sanityCheck 'goRight end'
-
-  printFullCollectionsIds: =>
-    index = 0
-    console.log 'fullCollection IDs, activeModel id: ', @activeModel?.id, ', fullCollectionIndex: ', @getModelIndexInFullCollection()
-    while ( index < @fullCollection.length )
-      console.log 'index: ', index, ', id: ', @fullCollection.at(index).id
-      index++
-
-  printLocalCollectionsIds: =>
-    index = 0
-    console.log 'localCollection IDs, activeModel id: ', @activeModel?.id, ', fullCollectionIndex: ', @getModelIndexInFullCollection()
-    while ( index < @localCollection.length )
-      console.log 'index: ', index, ', id: ', @localCollection.at(index).id
-      index++
 
   keyHandler: (e) =>
-    #console.log 'keyHandler, keyCode: ', e.keyCode
     if e.keyCode == 37
       if @parentView.isModalVisible()
         @goLeft()
@@ -222,11 +186,6 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     if e.keyCode == 27
       if @parentView.isModalVisible()
         @parentView.hideModal()
-        return false
-    if e.keyCode == 80
-      if @parentView.isModalVisible()
-        @printFullCollectionsIds()
-        @printLocalCollectionsIds()
         return false
 
   openMessage: (event) =>

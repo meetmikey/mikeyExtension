@@ -1,59 +1,57 @@
 downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
+
+imageTemplate = """
+  <div class="image-box" data-cid="{{cid}}">
+    <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide this image"><div class="close-x">x</div></div>
+    {{#if deleting}}
+
+      <div class="undo-delete">This image will no longer appear.<br>Click here to undo.</div>
+      <div class="image-subbox" style="opacity.1">
+    {{else}}
+      <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click here to undo.</div>
+      <div class="image-subbox">
+    {{/if}}
+      <img class="mm-image" src="{{image}}"/>
+      <div class="image-text">
+        <div class="image-filename">
+          <a href="#">{{filename}}&nbsp;</a>
+        </div>
+
+        <div class="rollover-actions">
+          <a href="#inbox/{{msgHex}}" class="open-message">
+            <div class="list-icon image-box-tooltip" data-toggle="tooltip" title="View email">
+              <div class="list-icon" style="background-image: url('#{downloadUrl}');">
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+"""
+
 template = """
-  {{#unless models}}
-
-  {{else}}
-
-    <div id="mmCarouselModal-{{idSuffix}}" class="modal fade">
+    <div class="mmCarouselModal modal fade">
       <div class="mmImageCarousel"></div>
     </div>
 
-    <div id="mmImagesIsotope-{{idSuffix}}">
-    {{#each models}}
-      <div class="image-box" data-cid="{{cid}}">
-
-        <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide this image"><div class="close-x">x</div></div>
-        {{#if deleting}}
-
-          <div class="undo-delete">This image will no longer appear.<br>Click here to undo.</div>
-          <div class="image-subbox" style="opacity.1">
-        {{else}}
-          <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click here to undo.</div>
-          <div class="image-subbox">
-        {{/if}}
-          <img class="mm-image" src="{{image}}"/>
-          <div class="image-text">
-            <div class="image-filename">
-              <a href="#">{{filename}}&nbsp;</a>
-            </div>
-
-            <div class="rollover-actions">
-              <!-- <a href="#">Forward</a> -->
-
-               {{#if ../searchQuery}}
-                  <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message">View email thread</a>
-                {{else}}
-                  <a href="#inbox/{{msgHex}}" class="open-message">
-                    <div class="list-icon image-box-tooltip" data-toggle="tooltip" title="View email">
-                      <div class="list-icon" style="background-image: url('#{downloadUrl}');">
-                      </div>
-                    </div>
-                  </a>
-            {{/if}}
-            </div>
-          </div>
-        </div>
-      </div>
-    {{/each}}
+    <div class="mmImagesIsotope">
+      {{#if models}}
+        {{#each models}}
+          """ + imageTemplate + """
+        {{/each}}
+      {{/if}}
     </div>
-  {{/unless}}
 """
+
 
 class MeetMikey.View.Images extends MeetMikey.View.Base
   template: Handlebars.compile(template)
+  imageTemplate: Handlebars.compile(imageTemplate)
 
   pollDelay: MeetMikey.Constants.pollDelay
   hasInitializedIsotope: false
+  isotopeTimeInterval: 200
   defaultNumImagesToFetch: 8
   infiniteScrollThreshold: 1000
   fetching: false
@@ -74,9 +72,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     'click .undo-delete' : 'unMarkDeleting'
 
   postInitialize: =>
-    @on 'showTab', @initIsotope
+    @on 'showTab', @isotopeUntilImagesLoaded
     @on 'showTab', @bindScrollHandler
-    @idSuffix = Math.random().toString().substring(2,8)
     Backbone.on 'change:tab', @unbindScrollHandler
     @collection = new MeetMikey.Collection.Images()
     @collection.on 'reset', _.debounce(@render, MeetMikey.Constants.paginationSize)
@@ -84,25 +81,25 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @setupModal()
 
   setupModal: =>
-    $('#mmCarouselModal-' + @idSuffix).modal
+    $('.mmCarouselModal').modal
       show: false
 
   isModalVisible: =>
-    $('#mmCarouselModal-' + @idSuffix).hasClass 'fade-in'
+    $('.mmCarouselModal').hasClass 'fade-in'
     
   openModal: =>
-    $('#mmCarouselModal-' + @idSuffix).modal 'show'
-    $('#mmCarouselModal-' + @idSuffix).trigger('mouseover')
+    $('.mmCarouselModal').modal 'show'
+    $('.mmCarouselModal').trigger('mouseover')
 
   hideModal: =>
-    $('#mmCarouselModal-' + @idSuffix).modal 'hide'
+    $('.mmCarouselModal').modal 'hide'
 
   postRender: =>
     @hasInitializedIsotope = false
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     $('.image-box-tooltip').tooltip placement: 'top'
     if MeetMikey.Globals.tabState == 'images'
-      @initIsotope()
+      @isotopeUntilImagesLoaded()
 
   openImage: (event) =>
     @subViews.imageCarousel.view.openImage event
@@ -117,24 +114,23 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @collection.fetch success: @waitAndPoll if @options.fetch
 
   restoreFromCache: =>
-    @collection.reset(@cachedModels)
+    @collection.reset @cachedModels
 
   getTemplateData: =>
-    models: _.invoke(@collection.models, 'decorate')
-    idSuffix: @idSuffix
+    models: _.invoke @collection.models, 'decorate'
     searchQuery: @searchQuery
 
   markDeleting: (event) =>
     event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
-    model.set('deleting', true)
+    model.set 'deleting', true
     element = $('.image-box[data-cid='+model.cid+']')
-    imageElement = element.children('.image-subbox')
+    imageElement = element.children '.image-subbox'
     imageElement.css('opacity', .1) if imageElement?
     element.children('.undo-delete').show()
 
-    @deleteAfterDelay (model.cid)
+    @deleteAfterDelay model.cid
     MeetMikey.Helper.trackResourceEvent 'deleteResource', model,
       search: @searchQuery?, currentTab: MeetMikey.Globals.tabState, rollover: false
 
@@ -150,9 +146,9 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   deleteAfterDelay: (modelId) =>
     setTimeout =>
-      model = @collection.get(modelId)
-      if model.get('deleting')
-        @collection.remove(model)
+      model = @collection.get modelId
+      if model.get 'deleting'
+        @collection.remove model
         model.delete()
     , MeetMikey.Constants.deleteDelay
 
@@ -160,7 +156,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     if ! cid
       cid = $(event.currentTarget).closest('.item').attr('data-cid')
-    model = @collection.get(cid)
+    model = @collection.get cid
     msgHex = model.get 'gmMsgHex'
     if @options.fetch
       hash = "#inbox/#{msgHex}"
@@ -224,27 +220,27 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @fetching = false
     @endOfImages = true if _.isEmpty(response)
     @appendNewImageModelTemplates response
-    @runIsotope()
     @delegateEvents()
 
   appendNewImageModelTemplates: (response) =>
     ids = _.pluck response, '_id'
     models = _.map ids, (id) => @collection.get(id)
-    #console.log 'appendNewImageModelTemplates, numNewModels: ', models.length
     decoratedModels = _.invoke(models, 'decorate')
-    @$el.append @template(models: decoratedModels)
+    html = ''
+    _.each decoratedModels, (decoratedModel) =>
+      html += @imageTemplate(decoratedModel)
+    items = $(html)
+    $('.mmImagesIsotope').isotope 'insert', items
 
   runIsotope: =>
-    #console.log 'runIsotope'
     if ! @hasInitializedIsotope
-      #console.log 'initializing isotope'
-      $('#mmImagesIsotope-' + @idSuffix).isotope
+      $('.mmImagesIsotope').isotope
         filter: '*'
         animationEngine: 'css'
       @hasInitializedIsotope = true
-    $('#mmImagesIsotope-' + @idSuffix).isotope('reloadItems')
+    $('.mmImagesIsotope').isotope 'reloadItems'
 
-  checkAndRunIsotope: =>
+  checkImagesLoadedAndRunIsotope: =>
     if @areImagesLoaded
       # @logger.info 'images loaded, clearing isotope interval', @isotopeInterval
       clearInterval @isotopeInterval
@@ -252,19 +248,20 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     else
       @runIsotope()
 
-  initIsotope: =>
-    #console.log 'initIsotope!!'
-    # @logger.info 'init isotope'
+  isotopeUntilImagesLoaded: =>
+    # @logger.info 'isotopeUntilImagesLoaded'
+    if @isotopeInterval
+      return
     @areImagesLoaded = false
     if ! @isotopeInterval
-      @isotopeInterval = setInterval @checkAndRunIsotope, 200
+      @isotopeInterval = setInterval @checkImagesLoadedAndRunIsotope, @isotopeTimeInterval
     @$el.imagesLoaded =>
       @areImagesLoaded = true
       # @logger.info 'images loaded, isotoping one last time'
       @runIsotope()
 
   setResults: (models, query) =>
-    @on 'showTab', @initIsotope
+    @on 'showTab', @isotopeUntilImagesLoaded
     @searchQuery = query
     @collection.reset models, sort: false
 
