@@ -51,7 +51,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   pollDelay: MeetMikey.Constants.pollDelay
   hasInitializedIsotope: false
-  isotopeTimeInterval: 200
+  isotopeTimeInterval: 500
   defaultNumImagesToFetch: 8
   infiniteScrollThreshold: 1000
   fetching: false
@@ -233,40 +233,27 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @$('.mmImagesIsotope').isotope 'insert', items
 
   runIsotope: =>
-    console.log 'runIsotope'
     if ! @hasInitializedIsotope
-      console.log 'initializing isotope'
       @$('.mmImagesIsotope').isotope
         filter: '*'
         animationEngine: 'css'
       @hasInitializedIsotope = true
-    @$('.mmImagesIsotope').isotope 'reloadItems'
-
-  checkImagesLoadedAndRunIsotope: =>
-    if @areImagesLoaded
-      # @logger.info 'images loaded, clearing isotope interval', @isotopeInterval
-      clearInterval @isotopeInterval
-      @isotopeInterval = null
-    else
-      @runIsotope()
+    @$('.mmImagesIsotope').isotope 'reLayout'
 
   isotopeUntilImagesLoaded: =>
     # @logger.info 'isotopeUntilImagesLoaded'
-    if @isotopeInterval
-      return
-    @areImagesLoaded = false
-    if ! @isotopeInterval
-      @isotopeInterval = setInterval @checkImagesLoadedAndRunIsotope, @isotopeTimeInterval
+    @runIsotope()
     @$el.imagesLoaded =>
-      @areImagesLoaded = true
       # @logger.info 'images loaded, isotoping one last time'
       @runIsotope()
+      setTimeout @runIsotope, 1000
+      setTimeout @runIsotope, 4000
 
   setResults: (models, query) =>
     @on 'showTab', @isotopeUntilImagesLoaded
-    @isotopeUntilImagesLoaded()
     @searchQuery = query
     @collection.reset models, sort: false
+    @isotopeUntilImagesLoaded()
 
   waitAndPoll: =>
     @timeoutId = setTimeout @poll, @pollDelay
