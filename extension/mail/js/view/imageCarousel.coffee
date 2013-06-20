@@ -41,8 +41,10 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
   carouselVisible: false
   numPreloadImagesEachWay: 5
+  maxImagesInLocalCollection: 20
   bufferToFetchMoreImages: 10
   numImagesToFetch: 15
+  trimLocalCollection: true
 
   events:
     'click .open-message': 'openMessage'
@@ -154,6 +156,10 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
         @lowIndex = newLowIndex
         model = @fullCollection.at @lowIndex
         @localCollection.unshift model.clone()
+        @activeIndex++
+        if @trimLocalCollection and ( @localCollection.length > @maxImagesInLocalCollection )
+          @highIndex--
+          @localCollection.pop()
         @render()
       @activateModel()
 
@@ -169,6 +175,10 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
         @highIndex = newHighIndex
         model = @fullCollection.at @highIndex
         @localCollection.push model.clone()
+        if @trimLocalCollection and ( @localCollection.length > @maxImagesInLocalCollection )
+          @localCollection.shift()
+          @lowIndex++
+          @activeIndex--
         @render()
         if ( @fullCollection.length - @highIndex ) < @bufferToFetchMoreImages
           @parentView.fetchMoreImages @numImagesToFetch
