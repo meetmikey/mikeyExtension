@@ -58,7 +58,7 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     @fullCollection = collection
 
   postRender: =>
-    $('.mmCarousel').carousel
+    @$('.mmCarousel').carousel
       interval: false
     @bindCarouselKeys()
 

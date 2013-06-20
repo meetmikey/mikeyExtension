@@ -81,18 +81,18 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @setupModal()
 
   setupModal: =>
-    $('.mmCarouselModal').modal
+    @$('.mmCarouselModal').modal
       show: false
 
   isModalVisible: =>
-    $('.mmCarouselModal').hasClass 'fade-in'
+    @$('.mmCarouselModal').hasClass 'fade-in'
     
   openModal: =>
-    $('.mmCarouselModal').modal 'show'
-    $('.mmCarouselModal').trigger('mouseover')
+    @$('.mmCarouselModal').modal 'show'
+    @$('.mmCarouselModal').trigger('mouseover')
 
   hideModal: =>
-    $('.mmCarouselModal').modal 'hide'
+    @$('.mmCarouselModal').modal 'hide'
 
   postRender: =>
     @hasInitializedIsotope = false
@@ -230,15 +230,17 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     _.each decoratedModels, (decoratedModel) =>
       html += @imageTemplate(decoratedModel)
     items = $(html)
-    $('.mmImagesIsotope').isotope 'insert', items
+    @$('.mmImagesIsotope').isotope 'insert', items
 
   runIsotope: =>
+    console.log 'runIsotope'
     if ! @hasInitializedIsotope
-      $('.mmImagesIsotope').isotope
+      console.log 'initializing isotope'
+      @$('.mmImagesIsotope').isotope
         filter: '*'
         animationEngine: 'css'
       @hasInitializedIsotope = true
-    $('.mmImagesIsotope').isotope 'reloadItems'
+    @$('.mmImagesIsotope').isotope 'reloadItems'
 
   checkImagesLoadedAndRunIsotope: =>
     if @areImagesLoaded
@@ -262,6 +264,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   setResults: (models, query) =>
     @on 'showTab', @isotopeUntilImagesLoaded
+    @isotopeUntilImagesLoaded()
     @searchQuery = query
     @collection.reset models, sort: false
 
