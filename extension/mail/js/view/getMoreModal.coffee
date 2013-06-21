@@ -5,7 +5,7 @@ template = """
       <h3>Get more out of Mikey</h3>
     </div>
     <div class="modal-body">
-      <p>Mikey is showing you stuff from the last {{mailProcessedDays}} out of the {{mailTotalDays}} total days that you've had Gmail.</p>  
+      <p>Mikey is showing you stuff from the last {{mailDaysLimit}} out of the {{mailTotalDays}} total days that you've had Gmail.</p>  
       <p>Share with friends or upgrade to Mikey Premium to get more.</p>
     </div>
     <div class="modal-body">
