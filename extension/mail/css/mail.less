@@ -996,8 +996,10 @@ font-size: 13px;
 .undo-delete {
   color: #777;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 40px;
   font-size: 15px;
+  position: absolute;
+  width: 250px;
 
   &:hover {
     color: #222;
@@ -2160,11 +2162,11 @@ a.get-more-link {
   color: #222;
   font-size: 13px;
   line-height: 15px;
-  margin-top: 20px;
-  padding: 0px 20px 0px 20px;
+  margin-top: 0px;
+  padding: 20px 20px 0px 20px;
   background-color: #fff;
-  margin-top: -55px;
-  z-index: 999999999;
+  display: block;
+  border-top: 1px solid #e0e0e0;
 }
 
 .image-subject {
@@ -2185,22 +2187,17 @@ a.get-more-link {
 
 }
 
-.mmCarouselModal {
-  width: 600px;
-}
-
 .list-icon.image-boxness {
   float: right;
   display: inline-block;
 }
 
 .max-image {
+  max-width: 800px;
+  padding: 0px;
+  max-height: 600px;
   margin-left: auto;
   margin-right: auto;
-  max-width: 80%;
-  padding: 0px;
-  border-bottom: 1px solid #e0e0e0;
-  max-height: 80%;
 }
 
 .carousel-inner img {
@@ -2208,14 +2205,32 @@ width: auto;
 }
 
 .mm-images-tab .modal {
-  width: auto;
-  max-width: 80%;
+  width: 800px;
   padding: 0px;
   margin-left: 0px;
   height: auto;
-  max-height: 80%;
-  left: 10%;
+  left: 50%;
+  margin-left: -400px;
+  background-color: #fff;
+
 }
+
+.modal .hide-image-x {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 8px 12px;
+  background-color: white;
+  visibility: visible;
+  z-index: 1100;
+
+
+  .max-image:hover & {
+    float:right;
+    visibility: visible;
+  }
+}
+
 
 .carousel .carousel-control { visibility: hidden; }
 .carousel:hover .carousel-control { visibility: visible; }

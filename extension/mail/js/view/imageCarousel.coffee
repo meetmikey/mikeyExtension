@@ -1,11 +1,13 @@
 downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 template = """
   <div class="mmCarousel carousel slide">
+
     
     <!-- Carousel items -->
     <div class="carousel-inner">
       {{#each models}}
         <div class="item" data-cid="{{cid}}">
+          <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide this image"><div class="close-x">x</div></div>
         <img class="max-image" src="{{url}}"/>
         <div class="image-info">
           <div class="image-sender">{{from}}</div>
