@@ -2,7 +2,7 @@ downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png
 
 imageTemplate = """
   <div class="image-box" data-cid="{{cid}}">
-    <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide this image"><div class="close-x">x</div></div>
+    <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" data-animation="false" title="Hide this image"><div class="close-x">x</div></div>
     {{#if deleting}}
 
       <div class="undo-delete">This image will no longer appear.<br>Click here to undo.</div>
@@ -19,7 +19,7 @@ imageTemplate = """
 
         <div class="rollover-actions">
           <a href="#inbox/{{msgHex}}" class="open-message">
-            <div class="list-icon image-box-tooltip" data-toggle="tooltip" title="View email">
+            <div class="list-icon image-box-tooltip" data-toggle="tooltip" data-animation="false" title="View email">
               <div class="list-icon" style="background-image: url('#{downloadUrl}');">
               </div>
             </div>
