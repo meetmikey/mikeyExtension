@@ -199,8 +199,6 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
       if @parentView.isModalVisible()
         @parentView.hideModal()
         return false
-    if e.keyCode == 80
-      @parentView.runIsotope()
 
   openMessage: (event) =>
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
