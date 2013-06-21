@@ -200,10 +200,8 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
       return
     msgHex = model.get 'gmMsgHex'
     if @parentView.searchQuery
-      console.log 'openMessage searchQuery: ', @parentView.searchQuery
       hash = "#search/#{@parentView.searchQuery}/#{msgHex}"
     else
-      console.log 'openMessage, no searchQuery.'
       hash = "#inbox/#{msgHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
