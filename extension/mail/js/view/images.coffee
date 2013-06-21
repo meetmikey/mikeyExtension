@@ -55,6 +55,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   defaultNumImagesToFetch: 8
   infiniteScrollThreshold: 1000
   fetching: false
+  searchQuery: null
 
   safeFind: MeetMikey.Helper.DOMManager.find
 
@@ -156,12 +157,16 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     if ! cid
       cid = $(event.currentTarget).closest('.item').attr('data-cid')
+    if ! cid
+      return
     model = @collection.get cid
+    if ! model
+      return
     msgHex = model.get 'gmMsgHex'
-    if @options.fetch
-      hash = "#inbox/#{msgHex}"
-    else
+    if @searchQuery
       hash = "#search/#{@searchQuery}/#{msgHex}"
+    else
+      hash = "#inbox/#{msgHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false

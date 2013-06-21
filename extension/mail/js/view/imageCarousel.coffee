@@ -2,7 +2,6 @@ downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png
 template = """
   <div class="mmCarousel carousel slide">
 
-    
     <!-- Carousel items -->
     <div class="carousel-inner">
       {{#each models}}
@@ -13,20 +12,12 @@ template = """
           <div class="image-sender">{{from}}</div>
           <div class="image-subject">{{subject}}</div>
 
-          {{#if ../searchQuery}}
-            <a href="#search/{{../../searchQuery}}/{{msgHex}}" class="open-message" data-dismiss="modal">
-              <div class="list-icon" style="float:right; display:inline-blocks;">
-                <div class="list-icon" style="background-image: url('#{downloadUrl}');"></div>
-              </div>
-            </a>
-          {{else}}
-            <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">
-              <div class="list-icon" style="float:right; display:inline-blocks;">
-                <div class="list-icon" style="background-image: url('#{downloadUrl}');"></div>
-              </div>
-            </a>
-          {{/if}}
-         
+          <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">
+            <div class="list-icon" style="float:right; display:inline-blocks;">
+              <div class="list-icon" style="background-image: url('#{downloadUrl}');"></div>
+            </div>
+          </a>
+
           </div>
         </div>
       {{/each}}
@@ -75,6 +66,7 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
   getTemplateData: =>
     models: _.invoke(@localCollection.models, 'decorate')
+    searchQuery: @parentView.searchQuery
 
   getModelIndexInFullCollection: (forceModel) =>
     model = @activeModel
@@ -112,14 +104,11 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     activeModelInFullCollection = @fullCollection.get(cid)
-    @localCollection.reset []
     @activeModel = activeModelInFullCollection.clone()
-    @localCollection.push @activeModel
-    @parentView.openModal()
-    @render()
     @getLocalImages()
     @render()
     @activateModel()
+    @parentView.openModal()
 
     MeetMikey.Helper.trackResourceEvent 'openResource', @activeModel,
       search: !@options.search, currentTab: MeetMikey.Globals.tabState, rollover: false
@@ -204,12 +193,18 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     if ! cid
       cid = $(event.currentTarget).closest('.item').attr('data-cid')
-    model = @fullCollection.get(cid)
+    if ! cid
+      return
+    model = @localCollection.get cid
+    if ! model
+      return
     msgHex = model.get 'gmMsgHex'
-    if @options.fetch
-      hash = "#inbox/#{msgHex}"
+    if @parentView.searchQuery
+      console.log 'openMessage searchQuery: ', @parentView.searchQuery
+      hash = "#search/#{@parentView.searchQuery}/#{msgHex}"
     else
-      hash = "#search/#{@searchQuery}/#{msgHex}"
+      console.log 'openMessage, no searchQuery.'
+      hash = "#inbox/#{msgHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
