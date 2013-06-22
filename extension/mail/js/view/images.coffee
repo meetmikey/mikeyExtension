@@ -126,7 +126,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
     model.set 'deleting', true
-    element = $('.image-box[data-cid='+model.cid+']')
+    element = @$('.image-box[data-cid='+model.cid+']')
     imageElement = element.children '.image-subbox'
     imageElement.css('opacity', .1) if imageElement?
     element.children('.undo-delete').show()
@@ -140,7 +140,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
     model.set('deleting', false)
-    element = $('.image-box[data-cid='+model.cid+']')
+    element = @$('.image-box[data-cid='+model.cid+']')
     imageElement = element.children('.image-subbox')
     imageElement.css('opacity', 1) if imageElement?
     element.children('.undo-delete').hide()
@@ -151,6 +151,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       if model.get 'deleting'
         @collection.remove model
         model.delete()
+      isotopeItem = @$('.image-box[data-cid='+model.cid+']')
+      @$('.mmImagesIsotope').isotope 'remove', isotopeItem
     , MeetMikey.Constants.deleteDelay
 
   openMessage: (event) =>

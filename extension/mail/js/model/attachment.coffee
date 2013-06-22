@@ -24,5 +24,5 @@ class MeetMikey.Model.Attachment extends MeetMikey.Model.Base
       data: apiData
       error: (data) ->
         console.log 'hide error', data
-      success: (data) ->
-        console.log 'hide success', data
+      #success: (data) ->
+        #console.log 'hide success', data
