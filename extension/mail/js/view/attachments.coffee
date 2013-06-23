@@ -9,7 +9,7 @@ template = """
         <!-- <th class="mm-toggle-box"></th> -->
 
 
-        <th class="mm-download" colspan="2" data-mm-field="filename">File<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-download" colspan="3" data-mm-field="filename">File<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-file">&nbsp;</th>
         <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-to" data-mm-field="recipients">To<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
@@ -22,6 +22,11 @@ template = """
     {{#each models}}
         <tr class="files" data-cid="{{cid}}">
         {{#if deleting}}
+          <td class="mm-hide" style="opacity:0.1">
+            <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this link">
+              <a href="#"><div class="close-x">x</div></a>
+            </div>
+          </td>
           <td class="mm-download" style="opacity:0.1">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
                 <div class="list-icon" style="background-image: url('#{spriteUrl}');">
@@ -37,12 +42,19 @@ template = """
           <td class="mm-size truncate" style="opacity:0.1">{{size}}</td>
           <td class="mm-sent truncate" style="opacity:0.1">{{sentDate}}</td>
         {{else}}
+          <td class="mm-hide">
+            <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this link">
+              <a href="#"><div class="close-x">x</div></a>
+            </div>
+          </td>
+
           <td class="mm-download">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
                 <div class="list-icon" style="background-image: url('#{spriteUrl}');">
                 </div>
               </div>
           </td>
+          
           <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
           <td class="mm-undo" style="display:none;">{{filename}} won't be shown anymore! Click to UNDO </td>
           <td class="mm-file truncate">{{filename}}&nbsp;</td>

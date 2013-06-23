@@ -8,7 +8,7 @@ template = """
     <div class="pagination-container"></div>
     <table class="inbox-table search-results" id="mm-links-table" border="0">
       <thead class="labels">
-        <th class="mm-download" colspan="2" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-download" colspan="3" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-file mm-link"></th>
         <th class="mm-source" data-mm-field="url">Source<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
@@ -19,12 +19,19 @@ template = """
         {{#each models}}
           <tr class="files" data-cid="{{cid}}">
           {{#if deleting}}
+            <td class="mm-hide" style="opacity:0.1">
+              <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this link">
+                <a href="#"><div class="close-x">x</div></a>
+              </div>
+            </td>
+
             <td class="mm-download" style="opacity:0.1">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
                 <div class="list-icon" style="background-image: url('#{spriteUrl}');">
                 </div>
               </div>
             </td>
+         
             <td class="mm-favicon" style="background:url({{faviconURL}}) no-repeat;">&nbsp;</td>
             <td class="mm-file truncate" style="display:none;>
               <div class="flex">
@@ -42,12 +49,19 @@ template = """
             <td class="mm-to truncate" style="opacity:0.1">{{to}}</td>
             <td class="mm-sent truncate" style="opacity:0.1">{{sentDate}}</td>
           {{else}}
+            <td class="mm-hide">
+              <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this link">
+                <a href="#"><div class="close-x">x</div></a>
+              </div>
+            </td>
+
             <td class="mm-download">
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
                 <div class="list-icon" style="background-image: url('#{spriteUrl}');">
                 </div>
               </div>
             </td>
+
             <td class="mm-favicon" style="background:url({{faviconURL}}) no-repeat;">&nbsp;</td>
             <td class="mm-file truncate">
               <div class="flex">
