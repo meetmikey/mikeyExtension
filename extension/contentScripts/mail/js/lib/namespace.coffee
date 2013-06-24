@@ -1,9 +1,0 @@
-window.MeetMikey =
-  View: {}
-  Model: {}
-  Collection: {}
-  Decorator: {}
-  Template: {}
-  Helper: {}
-  Globals: {}
-  Settings: {}
