@@ -5,10 +5,10 @@ imageTemplate = """
     <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" data-animation="false" title="Hide this image"><div class="close-x">x</div></div>
     {{#if deleting}}
 
-      <div class="undo-delete">This image will no longer appear.<br>Click here to undo.</div>
+      <div class="undo-delete">This image will no longer appear.<br>Click to undo.</div>
       <div class="image-subbox" style="opacity.1">
     {{else}}
-      <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click here to undo.</div>
+      <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click to undo.</div>
       <div class="image-subbox">
     {{/if}}
       <img class="mm-image" src="{{image}}"/>
@@ -70,7 +70,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     'click .image-filename a': 'openImage'
     'click .open-message': 'openMessage'
     'click .hide-image-x' : 'markDeleting'
-    'click .undo-delete' : 'unMarkDeleting'
 
   postInitialize: =>
     @on 'showTab', @isotopeUntilImagesLoaded
@@ -103,7 +102,12 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @isotopeUntilImagesLoaded()
 
   openImage: (event) =>
-    @subViews.imageCarousel.view.openImage event
+    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
+    model = @collection.get(cid)
+    if !model.get('deleting')
+      @subViews.imageCarousel.view.openImage event
+    else
+      @unMarkDeleting (event)
 
   teardown: =>
     @clearTimeout()
@@ -139,6 +143,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
+
     model.set('deleting', false)
     element = @$('.image-box[data-cid='+model.cid+']')
     imageElement = element.children('.image-subbox')
