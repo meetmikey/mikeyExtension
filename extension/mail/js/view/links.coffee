@@ -94,6 +94,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     'click .files .mm-file': 'openLink'
     'click .files .mm-source': 'openLink'
     'click .files .mm-download': 'openMessage'
+    'click .close-x' : 'markDeletingEvent'
     'click .files .mm-undo' : 'unMarkDeletingEvent'
     'click th': 'sortByColumn'
     'mouseenter .files .mm-file, .files .mm-source': 'startRollover'
@@ -133,6 +134,23 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     element.children('.mm-file').hide()
     for child in element.children()
       $(child).css('opacity', .1) if not $(child).hasClass('mm-undo')
+
+    @deleteAfterDelay (model.cid)
+    MeetMikey.Helper.trackResourceEvent 'deleteResource', model,
+      search: @searchQuery?, currentTab: MeetMikey.Globals.tabState, rollover: false
+
+  deleteAfterDelay: (modelId) =>
+    setTimeout =>
+      model = @collection.get(modelId)
+      if model.get('deleting')
+        @collection.remove(model)
+        model.delete()
+    , MeetMikey.Constants.deleteDelay
+
+  markDeletingEvent: (event) =>
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
+    model = @collection.get(cid)
+    @markDeleting(model)
 
   unMarkDeletingEvent: (event) =>
     cid = $(event.currentTarget).closest('.files').attr('data-cid')

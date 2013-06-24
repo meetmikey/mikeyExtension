@@ -43,7 +43,7 @@ template = """
           <td class="mm-sent truncate" style="opacity:0.1">{{sentDate}}</td>
         {{else}}
           <td class="mm-hide">
-            <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this link">
+            <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this attachment">
               <a href="#"><div class="close-x">x</div></a>
             </div>
           </td>
@@ -79,6 +79,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   events:
     'click .files .mm-file': 'openAttachment'
     'click .files .mm-download': 'openMessage'
+    'click .close-x' : 'markDeletingEvent'
     'click .files .mm-undo' : 'unMarkDeletingEvent'
     'click th': 'sortByColumn'
     'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
@@ -119,6 +120,23 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     element.children('.mm-file').hide()
     for child in element.children()
       $(child).css('opacity', .1) if not $(child).hasClass('mm-undo')
+    @deleteAfterDelay (model.cid)
+
+    MeetMikey.Helper.trackResourceEvent 'deleteResource', model,
+      search: @searchQuery?, currentTab: MeetMikey.Globals.tabState, rollover: false
+
+  deleteAfterDelay: (modelId) =>
+    setTimeout =>
+      model = @collection.get(modelId)
+      if model.get('deleting')
+        @collection.remove(model)
+        model.delete()
+    , MeetMikey.Constants.deleteDelay
+
+  markDeletingEvent: (event) =>
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
+    model = @collection.get(cid)
+    @markDeleting(model)
 
   unMarkDeletingEvent: (event) =>
     cid = $(event.currentTarget).closest('.files').attr('data-cid')

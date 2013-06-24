@@ -33,17 +33,6 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
     @collection.trigger('delete', @model)
     $('.rollover-resource-delete').hide()
     $('.rollover-resource-undo').show()
-    @deleteAfterDelay (@model.cid)
-    MeetMikey.Helper.trackResourceEvent 'deleteResource', @model,
-      search: @searchQuery?, currentTab: MeetMikey.Globals.tabState, rollover: true
-
-  deleteAfterDelay: (modelId) =>
-    setTimeout =>
-      model = @collection.get(modelId)
-      if model.get('deleting')
-        @collection.remove(model)
-        model.delete()
-    , MeetMikey.Constants.deleteDelay
 
   startSpawn: (event) =>
     cid = $(event.target).closest('tr').attr('data-cid')
