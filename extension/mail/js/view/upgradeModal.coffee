@@ -21,17 +21,3 @@ template = """
 
 class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
   template: Handlebars.compile(template)
-
-  postRender: =>
-    super
-    MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal'
-    @notifyAboutUpgradeInterest()
-
-  notifyAboutUpgradeInterest: =>
-    if MeetMikey.Constants.env is 'production'
-      email = MeetMikey.globalUser?.get('email')
-      MeetMikey.Helper.callAPI
-        url: 'upgradeInterest'
-        type: 'GET'
-        data:
-          userEmail: email
