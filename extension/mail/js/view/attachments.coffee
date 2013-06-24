@@ -23,7 +23,7 @@ template = """
         <tr class="files" data-cid="{{cid}}">
         {{#if deleting}}
           <td class="mm-hide" style="opacity:0.1">
-            <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this link">
+            <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this file">
               <a href="#"><div class="close-x">x</div></a>
             </div>
           </td>
@@ -43,7 +43,7 @@ template = """
           <td class="mm-sent truncate" style="opacity:0.1">{{sentDate}}</td>
         {{else}}
           <td class="mm-hide">
-            <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this attachment">
+            <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this file">
               <a href="#"><div class="close-x">x</div></a>
             </div>
           </td>
