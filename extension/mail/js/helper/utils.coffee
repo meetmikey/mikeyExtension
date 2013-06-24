@@ -89,9 +89,6 @@ MeetMikey.Helper.getHash = (input) ->
     hash = hash & hash
   hash
 
-MeetMikey.Helper.getBetaCodeHash = (betaCodeInput) ->
-  MeetMikey.Helper.getHash betaCodeInput
-
 MeetMikey.Helper.isRealUser = (userId=MeetMikey.globalUser?.id) ->
   return true unless userId?
   not _.contains(MeetMikey.Constants.MikeyTeamUserIds, userId)

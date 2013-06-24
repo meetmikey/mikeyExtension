@@ -11,7 +11,7 @@ class Setup
     $(window).one('DOMSubtreeModified', @bootstrap)
 
   bootstrap: =>
-    MeetMikey.Helper.BetaAccess.checkAccess @waitAndStartAuthFlow
+    @waitAndStartAuthFlow()
     MeetMikey.Globals.checkTabsInterval = null
 
   waitAndStartAuthFlow: =>
