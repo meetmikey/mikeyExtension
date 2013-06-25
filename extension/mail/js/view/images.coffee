@@ -78,6 +78,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @collection = new MeetMikey.Collection.Images()
     @collection.on 'reset', _.debounce(@render, MeetMikey.Constants.paginationSize)
     @subViews.imageCarousel.view.setImageCollection @collection
+    $(window).off 'hashchange', @hashChange
+    $(window).on 'hashchange', @hashChange
     @setupModal()
 
   setupModal: =>
@@ -114,6 +116,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @cachedModels = _.clone @collection.models
     @collection.reset()
     @unbindScrollHandler()
+    $(window).off 'hashchange', @hashChange
 
   initialFetch: =>
     @collection.fetch success: @waitAndPoll if @options.fetch
@@ -180,6 +183,24 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
     window.location = hash
 
+  hashChange: =>
+    if @isVisible()
+      @runIsotope()
+    setTimeout @checkAndBindScrollHandler, 1000
+    setTimeout @checkAndBindScrollHandler, 2000
+    setTimeout @checkAndBindScrollHandler, 4000
+
+  checkAndBindScrollHandler: =>
+    if @isVisible()
+      @runIsotope()
+      @bindScrollHandler()
+    else
+      @unbindScrollHandler()
+
+  isVisible: =>
+    isVisible = @$el.is ':visible'
+    isVisible
+
   $scrollElem: =>
     if MeetMikey.Globals.previewPane
       @$el.parent()
@@ -188,15 +209,13 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   bindScrollHandler: =>
     @unbindScrollHandler()
-    @$scrollElem().on 'scroll', () =>
-      if @options.fetch
-        @scrollHandler()
+    @$scrollElem().on 'scroll', @scrollHandler
 
   unbindScrollHandler: =>
     @$scrollElem().off 'scroll', @scrollHandler
 
   scrollHandler: (event)=>
-    @fetchMoreImages() if @nearBottom()
+    @fetchMoreImages() if @nearBottom() and @options.fetch
 
   nearBottom: =>
     $scrollElem = @$scrollElem()
