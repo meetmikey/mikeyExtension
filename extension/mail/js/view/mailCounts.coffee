@@ -1,6 +1,6 @@
 template = """
   <div class="mail-counts">
-    <div class="mail-days mm-download-tooltip" data-toggle="tooltip" title="How much of your Gmail archive Mikey is showing you">Showing <strong>{{mailDaysLimit}}</strong> of <strong>{{mailTotalDays}}</strong> days</div><a href="#" class="get-more-link">get more</a>
+    <div class="mail-days mm-download-tooltip" data-toggle="tooltip" title="How much of your Gmail archive Mikey is showing you"><strong>{{mailDaysLimit}}</strong> of <strong>{{mailTotalDays}}</strong> days archived</div><a href="#" class="get-more-link">share Mikey</a>
 
   </div>
 """

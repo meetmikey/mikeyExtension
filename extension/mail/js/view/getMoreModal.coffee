@@ -2,17 +2,17 @@ template = """
   <div class="modal hide fade modal-wide" style="display: none;">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Get more out of Mikey</h3>
+      <h3>Share Mikey with Friends</h3>
     </div>
     <div class="modal-body">
-      <p>Mikey is showing you stuff from the last {{mailDaysLimit}} out of the {{mailTotalDays}} total days that you've had Gmail.</p>  
-      <p>Share with friends or upgrade to Mikey Premium to get more.</p>
+      <p>You already have a premium account so we can't give you more days, but if Mikey has helped you out, we would be thrilled if you shared Mikey with your friends.</p>  
+      
     </div>
-    <div class="modal-body">
+    <div class="modal-body premium-modal">
       <div class="buttons-cluster">
         <a href="#" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">twitter</div></a>
         <a href="#" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">facebook</div></a>
-        <a href="#" id="upgradeButton" class="share-modal-button premium"><div class="referral-button-text">upgrade</div></a>
+        <a href="#" class="share-modal-button premium upgraded mm-download-tooltip" data-toggle="tooltip" title="You already have a premium account"><div class="referral-button-text">upgraded</div></a> 
       </div>
       Or share this URL<br>
       <input style="padding-bottom: 5px;" id="directReferralLinkText" type="text" value="{{directReferralLink}}"><a href="#" id="copyButton" style="margin-left:-2px;" class="button buttons">Copy</a>
@@ -33,11 +33,13 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     'click #copyButton': 'copyTextToClipboard'
 
   shareTitle: 'Meet Mikey'
-  shareSummary: 'Mikey makes your gmail great'
+  shareSummary: 'Mikey makes your Gmail awesome.'
 
   postRender: =>
+    $('.mm-download-tooltip').tooltip placement: 'bottom'
     super
     MeetMikey.Helper.Analytics.trackEvent 'viewGetMoreModal'
+    
 
   twitterReferralClick: =>
     MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'twitter'
