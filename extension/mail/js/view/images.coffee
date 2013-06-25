@@ -187,6 +187,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @safeFind(MeetMikey.Constants.Selectors.scrollContainer)
 
   bindScrollHandler: =>
+    @unbindScrollHandler()
     @$scrollElem().on 'scroll', () =>
       if @options.fetch
         @scrollHandler()
