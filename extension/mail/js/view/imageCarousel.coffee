@@ -7,21 +7,26 @@ template = """
       {{#each models}}
         <div class="item" data-cid="{{cid}}">
           <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide this image"><div class="close-x">x</div></div>
-        <img class="max-image" src="{{url}}"/>
-        <div class="image-info">
-          <div class="image-sender">{{from}}</div>
-          <div class="image-subject">{{subject}}</div>
+          <div class="modal-image-box">
+            <img class="max-image" src="{{url}}"/>
+          </div>
+          <div class="image-info">
+            <div class="image-sender">{{from}}</div>
+            <div class="image-subject">{{subject}}</div>
 
-          <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">
-            <div class="list-icon" style="float:right; display:inline-blocks;">
-              <div class="list-icon" style="background-image: url('#{downloadUrl}');"></div>
-            </div>
-          </a>
+            <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">
+              <div class="list-icon" style="float:right; display:inline-blocks;">
+                <div class="list-icon" style="background-image: url('#{downloadUrl}');"></div>
+              </div>
+            </a>
 
           </div>
-        </div>
+      </div>
+
       {{/each}}
     </div>
+
+
 
     <!-- Carousel nav -->
     <div class="carousel-control left" style="cursor:pointer;">&lsaquo;</div>
