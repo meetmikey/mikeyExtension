@@ -49,7 +49,10 @@ class MeetMikey.Model.User extends Backbone.Model
       @get('daysLimit')
 
   isPremium: =>
-    @get('isPremium')
+    if @get('isPremium')
+      return true
+    else
+      return false
 
   fetchOnboard: =>
     MeetMikey.Helper.callAPI

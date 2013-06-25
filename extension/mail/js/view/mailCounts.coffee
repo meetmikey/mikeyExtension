@@ -1,7 +1,20 @@
 template = """
   <div class="mail-counts">
-    <div class="mail-days mm-download-tooltip" data-toggle="tooltip" title="How much of your Gmail archive Mikey is showing you">Showing <strong>{{mailDaysLimit}}</strong> of <strong>{{mailTotalDays}}</strong> days</div><a href="#" class="get-more-link">get more</a>
 
+    <div class="mail-days mm-download-tooltip" data-toggle="tooltip" title="How much of your Gmail archive Mikey is showing you">
+      {{#if isFullyIndexed}}
+        <strong>{{mailTotalDays}}</strong> of <strong>{{mailTotalDays}}</strong> days archived
+      {{else}}
+        Showing <strong>{{mailDaysLimit}}</strong> of <strong>{{mailTotalDays}}</strong> days
+      {{/if}}
+    </div>
+    <a href="#" class="get-more-link">
+      {{#if isFullyIndexed}}
+        share Mikey
+      {{else}}
+        get more
+      {{/if}}
+    </a>
   </div>
 """
 
@@ -15,18 +28,17 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
     MeetMikey.globalUser?.on 'change', @render
 
   getTemplateData: =>
+    isFullyIndexed = MeetMikey.globalUser?.isPremium() || ( MeetMikey.globalUser?.getDaysLimit() >= MeetMikey.globalUser?.getMailTotalDays() )
     object = {}
-    object.mailDaysLimit = MeetMikey.globalUser.getDaysLimit()
-    object.mailTotalDays = MeetMikey.globalUser.getMailTotalDays()
+    object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
+    object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
+    object.isFullyIndexed = isFullyIndexed
     object
 
   shouldShow: =>
     if MeetMikey.globalUser &&
-    ! MeetMikey.globalUser.isPremium() &&
     ! MeetMikey.globalUser.get('onboarding') &&
-    MeetMikey.globalUser.getMailTotalDays() &&
-    MeetMikey.globalUser.getDaysLimit() &&
-    MeetMikey.globalUser.getMailTotalDays() > MeetMikey.globalUser.getDaysLimit()
+    MeetMikey.globalUser.getMailTotalDays()
       true
     else
       false

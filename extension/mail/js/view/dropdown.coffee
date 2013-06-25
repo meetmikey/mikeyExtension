@@ -5,10 +5,16 @@ template = """
       <li><a tabindex="-1" href="http://mikey.uservoice.com">Suggest a feature</a></li>
       <li><a tabindex="-1" href="mailto:support@mikeyteam.com">Mikey support</a></li>
       <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
-      {{#if showGetMoreDays}}
       <li class="divider"></li>
-      <li><a tabindex="-1" href="#" class="get-more"><!-- <div class="index-status">{{mailProcessedDays}}/{{mailTotalDays}}-->Get more Mikey</a></li>
-      {{/if}}
+      <li>
+        <a tabindex="-1" href="#" class="get-more">
+          {{#if isPremium}}
+            Share Mikey
+          {{else}}
+            Get more Mikey
+          {{/if}}
+        </a>
+      </li>
     </ul>
   </li>
 """
@@ -30,18 +36,15 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
   getTemplateData: =>
     object = {}
     object.toggleAction = if MeetMikey.Helper.OAuth.isEnabled() then 'Disable' else 'Enable'
-    object.showGetMoreDays = @shouldShow()
     object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
+    object.isPremium = MeetMikey.globalUser?.isPremium()
     object
 
   shouldShow: =>
     if MeetMikey.globalUser &&
-    ! MeetMikey.globalUser.isPremium() &&
     ! MeetMikey.globalUser.get('onboarding') &&
-    MeetMikey.globalUser.getMailTotalDays() &&
-    MeetMikey.globalUser.getDaysLimit() &&
-    MeetMikey.globalUser.getMailTotalDays() > MeetMikey.globalUser.getDaysLimit()
+    MeetMikey.globalUser.getMailTotalDays()
       true
     else 
       false
