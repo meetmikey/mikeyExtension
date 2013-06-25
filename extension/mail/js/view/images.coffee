@@ -156,8 +156,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       if model.get 'deleting'
         @collection.remove model
         model.delete()
-      isotopeItem = @$('.image-box[data-cid='+model.cid+']')
-      @$('.mmImagesIsotope').isotope 'remove', isotopeItem
+        isotopeItem = @$('.image-box[data-cid='+model.cid+']')
+        @$('.mmImagesIsotope').isotope 'remove', isotopeItem
     , MeetMikey.Constants.deleteDelay
 
   openMessage: (event) =>
