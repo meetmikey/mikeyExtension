@@ -19,7 +19,7 @@ imageTemplate = """
 
         <div class="rollover-actions">
           <a href="#inbox/{{msgHex}}" class="open-message">
-            <div class="list-icon image-box-tooltip" data-toggle="tooltip" data-animation="false" title="View email">
+            <div class="list-icon" data-toggle="tooltip" data-animation="false" title="View email">
               <div class="list-icon" style="background-image: url('#{downloadUrl}');">
               </div>
             </div>
