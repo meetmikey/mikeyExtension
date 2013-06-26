@@ -1,5 +1,6 @@
 class LinkDecorator
   httpRegex: /https?:\/\/(.+)/
+  googleDocRegex: /.*docs\.google\.com.*/
 
   decorate: (model) =>
     object = {}
@@ -13,6 +14,7 @@ class LinkDecorator
     object.to = @formatRecipients model
     object.sentDate = @formatDate model
     object.faviconURL = MeetMikey.Helper.getFaviconURL(model.get('resolvedURL') ? model.get('url'))
+    object.isGoogleDoc = @isGoogleDoc model
     object.cid = model.cid
     object.deleting = model.get('deleting')
 
@@ -36,5 +38,10 @@ class LinkDecorator
       match[1]
     else
       url
+
+  isGoogleDoc: (model) =>
+    url = model.get('resolvedURL') ? model.get('url')
+    match = url.match @googleDocRegex
+    match?
 
 MeetMikey.Decorator.Link = new LinkDecorator()

@@ -1,5 +1,6 @@
 spriteUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 openIconUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
+driveIcon = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/google-drive-icon.png")
 
 template = """
   {{#unless models}}
@@ -32,7 +33,12 @@ template = """
               </div>
             </td>
          
-            <td class="mm-favicon" style="background:url({{faviconURL}}) no-repeat;">&nbsp;</td>
+            {{#if isGoogleDoc}}
+              <td class="mm-favicon" style="background:url('#{driveIcon}') no-repeat;">&nbsp;</td>
+            {{else}}
+              <td class="mm-favicon" style="background:url({{faviconURL}}) no-repeat;">&nbsp;</td>
+            {{/if}}
+
             <td class="mm-file truncate" style="display:none;>
               <div class="flex">
                 {{title}}
@@ -62,7 +68,13 @@ template = """
               </div>
             </td>
 
-            <td class="mm-favicon" style="background:url({{faviconURL}}) no-repeat;">&nbsp;</td>
+            {{#if isGoogleDoc}}
+              <td class="mm-favicon" style="background:url('#{driveIcon}') no-repeat;">&nbsp;</td>
+            {{else}}
+              <td class="mm-favicon" style="background:url({{faviconURL}}) no-repeat;">&nbsp;</td>
+            {{/if}}
+
+
             <td class="mm-file truncate">
               <div class="flex">
                 {{title}}
