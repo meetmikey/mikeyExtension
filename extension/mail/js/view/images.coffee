@@ -56,6 +56,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   infiniteScrollThreshold: 1000
   fetching: false
   searchQuery: null
+  numSearchResultsReceived: 0
 
   safeFind: MeetMikey.Helper.DOMManager.find
 
@@ -215,7 +216,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @$scrollElem().off 'scroll', @scrollHandler
 
   scrollHandler: (event)=>
-    @fetchMoreImages() if @nearBottom() and @options.fetch
+    @fetchMoreImages() if @nearBottom()
 
   nearBottom: =>
     $scrollElem = @$scrollElem()
@@ -224,23 +225,41 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     nearBottom
 
   fetchMoreImages: (forceNumToFetch) =>
-    numToFetch = @defaultNumImagesToFetch
-    if forceNumToFetch
-      numToFetch = forceNumToFetch
     if not @endOfImages and not @fetching
-      @fetching = true
-      MeetMikey.Helper.callAPI
-        url: '/image'
-        data:
-          userEmail: MeetMikey.globalUser.get('email')
-          asymHash: MeetMikey.globalUser.get('asymHash')
-          extensionVersion: MeetMikey.Constants.extensionVersion
-          before: @collection.last()?.get('sentDate')
-          limit: numToFetch
-        success: (res) =>
-          @addImagesFromFetchResponse res
-        #error: (err) =>
-          #console.log 'fetch error: ', err
+      if @options.fetch
+        numToFetch = @defaultNumImagesToFetch
+        if forceNumToFetch
+          numToFetch = forceNumToFetch
+          @fetching = true
+          MeetMikey.Helper.callAPI
+            url: '/image'
+            data:
+              userEmail: MeetMikey.globalUser.get('email')
+              asymHash: MeetMikey.globalUser.get('asymHash')
+              extensionVersion: MeetMikey.Constants.extensionVersion
+              before: @collection.last()?.get('sentDate')
+              limit: numToFetch
+            success: (res) =>
+              @addImagesFromFetchResponse res
+            #error: (err) =>
+              #console.log 'fetch error: ', err
+      else
+        @getMoreSearchResults()
+
+  getMoreSearchResults: =>
+    #console.log 'getMoreSearchResults before, @numSearchResultsReceived: ', @numSearchResultsReceived
+    MeetMikey.Helper.callAPI
+      url: "searchImages"
+      type: 'GET'
+      data:
+        query: @searchQuery
+        fromIndex: @numSearchResultsReceived
+      success: (res) =>
+        @addImagesFromFetchResponse res
+        @numSearchResultsReceived += res.length
+        @isotopeUntilImagesLoaded()
+      failure: ->
+        @logger.info 'search failed'
 
   addImagesFromFetchResponse: (res) =>
     _.each res, (imageData) =>
@@ -284,6 +303,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   setResults: (models, query) =>
     @on 'showTab', @isotopeUntilImagesLoaded
     @searchQuery = query
+    @numSearchResultsReceived = models.length
     @collection.reset models, sort: false
     @isotopeUntilImagesLoaded()
 

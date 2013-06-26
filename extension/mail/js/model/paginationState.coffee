@@ -2,7 +2,7 @@ class MeetMikey.Model.PaginationState extends MeetMikey.Model.Base
   defaults:
     page: 0
 
-  itemsPerPage: 50
+  itemsPerPage: MeetMikey.Constants.paginationSize
 
   initialize: =>
     @items = @get 'items'
