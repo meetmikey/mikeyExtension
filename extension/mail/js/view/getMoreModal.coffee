@@ -1,5 +1,5 @@
 template = """
-  <div class="modal hide fade modal-wide" style="display: none;">
+  <div class="modal hide fade modal-wide premium-modal" style="display: none;">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       {{#if isPremium}}
@@ -15,12 +15,12 @@ template = """
         {{#if isFullyIndexed}}
           <p>Mikey is showing you stuff from all {{mailTotalDays}} days in your account, but you're limited to {{mailDaysLimit}}.</p>
         {{else}}
-          <p>Mikey is showing you stuff from the last {{mailDaysLimit}} out of the {{mailTotalDays}} total days that you've had Gmail.</p>
+          <p>Mikey is showing you stuff from the last {{mailDaysLimit}} (out of the {{mailTotalDays}} total days that you've had this Gmail account).</p>
         {{/if}}
         <p>Share with friends or upgrade to Mikey Premium to get more.</p>
       {{/if}}
     </div>
-    <div class="modal-body {{#if premium}} premium-modal {{/if}}">
+    <div class="modal-body">
       <div class="buttons-cluster">
         <a href="#" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">twitter</div></a>
         <a href="#" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">facebook</div></a>

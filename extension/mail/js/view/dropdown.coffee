@@ -5,16 +5,18 @@ template = """
       <li><a tabindex="-1" href="http://mikey.uservoice.com">Suggest a feature</a></li>
       <li><a tabindex="-1" href="mailto:support@mikeyteam.com">Mikey support</a></li>
       <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
-      <li class="divider"></li>
-      <li>
-        <a tabindex="-1" href="#" class="get-more">
-          {{#if isPremium}}
-            Share Mikey
-          {{else}}
-            Get more Mikey
-          {{/if}}
-        </a>
-      </li>
+      {{#if shouldShowShareMikey}}
+        <li class="divider"></li>
+        <li>
+          <a tabindex="-1" href="#" class="get-more">
+            {{#if isPremium}}
+              Share Mikey
+            {{else}}
+              Get more Mikey
+            {{/if}}
+          </a>
+        </li>
+      {{/if}}
     </ul>
   </li>
 """
@@ -39,9 +41,10 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
     object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
     object.isPremium = MeetMikey.globalUser?.isPremium()
+    object.shouldShowShareMikey = @shouldShowShareMikey()
     object
 
-  shouldShow: =>
+  shouldShowShareMikey: =>
     if MeetMikey.globalUser &&
     ! MeetMikey.globalUser.get('onboarding') &&
     MeetMikey.globalUser.getMailTotalDays()
