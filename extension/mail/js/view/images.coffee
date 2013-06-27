@@ -57,6 +57,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   fetching: false
   searchQuery: null
   numSearchResultsReceived: 0
+  endOfImages: false
 
   safeFind: MeetMikey.Helper.DOMManager.find
 
@@ -124,6 +125,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   restoreFromCache: =>
     @collection.reset @cachedModels
+    @endOfImages = false
 
   getTemplateData: =>
     models: _.invoke @collection.models, 'decorate'
@@ -209,13 +211,16 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @safeFind(MeetMikey.Constants.Selectors.scrollContainer)
 
   bindScrollHandler: =>
+    console.log 'bindScrollHandler'
     @unbindScrollHandler()
     @$scrollElem().on 'scroll', @scrollHandler
 
   unbindScrollHandler: =>
+    console.log 'UNbindScrollHandler'
     @$scrollElem().off 'scroll', @scrollHandler
 
   scrollHandler: (event)=>
+    console.log 'scrollHandler'
     @fetchMoreImages() if @nearBottom()
 
   nearBottom: =>
@@ -225,29 +230,30 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     nearBottom
 
   fetchMoreImages: (forceNumToFetch) =>
+    console.log 'fetchMoreImages, endOfImages: ', @endOfImages, ', fetching: ', @fetching, ', options.fetch: ', @options.fetch
     if not @endOfImages and not @fetching
       if @options.fetch
         numToFetch = @defaultNumImagesToFetch
         if forceNumToFetch
           numToFetch = forceNumToFetch
-          @fetching = true
-          MeetMikey.Helper.callAPI
-            url: '/image'
-            data:
-              userEmail: MeetMikey.globalUser.get('email')
-              asymHash: MeetMikey.globalUser.get('asymHash')
-              extensionVersion: MeetMikey.Constants.extensionVersion
-              before: @collection.last()?.get('sentDate')
-              limit: numToFetch
-            success: (res) =>
-              @addImagesFromFetchResponse res
-            #error: (err) =>
-              #console.log 'fetch error: ', err
+        @fetching = true
+        MeetMikey.Helper.callAPI
+          url: 'image'
+          data:
+            userEmail: MeetMikey.globalUser.get('email')
+            asymHash: MeetMikey.globalUser.get('asymHash')
+            extensionVersion: MeetMikey.Constants.extensionVersion
+            before: @collection.last()?.get('sentDate')
+            limit: numToFetch
+          success: (res) =>
+            @addImagesFromFetchResponse res
+          #error: (err) =>
+            #console.log 'fetch error: ', err
       else
         @getMoreSearchResults()
 
   getMoreSearchResults: =>
-    #console.log 'getMoreSearchResults before, @numSearchResultsReceived: ', @numSearchResultsReceived
+    console.log 'getMoreSearchResults before, @numSearchResultsReceived: ', @numSearchResultsReceived
     MeetMikey.Helper.callAPI
       url: "searchImages"
       type: 'GET'
@@ -262,20 +268,23 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         @logger.info 'search failed'
 
   addImagesFromFetchResponse: (res) =>
+    @endOfImages = true if _.isEmpty(res)
+    newModels = []
     _.each res, (imageData) =>
       newModel = new MeetMikey.Model.Image imageData
-      @collection.push newModel
-    @fetchSuccess res
-
-  fetchSuccess: (response) =>
-    @fetching = false
-    @endOfImages = true if _.isEmpty(response)
-    @appendNewImageModelTemplates response
+      isDupe = false
+      @collection.each (oldModel) =>
+        if oldModel.get 'hash' == newModel.get 'hash'
+          console.log 'found dupe!'
+          isDupe = true
+      if not isDupe
+        @collection.push newModel
+        newModels.push newModel
+    @appendNewImageModelTemplates newModels
     @delegateEvents()
+    @fetching = false
 
-  appendNewImageModelTemplates: (response) =>
-    ids = _.pluck response, '_id'
-    models = _.map ids, (id) => @collection.get(id)
+  appendNewImageModelTemplates: (models) =>
     decoratedModels = _.invoke(models, 'decorate')
     html = ''
     _.each decoratedModels, (decoratedModel) =>
@@ -303,6 +312,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   setResults: (models, query) =>
     @on 'showTab', @isotopeUntilImagesLoaded
     @searchQuery = query
+    @endOfImages = false
     @numSearchResultsReceived = models.length
     @collection.reset models, sort: false
     @isotopeUntilImagesLoaded()
