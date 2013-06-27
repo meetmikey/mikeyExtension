@@ -75,8 +75,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   postInitialize: =>
     @on 'showTab', @isotopeUntilImagesLoaded
-    @on 'showTab', @bindScrollHandler
-    Backbone.on 'change:tab', @unbindScrollHandler
+    #@on 'showTab', @bindScrollHandler
+    Backbone.on 'change:tab', @hashChange
     @collection = new MeetMikey.Collection.Images()
     @collection.on 'reset', _.debounce(@render, MeetMikey.Constants.paginationSize)
     @subViews.imageCarousel.view.setImageCollection @collection
@@ -211,16 +211,13 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @safeFind(MeetMikey.Constants.Selectors.scrollContainer)
 
   bindScrollHandler: =>
-    console.log 'bindScrollHandler'
     @unbindScrollHandler()
     @$scrollElem().on 'scroll', @scrollHandler
 
   unbindScrollHandler: =>
-    console.log 'UNbindScrollHandler'
     @$scrollElem().off 'scroll', @scrollHandler
 
   scrollHandler: (event)=>
-    console.log 'scrollHandler'
     @fetchMoreImages() if @nearBottom()
 
   nearBottom: =>
@@ -230,7 +227,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     nearBottom
 
   fetchMoreImages: (forceNumToFetch) =>
-    console.log 'fetchMoreImages, endOfImages: ', @endOfImages, ', fetching: ', @fetching, ', options.fetch: ', @options.fetch
     if not @endOfImages and not @fetching
       if @options.fetch
         numToFetch = @defaultNumImagesToFetch
@@ -253,7 +249,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         @getMoreSearchResults()
 
   getMoreSearchResults: =>
-    console.log 'getMoreSearchResults before, @numSearchResultsReceived: ', @numSearchResultsReceived
     MeetMikey.Helper.callAPI
       url: "searchImages"
       type: 'GET'
@@ -274,8 +269,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       newModel = new MeetMikey.Model.Image imageData
       isDupe = false
       @collection.each (oldModel) =>
-        if oldModel.get 'hash' == newModel.get 'hash'
-          console.log 'found dupe!'
+        if oldModel.get('hash') == newModel.get('hash')
           isDupe = true
       if not isDupe
         @collection.push newModel
