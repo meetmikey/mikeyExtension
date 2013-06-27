@@ -1,5 +1,5 @@
 _.extend MeetMikey.Constants,
-  env: "production"
+  env: "local"
   imgPath: 'mail/img'
   mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
   mixpanelOff: false
@@ -30,6 +30,9 @@ _.extend MeetMikey.Constants,
 
     # top search bar container
     searchBar: '#gbqf'
+
+    # top search bar container
+    searchBarInput: '#gbqfq'
 
     # sidebar (with inbox, etc)
     sideBar: '.nM[role=navigation]'

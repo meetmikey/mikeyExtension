@@ -6,7 +6,7 @@ class Url
   searchHashRegex: /^#(?:search|apps)(?!.+\/)/
   appsSearchHashRegex: /^#apps/
 
-  searchQueryHashRegex: /#(?:search|apps)\/([^\/]+)(?!.+\/)$/
+  searchQueryHashRegex: /#(?:search|apps|advanced-search)\/([^\/]+)(?!.+\/)$/
 
 
   getHash: =>
@@ -30,6 +30,9 @@ class Url
   getSearchQuery: =>
     afterHash = window.location.hash
     [match, query] = @getHash().match(@searchQueryHashRegex) ? []
+
+    if query?.substring('advanced-search')
+      query = MeetMikey.Helper.getSearchQueryFromBox()
 
     query
 

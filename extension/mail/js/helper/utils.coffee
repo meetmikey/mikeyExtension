@@ -102,3 +102,6 @@ MeetMikey.Helper.clearCheckTabsInterval = ->
   if MeetMikey.Globals.checkTabsInterval
     clearInterval MeetMikey.Globals.checkTabsInterval
     MeetMikey.Globals.checkTabsInterval = null
+
+MeetMikey.Helper.getSearchQueryFromBox = ->
+  $(MeetMikey.Constants.Selectors.searchBarInput)?.val()
