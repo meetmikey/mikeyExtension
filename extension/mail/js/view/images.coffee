@@ -31,7 +31,7 @@ imageTemplate = """
 """
 
 template = """
-    <div class="mmCarouselModal modal fade">
+    <div class="mmCarouselModal modal fade" style="display:none;">
       <div class="mmImageCarousel"></div>
     </div>
 
