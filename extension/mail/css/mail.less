@@ -2313,6 +2313,7 @@ width: auto;
   padding: 0 4px 0 4px;
   border-radius: 2px;
   float: right;
+  opacity: 0;
 
   .email-tab & 
   { background-color: @red;}
@@ -2325,4 +2326,8 @@ width: auto;
 
   .images-tab &
   { background-color: @navy;}
+
+  &.displayed {
+    opacity: 1;
+  }
 }

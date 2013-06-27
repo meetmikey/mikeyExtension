@@ -3,7 +3,7 @@ template = """
 <table class="tabs-table">
   <tbody>
     <tr class="mikey-tabs {{disabledClass}}">
-      <td class="mikey-tab active email-tab" data-mm-tab="email">
+      <td href="#" class="mikey-tab active email-tab" data-mm-tab="email">
      
           <div class="tab-highlight"></div>
           <div class="tab-content">
@@ -12,16 +12,16 @@ template = """
           </div>
       </td>
 
-      <td class="mikey-tab files-tab" data-mm-tab="files">
+      <td href="#" class="mikey-tab files-tab" data-mm-tab="attachments">
      
           <div class="tab-highlight"></div>
           <div class="tab-content">
             <div class="tab-icon files-tab"></div>
-            <div class="tab-label">Files<div class="mm-count">26</div></div>
+            <div class="tab-label">Files<div class="mm-count"></div></div>
           </div>
       </td>
 
-      <td class="mikey-tab links-tab" data-mm-tab="links">
+      <td href="#" class="mikey-tab links-tab" data-mm-tab="links">
      
           <div class="tab-highlight"></div>
           <div class="tab-content">
@@ -30,7 +30,7 @@ template = """
           </div>
       </td>
 
-      <td class="mikey-tab images-tab" data-mm-tab="images">
+      <td href="#" class="mikey-tab images-tab" data-mm-tab="images">
      
           <div class="tab-highlight"></div>
           <div class="tab-content">
@@ -65,7 +65,7 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
       args: {}
 
   events:
-    'click li': 'tabClick'
+    'click .mikey-tab': 'tabClick'
 
   postInitialize: =>
     @subView('pagination').options.render = false if @options.search
@@ -119,7 +119,8 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
 
   updateTabCount: (tab, count) =>
     tab =  @$("[data-mm-tab='#{tab}']")
-    tab.find(".mm-count").text "(#{ count })"
+    tab.find(".mm-count").text "#{ count } results"
+    tab.find(".mm-count").addClass 'displayed'
 
   trackTabEvent: (tab) =>
     return if MeetMikey.Globals.tabState is tab or tab is 'email'
