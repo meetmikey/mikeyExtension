@@ -1,26 +1,51 @@
 template = """
-<ul class="mikey-tabs {{disabledClass}}">
-  <li class="mikey-tab active" data-mm-tab="email">
-    <a href="#">Email</a>
-  </li>
-  <li class="mikey-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your files are ready." data-mm-tab="attachments">
-    <a href="#">
-      Files <span class="mm-count"></span>
-    </a>
-  </li>
-  <li class="mikey-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your links are ready." data-mm-tab="links">
-    <a href="#">
-      Links <span class="mm-count"></span>
-    </a>
-  </li>
-  <li class="mikey-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your images are ready." data-mm-tab="images">
-    <a href="#">
-      Images <span class="mm-count"></span>
-    </a>
-  </li>
-</ul>
-<div class="mail-counts-container"></div>
-<div class="pagination-container"></div>
+<div class="mikey-tabs-box">
+<table class="tabs-table">
+  <tbody>
+    <tr class="mikey-tabs {{disabledClass}}">
+      <td class="mikey-tab active email-tab" data-mm-tab="email">
+     
+          <div class="tab-highlight"></div>
+          <div class="tab-content">
+            <div class="tab-icon"></div>
+            <div class="tab-label">Email<div class="mm-count"></div></div>
+          </div>
+      </td>
+
+      <td class="mikey-tab files-tab" data-mm-tab="files">
+     
+          <div class="tab-highlight"></div>
+          <div class="tab-content">
+            <div class="tab-icon files-tab"></div>
+            <div class="tab-label">Files<div class="mm-count">26</div></div>
+          </div>
+      </td>
+
+      <td class="mikey-tab links-tab" data-mm-tab="links">
+     
+          <div class="tab-highlight"></div>
+          <div class="tab-content">
+            <div class="tab-icon links-tab"></div>
+            <div class="tab-label">Links<div class="mm-count"></div></div>
+          </div>
+      </td>
+
+      <td class="mikey-tab images-tab" data-mm-tab="images">
+     
+          <div class="tab-highlight"></div>
+          <div class="tab-content">
+            <div class="tab-icon images-tab"></div>
+            <div class="tab-label">Images<div class="mm-count"></div></div>
+          </div>
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+    <div class="mail-counts-container"></div>
+    <div class="pagination-container"></div> 
+</div>
 """
 
 class MeetMikey.View.Tabs extends MeetMikey.View.Base
