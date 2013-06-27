@@ -230,7 +230,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     if not @endOfImages and not @fetching
       @fetching = true
       MeetMikey.Helper.callAPI
-        url: '/image'
+        url: 'image'
         data:
           userEmail: MeetMikey.globalUser.get('email')
           asymHash: MeetMikey.globalUser.get('asymHash')
