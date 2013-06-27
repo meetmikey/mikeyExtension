@@ -249,6 +249,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         @getMoreSearchResults()
 
   getMoreSearchResults: =>
+    @fetching = true
     MeetMikey.Helper.callAPI
       url: "searchImages"
       type: 'GET'
