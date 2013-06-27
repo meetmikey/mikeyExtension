@@ -31,7 +31,7 @@ imageTemplate = """
 """
 
 template = """
-    <div class="mmCarouselModal modal fade">
+    <div class="mmCarouselModal modal fade" style="display:none;">
       <div class="mmImageCarousel"></div>
     </div>
 
@@ -56,6 +56,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   infiniteScrollThreshold: 1000
   fetching: false
   searchQuery: null
+  numSearchResultsReceived: 0
+  endOfImages: false
 
   safeFind: MeetMikey.Helper.DOMManager.find
 
@@ -73,8 +75,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   postInitialize: =>
     @on 'showTab', @isotopeUntilImagesLoaded
-    @on 'showTab', @bindScrollHandler
-    Backbone.on 'change:tab', @unbindScrollHandler
+    #@on 'showTab', @bindScrollHandler
+    Backbone.on 'change:tab', @hashChange
     @collection = new MeetMikey.Collection.Images()
     @collection.on 'reset', _.debounce(@render, MeetMikey.Constants.paginationSize)
     @subViews.imageCarousel.view.setImageCollection @collection
@@ -123,6 +125,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   restoreFromCache: =>
     @collection.reset @cachedModels
+    @endOfImages = false
 
   getTemplateData: =>
     models: _.invoke @collection.models, 'decorate'
@@ -215,7 +218,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @$scrollElem().off 'scroll', @scrollHandler
 
   scrollHandler: (event)=>
-    @fetchMoreImages() if @nearBottom() and @options.fetch
+    @fetchMoreImages() if @nearBottom()
 
   nearBottom: =>
     $scrollElem = @$scrollElem()
@@ -224,39 +227,59 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     nearBottom
 
   fetchMoreImages: (forceNumToFetch) =>
-    numToFetch = @defaultNumImagesToFetch
-    if forceNumToFetch
-      numToFetch = forceNumToFetch
     if not @endOfImages and not @fetching
-      @fetching = true
-      MeetMikey.Helper.callAPI
-        url: '/image'
-        data:
-          userEmail: MeetMikey.globalUser.get('email')
-          asymHash: MeetMikey.globalUser.get('asymHash')
-          extensionVersion: MeetMikey.Constants.extensionVersion
-          before: @collection.last()?.get('sentDate')
-          limit: numToFetch
-        success: (res) =>
-          @addImagesFromFetchResponse res
-        #error: (err) =>
-          #console.log 'fetch error: ', err
+      if @options.fetch
+        numToFetch = @defaultNumImagesToFetch
+        if forceNumToFetch
+          numToFetch = forceNumToFetch
+        @fetching = true
+        MeetMikey.Helper.callAPI
+          url: 'image'
+          data:
+            userEmail: MeetMikey.globalUser.get('email')
+            asymHash: MeetMikey.globalUser.get('asymHash')
+            extensionVersion: MeetMikey.Constants.extensionVersion
+            before: @collection.last()?.get('sentDate')
+            limit: numToFetch
+          success: (res) =>
+            @addImagesFromFetchResponse res
+          #error: (err) =>
+            #console.log 'fetch error: ', err
+      else
+        @getMoreSearchResults()
+
+  getMoreSearchResults: =>
+    @fetching = true
+    MeetMikey.Helper.callAPI
+      url: "searchImages"
+      type: 'GET'
+      data:
+        query: @searchQuery
+        fromIndex: @numSearchResultsReceived
+      success: (res) =>
+        @addImagesFromFetchResponse res
+        @numSearchResultsReceived += res.length
+        @isotopeUntilImagesLoaded()
+      failure: ->
+        @logger.info 'search failed'
 
   addImagesFromFetchResponse: (res) =>
+    @endOfImages = true if _.isEmpty(res)
+    newModels = []
     _.each res, (imageData) =>
       newModel = new MeetMikey.Model.Image imageData
-      @collection.push newModel
-    @fetchSuccess res
-
-  fetchSuccess: (response) =>
-    @fetching = false
-    @endOfImages = true if _.isEmpty(response)
-    @appendNewImageModelTemplates response
+      isDupe = false
+      @collection.each (oldModel) =>
+        if oldModel.get('hash') == newModel.get('hash')
+          isDupe = true
+      if not isDupe
+        @collection.push newModel
+        newModels.push newModel
+    @appendNewImageModelTemplates newModels
     @delegateEvents()
+    @fetching = false
 
-  appendNewImageModelTemplates: (response) =>
-    ids = _.pluck response, '_id'
-    models = _.map ids, (id) => @collection.get(id)
+  appendNewImageModelTemplates: (models) =>
     decoratedModels = _.invoke(models, 'decorate')
     html = ''
     _.each decoratedModels, (decoratedModel) =>
@@ -284,6 +307,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   setResults: (models, query) =>
     @on 'showTab', @isotopeUntilImagesLoaded
     @searchQuery = query
+    @endOfImages = false
+    @numSearchResultsReceived = models.length
     @collection.reset models, sort: false
     @isotopeUntilImagesLoaded()
 

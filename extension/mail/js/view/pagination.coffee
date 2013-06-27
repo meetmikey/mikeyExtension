@@ -2,22 +2,23 @@ imgPath = MeetMikey.Constants.imgPath
 arrowSprite = chrome.extension.getURL "#{imgPath}/sprite.png"
 template = """
   <div class="pagination-wrapper" style="display: {{display}};">
-  <div class="arrow-buttons">
-
-       <div class="page-button right-box next-page {{nextPageClass}}">
-        <div class="forward arrow" style="background-image: url(#{arrowSprite})">
-        </div>
+    
+    <div class="arrow-buttons">
+      
+      <div class="page-button right-box next-page {{nextPageClass}}">
+        <div class="forward arrow" style="background-image: url(#{arrowSprite})"></div>
       </div>
 
       <div class="page-button left-box prev-page {{prevPageClass}}">
-        <div class="back arrow" style="background-image: url(#{arrowSprite})">
-        </div>
+        <div class="back arrow" style="background-image: url(#{arrowSprite})"></div>
       </div>
 
-  </div>
+    </div>
 
-     <div class="page-count"><strong>{{start}}-{{end}}</strong> of <strong>{{size}}</strong></div>
-     </div>
+    <div class="page-count">
+      <strong>{{start}}-{{end}}</strong> of <strong>{{size}}</strong>
+    </div>
+  </div>
 """
 
 class MeetMikey.View.Pagination extends MeetMikey.View.Base
@@ -28,7 +29,6 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
     'click .prev-page': 'prevPage'
 
   page: 0
-  itemsPerPage: 50
 
   postInitialize: =>
 
