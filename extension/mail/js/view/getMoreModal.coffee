@@ -52,7 +52,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     'click #copyButton': 'copyTextToClipboard'
 
   shareTitle: 'Meet Mikey'
-  shareSummary: 'Mikey makes your Gmail awesome.'
+  shareSummary: 'The best way to find things in Gmail.'
 
   postRender: =>
     if MeetMikey.globalUser?.isPremium()
