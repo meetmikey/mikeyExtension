@@ -2,15 +2,17 @@ template = """
   <div class="mail-counts">
 
     <div class="mail-days mm-download-tooltip" data-toggle="tooltip" title="How much of your Gmail archive Mikey is showing you">
-      {{#if isFullyIndexed}}
-        <strong>{{mailTotalDays}}</strong> of <strong>{{mailTotalDays}}</strong> days archived
-      {{else}}
-        Showing <strong>{{mailDaysLimit}}</strong> of <strong>{{mailTotalDays}}</strong> days
-      {{/if}}
+      <a href="#" class="get-more-link">
+        {{#if isFullyIndexed}}
+          <strong>{{mailTotalDays}}</strong> of <strong>{{mailTotalDays}}</strong> days
+        {{else}}
+          <strong>{{mailDaysLimit}}</strong> of <strong>{{mailTotalDays}}</strong> days
+        {{/if}}
+      </a>
     </div>
     <a href="#" class="get-more-link">
       {{#if isFullyIndexed}}
-        share Mikey
+        <!-- share Mikey -->
       {{else}}
         get more
       {{/if}}

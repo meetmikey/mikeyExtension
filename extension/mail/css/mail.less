@@ -54,10 +54,10 @@ box-shadow: none !important;
 
 /* body moved down to make space for tabs */
 
-.AO-tabs {
+/* .AO-tabs {
   top: 45px !important;
   padding-bottom: 45px !important;
-}
+} */
 
 /* spacing for autocorrect on search */
 
@@ -123,6 +123,14 @@ padding-top: 24px;
 
 }
 
+
+.G-atb {
+margin-left: 0px !important;
+padding-left: 0px !important;
+position: relative;
+white-space: nowrap;
+z-index: 4;
+}
 
 
 
@@ -461,6 +469,14 @@ th.mm-download {
 
 .labels th {
   background: none !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #777;
 }
 
 th.mm-download {
@@ -1166,30 +1182,30 @@ white-space: nowrap;
   margin-top: 1em;
   margin-right:16px;
   .compact & {
-    margin-top:15px;
+    margin-top:4px;
   }
   .cozy & {
-    margin-top:21px;
+    margin-top:9px;
     margin-right: 28px;
   }
   .comfortable & {
-    margin-top:21px;
+    margin-top:9px;
     margin-right:44px;
   }
   .compact.multiple-inbox & {
-    margin-top: 5px;
+    margin-top: 2px;
   }
 
   .preview-pane.compact & {
-    margin-top: 12px;
+    margin-top: 2px;
   }
 
   .cozy.multiple-inbox & {
-    margin-top: 5px;
+    margin-top: 2px;
   }
 
    .comfortable.multiple-inbox & {
-    margin-top: 5px;
+    margin-top: 2px;
   }
 
 }
@@ -1949,13 +1965,18 @@ body::-webkit-scrollbar-corner {
 /* ---------------- COUNTERS AND REFERRALS -------------------- */
 
 .mail-counts-container {
-  float: right;
-  margin-top: 10px;
-  margin-right: 40px;
+  display: inline-block;
+  padding-bottom: 8px;
+  margin-top: -10px;
+  .compact & {
+    padding-bottom: 0px;
+  }
 }
 
 .mail-counts {
-  margin-left: 10px;
+  margin-left: 14px;
+  float: left;
+  padding-bottom: 3px;
 }
 
 .share-modal-button {
@@ -2046,6 +2067,16 @@ a.get-more-link {
 
   &:hover {
     color: #222;
+  }
+
+  .mail-days & {
+    font-size: 13px;
+    color: #222;
+    text-transform: none;
+
+    &:hover {
+      color: #000;
+    }
   }
 }
 
@@ -2171,13 +2202,13 @@ width: auto;
   { background-color: @red;}
 
   .active.files-tab & 
-  { background-color: @orange;}
+  { background-color: @red;}
 
   .active.links-tab & 
-  { background-color: @purple;}
+  { background-color: @red;}
 
   .active.images-tab & 
-  { background-color: @navy;}
+  { background-color: @red;}
 
 
 }
@@ -2191,6 +2222,15 @@ width: auto;
   background-image: url('@{pathPrefix}/mail/img/tabs-icons.png');
   float: left;
   .fader;
+
+  .compact & {
+    background-image: url('@{pathPrefix}/mail/img/tabs-icons_compact.png');
+    height: 25px;
+    width: 35px;
+    background-position: 0px 1px;
+  }
+
+
 
   &.files-tab {
     background-position: -50px 0;
@@ -2208,6 +2248,19 @@ width: auto;
     opacity: 0.8;
   }
 
+  .compact & {
+      &.files-tab {
+            background-position: -35px 1px;
+      }
+
+      &.links-tab {
+        background-position: -70px 1px;
+      }
+
+      &.images-tab {
+        background-position: -105px 1px;
+      }
+  }
 
 }
 
@@ -2228,6 +2281,10 @@ width: auto;
   .images-tab & {
     border-right: 1px solid #e0e0e0;
   }
+
+  .compact & {
+    height: 25px;
+  }
 }
 
 .tab-label {
@@ -2241,10 +2298,14 @@ width: auto;
   position: relative;
   padding-top: 12px;
   float: left;
+
+  .compact & {
+    padding-top: 5px;
+  }
 }
 
 .mikey-tab {
-  width: 250px;
+  width: 172px;
   padding: 0px;
 
 }
@@ -2271,13 +2332,13 @@ width: auto;
   { background-color: @red;}
 
   &.files-tab .tab-highlight   
-  { background-color: @orange;}
+  { background-color: @red;}
 
   &.links-tab .tab-highlight 
-  { background-color: @purple;}
+  { background-color: @red;}
 
   &.images-tab .tab-highlight 
-  { background-color: @navy;}
+  { background-color: @red;}
 
 }
 
@@ -2302,6 +2363,7 @@ width: auto;
 
 .mikey-tabs-box {
   margin-top: 10px;
+  margin-bottom: 3px;
 }
 
 .mm-count {
@@ -2319,13 +2381,13 @@ width: auto;
   { background-color: @red;}
 
   .files-tab &  
-  { background-color: @orange;}
+  { background-color: @red;}
 
   .links-tab &
-  { background-color: @purple;}
+  { background-color: @red;}
 
   .images-tab &
-  { background-color: @navy;}
+  { background-color: @red;}
 
   &.displayed {
     opacity: 1;
