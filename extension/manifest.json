@@ -77,6 +77,10 @@
             "mail/js/mail.js"],
       "css": ["vendor/css/bootstrap.css",
               "mail/css/mail.css"]
+    },
+    {
+        "matches": ["*://*.meetmikey.com/*"],
+        "js": ["mikey/js/exists.js"]
     }
   ],
   "web_accessible_resources": [
