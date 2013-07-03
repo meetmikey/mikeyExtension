@@ -2091,21 +2091,29 @@ a.get-more-link {
   text-decoration: none;
   text-transform: uppercase;
 
-  .light & {
+  .dark-blocks & {
     color: #aaa;
-  }
-
-  &:hover {
-    color: #fff;
-  }
-
-  .mail-days & {
-    font-size: 13px;
-    color: #fff;
-    text-transform: none;
 
     &:hover {
       color: #fff;
+    }
+}
+
+  .mail-days & {
+    font-size: 13px;
+    color: #222;
+    text-transform: none;
+
+    .dark-blocks & {
+      color: #fff;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    &:hover {
+      color: #222;
     }
   }
 }
@@ -2228,7 +2236,13 @@ width: auto;
   z-index: 1;
 
   .active & 
-  { top:2px;}
+  { top:1px;}
+
+  .dark-blocks .active &
+  {top:2px;}
+
+  .dark-blocks .active.mikey-tab:hover & 
+  {top:2px;}
 
 
   .active.email-tab & 
@@ -2348,12 +2362,14 @@ width: auto;
   }
 
   .dark-blocks & {
-    background: rgba(5, 5, 5, .85);
+    background-color: rgba(35, 35, 35, 0.901961)!important;
     border: 1px solid #3B3A3D;
   }
 
   .dark-blocks .active & {
-    background: rgba(35, 35, 35, .9)!important;
+    background-color: none;
+    border-bottom: transparent;
+    background: rgba(5, 5, 5, 0)!important;
   }
 
   .images-tab & {
@@ -2412,7 +2428,7 @@ width: auto;
 
 
   &.active .tab-highlight {
-    top: 2px;
+    top: 1px;
   }
 
   &.email-tab .tab-highlight 
