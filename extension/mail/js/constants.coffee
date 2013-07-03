@@ -9,6 +9,7 @@ _.extend MeetMikey.Constants,
   onboardCheckPollDelay: 10*1000
   msPerDay: 1000 * 60 * 60 * 24
   paginationSize: 50
+  imagePaginationSize: 15
   deleteDelay: 8000
   extensionVersion: chrome.runtime.getManifest()?.version
 
