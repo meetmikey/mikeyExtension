@@ -34,7 +34,7 @@ template = """
               </div>
           </td>
           <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat; opacity:0.1">&nbsp;</td>
-          <td class="mm-undo">{{filename}} won't be shown anymore! Click to UNDO </td>
+          <td class="mm-undo">File is hidden! <strong>Undo</strong></td>
           <td class="mm-file truncate" style="display:none;">{{filename}}&nbsp;</td>
           <td class="mm-from truncate" style="opacity:0.1">{{from}}</td>
           <td class="mm-to truncate" style="opacity:0.1">{{to}}</td>
@@ -56,7 +56,7 @@ template = """
           </td>
           
           <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat;">&nbsp;</td>
-          <td class="mm-undo" style="display:none;">{{filename}} won't be shown anymore! Click to UNDO </td>
+          <td class="mm-undo" style="display:none;">File is hidden! <strong>Undo</strong></td>
           <td class="mm-file truncate">{{filename}}&nbsp;</td>
           <td class="mm-from truncate">{{from}}</td>
           <td class="mm-to truncate">{{to}}</td>

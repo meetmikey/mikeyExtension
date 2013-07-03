@@ -47,7 +47,7 @@ template = """
             </td>
             <td class="mm-undo truncate"">
               <div class="flex">
-                <div class="undo-title-truncate">{{title}}</div> will not be shown anymore. <strong>Click here to undo.</strong> 
+                Link is hidden! <strong>Undo</strong> 
               </div>
             </td>
             <td class="mm-source truncate" style="opacity:0.1">{{displayUrl}}</td>
@@ -83,7 +83,7 @@ template = """
             </td>
             <td class="mm-undo truncate" style="display:none;">
               <div class="flex">
-                <div class="undo-title-truncate">{{title}}</div> will not be shown anymore. <strong>Click here to undo.</strong> 
+                Link is hidden! <strong>Undo</strong> 
               </div>
             </td>
             <td class="mm-source truncate">{{displayUrl}}</td>
