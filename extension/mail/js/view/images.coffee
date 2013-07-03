@@ -78,7 +78,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     #@on 'showTab', @bindScrollHandler
     Backbone.on 'change:tab', @hashChange
     @collection = new MeetMikey.Collection.Images()
-    @collection.on 'reset', _.debounce(@render, MeetMikey.Constants.paginationSize)
+    @collection.on 'reset', _.debounce(@render, MeetMikey.Constants.imagePaginationSize)
     @subViews.imageCarousel.view.setImageCollection @collection
     $(window).off 'hashchange', @hashChange
     $(window).on 'hashchange', @hashChange
@@ -319,7 +319,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     clearTimeout @timeoutId if @timeoutId
 
   poll: =>
-    data = if MeetMikey.globalUser.get('onboarding') or @collection.length < MeetMikey.Constants.paginationSize
+    data = if MeetMikey.globalUser.get('onboarding') or @collection.length < MeetMikey.Constants.imagePaginationSize
       {}
     else
       after: @collection.latestSentDate()
