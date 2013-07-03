@@ -85,12 +85,12 @@ padding-top: 24px;
 
 .preview-pane {
   
-  & .D.E.G-atb {
+  /* & .D.E.G-atb {
     margin-top: -35px;
-  }
+  } 
   & .aia {
     padding-top: 46px;
-  }
+  }*/
   & .mm-attachments-tab, & .mm-links-tab, & .mm-images-tab {
     overflow-y: scroll !important;
     overflow-x: hidden !important;
@@ -108,12 +108,12 @@ padding-top: 24px;
 
   &.compact {
   
-    & .D.E.G-atb {
+    /* & .D.E.G-atb {
     margin-top: -42px;
-    }
+    } 
     & .aia {
     padding-top: 39px;
-    }
+    }*/
   }
 
   & .isotope {
@@ -121,8 +121,23 @@ padding-top: 24px;
     margin-top: 0px;
   }
 
-}
+  .G-atb {
+    border-bottom: none;
+  }
 
+  .mm-tabs-container {
+    border-bottom: solid 1px #e0e0e0;
+  }
+
+  .aia {
+    margin-top: -14px;
+
+    .compact & {
+      margin-top: -7px;
+    }
+  }
+
+}
 
 .G-atb {
 margin-left: 0px !important;
@@ -131,6 +146,7 @@ position: relative;
 white-space: nowrap;
 z-index: 4;
 }
+
 
 
 
@@ -2305,7 +2321,7 @@ width: auto;
 }
 
 .mikey-tab {
-  width: 172px;
+  width: 135px;
   padding: 0px;
 
 }
