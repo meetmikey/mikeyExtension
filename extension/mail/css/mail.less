@@ -502,6 +502,7 @@ th.mm-download {
   font-size: 11px;
   text-transform: uppercase;
   color: #777;
+  cursor: pointer;
 }
 
 th.mm-download {
@@ -2090,17 +2091,21 @@ a.get-more-link {
   text-decoration: none;
   text-transform: uppercase;
 
+  .light & {
+    color: #aaa;
+  }
+
   &:hover {
-    color: #222;
+    color: #fff;
   }
 
   .mail-days & {
     font-size: 13px;
-    color: #222;
+    color: #fff;
     text-transform: none;
 
     &:hover {
-      color: #000;
+      color: #fff;
     }
   }
 }
@@ -2222,6 +2227,9 @@ width: auto;
   top: 1px;
   z-index: 1;
 
+  .active & 
+  { top:2px;}
+
 
   .active.email-tab & 
   { background-color: @red;}
@@ -2273,9 +2281,29 @@ width: auto;
     opacity: 0.8;
   }
 
+  .dark-blocks & {
+    background-position: 0px 116px;  
+
+    &.files-tab {
+    background-position: -50px 116px;
+    }
+
+    &.links-tab {
+      background-position: -100px 116px;
+    }
+
+    &.images-tab {
+      background-position: -150px 116px;
+    }
+
+    .active & {
+      opacity: 0.8;
+    }
+  }
+
   .compact & {
       &.files-tab {
-            background-position: -35px 1px;
+            background-position: -35px 2px;
       }
 
       &.links-tab {
@@ -2286,6 +2314,23 @@ width: auto;
         background-position: -105px 1px;
       }
   }
+
+    .dark-blocks.compact & {
+      background-position: 0px 27px;
+
+      &.files-tab {
+            background-position: -35px 26px;
+      }
+
+      &.links-tab {
+        background-position: -70px 27px;
+      }
+
+      &.images-tab {
+        background-position: -105px 27px;
+      }
+  }
+
 
 }
 
@@ -2302,9 +2347,21 @@ width: auto;
     border-top: transparent;
   }
 
+  .dark-blocks & {
+    background: rgba(5, 5, 5, .85);
+    border: 1px solid #3B3A3D;
+  }
+
+  .dark-blocks .active & {
+    background: rgba(35, 35, 35, .9)!important;
+  }
 
   .images-tab & {
     border-right: 1px solid #e0e0e0;
+
+    .dark-blocks & {
+      border-right: 1px solid #3B3A3D;
+    }
   }
 
   .compact & {
@@ -2327,6 +2384,9 @@ width: auto;
   .compact & {
     padding-top: 5px;
   }
+  .dark-blocks & {
+    color: #fff;
+  }
 }
 
 .mikey-tab {
@@ -2341,16 +2401,18 @@ width: auto;
 
   & .tab-icon {
     opacity: 0.8;
+    .dark-blocks & {
+      opacity: 0.95;
+    }
   }
 
   & .tab-highlight {
     top: 2px;
-
-
   }
 
+
   &.active .tab-highlight {
-    top: 1px;
+    top: 2px;
   }
 
   &.email-tab .tab-highlight 
