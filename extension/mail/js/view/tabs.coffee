@@ -119,7 +119,7 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
 
   updateTabCount: (tab, count) =>
     tab =  @$("[data-mm-tab='#{tab}']")
-    tab.find(".mm-count").text "#{ count } results"
+    tab.find(".mm-count").text "#{ count }"
     tab.find(".mm-count").addClass 'displayed'
 
   trackTabEvent: (tab) =>
