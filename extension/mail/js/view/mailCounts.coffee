@@ -1,5 +1,5 @@
 template = """
-  <div class="mail-counts">
+  <div class="mail-counts" style="display: {{display}};>
 
     <div class="mail-days mm-download-tooltip" data-toggle="tooltip" title="How much of your Gmail archive Mikey is showing you">
       <a href="#" class="get-more-link">
@@ -10,11 +10,11 @@ template = """
         {{/if}}
       </a>
     </div>
-    <a href="#" class="get-more-link">
+    <a href="#" class="get-more-link" style="display: {{display}};">
       {{#if isFullyIndexed}}
         <!-- share Mikey -->
       {{else}}
-        get more
+        &nbsp get more
       {{/if}}
     </a>
   </div>
@@ -28,6 +28,7 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
 
   postInitialize: =>
     MeetMikey.globalUser?.on 'change', @render
+    Backbone.on 'change:tab', @render
 
   getTemplateData: =>
     isFullyIndexed = MeetMikey.globalUser?.isPremium() || ( MeetMikey.globalUser?.getDaysLimit() >= MeetMikey.globalUser?.getMailTotalDays() )
@@ -35,6 +36,7 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
     object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
     object.isFullyIndexed = isFullyIndexed
+    object.display = @getDisplay()
     object
 
   shouldShow: =>
@@ -44,6 +46,7 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
       true
     else
       false
+
 
   postRender: =>
     $('.mm-download-tooltip').tooltip placement: 'bottom'
@@ -56,3 +59,12 @@ class MeetMikey.View.MailCounts extends MeetMikey.View.Base
     $('body').append $('<div id="mm-get-more-modal"></div>')
     @getMoreModal = new MeetMikey.View.GetMoreModal el: '#mm-get-more-modal'
     @getMoreModal.render()
+
+  getDisplay: =>
+    tab = MeetMikey.Globals.tabState
+    tabsWidth = $('#mm-tabs-container').css('width')?.replace("px","")
+    if !tabsWidth
+      return 'inline'
+    else
+      tabsWidthInt = parseInt(tabsWidth, 10)
+      method = if tab is 'email' or tabsWidthInt > 900 then 'inline' else 'none'
