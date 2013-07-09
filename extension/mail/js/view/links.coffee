@@ -160,11 +160,13 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     , MeetMikey.Constants.deleteDelay
 
   markDeletingEvent: (event) =>
+    event.preventDefault()
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
     @markDeleting(model)
 
   unMarkDeletingEvent: (event) =>
+    event.preventDefault()
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
     @unMarkDeleting(model)
