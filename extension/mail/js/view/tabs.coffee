@@ -12,7 +12,7 @@ template = """
           </div>
       </td>
 
-      <td href="#" class="mikey-tab files-tab" data-mm-tab="attachments">
+      <td href="#" class="mikey-tab files-tab" data-mm-tab="attachments" data-placement="bottom" title="Mikey is at work. We'll let you know when your files are ready.">
      
           <div class="tab-highlight"></div>
           <div class="tab-content">
@@ -21,7 +21,7 @@ template = """
           </div>
       </td>
 
-      <td href="#" class="mikey-tab links-tab" data-mm-tab="links">
+      <td href="#" class="mikey-tab links-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your links are ready." data-mm-tab="links">
      
           <div class="tab-highlight"></div>
           <div class="tab-content">
@@ -30,7 +30,7 @@ template = """
           </div>
       </td>
 
-      <td href="#" class="mikey-tab images-tab" data-mm-tab="images">
+      <td href="#" class="mikey-tab images-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your images are ready." data-mm-tab="images">
      
           <div class="tab-highlight"></div>
           <div class="tab-content">
