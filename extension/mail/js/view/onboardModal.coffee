@@ -29,6 +29,7 @@ class MeetMikey.View.OnboardModal extends MeetMikey.View.BaseModal
   events:
     'click #authorize-button': 'authorize'
     'click #never-button': 'doNotAsk'
+    'hidden .modal': 'modalHidden'
 
   postRender: =>
     if @model.get('errMsg')

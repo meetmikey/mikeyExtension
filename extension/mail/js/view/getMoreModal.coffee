@@ -50,6 +50,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     'click #facebookReferralButton': 'facebookReferralClick'
     'click #upgradeButton': 'showUpgradeModal'
     'click #copyButton': 'copyTextToClipboard'
+    'hidden .modal': 'modalHidden'
 
   shareTitle: 'Meet Mikey'
   shareSummary: 'The best way to find things in Gmail.'

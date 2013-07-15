@@ -29,6 +29,7 @@ class MeetMikey.View.ReAuthModal extends MeetMikey.View.BaseModal
   events:
     'click #authorize-button': 'authorize'
     'click #delete': 'delete'
+    'hidden .modal': 'modalHidden'
 
   postRender: =>
     if @model.get('errMsg')

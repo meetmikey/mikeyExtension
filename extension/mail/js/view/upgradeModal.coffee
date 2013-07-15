@@ -21,3 +21,6 @@ template = """
 
 class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
   template: Handlebars.compile(template)
+
+  events:
+    'hidden .modal': 'modalHidden'

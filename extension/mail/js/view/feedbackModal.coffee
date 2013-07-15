@@ -16,3 +16,6 @@ template = """
 
 class MeetMikey.View.FeedbackModal extends MeetMikey.View.BaseModal
   template: Handlebars.compile(template)
+
+  events:
+    'hidden .modal': 'modalHidden'

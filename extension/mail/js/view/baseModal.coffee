@@ -1,8 +1,5 @@
 class MeetMikey.View.BaseModal extends MeetMikey.View.Base
 
-  events:
-    'hidden .modal': 'remove'
-
   postRender: =>
     @show()
 
@@ -12,3 +9,8 @@ class MeetMikey.View.BaseModal extends MeetMikey.View.Base
 
   hide: =>
     $('.modal').modal 'hide'
+    @remove()
+
+  modalHidden: (e) =>
+    if e.target == e.currentTarget
+      @hide()

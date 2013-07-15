@@ -56,6 +56,7 @@ class MeetMikey.View.WelcomeModal extends MeetMikey.View.BaseModal
   events:
     'click .carousel-control.left': 'prev'
     'click .carousel-control.right': 'next'
+    'hidden .modal': 'modalHidden'
 
   prev: =>
     @$('.carousel').carousel 'prev'
