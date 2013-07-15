@@ -8,7 +8,7 @@ class MeetMikey.View.BaseModal extends MeetMikey.View.Base
     @$('.modal').modal 'show'
 
   hide: =>
-    $('.modal').modal 'hide'
+    @$('.modal').modal 'hide'
     @remove()
 
   modalHidden: (e) =>
