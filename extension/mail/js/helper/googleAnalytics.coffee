@@ -13,7 +13,6 @@ class GoogleAnalytics
 
   trackEvent: (event, eventProps, allProps) =>
     @setup()
-    #console.log 'ga trackEvent, event: ', event
     ga('send', 'event', 'mikeyExtension', event);
 
 MeetMikey.Helper.GoogleAnalytics = new GoogleAnalytics()
