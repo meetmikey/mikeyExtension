@@ -54,6 +54,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
 
   shareTitle: 'Meet Mikey'
   shareSummary: 'The best way to find things in Gmail.'
+  twitterTag: '@mikeyforgmail'
 
   postRender: =>
     if MeetMikey.globalUser?.isPremium()
@@ -71,7 +72,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
 
   getTwitterShareLink: =>
     link = 'https://twitter.com/intent/tweet'
-    link += '?text=' + encodeURIComponent @shareTitle + ': ' + @shareSummary
+    link += '?text=' + encodeURIComponent @shareTitle + ': ' + @shareSummary + ' ' + @twitterTag
     link += '&url=' + encodeURIComponent @getReferralURL 'twitter'
     link
 
