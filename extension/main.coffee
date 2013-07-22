@@ -3,6 +3,7 @@ if ! localStorage.firstRun
      url: 'https://www.gmail.com'
   })
   localStorage.firstRun = true
+  MeetMikey.Helper.Analytics.trackEvent 'install'
 
  copyTextToClipboard = (text) ->
   copyDiv = document.createElement('div')
