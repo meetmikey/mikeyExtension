@@ -15,7 +15,7 @@ template = """
         {{#if isFullyIndexed}}
           <p>Mikey is showing you stuff from all {{mailTotalDays}} days in your account, but you're limited to {{mailDaysLimit}}.</p>
         {{else}}
-          <p>Mikey is showing you stuff from the last {{mailDaysLimit}} (out of the {{mailTotalDays}} total days that you've had this Gmail account).</p>
+          <p>Mikey is showing you stuff from the last {{mailDaysLimit}} days (out of the {{mailTotalDays}} total days that you've had this Gmail account).</p>
         {{/if}}
         <p>Share with friends or upgrade to Mikey Premium to get more.</p>
       {{/if}}

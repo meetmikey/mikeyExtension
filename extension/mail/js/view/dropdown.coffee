@@ -4,6 +4,7 @@ template = """
     <ul id="menu1" class="dropdown-menu mm-menu" role="menu" aria-labelledby="drop4">
       <li><a tabindex="-1" href="http://mikey.uservoice.com">Suggest a feature</a></li>
       <li><a tabindex="-1" href="mailto:support@mikeyteam.com">Mikey support</a></li>
+      <li><a tabindex="-1" target="_blank" href="http://www.meetmikey.com/faq.html">Mikey FAQ</a></li>
       <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
       {{#if shouldShowShareMikey}}
         <li class="divider"></li>
