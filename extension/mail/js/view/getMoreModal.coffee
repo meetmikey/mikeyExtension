@@ -119,11 +119,13 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     @notifyAboutUpgradeInterest()
 
   notifyAboutUpgradeInterest: =>
-    if MeetMikey.Constants.env is 'production'
+    #TEMP!!!!! GET RID OF FALSE!!!
+    if false and MeetMikey.Constants.env is 'production'
       MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal'
       email = MeetMikey.globalUser?.get('email')
       MeetMikey.Helper.callAPI
-        url: 'upgradeInterest'
-        type: 'GET'
+        url: 'upgrade'
+        type: 'POST'
         data:
           userEmail: email
+          

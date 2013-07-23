@@ -6,15 +6,15 @@ template = """
     </div>
     <div class="modal-body">
       <p>
-        Thanks for your interest in upgrading to premium Mikey!
+        Thanks for your interest in upgrading Mikey!
       </p>
       <p>
-        We'll be rolling out our pricing soon, and we'll let you know when it's ready.
-        If you have any questions in the meantime, you can reach Team Mikey by <a href="mailto:support@mikeyteam.com">email</a>.
+        <div id='mm-stripe-basic'></div>
+        <div id='mm-stripe-pro'></div>
       </p>
     </div>
     <div class="footer-buttons">
-      <a href="#" data-dismiss="modal" class="button buttons">Great</a>
+      <a href="#" data-dismiss="modal" class="button buttons">Not now</a>
     </div>
   </div>
 """
@@ -22,5 +22,19 @@ template = """
 class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
   template: Handlebars.compile(template)
 
+  subViews:
+    'stripeBasic':
+      viewClass: MeetMikey.View.PayWithStripe
+      selector: '#mm-stripe-basic'
+      args: {plan: 'basic'}
+    'stripePro':
+      viewClass: MeetMikey.View.PayWithStripe
+      selector: '#mm-stripe-pro'
+      args: {plan: 'pro'}
+
   events:
     'hidden .modal': 'modalHidden'
+
+  getTemplateData: =>
+    object = {}
+    object

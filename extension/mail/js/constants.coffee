@@ -1,7 +1,8 @@
 _.extend MeetMikey.Constants,
-  env: "production"
+  env: 'local'
   imgPath: 'mail/img'
-  mixpanelId: "4025d8a58a875ce9a39db05bcf86fd71"
+  mixpanelId: '4025d8a58a875ce9a39db05bcf86fd71'
+  stripeKey: 'pk_test_xkrclY7n0l6KbnAmG2huBZzK'
   mixpanelOff: false
   piwikOff: false
   googleAnalyticsOff: false
@@ -12,6 +13,7 @@ _.extend MeetMikey.Constants,
   imagePaginationSize: 15
   deleteDelay: 8000
   extensionVersion: chrome.runtime.getManifest()?.version
+  extensionId: chrome.i18n.getMessage("@@extension_id")
 
   APIUrls:
     local: "https://local.meetmikey.com"

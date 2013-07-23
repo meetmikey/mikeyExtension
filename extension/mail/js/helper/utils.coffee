@@ -102,3 +102,6 @@ MeetMikey.Helper.clearCheckTabsInterval = ->
   if MeetMikey.Globals.checkTabsInterval
     clearInterval MeetMikey.Globals.checkTabsInterval
     MeetMikey.Globals.checkTabsInterval = null
+
+String.prototype.capitalize = () ->
+  this.charAt(0).toUpperCase() + this.slice(1)
