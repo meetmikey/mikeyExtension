@@ -1,10 +1,23 @@
 {
   "name": "Mikey for Gmail™",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "manifest_version": 2,
   "description": "Meet Mikey. A better way to find things in your Gmail.",
   "background": {
-    "scripts": ["main.js"],
+    "scripts": ["vendor/js/jquery.js"
+                ,"vendor/js/underscore.js"
+                ,"vendor/js/handlebars.js"
+                ,"vendor/js/piwik.js"
+                ,"vendor/js/googleAnalytics.js"
+                ,"mail/js/namespace.js"
+                ,"mail/js/constants.js"
+                ,"mail/js/helper/utils.js"
+                ,"mail/js/helper/logger.js"
+                ,"mail/js/helper/mixpanel.js"
+                ,"mail/js/helper/piwik.js"
+                ,"mail/js/helper/googleAnalytics.js"
+                ,"mail/js/helper/analytics.js"
+                ,"main.js"],
     "persistent": true
   },
   "content_scripts": [
