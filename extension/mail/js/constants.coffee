@@ -10,7 +10,7 @@ _.extend MeetMikey.Constants,
   onboardCheckPollDelay: 10*1000
   msPerDay: 1000 * 60 * 60 * 24
   paginationSize: 50
-  imagePaginationSize: 15
+  imagePaginationSize: 20
   deleteDelay: 8000
   extensionVersion: chrome.runtime.getManifest()?.version
   extensionId: chrome.i18n.getMessage("@@extension_id")
@@ -76,6 +76,9 @@ _.extend MeetMikey.Constants,
     # inner container that scrolls
     scrollContainer: '[id=":rp"]'
 
+    # inner container that scrolls
+    scrollContainer2: '[id=":4"]'
+
     # nav bar at very top of viewport
     navBar: '#gbzc'
 
@@ -96,8 +99,15 @@ _.extend MeetMikey.Constants,
     # where multiple inbox container should be injected
     multipleInboxContainer: "[id=':rr']"
 
+    # where multiple inbox container should be injected
+    multipleInboxContainer2: "[id=':2']"
+
+
     # where multiple inbox tabs should be injected
     multipleInboxTabsContainer: '[id=":ro"]'
+
+    # where multiple inbox tabs should be injected
+    multipleInboxTabsContainer2: '[id=":5"]'
 
     # existence of gmail tabs
     gmailTabsSelector: '.aKh'

@@ -61,6 +61,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   safeFind: MeetMikey.Helper.DOMManager.find
 
+  safeFindEither: MeetMikey.Helper.DOMManager.findEither
+
   subViews:
     'imageCarousel':
       viewClass: MeetMikey.View.ImageCarousel
@@ -208,7 +210,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     if MeetMikey.Globals.previewPane
       @$el.parent()
     else
-      @safeFind(MeetMikey.Constants.Selectors.scrollContainer)
+      @safeFindEither(MeetMikey.Constants.Selectors.scrollContainer, MeetMikey.Constants.Selectors.scrollContainer2)
 
   bindScrollHandler: =>
     @unbindScrollHandler()

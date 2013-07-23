@@ -52,7 +52,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   preInitialize: =>
     @tabs = $.extend true, {}, @tabs # deep copy tabs
     if @options.fetch and MeetMikey.Globals.multipleInbox
-      @tabs.email = MeetMikey.Constants.Selectors.multipleInboxContainer + ', ' + @tabs.email
+      @tabs.email = MeetMikey.Globals.multipleInboxContainer + ', ' + @tabs.email
     @subViews.attachments.args.fetch = @options.fetch
     @subViews.links.args.fetch = @options.fetch
     @subViews.images.args.fetch = @options.fetch
@@ -88,7 +88,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @managePaginationDisplay(tab)
     @manageAppsSearchDisplay(tab) if @inAppsSearch()
     $(@tabs[tab]).show()
-    $(MeetMikey.Constants.Selectors.scrollContainer).scrollTop 0
+    if $(MeetMikey.Constants.Selectors.scrollContainer)
+      $(MeetMikey.Constants.Selectors.scrollContainer).scrollTop 0
+    else if $(MeetMikey.Constants.Selectors.scrollContainer2)
+      $(MeetMikey.Constants.Selectors.scrollContainer2).scrollTop 0
     MeetMikey.Globals.tabState = tab
     Backbone.trigger 'change:tab', tab
     @subView(tab)?.trigger 'showTab'
@@ -116,7 +119,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   resetEmailDisplay: =>
     $(MeetMikey.Constants.Selectors.allInboxes).show()
-    $(MeetMikey.Constants.Selectors.multipleInboxContainer).show()
+    $(MeetMikey.Globals.multipleInboxContainer).show()
 
   inAppsSearch: MeetMikey.Helper.Url.inAppsSearch
 

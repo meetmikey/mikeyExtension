@@ -48,7 +48,16 @@ class Setup
 
   checkMultipleInbox: (callback) =>
     controlSelector = MeetMikey.Constants.Selectors.inboxControlsContainer
-    tabContainerSelector = MeetMikey.Constants.Selectors.multipleInboxTabsContainer
+    if @checkDomVersion() == 1
+      tabContainerSelector = MeetMikey.Constants.Selectors.multipleInboxTabsContainer
+      MeetMikey.Globals.multipleInboxTabsContainer = MeetMikey.Constants.Selectors.multipleInboxTabsContainer
+    else if @checkDomVersion() == 2
+      tabContainerSelector = MeetMikey.Constants.Selectors.multipleInboxTabsContainer2
+      MeetMikey.Globals.multipleInboxTabsContainer = MeetMikey.Constants.Selectors.multipleInboxTabsContainer2
+    else
+      console.log 'error, unknown dom version'
+      # TODO: send an error to the api server that is critical in some way
+
     MeetMikey.Helper.DOMManager.waitAndFind controlSelector, (target) =>
       margin = target.css 'margin-left'
       controlSelectorArray = $(tabContainerSelector).find(controlSelector)
@@ -58,10 +67,22 @@ class Setup
         nonDispNone = _.filter controlSelectorArray, (element) -> $(element).css('display') != "none"
         count = nonDispNone.length
 
-      # move 400px into named constant
+      # TODO: move 400px into named constant
       MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and count == 0
       @setSelectors()
+      console.log 'multipleInbox', @multipleInbox
       callback @multipleInbox
+
+  checkDomVersion: =>
+    version1 = $(MeetMikey.Constants.Selectors.multipleInboxTabsContainer)
+    version2 = $(MeetMikey.Constants.Selectors.multipleInboxTabsContainer2)
+
+    if version1.length
+      return 1
+    else if version2.length
+      return 2
+    else
+      return 0
 
   checkGmailTabs: (callback) =>
     gmailTabsSelector = MeetMikey.Constants.Selectors.gmailTabsSelector
@@ -82,8 +103,15 @@ class Setup
   setSelectors: =>
     selectors = MeetMikey.Constants.Selectors
     if @multipleInbox
-      @inboxSelector = selectors.multipleInboxContainer
-      @tabsSelector = selectors.multipleInboxTabsContainer
+      if @checkDomVersion() == 1
+        @tabsSelector = MeetMikey.Constants.Selectors.multipleInboxTabsContainer
+        @inboxSelector = selectors.multipleInboxContainer
+        MeetMikey.Globals.multipleInboxContainer = selectors.multipleInboxContainer
+      else if @checkDomVersion() == 2
+        @tabsSelector = MeetMikey.Constants.Selectors.multipleInboxTabsContainer2
+        @inboxSelector = selectors.multipleInboxContainer2
+        MeetMikey.Globals.multipleInboxContainer = selectors.multipleInboxContainer2
+
       $('body').addClass 'multiple-inbox'
     else
       @inboxSelector = selectors.inboxContainer
