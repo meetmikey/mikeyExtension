@@ -52,7 +52,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
   preInitialize: =>
     @tabs = $.extend true, {}, @tabs # deep copy tabs
     if @options.fetch and MeetMikey.Globals.multipleInbox
-      @tabs.email = MeetMikey.Constants.Selectors.multipleInboxContainer + ', ' + @tabs.email
+      @tabs.email = MeetMikey.Globals.multipleInboxContainer + ', ' + @tabs.email
     @subViews.attachments.args.fetch = @options.fetch
     @subViews.links.args.fetch = @options.fetch
     @subViews.images.args.fetch = @options.fetch
@@ -119,7 +119,7 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   resetEmailDisplay: =>
     $(MeetMikey.Constants.Selectors.allInboxes).show()
-    $(MeetMikey.Constants.Selectors.multipleInboxContainer).show()
+    $(MeetMikey.Globals.multipleInboxContainer).show()
 
   inAppsSearch: MeetMikey.Helper.Url.inAppsSearch
 
