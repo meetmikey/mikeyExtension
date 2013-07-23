@@ -13,7 +13,8 @@ template = """
     </div>
     <div class="modal-body normalModal">
       <p>Mikey needs access to your Gmail in order to perform his magic.</p>
-      <p>Once you connect, it should take a few hours to process.</p>
+      <p>Once you connect, it usually takes a few hours to process.</p>
+      <p>Take a look at the <a target="_blank" href="http://www.meetmikey.com/faq.html">FAQ</a> if you have any questions.</p>
     </div>
     <div class="footer-buttons">
       <a href="#" id="authorize-button" class="button buttons">Connect</a>
