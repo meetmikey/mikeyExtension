@@ -6,6 +6,15 @@ class DOMManager
     @error('selectorNotFound', selector) unless target.length > 0
     target
 
+  findEither: (selector1, selector2) =>
+    target1 = $(selector1)
+    target2 = $(selector2)
+    @error('selectorsNotFound', selector1) unless target1.length > 0 || target2.length > 0
+    if target1.length > 0
+      target1
+    else
+      target2
+
   findWithin: ($elem) => (selector) =>
     target = $elem.find selector
     @error('selectorNotFound', selector) unless target.length > 0

@@ -74,6 +74,9 @@ _.extend MeetMikey.Constants,
     # inner container that scrolls
     scrollContainer: '[id=":rp"]'
 
+    # inner container that scrolls
+    scrollContainer2: '[id=":4"]'
+
     # nav bar at very top of viewport
     navBar: '#gbzc'
 
@@ -96,6 +99,9 @@ _.extend MeetMikey.Constants,
 
     # where multiple inbox tabs should be injected
     multipleInboxTabsContainer: '[id=":ro"]'
+
+    # where multiple inbox tabs should be injected
+    multipleInboxTabsContainer2: '[id=":5"]'
 
     # existence of gmail tabs
     gmailTabsSelector: '.aKh'

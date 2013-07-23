@@ -88,7 +88,10 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @managePaginationDisplay(tab)
     @manageAppsSearchDisplay(tab) if @inAppsSearch()
     $(@tabs[tab]).show()
-    $(MeetMikey.Constants.Selectors.scrollContainer).scrollTop 0
+    if $(MeetMikey.Constants.Selectors.scrollContainer)
+      $(MeetMikey.Constants.Selectors.scrollContainer).scrollTop 0
+    else if $(MeetMikey.Constants.Selectors.scrollContainer2)
+      $(MeetMikey.Constants.Selectors.scrollContainer2).scrollTop 0
     MeetMikey.Globals.tabState = tab
     Backbone.trigger 'change:tab', tab
     @subView(tab)?.trigger 'showTab'
