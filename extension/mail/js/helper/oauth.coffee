@@ -55,6 +55,7 @@ class OAuth
       userEmail: @getUserEmail()
 
   trackAuthEvent: (user) =>
+    MeetMikey.Helper.Analytics.setUser user
     MeetMikey.Helper.Analytics.trackEvent 'authorized'
 
   checkUser: (callback) =>
