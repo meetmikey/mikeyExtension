@@ -191,6 +191,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   hashChange: =>
     if @isVisible()
       @runIsotope()
+    setTimeout @checkAndBindScrollHandler, 200
     setTimeout @checkAndBindScrollHandler, 1000
     setTimeout @checkAndBindScrollHandler, 2000
     setTimeout @checkAndBindScrollHandler, 4000
