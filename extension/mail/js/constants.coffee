@@ -102,10 +102,10 @@ _.extend MeetMikey.Constants,
 
 
     # where multiple inbox tabs should be injected
-    multipleInboxTabsContainer: '[id=":ro"]'
+    multipleInboxTabsContainer: '[id=":5"]'
 
     # where multiple inbox tabs should be injected
-    multipleInboxTabsContainer2: '[id=":5"]'
+    multipleInboxTabsContainer2: '[id=":ro"]'
 
     # existence of gmail tabs
     gmailTabsSelector: '.aKh'
