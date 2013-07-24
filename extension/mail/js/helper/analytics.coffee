@@ -18,6 +18,7 @@ class Analytics
   userProps: {}
 
   setUser: (user) =>
+    return unless user
     @userProps = _.pick user.attributes, 'email', 'firstName', 'lastName', 'displayName', 'timestamp'
     @userProps.userId = user.id
     @userProps.userCreatedTimestamp = user.get('timestamp')

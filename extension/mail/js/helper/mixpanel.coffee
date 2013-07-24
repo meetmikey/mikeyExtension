@@ -5,7 +5,6 @@ class Mixpanel
 
   setUser: (allProps) =>
     userObj = @_buildUserObj allProps
-    console.log 'setUser, userObj: ', userObj
     $.ajax
       url: "#{@apiUrl}/engage"
       data:
