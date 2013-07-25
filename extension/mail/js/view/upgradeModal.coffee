@@ -6,15 +6,126 @@ template = """
     </div>
     <div class="modal-body">
       <p>
-        Thanks for your interest in upgrading Mikey!
+        Simple monthly rates. No surprises.
       </p>
       <p>
-        <div id='mm-stripe-basic'></div>
-        <div id='mm-stripe-pro'></div>
+       
+        <div class="pricing">
+          <div class="pricing-tier basic user-plan">
+            <div class="status current">
+              current
+            </div>
+            <div class="status cancel">
+              cancel
+            </div>
+            <div class="status upgrade">
+              get it
+            </div>
+            <div class="plan-highlight">
+              <div class="plan-cost">
+                <div class="per-month">
+                  Basic
+                </div>
+                <div class="dollar-sign">
+                  $
+                </div>
+                <div class="amount">
+                  2
+                </div>
+
+              </div>
+            </div>
+            <div class="plan-feature">
+              365 days
+            </div>
+            <div class="plan-feature">
+              1 account
+            </div>
+            <!-- <div class="upgrade-button">
+              upgrade now
+            </div> -->
+          </div>
+
+          <div class="pricing-tier pro">
+            <div class="status current">
+              current
+            </div>
+            <div class="status cancel">
+              cancel
+            </div>
+            <div class="status upgrade">
+              get it
+            </div>
+            <div class="plan-highlight">
+              <div class="plan-cost">
+                <div class="per-month">
+                  Pro
+                </div>
+                <div class="dollar-sign">
+                  $
+                </div>
+                <div class="amount">
+                  5
+                </div>
+
+              </div>
+            </div>
+            <div class="plan-feature">
+              Unlimited days
+            </div>
+            <div class="plan-feature">
+              1 account
+            </div>
+            <!-- <div class="upgrade-button">
+              upgrade now
+            </div> -->
+          </div>
+
+          <div class="pricing-tier team">
+            <div class="status current">
+              current
+            </div>
+            <div class="status cancel">
+              cancel
+            </div>
+            <div class="status upgrade">
+              get it
+            </div>
+            <div class="plan-highlight">
+              <div class="plan-cost">
+                <div class="per-month">
+                  Team
+                </div>
+
+                <div class="dollar-sign">
+                  $
+                </div>
+                <div class="amount">
+                  20
+                </div>
+
+              </div>
+            </div>
+            <div class="plan-feature">
+              Unlimited days
+            </div>
+            <div class="plan-feature">
+              5 accounts
+            </div>
+
+            <!-- <div class="upgrade-button">
+              upgrade now
+            </div> -->
+          </div>
+
+ 
+
+          
+
       </p>
     </div>
     <div class="footer-buttons">
-      <a href="#" data-dismiss="modal" class="button buttons">Not now</a>
+      <!-- <a href="#" data-dismiss="modal" class="button buttons">Not now</a> -->
     </div>
   </div>
 """

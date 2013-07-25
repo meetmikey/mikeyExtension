@@ -10,20 +10,21 @@ template = """
     </div>
     <div class="modal-body">
       {{#if isPremium}}
-        <p>You already have a premium account so we can't give you more days, but if Mikey has helped you out, we would be thrilled if you shared Mikey with your friends.</p>
+        <p>You already have a premium account so we can't give you more days, but if Mikey has helped you out, we would be thrilled if you shared Mikey with your friends or rated us in the Chrome store.</p>
       {{else}}
         {{#if isFullyIndexed}}
-          <p>Mikey is showing you stuff from all {{mailTotalDays}} days in your account, but you're limited to {{mailDaysLimit}}.</p>
+          <p>Mikey is showing you stuff from all <strong>{{mailTotalDays}}</strong> days in your account, but you will be limited to <strong>{{mailDaysLimit}}</strong>.</p>
         {{else}}
-          <p>Mikey is showing you stuff from the last {{mailDaysLimit}} days (out of the {{mailTotalDays}} total days that you've had this Gmail account).</p>
+          <p>Mikey is showing you stuff from the last <strong>{{mailDaysLimit}}</strong> out of the <strong>{{mailTotalDays}}</strong> total days that you've had this Gmail account.</p>
         {{/if}}
-        <p>Share with friends or upgrade to Mikey Premium to get more.</p>
+        <p>Share with friends, rate us in the Chrome store or upgrade to Mikey Premium to get more days.</p>
       {{/if}}
     </div>
     <div class="modal-body">
       <div class="buttons-cluster">
         <a href="#" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">twitter</div></a>
         <a href="#" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">facebook</div></a>
+        <a href="#" id="chromeReferralButton" class="share-modal-button chrome-share"><div class="referral-button-text">rate mikey</div></a>
         {{#if isPremium}}
           <a href="#" class="share-modal-button premium upgraded mm-download-tooltip" data-toggle="tooltip" title="You already have a premium account">
             <div class="referral-button-text">upgraded</div></a> 

@@ -2005,8 +2005,8 @@ body::-webkit-scrollbar-corner {
 
 .share-modal-button {
   display: inline-block;
-  width: 140px;
-  height: 140px;
+  width: 110px;
+  height: 110px;
   text-transform: uppercase;
   text-decoration: none;
   font-size: 11px;
@@ -2017,13 +2017,23 @@ body::-webkit-scrollbar-corner {
   -moz-border-radius: 2px;
   border-radius: 2px;
   color: #fff;
+  background-size: 70px 70px;
 
   
   &.facebook-share {
     background-color: #3D5B99;
     background-image: url('@{pathPrefix}/mail/img/facebookShare.png');
     &:hover {
-      background-color: #4B6BA3;
+      background-color: darken(#3D5B99, 10%);
+
+    }
+  }
+
+    &.chrome-share {
+    background-color: #DB5037;
+    background-image: url('@{pathPrefix}/mail/img/chromeShare.png');
+    &:hover {
+      background-color: darken(#DB5037, 10%);
 
     }
   }
@@ -2032,20 +2042,22 @@ body::-webkit-scrollbar-corner {
     background-color: #2CAAE1;
     background-image: url('@{pathPrefix}/mail/img/twitterShare.png');
     &:hover {
-      background-color: #3DBBE8;
+      background-color: darken(#2CAAE1, 10%);
+
     }
   }
   &.premium {
-    background-color: #3079ED;
+    background-color: #2372C1;
     background-image: url('@{pathPrefix}/mail/img/premiumUpgrade.png');
     &:hover {
-      background-color: #4A90F4;
+      background-color: darken(#2372C1, 10%);
+
     }
     &.upgraded {
       cursor: pointer;
       opacity: 0.3;
       &:hover {
-        background-color: #3079ED;
+        background-color: #2372C1;
       }
     }
   }
@@ -2069,7 +2081,7 @@ body::-webkit-scrollbar-corner {
 
 .referral-button-text {
   text-align: center;
-  margin-top: 110px;
+  margin-top: 86px;
   display: block;
 }
 
@@ -2492,5 +2504,146 @@ width: auto;
 
   &.displayed {
     opacity: 1;
+  }
+}
+
+/* --------------------- PREMIUM ------------------------------- */
+
+
+.status {
+  width: 80px;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 8px 0px 8px 0px;
+  margin: 0 auto;
+  text-align: center;
+  display: none;
+}
+
+.upgrade {
+  background-color: darken(#94D3A3, 20%);
+}
+
+.cancel {
+  background-color: @red;
+}
+
+.current {
+  background-color: darken(#2372C1, 10%);
+}
+
+.pricing-tier {
+  width:140px;
+  margin-right: 14px;
+  cursor: pointer;
+  display: inline-block;
+  padding-top: 10px;
+  
+  &:hover {
+    & .plan-highlight {
+      background-color: darken(#94D3A3, 10%);
+    }
+    &.user-plan:hover .plan-highlight {
+      background-color: lighten(@red, 10%);
+    }
+    & .status.upgrade {
+      display:block;
+    }
+
+  }
+
+  &.user-plan:hover {
+    
+    & .status.upgrade {
+      display: none;
+    }
+    & .status.cancel {
+      display: block;
+    }
+    & .status.current {
+      display: none;
+    }
+  }
+
+  &.user-plan {
+    & .status.current {
+      display: block;
+    }
+  }
+}
+
+
+
+
+.plan-highlight {
+  background-color: #2372C1;
+  color: #fff;
+  /* background-image: url('@{pathPrefix}/mail/img/premiumUpgrade.png'); */
+    &:hover {
+      background-color: darken(#2372C1, 10%);
+
+    }
+}
+
+.plan-cost {
+  width: 64px;
+  margin: 0 auto;
+  padding: 20px 0px 20px 0px;
+
+  .team & {
+    width: 100px;
+  }
+ }
+
+.dollar-sign {
+  float: left;
+  padding-top: 0px;
+  font-size: 18px;
+  font-weight: normal;
+
+}
+
+.amount {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 80px;
+  line-height: 64px;
+
+}
+
+.per-month {
+  display: block;
+  text-transform: uppercase;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 10px;
+  opacity: 0.8;
+
+}
+
+
+
+.plan-feature {
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  padding: 10px 0px 10px 0px;
+  background-color: #f7f7f7;
+  color: #222;
+  font-size: 12px;
+}
+
+
+.upgrade-button {
+  background-color: #94D3A3;
+  text-align: center;
+  margin-top: 0px;
+  padding: 10px 0px 10px 0px;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 11px;
+  &:hover {
+    background-color: lighten(#94D3A3, 10%);
+    cursor: pointer;
   }
 }
