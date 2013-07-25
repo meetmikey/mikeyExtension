@@ -5,7 +5,7 @@ template = """
 class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
-  mikeyIcon: 'mikey-icon 120x120.png'
+  mikeyIcon: 'mikeyIcon120x120.png'
 
   events:
     'click .payButton': 'payButtonClicked'
@@ -17,23 +17,14 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
     object.plan = @options.plan
     object
 
-  getAmount: =>
-    if @options.plan == 'basic'
-      199
-    else
-      499
-
   getReadableAmount: =>
     if @options.plan == 'basic'
-      '$1.99'
+      MeetMikey.Constants.basicPlanPriceReadable
     else
-      '$4.99'
+      MeetMikey.Constants.proPlanPriceReadable
 
   getTitle: =>
-    'Mikey ' + @options.plan.capitalize() + ' plan'
-
-  getDescription: =>
-    @getTitle() + ' (' + @getReadableAmount() + '/month)'
+    'Mikey ' + @options.plan.capitalize() + ' Plan (' + @getReadableAmount() + '/month)'
 
   payButtonClicked: =>
     token = (res) =>
@@ -42,14 +33,13 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
 
     stripeData = {
         key: MeetMikey.Constants.stripeKey
-      , amount: @getAmount()
       , plan: @options.plan
       , currency: 'usd'
       , name: @getTitle()
-      , description: @getDescription()
-      , panelLabel: 'Checkout'
+      #, description: 
+      , panelLabel: 'Purchase'
       , token: token
-      , 'data-image': chrome.extension.getURL MeetMikey.Constants.imgPath + '/' + @mikeyIcon
+      , image: chrome.extension.getURL MeetMikey.Constants.imgPath + '/' + @mikeyIcon
     }
     StripeCheckout.open stripeData
     false

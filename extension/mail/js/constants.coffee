@@ -1,5 +1,5 @@
 _.extend MeetMikey.Constants,
-  env: 'production'
+  env: 'local'
   imgPath: 'mail/img'
   mixpanelId: '4025d8a58a875ce9a39db05bcf86fd71'
   stripeKey: 'pk_test_xkrclY7n0l6KbnAmG2huBZzK'
@@ -12,6 +12,8 @@ _.extend MeetMikey.Constants,
   paginationSize: 50
   imagePaginationSize: 20
   deleteDelay: 8000
+  basicPlanPriceReadable: '$1.99'
+  proPlanPriceReadable: '$4.99'
   extensionVersion: chrome.runtime.getManifest()?.version
   extensionId: chrome.i18n.getMessage("@@extension_id")
 
