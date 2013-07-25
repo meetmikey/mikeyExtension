@@ -70,7 +70,6 @@ class Setup
       # TODO: move 400px into named constant
       MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and count == 0
       @setSelectors()
-      console.log 'multipleInbox', @multipleInbox
       callback @multipleInbox
 
   checkDomVersion: =>

@@ -76,10 +76,10 @@ _.extend MeetMikey.Constants,
     gmailPagination: '.Cr.aqJ > .ar5.J-J5-Ji'
 
     # inner container that scrolls
-    scrollContainer: '[id=":rp"]'
+    scrollContainer: '[id=":4"]'
 
     # inner container that scrolls
-    scrollContainer2: '[id=":4"]'
+    scrollContainer2: '[id=":rp"]'
 
     # nav bar at very top of viewport
     navBar: '#gbzc'
@@ -99,17 +99,17 @@ _.extend MeetMikey.Constants,
     inboxControlsContainer: ".G-atb"
 
     # where multiple inbox container should be injected
-    multipleInboxContainer: "[id=':rr']"
+    multipleInboxContainer: "[id=':2']"
 
     # where multiple inbox container should be injected
-    multipleInboxContainer2: "[id=':2']"
+    multipleInboxContainer2: "[id=':rr']"
 
 
     # where multiple inbox tabs should be injected
-    multipleInboxTabsContainer: '[id=":ro"]'
+    multipleInboxTabsContainer: '[id=":5"]'
 
     # where multiple inbox tabs should be injected
-    multipleInboxTabsContainer2: '[id=":5"]'
+    multipleInboxTabsContainer2: '[id=":ro"]'
 
     # existence of gmail tabs
     gmailTabsSelector: '.aKh'

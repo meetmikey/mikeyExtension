@@ -54,7 +54,9 @@ class OAuth
     MeetMikey.Helper.Analytics.trackEvent 'disableExtension',
       userEmail: @getUserEmail()
 
-  trackAuthEvent: (user) =>
+  trackAuthEvent: (userData) =>
+    user = new MeetMikey.Model.User userData
+    MeetMikey.Helper.Analytics.setUser user
     MeetMikey.Helper.Analytics.trackEvent 'authorized'
 
   checkUser: (callback) =>
