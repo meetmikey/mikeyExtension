@@ -44,6 +44,18 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
     StripeCheckout.open stripeData
     false
 
+  paymentSuccess: =>
+    console.log 'payment success!'
+
+  paymentFail: =>
+    console.log 'payment fail!'
+
+  handlePaymentAPIResponse: (response, status) =>
+    if status && status == 'success'
+      @paymentSuccess()
+    else
+      @paymentFail()
+
   performPayment: (stripeToken) =>
     userEmail = MeetMikey.globalUser?.get 'email'
     console.log 'performPayment, stripeToken: ', stripeToken, ', userEmail: ', userEmail
@@ -54,3 +66,4 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
         userEmail: userEmail
         plan: @options.plan
         stripeToken: stripeToken
+      complete: @handlePaymentAPIResponse
