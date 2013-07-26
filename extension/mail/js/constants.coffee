@@ -12,8 +12,15 @@ _.extend MeetMikey.Constants,
   paginationSize: 50
   imagePaginationSize: 20
   deleteDelay: 8000
-  basicPlanPriceReadable: '$1.99'
-  proPlanPriceReadable: '$4.99'
+  basicPlanPrice: '2'
+  basicPlanNumAccounts: 1
+  basicPlanDays: '365'
+  proPlanPrice: '5'
+  proPlanDays: 'Unlimited'
+  proPlanNumAccounts: 1
+  teamPlanPrice: '20'
+  teamPlanDays: 'Unlimited'
+  teamPlanNumAccounts: 5
   extensionVersion: chrome.runtime.getManifest()?.version
   extensionId: chrome.i18n.getMessage("@@extension_id")
 

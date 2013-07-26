@@ -17,7 +17,7 @@ template = """
         {{else}}
           <p>Mikey is showing you stuff from the last <strong>{{mailDaysLimit}}</strong> out of the <strong>{{mailTotalDays}}</strong> total days that you've had this Gmail account.</p>
         {{/if}}
-        <p>Share with friends, rate us in the Chrome store or upgrade to Mikey Premium to get more days.</p>
+        <p>Share with friends, rate us in the Chrome store, or upgrade to Mikey Premium to get more days.</p>
       {{/if}}
     </div>
     <div class="modal-body">
@@ -25,14 +25,11 @@ template = """
         <a href="#" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">twitter</div></a>
         <a href="#" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">facebook</div></a>
         <a href="#" id="chromeReferralButton" class="share-modal-button chrome-share"><div class="referral-button-text">rate mikey</div></a>
-        {{#if isPremium}}
-          <a href="#" class="share-modal-button premium upgraded mm-download-tooltip" data-toggle="tooltip" title="You already have a premium account">
-            <div class="referral-button-text">upgraded</div></a> 
-        {{else}}
+        {{#unless isGrantedPremium}}
           <a href="#" id="upgradeButton" class="share-modal-button premium">
             <div class="referral-button-text">upgrade</div>
           </a>
-        {{/if}}
+        {{/unless}}
       </div>
       Or share this URL<br>
       <input style="padding-bottom: 5px;" id="directReferralLinkText" type="text" value="{{directReferralLink}}"><a href="#" id="copyButton" style="margin-left:-2px;" class="button buttons">Copy</a>
