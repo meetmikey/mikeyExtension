@@ -42,6 +42,41 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
   events:
     'hidden .modal': 'modalHidden'
 
+  paymentSuccess: (billingPlan) =>
+    console.log 'upgradeModal paymentSuccess, billingPlan: ', billingPlan
+    @tryReloadingUserWithBillingPlan billingPlan
+
+  paymentFail: (billingPlan) =>
+    console.log 'upgradeModal paymentFail, billingPlan: ', billingPlan
+
+  cancelSuccess: (oldBillingPlan) =>
+    console.log 'upgradeModal cancelSuccess, oldBillingPlan: ', oldBillingPlan
+    newBillingPlan = 'free'
+    @tryReloadingUserWithBillingPlan 'free'
+
+  cancelFail: (oldBillingPlan) =>
+    console.log 'upgradeModal cancelFail, oldBillingPlan: ', oldBillingPlan
+
+
+  tryReloadingUserWithBillingPlan: ( billingPlan, delayInput, numAttemptsInput ) =>
+    numAttempts = 0
+    if numAttemptsInput
+      numAttempts = numAttemptsInput
+
+    delay = 500
+    if delayInput
+      delay = delayInput
+
+    setTimeout () =>
+      MeetMikey.globalUser.refreshFromServer () =>
+        if MeetMikey.globalUser.get('billingPlan') == billingPlan
+          @renderSubviews()
+        else if numAttempts >= 6
+          @paymentFail()
+        else
+          @tryReloadingUserWithBillingPlan billingPlan, delay * 2, ( numAttempts + 1 )
+    , delay
+
   getTemplateData: =>
     object = {}
     object

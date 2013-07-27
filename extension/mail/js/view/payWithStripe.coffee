@@ -1,5 +1,5 @@
 template = """
-  <div class="mmSubscribeButton {{billingPlan}} {{#if isActiveBillingPlan}}user-plan{{/if}}">
+  <div class="mmPlanButton {{billingPlan}} {{#if isActiveBillingPlan}}user-plan{{/if}}">
     <div class="status current">current</div>
     <div class="status cancel">cancel</div>
     <div class="status upgrade">get it</div>
@@ -21,8 +21,8 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
   mikeyIcon: 'mikeyIcon120x120.png'
 
   events:
-    'click .mmSubscribeButton': 'subscribeButtonClicked'
 
+    'click .mmPlanButton': 'planButtonClicked'
   postInitialize: =>
 
   getTemplateData: =>
@@ -75,7 +75,34 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
     numAccounts + label
 
 
-  subscribeButtonClicked: =>
+  planButtonClicked: =>
+    if @isActiveBillingPlan()
+      @cancelClicked()
+    else
+      @upgradeClicked()
+
+  cancelClicked: =>
+    if confirm 'Are you sure you want to cancel your plan?'
+      @cancelSubscription()
+
+  cancelSubscription: =>
+    console.log 'cancelSubscription'
+    userEmail = MeetMikey.globalUser?.get 'email'
+    MeetMikey.Helper.callAPI
+      url: 'cancelBillingPlan'
+      type: 'POST'
+      data:
+        userEmail: userEmail
+      complete: @handleCancelAPIResponse
+
+
+  handleCancelAPIResponse: (response, status) =>
+    if status && status == 'success'
+      @parentView.cancelSuccess @options.billingPlan
+    else
+      @parentView.cancelFail @options.billingPlan
+
+  upgradeClicked: =>
     token = (res) =>
       stripeCardToken = res.id
       @performPayment stripeCardToken
@@ -93,22 +120,16 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
     StripeCheckout.open stripeData
     false
 
-  paymentSuccess: =>
-    console.log 'payment success!'
-
-  paymentFail: =>
-    console.log 'payment fail!'
-
   handlePaymentAPIResponse: (response, status) =>
     if status && status == 'success'
-      @paymentSuccess()
+      @parentView.paymentSuccess @options.billingPlan
     else
-      @paymentFail()
+      @parentView.paymentFail @options.billingPlan
 
   performPayment: (stripeCardToken) =>
     userEmail = MeetMikey.globalUser?.get 'email'
     MeetMikey.Helper.callAPI
-      url: 'upgrade'
+      url: 'upgradeToBillingPlan'
       type: 'POST'
       data:
         userEmail: userEmail

@@ -2544,7 +2544,7 @@ width: auto;
     & .plan-highlight {
       background-color: darken(#94D3A3, 10%);
     }
-    &.user-plan:hover .plan-highlight {
+    &:hover .user-plan .plan-highlight {
       background-color: lighten(@red, 10%);
     }
     & .status.upgrade {
@@ -2553,7 +2553,7 @@ width: auto;
 
   }
 
-  &.user-plan:hover {
+  &:hover .user-plan {
     
     & .status.upgrade {
       display: none;
@@ -2566,7 +2566,7 @@ width: auto;
     }
   }
 
-  &.user-plan {
+  & .user-plan {
     & .status.current {
       display: block;
     }

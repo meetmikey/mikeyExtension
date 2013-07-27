@@ -42,14 +42,17 @@ class MeetMikey.View.Base extends Backbone.View
   render: =>
     @preRender()
     if @options.render
-      renderedTemplate = @template(@getTemplateData())
-      if @options.append
-        @$el.append renderedTemplate
-      else
-        @$el.html renderedTemplate
+      @renderTemplate()
     @renderSubviews() if @options.renderChildren
     @postRender()
     this
+
+  renderTemplate: =>
+    renderedTemplate = @template(@getTemplateData())
+    if @options.append
+      @$el.append renderedTemplate
+    else
+      @$el.html renderedTemplate
 
   preRender: ->
   postRender: ->
