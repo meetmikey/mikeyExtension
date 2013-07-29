@@ -21,9 +21,7 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
   mikeyIcon: 'mikeyIcon120x120.png'
 
   events:
-
     'click .mmPlanButton': 'planButtonClicked'
-  postInitialize: =>
 
   getTemplateData: =>
     object = {}
@@ -81,11 +79,13 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
       @upgradeClicked()
 
   cancelClicked: =>
+    MeetMikey.Helper.Analytics.trackEvent 'cancelSubscriptionClicked'
     if confirm 'Are you sure you want to cancel your plan?'
       @cancelSubscription()
 
   cancelSubscription: =>
     console.log 'cancelSubscription'
+    MeetMikey.Helper.Analytics.trackEvent 'cancelSubscription', {billingPlan: @options.billingPlan}
     @subscriptionChangeSubmitted()
     userEmail = MeetMikey.globalUser?.get 'email'
     MeetMikey.Helper.callAPI
@@ -105,6 +105,7 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
       @parentView.cancelFail @options.billingPlan
 
   upgradeClicked: =>
+    MeetMikey.Helper.Analytics.trackEvent 'subscribeToPlanClicked', {billingPlan: @options.billingPlan}
     token = (res) =>
       stripeCardToken = res.id
       @performPayment stripeCardToken
@@ -129,6 +130,7 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
       @parentView.paymentFail @options.billingPlan
 
   performPayment: (stripeCardToken) =>
+    MeetMikey.Helper.Analytics.trackEvent 'subscribeToPlan', {billingPlan: @options.billingPlan}
     @subscriptionChangeSubmitted()
     userEmail = MeetMikey.globalUser?.get 'email'
     MeetMikey.Helper.callAPI
