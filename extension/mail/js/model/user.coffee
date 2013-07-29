@@ -30,7 +30,7 @@ class MeetMikey.Model.User extends Backbone.Model
     MeetMikey.Helper.OAuth.checkUser (userData) =>
       if userData?
         @set userData
-      callback()
+      callback() if callback
 
   getMailTotalDays: =>
     if @get('minMailDate')

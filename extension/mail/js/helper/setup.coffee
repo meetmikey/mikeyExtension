@@ -44,7 +44,7 @@ class Setup
     if MeetMikey.globalUser.checkInvalidToken()
       @injectReauthModal()
     MeetMikey.globalUser.checkOnboard()
-    @dropdownView.globalUserUpdated()
+    @dropdownView.addGlobalUserEvent()
 
   checkMultipleInbox: (callback) =>
     controlSelector = MeetMikey.Constants.Selectors.inboxControlsContainer

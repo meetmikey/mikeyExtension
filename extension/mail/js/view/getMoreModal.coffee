@@ -74,6 +74,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     MeetMikey.Helper.Analytics.trackEvent 'rateOnChromeStoreClick'
     url = MeetMikey.Constants.chromeStoreReviewURL
     window.open url
+    @hide()
     @creditUserWithReview()
 
   creditUserWithReview: =>
@@ -83,6 +84,8 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
       type: 'POST'
       data:
         userEmail: email
+      complete: () =>
+        MeetMikey.globalUser.refreshFromServer()
 
   getTwitterShareLink: =>
     link = 'https://twitter.com/intent/tweet'

@@ -30,10 +30,12 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
     'click .get-more': 'openGetMoreModal'
 
   postInitialize: =>
-    MeetMikey.globalUser?.on 'change', @rerender
+    @addGlobalUserEvent()
 
-  globalUserUpdated: =>
-    MeetMikey.globalUser?.on 'change', @rerender
+  addGlobalUserEvent: () =>
+    if MeetMikey.globalUser
+      MeetMikey.globalUser.off 'change'
+      MeetMikey.globalUser.on 'change', @rerender
     @rerender()
 
   getTemplateData: =>
