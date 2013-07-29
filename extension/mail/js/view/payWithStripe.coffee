@@ -74,7 +74,6 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
       label += 's'
     numAccounts + label
 
-
   planButtonClicked: =>
     if @isActiveBillingPlan()
       @cancelClicked()
@@ -87,6 +86,7 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
 
   cancelSubscription: =>
     console.log 'cancelSubscription'
+    @subscriptionChangeSubmitted()
     userEmail = MeetMikey.globalUser?.get 'email'
     MeetMikey.Helper.callAPI
       url: 'cancelBillingPlan'
@@ -95,6 +95,8 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
         userEmail: userEmail
       complete: @handleCancelAPIResponse
 
+  subscriptionChangeSubmitted: =>
+    @parentView.subscriptionChangeSubmitted()
 
   handleCancelAPIResponse: (response, status) =>
     if status && status == 'success'
@@ -127,6 +129,7 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
       @parentView.paymentFail @options.billingPlan
 
   performPayment: (stripeCardToken) =>
+    @subscriptionChangeSubmitted()
     userEmail = MeetMikey.globalUser?.get 'email'
     MeetMikey.Helper.callAPI
       url: 'upgradeToBillingPlan'
