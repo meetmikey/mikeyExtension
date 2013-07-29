@@ -1,5 +1,5 @@
 _.extend MeetMikey.Constants,
-  env: 'production'
+  env: 'local'
   imgPath: 'mail/img'
   mixpanelId: '4025d8a58a875ce9a39db05bcf86fd71'
   stripeKey: 'pk_test_xkrclY7n0l6KbnAmG2huBZzK'
@@ -23,6 +23,7 @@ _.extend MeetMikey.Constants,
   teamPlanNumAccounts: 5
   extensionVersion: chrome.runtime.getManifest()?.version
   extensionId: chrome.i18n.getMessage("@@extension_id")
+  chromeStoreReviewURL: 'https://chrome.google.com/webstore/detail/mikey-for-gmail/pfbeimpckikjpnjhcbpikdjnelnblhnn/reviews'
 
   APIUrls:
     local: "https://local.meetmikey.com"

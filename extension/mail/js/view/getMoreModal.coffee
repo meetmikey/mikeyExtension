@@ -24,7 +24,7 @@ template = """
       <div class="buttons-cluster">
         <a href="#" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">twitter</div></a>
         <a href="#" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">facebook</div></a>
-        <a href="#" id="chromeReferralButton" class="share-modal-button chrome-share"><div class="referral-button-text">rate mikey</div></a>
+        <a href="#" id="rateOnChromeStoreButton" class="share-modal-button chrome-share"><div class="referral-button-text">rate mikey</div></a>
         {{#unless isGrantedPremium}}
           <a href="#" id="upgradeButton" class="share-modal-button premium">
             <div class="referral-button-text">upgrade</div>
@@ -46,6 +46,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
   events:
     'click #twitterReferralButton': 'twitterReferralClick'
     'click #facebookReferralButton': 'facebookReferralClick'
+    'click #rateOnChromeStoreButton': 'rateOnChromeStoreClick'
     'click #upgradeButton': 'showUpgradeModal'
     'click #copyButton': 'copyTextToClipboard'
     'hidden .modal': 'modalHidden'
@@ -68,6 +69,20 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
   facebookReferralClick: =>
     MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'facebook'
     window.open @getFacebookShareLink(), 'sharer', 'width=626,height=436'
+
+  rateOnChromeStoreClick: =>
+    MeetMikey.Helper.Analytics.trackEvent 'rateOnChromeStoreClick'
+    url = MeetMikey.Constants.chromeStoreReviewURL
+    window.open url
+    @creditUserWithReview()
+
+  creditUserWithReview: =>
+    email = MeetMikey.globalUser?.get('email')
+    MeetMikey.Helper.callAPI
+      url: 'creditChromeStoreReview'
+      type: 'POST'
+      data:
+        userEmail: email
 
   getTwitterShareLink: =>
     link = 'https://twitter.com/intent/tweet'
@@ -117,8 +132,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     @notifyAboutUpgradeInterest()
 
   notifyAboutUpgradeInterest: =>
-    #TEMP!!!!! GET RID OF FALSE!!!
-    if false and MeetMikey.Constants.env is 'production'
+    if MeetMikey.Constants.env is 'production'
       MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal'
       email = MeetMikey.globalUser?.get('email')
       MeetMikey.Helper.callAPI
@@ -126,4 +140,3 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
         type: 'POST'
         data:
           userEmail: email
-          
