@@ -44,7 +44,7 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
 
   showSubscriptionChangeNotification: (type) =>
     $('#mmPaymentConfirmation').remove()
-    html = '<div class="alert" id="mmPaymentConfirmation"></div>'
+    html = '<div class="alert mmAlert" id="mmPaymentConfirmation"></div>'
     $('body').append $(html)
     $('#mmPaymentConfirmation').addClass 'alert-' + type
     $('#mmPaymentConfirmation').on 'hide', () =>
