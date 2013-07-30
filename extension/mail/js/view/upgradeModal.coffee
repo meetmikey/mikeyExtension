@@ -55,22 +55,26 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
     $('#mmPaymentMessage').html 'Processing your Mikey account update...'
     
   paymentSuccess: (billingPlan) =>
+    MeetMikey.Helper.Analytics.trackEvent 'paymentSuccess'
     @tryReloadingUserWithBillingPlan billingPlan
     @showSubscriptionChangeNotification 'success'
     $('#mmPaymentMessage').html 'Mikey payment success!  You are now subscribed to the Mikey ' + billingPlan.capitalize() + ' Plan.'
 
   paymentFail: (billingPlan) =>
+    MeetMikey.Helper.Analytics.trackEvent 'paymentFail'
     @showSubscriptionChangeNotification 'error'
-    $('#mmPaymentMessage').html 'Mikey payment failed.  You will not be charged.  You may contact <a tabindex="-1" href="mailto:support@mikeyteam.com">support</a> for more information.'
+    $('#mmPaymentMessage').html 'Mikey payment failed.  You will not be charged.  Our <a tabindex="-1" href="mailto:support@mikeyteam.com">support team</a> has been notified.'
 
   cancelSuccess: (oldBillingPlan) =>
+    MeetMikey.Helper.Analytics.trackEvent 'cancelSuccess'
     @tryReloadingUserWithBillingPlan 'free'
     @showSubscriptionChangeNotification 'success'
     $('#mmPaymentMessage').html 'Your Mikey subscription has been cancelled.'
 
   cancelFail: (oldBillingPlan) =>
+    MeetMikey.Helper.Analytics.trackEvent 'cancelFail'
     @showSubscriptionChangeNotification 'error'
-    $('#mmPaymentMessage').html 'Mikey subscription cancellation failed.  You may contact <a tabindex="-1" href="mailto:support@mikeyteam.com">support</a> for more information.'
+    $('#mmPaymentMessage').html 'Mikey subscription cancellation failed.  Our <a tabindex="-1" href="mailto:support@mikeyteam.com">support team</a> has been notified.'
 
 
   tryReloadingUserWithBillingPlan: ( billingPlan, delayInput, numAttemptsInput ) =>
@@ -87,7 +91,8 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
         if MeetMikey.globalUser.get('billingPlan') == billingPlan
           @renderSubviews()
         else if numAttempts >= 6
-          @paymentFail()
+          $('#mmPaymentConfirmation').remove()
+          MeetMikey.Helper.Analytics.trackEvent 'userAccountUpdateFail', {billingPlan: billingPlan}
         else
           newDelay = delay * 2
           if newDelay == 0
