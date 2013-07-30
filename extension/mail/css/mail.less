@@ -2533,12 +2533,19 @@ width: auto;
   background-color: darken(#2372C1, 10%);
 }
 
+.blank {
+  display: inline-block;
+  opacity: 0;
+}
+
+
+
 .pricing-tier {
   width:140px;
   margin-right: 14px;
   cursor: pointer;
   display: inline-block;
-  padding-top: 10px;
+  padding-top: 0px;
   
   &:hover {
     & .plan-highlight {
@@ -2549,6 +2556,9 @@ width: auto;
     }
     & .status.upgrade {
       display:block;
+    }
+    & .status.blank {
+      display: none;
     }
 
   }
@@ -2564,11 +2574,27 @@ width: auto;
     & .status.current {
       display: none;
     }
+    & .status.blank {
+      display: none;
+    }
   }
 
   & .user-plan {
     & .status.current {
       display: block;
+    }
+    & .status.blank {
+      display: none;
+    }
+  }
+
+  &.default {
+    & .status.current {
+      display: block;
+      opacity: 0;
+    }
+    & .status.blank {
+      display: none;
     }
   }
 }
@@ -2690,4 +2716,20 @@ background-image: -o-linear-gradient(top, #4D90FE, #4787ED);
 background-image: -ms-linear-gradient(top, #4D90FE, #4787ED);
 background-image: linear-gradient(top, #4D90FE, #4787ED);
 color: #FFF;
+}
+
+/* ----------------- ALERT MODAL ---------------------- */
+
+.mm-alert {
+  margin-bottom: 0px;
+  text-shadow: none;
+  color: darken(#94D3A3, 20%);
+  background-color: lighten(#94D3A3, 20%);
+  border: #94D3A3;
+
+  & .close {
+    text-decoration: none;
+    color: darken(#94D3A3, 20%);
+  }
+
 }

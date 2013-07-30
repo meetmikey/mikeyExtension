@@ -3,6 +3,7 @@ template = """
     <div class="status current">current</div>
     <div class="status cancel">cancel</div>
     <div class="status upgrade">get it</div>
+    <div class="status blank">&nbsp;</div>
     <div class="plan-highlight">
       <div class="plan-cost">
         <div class="per-month">{{billingPlanUpperCase}}</div>
