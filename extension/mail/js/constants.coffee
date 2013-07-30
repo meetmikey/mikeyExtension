@@ -1,5 +1,5 @@
 _.extend MeetMikey.Constants,
-  env: 'local'
+  env: 'production'
   imgPath: 'mail/img'
   mixpanelId: '4025d8a58a875ce9a39db05bcf86fd71'
   stripeKeyTest: 'pk_test_xkrclY7n0l6KbnAmG2huBZzK'
