@@ -2,7 +2,8 @@ _.extend MeetMikey.Constants,
   env: 'local'
   imgPath: 'mail/img'
   mixpanelId: '4025d8a58a875ce9a39db05bcf86fd71'
-  stripeKey: 'pk_test_xkrclY7n0l6KbnAmG2huBZzK'
+  stripeKeyTest: 'pk_test_xkrclY7n0l6KbnAmG2huBZzK'
+  stripeKeyLive: 'pk_live_XVTbzJMXFGaHrDYQvmbu0zgM'
   mixpanelOff: false
   piwikOff: false
   googleAnalyticsOff: false

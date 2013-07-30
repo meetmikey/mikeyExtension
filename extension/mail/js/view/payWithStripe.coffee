@@ -112,7 +112,7 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
       @performPayment stripeCardToken
 
     stripeData = {
-        key: MeetMikey.Constants.stripeKey
+        key: MeetMikey.Helper.getStripeKey()
       , billingPlan: @options.billingPlan
       , currency: 'usd'
       , name: @getTitle()

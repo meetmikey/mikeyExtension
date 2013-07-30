@@ -4,6 +4,12 @@ MeetMikey.Helper.getAPIUrl = ->
 
 Handlebars.registerHelper 'getAPIUrl', MeetMikey.Helper.getAPIUrl
 
+MeetMikey.Helper.getStripeKey = ->
+  if MeetMikey.Constants.env == 'production'
+    MeetMikey.Constants.stripeKeyLive
+  else
+    MeetMikey.Constants.stripeKeyTest
+
 MeetMikey.Helper.formatDate = (timestamp) ->
   date = new Date(timestamp)
   month = date.getMonth() + 1
