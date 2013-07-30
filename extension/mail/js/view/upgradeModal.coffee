@@ -58,7 +58,7 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
     MeetMikey.Helper.Analytics.trackEvent 'paymentSuccess'
     @tryReloadingUserWithBillingPlan billingPlan
     @showSubscriptionChangeNotification 'success'
-    $('#mmPaymentMessage').html 'Mikey payment success!  You are now subscribed to the Mikey ' + billingPlan.capitalize() + ' Plan.'
+    $('#mmPaymentMessage').html 'Mikey payment success!  You are now subscribed to the Mikey ' + billingPlan.capitalize() + ' Plan.  It may take a few hours to process your account data.'
 
   paymentFail: (billingPlan) =>
     MeetMikey.Helper.Analytics.trackEvent 'paymentFail'
