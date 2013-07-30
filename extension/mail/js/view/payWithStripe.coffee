@@ -85,7 +85,6 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
       @cancelSubscription()
 
   cancelSubscription: =>
-    console.log 'cancelSubscription'
     MeetMikey.Helper.Analytics.trackEvent 'cancelSubscription', {billingPlan: @options.billingPlan}
     @subscriptionChangeSubmitted()
     userEmail = MeetMikey.globalUser?.get 'email'

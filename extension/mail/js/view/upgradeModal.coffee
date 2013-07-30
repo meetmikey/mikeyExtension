@@ -44,40 +44,33 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
 
   showSubscriptionChangeNotification: (type) =>
     $('#mmPaymentConfirmation').remove()
-    html = '<div id="mmPaymentConfirmation" class="mm-alert alert">You are awesome.<a class="close" data-dismiss="alert" href="#" style="text-decoration: none;">×</a></div>'
+    html = '<div id="mmPaymentConfirmation" class="mm-alert alert"><div id="mmPaymentMessage" style="display:inline-block;"></div><a class="close" data-dismiss="alert" href="#" style="text-decoration: none;">×</a></div>'
     $('body').prepend $(html)
-    $('#mmPaymentConfirmation').addClass 'alert-' + type
-    $('#mmPaymentConfirmation').on 'hide', () =>
-      console.log 'alert hidden!'
-      $('#mmPaymentConfirmation').remove()
+    alertClass = 'alert-' + type
+    $('#mmPaymentConfirmation').addClass alertClass
 
   subscriptionChangeSubmitted: () =>
-    console.log 'subscriptionChangeSubmitted'
     @hide()
     @showSubscriptionChangeNotification 'info'
-    @$('#mmPaymentConfirmation').html 'Processing your Mikey subscription change...'
+    $('#mmPaymentMessage').html 'Processing your Mikey account update...'
     
   paymentSuccess: (billingPlan) =>
-    console.log 'upgradeModal paymentSuccess, billingPlan: ', billingPlan
     @tryReloadingUserWithBillingPlan billingPlan
     @showSubscriptionChangeNotification 'success'
-    @$('#mmPaymentConfirmation').html 'Mikey payment success!'
+    $('#mmPaymentMessage').html 'Mikey payment success!  You are now subscribed to the Mikey ' + billingPlan.capitalize() + ' Plan.'
 
   paymentFail: (billingPlan) =>
-    console.log 'upgradeModal paymentFail, billingPlan: ', billingPlan
     @showSubscriptionChangeNotification 'error'
-    $('#mmPaymentConfirmation').html 'Mikey payment failed.  You will not be charged.'
+    $('#mmPaymentMessage').html 'Mikey payment failed.  You will not be charged.  You may contact <a tabindex="-1" href="mailto:support@mikeyteam.com">support</a> for more information.'
 
   cancelSuccess: (oldBillingPlan) =>
-    console.log 'upgradeModal cancelSuccess, oldBillingPlan: ', oldBillingPlan
     @tryReloadingUserWithBillingPlan 'free'
     @showSubscriptionChangeNotification 'success'
-    $('#mmPaymentConfirmation').html 'Mikey cancellation success.'
+    $('#mmPaymentMessage').html 'Your Mikey subscription has been cancelled.'
 
   cancelFail: (oldBillingPlan) =>
-    console.log 'upgradeModal cancelFail, oldBillingPlan: ', oldBillingPlan
     @showSubscriptionChangeNotification 'error'
-    $('#mmPaymentConfirmation').html 'Mikey Cancellation failed.  Please contact <a tabindex="-1" href="mailto:support@mikeyteam.com">support</a></li>.'
+    $('#mmPaymentMessage').html 'Mikey subscription cancellation failed.  You may contact <a tabindex="-1" href="mailto:support@mikeyteam.com">support</a> for more information.'
 
 
   tryReloadingUserWithBillingPlan: ( billingPlan, delayInput, numAttemptsInput ) =>
@@ -85,7 +78,7 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
     if numAttemptsInput
       numAttempts = numAttemptsInput
 
-    delay = 500
+    delay = 0
     if delayInput
       delay = delayInput
 
@@ -96,7 +89,10 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
         else if numAttempts >= 6
           @paymentFail()
         else
-          @tryReloadingUserWithBillingPlan billingPlan, delay * 2, ( numAttempts + 1 )
+          newDelay = delay * 2
+          if newDelay == 0
+            newDelay = 500
+          @tryReloadingUserWithBillingPlan billingPlan, newDelay, ( numAttempts + 1 )
     , delay
 
   getTemplateData: =>
