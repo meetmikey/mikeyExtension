@@ -7,7 +7,7 @@ template = """
     </div>
 
     <div class="modal-body">
-      <p>Simple monthly rates. No surprises.</p>
+      <p>Simple monthly rates. No surprises. See Mikey's <a href="https://meetmikey.com/premium-terms.html" target="_blank">pricing terms</a> for more info.</p>
       <div class='pricing'>
         <div id='mm-stripe-basic' class='pricing-tier'></div>
         <div id='mm-stripe-pro' class='pricing-tier'></div>
