@@ -106,12 +106,10 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
     object.billingPlanCapitalized = MeetMikey.globalUser.getBillingPlan().capitalize()
     object
 
-  notifyAboutUpgradeInterest: (forceEvent) =>
-    event = 'viewUpgradeModal'
-    if forceEvent
-      event = forceEvent
+  notifyAboutUpgradeInterest: (eventData) =>
+    eventData = eventData || {}
     if MeetMikey.Constants.env is 'production'
-      MeetMikey.Helper.Analytics.trackEvent event
+      MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal', eventData
       email = MeetMikey.globalUser?.get('email')
       MeetMikey.Helper.callAPI
         url: 'upgrade'
