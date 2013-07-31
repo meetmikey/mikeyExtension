@@ -132,14 +132,4 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     $('body').append $('<div id="mm-upgrade-modal"></div>')
     @upgradeModal = new MeetMikey.View.UpgradeModal el: '#mm-upgrade-modal'
     @upgradeModal.render()
-    @notifyAboutUpgradeInterest()
-
-  notifyAboutUpgradeInterest: =>
-    if MeetMikey.Constants.env is 'production'
-      MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal'
-      email = MeetMikey.globalUser?.get('email')
-      MeetMikey.Helper.callAPI
-        url: 'upgrade'
-        type: 'POST'
-        data:
-          userEmail: email
+    @upgradeModal.notifyAboutUpgradeInterest()

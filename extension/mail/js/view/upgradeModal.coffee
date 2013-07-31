@@ -7,12 +7,13 @@ template = """
     </div>
 
     <div class="modal-body">
-      <p>Simple monthly rates. No surprises. See Mikey's <a href="https://meetmikey.com/premium-terms.html" target="_blank">pricing terms</a> for more info.</p>
+      <p>Your account is on the <b>Mikey {{billingPlanCapitalized}} Plan</b>.</p>
       <div class='pricing'>
         <div id='mm-stripe-basic' class='pricing-tier'></div>
         <div id='mm-stripe-pro' class='pricing-tier'></div>
-        <div id='mm-stripe-team' class='pricing-tier'></div>
+        <!-- <div id='mm-stripe-team' class='pricing-tier'></div> -->
       </div>
+      <p>Simple monthly rates. No surprises. See Mikey's <a href="https://meetmikey.com/premium-terms.html" target="_blank">pricing terms</a> for more info.</p>
     </div>
 
     <div class="footer-buttons">
@@ -34,10 +35,10 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
       viewClass: MeetMikey.View.PayWithStripe
       selector: '#mm-stripe-pro'
       args: {billingPlan: 'pro'}
-    'stripeTeam':
-      viewClass: MeetMikey.View.PayWithStripe
-      selector: '#mm-stripe-team'
-      args: {billingPlan: 'team'}
+    #'stripeTeam':
+     #viewClass: MeetMikey.View.PayWithStripe
+     #selector: '#mm-stripe-team'
+     #args: {billingPlan: 'team'}
 
   events:
     'hidden .modal': 'modalHidden'
@@ -102,4 +103,18 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
 
   getTemplateData: =>
     object = {}
+    object.billingPlanCapitalized = MeetMikey.globalUser.getBillingPlan().capitalize()
     object
+
+  notifyAboutUpgradeInterest: (forceEvent) =>
+    event = 'viewUpgradeModal'
+    if forceEvent
+      event = forceEvent
+    if MeetMikey.Constants.env is 'production'
+      MeetMikey.Helper.Analytics.trackEvent event
+      email = MeetMikey.globalUser?.get('email')
+      MeetMikey.Helper.callAPI
+        url: 'upgrade'
+        type: 'POST'
+        data:
+          userEmail: email

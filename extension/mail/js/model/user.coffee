@@ -32,6 +32,12 @@ class MeetMikey.Model.User extends Backbone.Model
         @set userData
       callback() if callback
 
+  getBillingPlan: () =>
+    billingPlan = @get('billingPlan')
+    if ! billingPlan
+      billingPlan = 'free'
+    billingPlan
+
   getMailTotalDays: =>
     if @get('minMailDate')
       currentDate = Date.now()
