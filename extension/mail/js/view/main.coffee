@@ -90,6 +90,8 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
   showEmailTab: =>
     @subView('tabs').setActiveTab 'email'
     @subView('inbox').showTab 'email'
+    if MeetMikey.Globals.gmailTabs
+      $(MeetMikey.Constants.Selectors.gmailTabsSelector).show()
 
   managePushdownDisplay: =>
     viewWithTabs = @inViewWithTabs()
