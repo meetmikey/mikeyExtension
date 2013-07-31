@@ -14,7 +14,7 @@ template = """
           <div id='mm-stripe-pro' class='pricing-tier'></div>
           <!-- <div id='mm-stripe-team' class='pricing-tier'></div> -->
         </div>
-        <p>Simple monthly rates. No surprises. See Mikey's <a href="https://meetmikey.com/premium-terms.html" target="_blank">pricing terms</a> for more info.</p>
+        <p>Simple monthly rates. No surprises. See Mikey's <a href="https://meetmikey.com/premium-terms.html" target="_blank">premium terms</a> for more info.</p>
       {{/unless}}
     </div>
 
