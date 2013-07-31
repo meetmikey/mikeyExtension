@@ -8,12 +8,14 @@ template = """
 
     <div class="modal-body">
       <p>Your account is on the <b>Mikey {{billingPlanCapitalized}} Plan</b>.</p>
-      <div class='pricing'>
-        <div id='mm-stripe-basic' class='pricing-tier'></div>
-        <div id='mm-stripe-pro' class='pricing-tier'></div>
-        <!-- <div id='mm-stripe-team' class='pricing-tier'></div> -->
-      </div>
-      <p>Simple monthly rates. No surprises. See Mikey's <a href="https://meetmikey.com/premium-terms.html" target="_blank">pricing terms</a> for more info.</p>
+      {{#unless isGrantedPremium}}
+        <div class='pricing'>
+          <div id='mm-stripe-basic' class='pricing-tier'></div>
+          <div id='mm-stripe-pro' class='pricing-tier'></div>
+          <!-- <div id='mm-stripe-team' class='pricing-tier'></div> -->
+        </div>
+        <p>Simple monthly rates. No surprises. See Mikey's <a href="https://meetmikey.com/premium-terms.html" target="_blank">pricing terms</a> for more info.</p>
+      {{/unless}}
     </div>
 
     <div class="footer-buttons">
@@ -104,6 +106,7 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
   getTemplateData: =>
     object = {}
     object.billingPlanCapitalized = MeetMikey.globalUser.getBillingPlan().capitalize()
+    object.isGrantedPremium = MeetMikey.globalUser.get('isGrantedPremium')
     object
 
   notifyAboutUpgradeInterest: (eventData) =>

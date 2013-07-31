@@ -106,6 +106,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
     object.directReferralLink = @getReferralURL 'direct'
     object.isPremium = MeetMikey.globalUser.isPremium()
+    object.isGrantedPremium = MeetMikey.globalUser.get('isGrantedPremium')
     object.isFullyIndexed = ( MeetMikey.globalUser?.getDaysLimit() >= MeetMikey.globalUser?.getMailTotalDays() )
     object
 
