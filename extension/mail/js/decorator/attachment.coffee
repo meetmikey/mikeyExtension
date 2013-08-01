@@ -28,6 +28,7 @@ class AttachmentDecorator
     object.msgHex = model.get('gmMsgHex')
     object.subject = model.get('mailCleanSubject')
     object.deleting = model.get('deleting')
+    object.isFavorite = model.get 'isFavorite'
 
     object
 

@@ -13,15 +13,15 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   subViews:
     'attachments':
-      viewClass: MeetMikey.View.AttachmentsTab
+      viewClass: MeetMikey.View.AttachmentsWrapper
       selector: '.mm-attachments-tab'
       args: {}
     'links':
-      viewClass: MeetMikey.View.LinksTab
+      viewClass: MeetMikey.View.LinksWrapper
       selector: '.mm-links-tab'
       args: {}
     'images':
-      viewClass: MeetMikey.View.ImagesTab
+      viewClass: MeetMikey.View.ImagesWrapper
       selector: '.mm-images-tab-inner'
       args: {}
 

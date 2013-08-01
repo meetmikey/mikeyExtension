@@ -5,7 +5,7 @@ template = """
   <div class="mm-attachments-nonfavorite" style=""></div>
 """
 
-class MeetMikey.View.AttachmentsTab extends MeetMikey.View.Base
+class MeetMikey.View.AttachmentsWrapper extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   subViews:

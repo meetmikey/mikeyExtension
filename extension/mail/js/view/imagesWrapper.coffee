@@ -2,7 +2,7 @@ template = """
   <div class="mm-images-nonfavorite" style=""></div>
 """
 
-class MeetMikey.View.ImagesTab extends MeetMikey.View.Base
+class MeetMikey.View.ImagesWrapper extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   subViews:

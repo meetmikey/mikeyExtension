@@ -16,6 +16,7 @@ class LinkDecorator
     object.faviconURL = MeetMikey.Helper.getFaviconURL(model.get('resolvedURL') ? model.get('url'))
     object.isGoogleDoc = @isGoogleDoc model
     object.cid = model.cid
+    object.isFavorite = model.get 'isFavorite'
     object.deleting = model.get('deleting')
 
     object
@@ -30,6 +31,8 @@ class LinkDecorator
     MeetMikey.Helper.formatDate model.get('sentDate')
 
   formatUrl: (model) =>
+    console.log 'formatUrl, model: ', model
+    console.log 'formatUrl, model url: ', model.get('url')
     @stripHttp model.get('url')
 
   stripHttp: (url) =>

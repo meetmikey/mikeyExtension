@@ -11,7 +11,7 @@ template = """
     <div class="pagination-container"></div>
     <table class="inbox-table search-results" id="mm-links-table" border="0">
       <thead class="labels">
-        <th class="mm-download" colspan="3" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-download" colspan="4" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-file mm-link"></th>
         <th class="mm-source" data-mm-field="url">Source<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
@@ -26,7 +26,6 @@ template = """
                 <a href="#"><div class="close-x">x</div></a>
               </div>
             </td>
-
             <td class="mm-download" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
                 <div class="list-icon" style="background-image: url('#{spriteUrl}');"></div>
@@ -78,6 +77,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     'click .close-x' : 'markDeletingEvent'
     'click .files .mm-undo' : 'unMarkDeletingEvent'
     'click th': 'sortByColumn'
+    'click .mm-favorite': 'toggleFavoriteEvent'
     'mouseenter .files .mm-file, .files .mm-source': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-source': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-source': 'delayRollover'
@@ -90,7 +90,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @rollover = new MeetMikey.View.LinkRollover collection: @collection, search: !@options.fetch
     @pagination = new MeetMikey.Model.PaginationState items: @collection
 
-    @collection.on 'reset add', _.debounce(@render, MeetMikey.Constants.paginationSize)
+    @collection.on 'reset add remove', _.debounce(@render, MeetMikey.Constants.paginationSize)
     @collection.on 'sort', @render
     @pagination.on 'change:page', @render
     @collection.on 'remove', @render
@@ -107,6 +107,29 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.off 'reset', @render
     @cachedModels = _.clone @collection.models
     @collection.reset()
+
+  toggleFavoriteEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
+    model = @collection.get(cid)
+    @toggleFavorite(model)
+
+  toggleFavorite: (model) =>
+    console.log 'toggleFavorite', model
+    isFavorite = not @options.isFavorite
+    model.set 'isFavorite', isFavorite
+    model.putIsFavorite isFavorite, (response, status) =>
+      @moveModelToOtherSubview(model, status)
+
+  moveModelToOtherSubview: (model, status) =>
+    if status == 'success'
+      @collection.remove model
+      if @options.isFavorite
+        @parentView.subViews.links.view.collection.add newModel
+      else
+        @parentView.subViews.linksFavorite.view.collection.add newModel
+    else
+      console.log 'putIsFavorite failed'
 
   markDeleting: (model) =>
     model.set('deleting', true)
@@ -149,11 +172,10 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
       $(child).css('opacity', 1) if not $(child).hasClass('mm-undo')
 
   initialFetch: =>
-    console.log 'links.initialFetch, @options.fetch: ', @options.fetch
     if @options.fetch
       @collection.fetch
         data:
-          faved: @options.isFavorite?
+          isFavorite: @options.isFavorite?
         success: @waitAndPoll
 
   restoreFromCache: =>
