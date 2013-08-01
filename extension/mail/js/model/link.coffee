@@ -1,6 +1,5 @@
 class MeetMikey.Model.Link extends MeetMikey.Model.Base
   idAttribute: "_id"
-  urlRoot: MeetMikey.Helper.getAPIUrl() +  '/link'
   decorator: MeetMikey.Decorator.Link
 
   putIsFavorite: (isFavorite, callback) =>

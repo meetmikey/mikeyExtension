@@ -115,7 +115,6 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @toggleFavorite(model)
 
   toggleFavorite: (model) =>
-    console.log 'toggleFavorite', model
     newIsFavorite = true
     if @options.isFavorite
       newIsFavorite = false
@@ -129,10 +128,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
       if @options.isFavorite
         @parentView.subViews.links.view.collection.add model
       else
-        lengthBefore = @parentView.subViews.linksFavorite.view.collection.length
         @parentView.subViews.linksFavorite.view.collection.add model
-        lengthAfter = @parentView.subViews.linksFavorite.view.collection.length
-        console.log 'length before: ', lengthBefore, ', length after: ', lengthAfter
     else
       console.log 'putIsFavorite failed'
 
