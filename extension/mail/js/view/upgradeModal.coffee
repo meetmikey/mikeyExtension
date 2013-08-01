@@ -13,6 +13,23 @@ template = """
           <div id='mm-stripe-basic' class='pricing-tier'></div>
           <div id='mm-stripe-pro' class='pricing-tier'></div>
           <!-- <div id='mm-stripe-team' class='pricing-tier'></div> -->
+          <div id='mm-stripe-enterprise' class='pricing-tier'>
+            <div class="status current">current</div>
+            <div class="status cancel">cancel</div>
+            <div class="status upgrade">get it</div>
+            <div class="status blank">&nbsp;</div>
+            <a href="mailto:sales@mikeyteam.com">
+            <div class="plan-highlight enterprise">
+              <div class="plan-cost">
+                <div class="per-month">enterprise</div>
+                <div class="icon-enterprise"></div>
+
+              </div>
+            </div>
+            </a>
+            <div class="plan-feature">Unlimited days</div>
+            <div class="plan-feature">10+ accounts</div>
+          </div>
         </div>
         <p>Simple monthly rates. No surprises. See Mikey's <a href="https://meetmikey.com/premium-terms.html" target="_blank">premium terms</a> for more info.</p>
       {{/unless}}
