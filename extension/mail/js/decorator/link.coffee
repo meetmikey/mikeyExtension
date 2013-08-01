@@ -31,8 +31,6 @@ class LinkDecorator
     MeetMikey.Helper.formatDate model.get('sentDate')
 
   formatUrl: (model) =>
-    console.log 'formatUrl, model: ', model
-    console.log 'formatUrl, model url: ', model.get('url')
     @stripHttp model.get('url')
 
   stripHttp: (url) =>

@@ -116,18 +116,23 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   toggleFavorite: (model) =>
     console.log 'toggleFavorite', model
-    isFavorite = not @options.isFavorite
-    model.set 'isFavorite', isFavorite
-    model.putIsFavorite isFavorite, (response, status) =>
+    newIsFavorite = true
+    if @options.isFavorite
+      newIsFavorite = false
+    model.set 'isFavorite', newIsFavorite
+    model.putIsFavorite newIsFavorite, (response, status) =>
       @moveModelToOtherSubview(model, status)
 
   moveModelToOtherSubview: (model, status) =>
     if status == 'success'
       @collection.remove model
       if @options.isFavorite
-        @parentView.subViews.links.view.collection.add newModel
+        @parentView.subViews.links.view.collection.add model
       else
-        @parentView.subViews.linksFavorite.view.collection.add newModel
+        lengthBefore = @parentView.subViews.linksFavorite.view.collection.length
+        @parentView.subViews.linksFavorite.view.collection.add model
+        lengthAfter = @parentView.subViews.linksFavorite.view.collection.length
+        console.log 'length before: ', lengthBefore, ', length after: ', lengthAfter
     else
       console.log 'putIsFavorite failed'
 
