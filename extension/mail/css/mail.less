@@ -2018,39 +2018,35 @@ body::-webkit-scrollbar-corner {
   border-radius: 2px;
   color: #fff;
   background-size: 70px 70px;
+  background-color: #2372C1;
+
+  &:hover {
+    background-color: darken(#2372C1, 10%);
+  }
 
   
   &.facebook-share {
-    background-color: #3D5B99;
+   
     background-image: url('@{pathPrefix}/mail/img/facebookShare.png');
-    &:hover {
-      background-color: darken(#3D5B99, 10%);
 
-    }
   }
 
     &.chrome-share {
-    background-color: #DB5037;
-    background-image: url('@{pathPrefix}/mail/img/chromeShare.png');
-    &:hover {
-      background-color: darken(#DB5037, 10%);
 
-    }
+    background-image: url('@{pathPrefix}/mail/img/chromeShare.png');
+
   }
 
   &.twitter-share {
-    background-color: #2CAAE1;
-    background-image: url('@{pathPrefix}/mail/img/twitterShare.png');
-    &:hover {
-      background-color: darken(#2CAAE1, 10%);
 
-    }
+    background-image: url('@{pathPrefix}/mail/img/twitterShare.png');
+
   }
   &.premium {
-    background-color: #2372C1;
+    
     background-image: url('@{pathPrefix}/mail/img/premiumUpgrade.png');
     &:hover {
-      background-color: darken(#2372C1, 10%);
+      
 
     }
     &.upgraded {
@@ -2597,6 +2593,10 @@ width: auto;
       display: none;
     }
   }
+
+  & a {
+    text-decoration: none;
+  }
 }
 
 
@@ -2619,6 +2619,10 @@ width: auto;
 
   .team & {
     width: 100px;
+  }
+
+  .enterprise & {
+    width: 108px;
   }
  }
 
@@ -2672,6 +2676,14 @@ width: auto;
     background-color: lighten(#94D3A3, 10%);
     cursor: pointer;
   }
+}
+
+.icon-enterprise {
+  width: 70px;
+  height: 45px;
+  margin: 15px auto 14px auto;
+  background-repeat: no-repeat;
+  background-image: url('@{pathPrefix}/mail/img/icon-enterprise.png');
 }
 
 /* ------------------- STRIPE HACKS -------------------------- */
