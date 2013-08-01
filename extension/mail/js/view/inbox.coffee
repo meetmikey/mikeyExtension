@@ -13,15 +13,15 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   subViews:
     'attachments':
-      viewClass: MeetMikey.View.Attachments
+      viewClass: MeetMikey.View.AttachmentsTab
       selector: '.mm-attachments-tab'
       args: {}
     'links':
-      viewClass: MeetMikey.View.Links
+      viewClass: MeetMikey.View.LinksTab
       selector: '.mm-links-tab'
       args: {}
     'images':
-      viewClass: MeetMikey.View.Images
+      viewClass: MeetMikey.View.ImagesTab
       selector: '.mm-images-tab-inner'
       args: {}
 
@@ -144,21 +144,21 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   bindCountUpdateForTab: (tab) =>
     @subView(tab).on 'reset', @updateCountForTab(tab)
-    @subView(tab).collection.on 'reset add remove', @updateCountForTab(tab)
+    @subView(tab).on 'updateTabCount', @updateCountForTab(tab)
 
   unbindCountUpdate: =>
     _.each @getTabs(), @unbindCountUpdateForTab
 
   unbindCountUpdateForTab: (tab) =>
     @subView(tab).off 'reset', @updateCountForTab(tab)
-    @subView(tab).collection.off 'reset add remove', @updateCountForTab(tab)
+    @subView(tab).off 'updateTabCount'
 
-  updateCountForTab: (tab) => (collection, orCollection) =>
-    @trigger 'updateTabCount', tab, (collection.length ? orCollection.length)
+  updateCountForTab: (tab) =>
+    @trigger 'updateTabCount', tab
 
   updateTabCounts: =>
     _.each @getTabs(), (tab) =>
-      @updateCountForTab(tab) @subView(tab).collection.length
+      @updateCountForTab(tab)
 
   setResults: (res, query) =>
     @subView('attachments').setResults res.attachments, query

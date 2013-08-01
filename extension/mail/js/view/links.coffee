@@ -1,6 +1,8 @@
 spriteUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 openIconUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 driveIcon = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/google-drive-icon.png")
+favoriteOnURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOn.jpg")
+favoriteOffURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOff.png")
 
 template = """
   {{#unless models}}
@@ -19,17 +21,21 @@ template = """
       <tbody>
         {{#each models}}
           <tr class="files" data-cid="{{cid}}">
-          {{#if deleting}}
-            <td class="mm-hide" style="opacity:0.1">
+            <td class="mm-hide" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this link">
                 <a href="#"><div class="close-x">x</div></a>
               </div>
             </td>
 
-            <td class="mm-download" style="opacity:0.1">
+            <td class="mm-download" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
-                <div class="list-icon" style="background-image: url('#{spriteUrl}');">
-                </div>
+                <div class="list-icon" style="background-image: url('#{spriteUrl}');"></div>
+              </div>
+            </td>
+
+            <td class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
+              <div class="list-icon mm-favorite-tooltip" data-toggle="tooltip" title="Toggle favorite">
+                <div class="list-icon" style="background-image: url('{{#if isFavorite}}#{favoriteOnURL}{{else}}#{favoriteOffURL}{{/if}}');"></div>
               </div>
             </td>
          
@@ -39,58 +45,21 @@ template = """
               <td class="mm-favicon" style="background:url({{faviconURL}}) no-repeat;">&nbsp;</td>
             {{/if}}
 
-            <td class="mm-file truncate" style="display:none;>
+            <td class="mm-file truncate" {{#if deleting}}style="display:none;{{/if}}>
               <div class="flex">
                 {{title}}
                 <span class="mm-file-text">{{summary}}</span>
               </div>
             </td>
-            <td class="mm-undo truncate"">
+            <td class="mm-undo truncate" {{#unless deleting}}style="display:none;{{/unless}}>
               <div class="flex">
                 Link is hidden! <strong>Undo</strong> 
               </div>
             </td>
-            <td class="mm-source truncate" style="opacity:0.1">{{displayUrl}}</td>
-            <td class="mm-from truncate" style="opacity:0.1">{{from}}</td>
-            <td class="mm-to truncate" style="opacity:0.1">{{to}}</td>
-            <td class="mm-sent truncate" style="opacity:0.1">{{sentDate}}</td>
-          {{else}}
-            <td class="mm-hide">
-              <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this link">
-                <a href="#"><div class="close-x">x</div></a>
-              </div>
-            </td>
-
-            <td class="mm-download">
-              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
-                <div class="list-icon" style="background-image: url('#{spriteUrl}');">
-                </div>
-              </div>
-            </td>
-
-            {{#if isGoogleDoc}}
-              <td class="mm-favicon" style="background:url('#{driveIcon}') no-repeat;">&nbsp;</td>
-            {{else}}
-              <td class="mm-favicon" style="background:url({{faviconURL}}) no-repeat;">&nbsp;</td>
-            {{/if}}
-
-
-            <td class="mm-file truncate">
-              <div class="flex">
-                {{title}}
-                <span class="mm-file-text">{{summary}}</span>
-              </div>
-            </td>
-            <td class="mm-undo truncate" style="display:none;">
-              <div class="flex">
-                Link is hidden! <strong>Undo</strong> 
-              </div>
-            </td>
-            <td class="mm-source truncate">{{displayUrl}}</td>
-            <td class="mm-from truncate">{{from}}</td>
-            <td class="mm-to truncate">{{to}}</td>
-            <td class="mm-sent truncate">{{sentDate}}</td>
-          {{/if}}
+            <td class="mm-source truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{displayUrl}}</td>
+            <td class="mm-from truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{from}}</td>
+            <td class="mm-to truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{to}}</td>
+            <td class="mm-sent truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{sentDate}}</td>
           </tr>
         {{/each}}
       </tbody>
@@ -180,7 +149,12 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
       $(child).css('opacity', 1) if not $(child).hasClass('mm-undo')
 
   initialFetch: =>
-    @collection.fetch success: @waitAndPoll if @options.fetch
+    console.log 'links.initialFetch, @options.fetch: ', @options.fetch
+    if @options.fetch
+      @collection.fetch
+        data:
+          faved: @options.isFavorite?
+        success: @waitAndPoll
 
   restoreFromCache: =>
     @collection.reset(@cachedModels)
@@ -194,7 +168,6 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
       @pagination.getPageItems()
     else
       @collection.models
-
 
   openLink: (event) =>
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
@@ -251,6 +224,8 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
       {}
     else
       after: @collection.latestSentDate()
+
+    data.isFavorite = @options.isFavorite?
 
     @collection.fetch
       update: true
