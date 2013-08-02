@@ -28,10 +28,9 @@ class MeetMikey.View.AttachmentsWrapper extends MeetMikey.View.Base
     if not @isSearch()
       @subView('attachmentsFavorite').collection.on 'reset add remove', () =>
         @trigger 'updateTabCount', @getCount()
-    if @options.fetch
-      @subView('attachments').options.fetch = true
-      if not @isSearch()
-        @subView('attachmentsFavorite').options.fetch = true
+    @subView('attachments').setFetch @options.fetch
+    if not @isSearch()
+      @subView('attachmentsFavorite').setFetch @options.fetch
 
   isSearch: =>
     not @options.fetch

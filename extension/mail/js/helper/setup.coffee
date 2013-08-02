@@ -201,3 +201,5 @@ class Setup
     @bootstrap()
 
 MeetMikey.Helper.Setup = new Setup()
+
+MeetMikey.globalEvents = _.extend {}, Backbone.Events

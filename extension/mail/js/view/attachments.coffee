@@ -94,6 +94,12 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   isSearch: =>
     not @options.fetch
 
+  setFetch: (isFetch) =>
+    @options.fetch = isFetch
+    if isFetch
+      MeetMikey.globalEvents.off 'searchFavoriteAction', @initialFetch
+      MeetMikey.globalEvents.on 'searchFavoriteAction', @initialFetch
+
   teardown: =>
     @clearTimeout()
     @collection.off('reset', @render)
@@ -114,19 +120,20 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     model.set 'isFavorite', newIsFavorite
     model.putIsFavorite newIsFavorite, (response, status) =>
       if status == 'success'
-        if not @isSearch()
-          @moveModelToOtherSubview model
-        else
-          @renderTemplate()
+        @moveModelToOtherSubview model
+        @renderTemplate()
       else
         console.log 'putIsFavorite failed'
 
   moveModelToOtherSubview: (model) =>
-    @collection.remove model
-    if @options.isFavorite
-      @parentView.subView('attachments').collection.add model
+    if @isSearch()
+      MeetMikey.globalEvents.trigger 'searchFavoriteAction'
     else
-      @parentView.subView('attachmentsFavorite').collection.add model
+      @collection.remove model
+      if model.get('isFavorite')
+        @parentView.subView('attachmentsFavorite').collection.add model
+      else
+        @parentView.subView('attachments').collection.add model
 
   markDeleting: (model) =>
     model.set('deleting', true)

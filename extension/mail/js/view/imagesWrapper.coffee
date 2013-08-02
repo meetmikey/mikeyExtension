@@ -14,8 +14,7 @@ class MeetMikey.View.ImagesWrapper extends MeetMikey.View.Base
   postInitialize: =>
     @subView('images').collection.on 'reset add remove', () =>
       @trigger 'updateTabCount', @getCount()
-    if @options.fetch
-      @subView('images').options.fetch = true
+    @subView('images').setFetch @options.fetch
 
   getCount: =>
     count = @subView('images').collection.length

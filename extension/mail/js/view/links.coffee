@@ -102,6 +102,12 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     @setActiveColumn()
 
+  setFetch: (isFetch) =>
+    @options.fetch = isFetch
+    if isFetch
+      MeetMikey.globalEvents.off 'searchFavoriteAction', @initialFetch
+      MeetMikey.globalEvents.on 'searchFavoriteAction', @initialFetch
+
   isSearch: =>
     not @options.fetch
 
@@ -125,19 +131,20 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     model.set 'isFavorite', newIsFavorite
     model.putIsFavorite newIsFavorite, (response, status) =>
       if status == 'success'
-        if not @isSearch()
-          @moveModelToOtherSubview model
-        else
-          @renderTemplate()
+        @moveModelToOtherSubview model
+        @renderTemplate()
       else
         console.log 'putIsFavorite failed'
 
   moveModelToOtherSubview: (model) =>
-    @collection.remove model
-    if @options.isFavorite
-      @parentView.subView('links').collection.add model
+    if @isSearch()
+      MeetMikey.globalEvents.trigger 'searchFavoriteAction'
     else
-      @parentView.subView('linksFavorite').collection.add model
+      @collection.remove model
+      if model.get('isFavorite')
+        @parentView.subView('linksFavorite').collection.add model
+      else
+        @parentView.subView('links').collection.add model
 
   markDeleting: (model) =>
     model.set('deleting', true)

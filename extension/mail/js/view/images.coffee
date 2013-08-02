@@ -90,6 +90,9 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @$('.mmCarouselModal').modal
       show: false
 
+  setFetch: (isFetch) =>
+    @options.fetch = isFetch
+
   isModalVisible: =>
     @$('.mmCarouselModal').hasClass 'fade-in'
     

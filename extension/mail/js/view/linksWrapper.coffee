@@ -28,10 +28,9 @@ class MeetMikey.View.LinksWrapper extends MeetMikey.View.Base
     if not @isSearch()
       @subView('linksFavorite').collection.on 'reset add remove', () =>
         @trigger 'updateTabCount', @getCount()
-    if @options.fetch
-      @subView('links').options.fetch = true
-      if not @isSearch()
-        @subView('linksFavorite').options.fetch = true
+    @subView('links').setFetch @options.fetch
+    if not @isSearch()
+      @subView('linksFavorite').setFetch @options.fetch
 
   isSearch: =>
     not @options.fetch
