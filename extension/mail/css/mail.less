@@ -245,6 +245,27 @@ body {
   }
 }
 
+.sidebar-icon {
+  background-image: url('@{pathPrefix}/mail/img/sidebar-icons.png');
+  width: 18px;
+  height: 18px;
+  overflow: hidden;
+  opacity: 0.55;
+  margin-left: -7px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &.favoriteOn {
+    background-position: 38px -3px;
+  }
+
+  &.favorite {
+    background-position: 57px -2px;
+  }
+}
+
 .list-icon {
   background-position: -65px -86px !important;
   width: 16px;

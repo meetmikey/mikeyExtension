@@ -1,6 +1,4 @@
 spriteUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
-favoriteOnURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOn.jpg")
-favoriteOffURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOff.png")
 
 template = """
   {{#unless models}}
@@ -36,8 +34,8 @@ template = """
           </td>
 
           <td class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-            <div class="list-icon mm-favorite-tooltip" data-toggle="tooltip" title="Toggle favorite">
-              <div class="list-icon" style="background-image: url('{{#if isFavorite}}#{favoriteOnURL}{{else}}#{favoriteOffURL}{{/if}}');"></div>
+            <div class="mm-favorite-tooltip" data-toggle="tooltip" title="Toggle favorite">
+              <div class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
             </div>
           </td>
 
@@ -93,6 +91,9 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     @setActiveColumn()
 
+  isSearch: =>
+    not @options.fetch
+
   teardown: =>
     @clearTimeout()
     @collection.off('reset', @render)
@@ -106,22 +107,26 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @toggleFavorite(model)
 
   toggleFavorite: (model) =>
+    oldIsFavorite = model.get('isFavorite')
     newIsFavorite = true
-    if @options.isFavorite
+    if oldIsFavorite
       newIsFavorite = false
     model.set 'isFavorite', newIsFavorite
     model.putIsFavorite newIsFavorite, (response, status) =>
-      @moveModelToOtherSubview(model, status)
-
-  moveModelToOtherSubview: (model, status) =>
-    if status == 'success'
-      @collection.remove model
-      if @options.isFavorite
-        @parentView.subView('attachments').collection.add model
+      if status == 'success'
+        if not @isSearch()
+          @moveModelToOtherSubview model
+        else
+          @renderTemplate()
       else
-        @parentView.subView('attachmentsFavorite').collection.add model
+        console.log 'putIsFavorite failed'
+
+  moveModelToOtherSubview: (model) =>
+    @collection.remove model
+    if @options.isFavorite
+      @parentView.subView('attachments').collection.add model
     else
-      console.log 'putIsFavorite failed'
+      @parentView.subView('attachmentsFavorite').collection.add model
 
   markDeleting: (model) =>
     model.set('deleting', true)
