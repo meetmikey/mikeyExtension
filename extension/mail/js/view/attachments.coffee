@@ -117,9 +117,9 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     if status == 'success'
       @collection.remove model
       if @options.isFavorite
-        @parentView.subViews.attachments.view.collection.add model
+        @parentView.subView('attachments').collection.add model
       else
-        @parentView.subViews.attachmentsFavorite.view.collection.add model
+        @parentView.subView('attachmentsFavorite').collection.add model
     else
       console.log 'putIsFavorite failed'
 

@@ -86,7 +86,6 @@
             "mail/js/view/welcomeModal.js",
             "mail/js/view/thanksModal.js",
             "mail/js/view/searchBar.js",
-            "mail/js/view/searchResults.js",
             "mail/js/view/search.js",
             "mail/js/view/sidebar.js",
             "mail/js/view/dropdown.js",

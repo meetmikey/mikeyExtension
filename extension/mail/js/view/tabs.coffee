@@ -116,9 +116,7 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
     else if MeetMikey.Globals.gmailTabs
       $(MeetMikey.Constants.Selectors.gmailTabsSelector).hide()
 
-
-  updateTabCount: (tab) =>
-    count = tab.getCount()
+  updateTabCount: (tab, count) =>
     tabElement = @$("[data-mm-tab='#{tab}']")
     tabElement.find(".mm-count").text "#{ count }"
     tabElement.find(".mm-count").addClass 'displayed'

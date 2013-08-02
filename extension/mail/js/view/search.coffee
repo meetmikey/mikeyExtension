@@ -26,10 +26,12 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
     @injectSearchResultsContainer()
     @injectTabBarContainer()
     @subView('tabs').on 'clicked:tab', @subView('searchResults').showTab
+    @subView('searchResults').bindCountUpdate()
     @subView('searchResults').on 'updateTabCount', @subView('tabs').updateTabCount
     @renderSubview 'searchResults'
     @subView('searchResults').showTab MeetMikey.Globals.tabState
-    return @subView('searchResults').restoreFromCache() if @cachedQuery == query
+    if @cachedQuery == query
+      return @subView('searchResults').restoreFromCache()
     @getSearchResults query
     @trackSearchEvent query
     @cachedQuery = query

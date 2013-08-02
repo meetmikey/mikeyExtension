@@ -23,29 +23,39 @@ class MeetMikey.View.LinksWrapper extends MeetMikey.View.Base
       }
 
   postInitialize: =>
-    @subViews.links.view.collection.on 'reset add remove', () =>
-      @trigger 'updateTabCount', @subViews.links.view
+    @subView('links').collection.on 'reset add remove', () =>
+      @trigger 'updateTabCount', @getCount()
     if not @isSearch()
-      @subViews.linksFavorite.view.collection.on 'reset add remove', () =>
-        @trigger 'updateTabCount', @subViews.linksFavorite.view
+      @subView('linksFavorite').collection.on 'reset add remove', () =>
+        @trigger 'updateTabCount', @getCount()
     if @options.fetch
-      @subViews.links.view.options.fetch = true
+      @subView('links').options.fetch = true
       if not @isSearch()
-        @subViews.linksFavorite.view.options.fetch = true
+        @subView('linksFavorite').options.fetch = true
 
   isSearch: =>
     not @options.fetch
 
   getCount: =>
-    count = @subViews.links.view.collection.length
+    count = @subView('links').collection.length
     if not @isSearch()
-      count += @subViews.linksFavorite.view.collection.length
+      count += @subView('linksFavorite').collection.length
     count
 
   initialFetch: =>
-    @subViews.links.view.initialFetch()
+    @subView('links').initialFetch()
     if not @isSearch()
-      @subViews.linksFavorite.view.initialFetch()
+      @subView('linksFavorite').initialFetch()
+
+  restoreFromCache: () =>
+    @subView('links').restoreFromCache()
+    if not @isSearch()
+     @subView('linksFavorite').restoreFromCache()
+
+  setResults: (models, query) =>
+    @subView('links').setResults models, query
+    if not @isSearch()
+     @subView('linksFavorite').setResults models, query
 
   getTemplateData: =>
     object = {}

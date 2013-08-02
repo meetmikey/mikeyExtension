@@ -23,29 +23,39 @@ class MeetMikey.View.AttachmentsWrapper extends MeetMikey.View.Base
       }
 
   postInitialize: =>
-    @subViews.attachments.view.collection.on 'reset add remove', () =>
-      @trigger 'updateTabCount', @subViews.attachments.view
+    @subView('attachments').collection.on 'reset add remove', () =>
+      @trigger 'updateTabCount', @getCount()
     if not @isSearch()
-      @subViews.attachmentsFavorite.view.collection.on 'reset add remove', () =>
-        @trigger 'updateTabCount', @subViews.attachmentsFavorite.view
+      @subView('attachmentsFavorite').collection.on 'reset add remove', () =>
+        @trigger 'updateTabCount', @getCount()
     if @options.fetch
-      @subViews.attachments.view.options.fetch = true
+      @subView('attachments').options.fetch = true
       if not @isSearch()
-        @subViews.attachmentsFavorite.view.options.fetch = true
+        @subView('attachmentsFavorite').options.fetch = true
 
   isSearch: =>
     not @options.fetch
 
   getCount: =>
-    count = @subViews.attachments.view.collection.length
+    count = @subView('attachments').collection.length
     if not @isSearch()
-      count += @subViews.attachmentsFavorite.view.collection.length
+      count += @subView('attachmentsFavorite').collection.length
     count
 
   initialFetch: =>
-    @subViews.attachments.view.initialFetch()
+    @subView('attachments').initialFetch()
     if not @isSearch()
-      @subViews.attachmentsFavorite.view.initialFetch()
+     @subView('attachmentsFavorite').initialFetch()
+
+  restoreFromCache: () =>
+    @subView('attachments').restoreFromCache()
+    if not @isSearch()
+     @subView('attachmentsFavorite').restoreFromCache()
+
+  setResults: (models, query) =>
+    @subView('attachments').setResults models, query
+    if not @isSearch()
+     @subView('attachmentsFavorite').setResults models, query
 
   getTemplateData: =>
     object = {}

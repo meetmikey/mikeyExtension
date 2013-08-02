@@ -126,9 +126,9 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     if status == 'success'
       @collection.remove model
       if @options.isFavorite
-        @parentView.subViews.links.view.collection.add model
+        @parentView.subView('links').collection.add model
       else
-        @parentView.subViews.linksFavorite.view.collection.add model
+        @parentView.subView('linksFavorite').collection.add model
     else
       console.log 'putIsFavorite failed'
 
