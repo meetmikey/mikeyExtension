@@ -1,4 +1,8 @@
 spriteUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
+favoriteOnURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOn.jpg")
+favoriteOffURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOff.png")
+likeOnURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOn.jpg")
+likeOffURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOff.png")
 
 template = """
   {{#unless models}}
@@ -9,7 +13,7 @@ template = """
       <thead class="labels">
         <!-- <th class="mm-toggle-box"></th> -->
 
-        <th class="mm-download" colspan="4" data-mm-field="filename">File<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-download" colspan="5" data-mm-field="filename">File<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-file">&nbsp;</th>
         <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-to" data-mm-field="recipients">To<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
@@ -39,6 +43,13 @@ template = """
             </div>
           </td>
 
+          <td class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
+            <div class="list-icon mm-like-tooltip" data-toggle="tooltip" title="Like">
+              <div class="list-icon" style="background-image: url('#{spriteUrl}');">
+            </div>
+          </td>
+
+
           <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat; {{#if deleting}}opacity:0.1{{/if}}">&nbsp;</td>
           <td class="mm-undo" {{#unless deleting}}style="display:none;"{{/unless}}>File is hidden! <strong>Undo</strong></td>
           <td class="mm-file truncate" {{#if deleting}}style="display:none;"{{/if}}>{{filename}}&nbsp;</td>
@@ -66,6 +77,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     'click .files .mm-undo' : 'unMarkDeletingEvent'
     'click th': 'sortByColumn'
     'click .mm-favorite': 'toggleFavoriteEvent'
+    'click .mm-like': 'toggleLikeEvent'
     'mouseenter .files .mm-file, .files .mm-icon': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-icon': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-icon': 'delayRollover'
@@ -122,8 +134,23 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
       if status == 'success'
         @moveModelToOtherSubview model
         @renderTemplate()
-      else
-        console.log 'putIsFavorite failed'
+
+  toggleLikeEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
+    model = @collection.get(cid)
+    @toggleLike(model)
+
+  toggleLike: (model) =>
+    newIsLike = true
+    if @options.isLiked
+      newIsLike = false
+
+    if newIsLike
+      model.set 'isLiked', true
+      model.putIsLiked true, (response, status) =>
+        console.log('response', response)
+        console.log('status', status)
 
   moveModelToOtherSubview: (model) =>
     if @isSearch()

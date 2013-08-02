@@ -23,6 +23,19 @@ class MeetMikey.Model.Attachment extends MeetMikey.Model.Base
       data: apiData
       complete: callback
 
+  putIsLiked: (isLiked, callback) =>
+    apiData =
+      userEmail: MeetMikey.globalUser.get('email')
+      asymHash: MeetMikey.globalUser.get('asymHash')
+      extensionVersion: MeetMikey.Constants.extensionVersion
+      isLiked: isLiked
+
+    $.ajax
+      type: 'PUT'
+      url: MeetMikey.Helper.getAPIUrl() + '/attachment/' + @get('_id')
+      data: apiData
+      complete: callback
+
   delete: =>
 
     apiData =
