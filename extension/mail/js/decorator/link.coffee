@@ -18,6 +18,7 @@ class LinkDecorator
     object.cid = model.cid
     object.isFavorite = model.get 'isFavorite'
     object.deleting = model.get('deleting')
+    object.isLiked = model.get 'isLiked'
 
     object
 

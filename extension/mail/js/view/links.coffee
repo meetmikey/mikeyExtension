@@ -11,7 +11,7 @@ template = """
     <div class="pagination-container"></div>
     <table class="inbox-table search-results" id="mm-links-table" border="0">
       <thead class="labels">
-        <th class="mm-download" colspan="4" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+        <th class="mm-download" colspan="5" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-file mm-link"></th>
         <th class="mm-source" data-mm-field="url">Source<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
@@ -35,6 +35,12 @@ template = """
             <td class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-favorite-tooltip" data-toggle="tooltip" title="Toggle favorite">
                 <div class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+              </div>
+            </td>
+
+            <td class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
+              <div class="mm-like-tooltip" data-toggle="tooltip" title="Like">
+                <div class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
               </div>
             </td>
          
@@ -78,6 +84,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     'click .files .mm-undo' : 'unMarkDeletingEvent'
     'click th': 'sortByColumn'
     'click .mm-favorite': 'toggleFavoriteEvent'
+    'click .mm-like': 'toggleLikeEvent'
     'mouseenter .files .mm-file, .files .mm-source': 'startRollover'
     'mouseleave .files .mm-file, .files .mm-source': 'cancelRollover'
     'mousemove .files .mm-file, .files .mm-source': 'delayRollover'
@@ -135,6 +142,19 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
         @renderTemplate()
       else
         console.log 'putIsFavorite failed'
+
+  toggleLikeEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
+    model = @collection.get(cid)
+    @toggleLike(model)
+
+  toggleLike: (model) =>
+    console.log(model.get('isLiked'))
+    if not model.get('isLiked')
+      model.set 'isLiked', true
+      model.putIsLiked true, (response, status) =>
+        @renderTemplate()
 
   moveModelToOtherSubview: (model) =>
     if @isSearch()

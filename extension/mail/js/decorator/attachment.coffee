@@ -29,6 +29,7 @@ class AttachmentDecorator
     object.subject = model.get('mailCleanSubject')
     object.deleting = model.get('deleting')
     object.isFavorite = model.get 'isFavorite'
+    object.isLiked = model.get 'isLiked'
 
     object
 

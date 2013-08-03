@@ -1,8 +1,4 @@
 spriteUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
-favoriteOnURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOn.jpg")
-favoriteOffURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOff.png")
-likeOnURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOn.jpg")
-likeOffURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOff.png")
 
 template = """
   {{#unless models}}
@@ -44,8 +40,8 @@ template = """
           </td>
 
           <td class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-            <div class="list-icon mm-like-tooltip" data-toggle="tooltip" title="Like">
-              <div class="list-icon" style="background-image: url('#{spriteUrl}');">
+            <div class="mm-like-tooltip" data-toggle="tooltip" title="Like">
+              <div class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
             </div>
           </td>
 
@@ -142,15 +138,11 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @toggleLike(model)
 
   toggleLike: (model) =>
-    newIsLike = true
-    if @options.isLiked
-      newIsLike = false
-
-    if newIsLike
+    console.log(model.get('isLiked'))
+    if not model.get('isLiked')
       model.set 'isLiked', true
       model.putIsLiked true, (response, status) =>
-        console.log('response', response)
-        console.log('status', status)
+        @renderTemplate()
 
   moveModelToOtherSubview: (model) =>
     if @isSearch()
