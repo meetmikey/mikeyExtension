@@ -6,20 +6,26 @@ template = """
     <div class="status blank">&nbsp;</div>
     <div class="plan-highlight">
       <div class="plan-cost">
-        <div class="per-month">{{billingPlanUpperCase}}</div>
-        <div class="dollar-sign">$</div>
-        <div class="amount">{{amount}}</div>
+        {{#if isEnterprise}}
+          <div class="per-month">enterprise</div>
+          <div class="icon-enterprise"></div>
+        {{else}}
+          <div class="per-month">{{billingPlanUpperCase}}</div>
+          <div class="dollar-sign">$</div>
+          <div class="amount">{{amount}}</div>
+        {{/if}}
       </div>
     </div>
     <div class="plan-feature">{{numDaysString}}</div>
     <div class="plan-feature">{{numAccountsString}}</div>
   </div>
 """
-
 class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
   mikeyIcon: 'mikeyIcon120x120.png'
+  contactEmailAddress: 'sales@mikeyteam.com'
+  contactEmailSubject: "I'm interested in the Mikey Enterprise Plan"
 
   events:
     'click .mmPlanButton': 'planButtonClicked'
@@ -32,7 +38,13 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
     object.amount = @getAmount()
     object.numDaysString = @getNumDaysString()
     object.numAccountsString = @getNumAccountsString()
+    object.isEnterprise = @isEnterprise()
     object
+
+  isEnterprise: =>
+    if ( @options.billingPlan == 'enterprise' )
+      return true
+    false
 
   isActiveBillingPlan: =>
     activeBillingPlan = MeetMikey.globalUser?.get('billingPlan')
@@ -57,8 +69,10 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
       days = MeetMikey.Constants.basicPlanDays
     else if @options.billingPlan == 'pro'
       days = MeetMikey.Constants.proPlanDays
-    else
+    else if @options.billingPlan == 'team'
       days = MeetMikey.Constants.teamPlanDays
+    else
+      days = MeetMikey.Constants.enterprisePlanDays
     days + ' days'
 
   getNumAccountsString: =>
@@ -66,8 +80,10 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
       numAccounts = MeetMikey.Constants.basicPlanNumAccounts
     else if @options.billingPlan == 'pro'
       numAccounts = MeetMikey.Constants.proPlanNumAccounts
-    else
+    else if @options.billingPlan == 'team'
       numAccounts = MeetMikey.Constants.teamPlanNumAccounts
+    else
+      numAccounts = MeetMikey.Constants.enterprisePlanNumAccounts
     label = ' account'
     if numAccounts != 1
       label += 's'
@@ -106,21 +122,26 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
 
   upgradeClicked: =>
     MeetMikey.Helper.Analytics.trackEvent 'subscribeToPlanClicked', {billingPlan: @options.billingPlan}
-    token = (res) =>
-      stripeCardToken = res.id
-      @performPayment stripeCardToken
 
-    stripeData = {
-        key: MeetMikey.Helper.getStripeKey()
-      , billingPlan: @options.billingPlan
-      , currency: 'usd'
-      , name: @getTitle()
-      #, description: 
-      , panelLabel: 'Purchase'
-      , token: token
-      , image: chrome.extension.getURL MeetMikey.Constants.imgPath + '/' + @mikeyIcon
-    }
-    StripeCheckout.open stripeData
+    if @isEnterprise()
+      contactMailToURL = 'mailto:' + @contactEmailAddress + '?subject=' + @contactEmailSubject
+      window.open contactMailToURL
+    else
+      token = (res) =>
+        stripeCardToken = res.id
+        @performPayment stripeCardToken
+
+      stripeData = {
+          key: MeetMikey.Helper.getStripeKey()
+        , billingPlan: @options.billingPlan
+        , currency: 'usd'
+        , name: @getTitle()
+        #, description: 
+        , panelLabel: 'Purchase'
+        , token: token
+        , image: chrome.extension.getURL MeetMikey.Constants.imgPath + '/' + @mikeyIcon
+      }
+      StripeCheckout.open stripeData
     false
 
   handlePaymentAPIResponse: (response, status) =>

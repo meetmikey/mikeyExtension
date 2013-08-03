@@ -22,6 +22,8 @@ _.extend MeetMikey.Constants,
   teamPlanPrice: '30'
   teamPlanDays: 'Unlimited'
   teamPlanNumAccounts: 5
+  enterprisePlanDays: 'Unlimited'
+  enterprisePlanNumAccounts: '10+'
   extensionVersion: chrome.runtime.getManifest()?.version
   extensionId: chrome.i18n.getMessage("@@extension_id")
   chromeStoreReviewURL: 'https://chrome.google.com/webstore/detail/mikey-for-gmail/pfbeimpckikjpnjhcbpikdjnelnblhnn/reviews'
