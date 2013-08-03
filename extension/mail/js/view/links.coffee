@@ -150,11 +150,12 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @toggleLike(model)
 
   toggleLike: (model) =>
-    console.log(model.get('isLiked'))
     if not model.get('isLiked')
       model.set 'isLiked', true
+      @renderTemplate()
       model.putIsLiked true, (response, status) =>
-        @renderTemplate()
+        if status != 200
+          @renderTemplate()
 
   moveModelToOtherSubview: (model) =>
     if @isSearch()
