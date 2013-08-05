@@ -266,29 +266,48 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       failure: ->
         @logger.info 'search failed'
 
-  addImagesFromFetchResponse: (res) =>
-    @endOfImages = true if _.isEmpty(res)
+  addImagesFromFetchResponse: (res, isPrepend) =>
+    console.log 'addImagesFromFetchResponse, res: ', res, ', isPrepend, ', isPrepend
+    @endOfImages = true if _.isEmpty(res) and not isPrepend
     newModels = []
-    _.each res, (imageData) =>
+    resModels = res
+    if isPrepend
+      resModels = res.reverse()
+    _.each resModels, (imageData) =>
       newModel = new MeetMikey.Model.Image imageData
       isDupe = false
       @collection.each (oldModel) =>
         if oldModel.get('hash') == newModel.get('hash')
           isDupe = true
       if not isDupe
-        @collection.push newModel
         newModels.push newModel
-    @appendNewImageModelTemplates newModels
+        if isPrepend
+          @collection.unshift newModel
+        else
+          @collection.push newModel
+    console.log 'addNewImageModelTemplates, newModels: ', newModels
+    @addNewImageModelTemplates newModels, isPrepend
     @delegateEvents()
     @fetching = false
 
-  appendNewImageModelTemplates: (models) =>
+  addNewImageModelTemplates: (models, isPrepend) =>
+    console.log 'addNewImageModelTemplates, models: ', models, ', isPrepend: ', isPrepend
     decoratedModels = _.invoke(models, 'decorate')
     html = ''
     _.each decoratedModels, (decoratedModel) =>
-      html += @imageTemplate(decoratedModel)
+      if isPrepend
+        newHTML = @imageTemplate(decoratedModel) + html
+        html = newHTML
+      else
+        html += @imageTemplate(decoratedModel)
     items = $(html)
-    @$('.mmImagesIsotope').isotope 'insert', items
+    if html
+      if isPrepend
+        console.log 'isotope reloadItems'
+        @$('.mmImagesIsotope').isotope 'reloadItems'
+      else
+        console.log 'isotope insert, items: ', items
+        @$('.mmImagesIsotope').isotope 'insert', items
 
   runIsotope: =>
     if ! @hasInitializedIsotope
@@ -322,14 +341,20 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     clearTimeout @timeoutId if @timeoutId
 
   poll: =>
+    console.log 'poll'
     data = if MeetMikey.globalUser.get('onboarding') or @collection.length < MeetMikey.Constants.imagePaginationSize
       {}
     else
       after: @collection.latestSentDate()
 
-    @collection.fetch
-      update: true
-      remove: false
-      data: data
-      success: @waitAndPoll
-      error: @waitAndPoll
+    MeetMikey.Helper.callAPI
+      url: 'image'
+      type: 'GET'
+      data:
+        data
+      success: (res) =>
+        @waitAndPoll()
+        @addImagesFromFetchResponse res, true
+      failure: ->
+        @waitAndPoll()
+        @logger.info 'search failed'

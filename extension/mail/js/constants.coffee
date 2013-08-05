@@ -1,5 +1,5 @@
 _.extend MeetMikey.Constants,
-  env: 'production'
+  env: 'local'
   imgPath: 'mail/img'
   mixpanelId: '4025d8a58a875ce9a39db05bcf86fd71'
   stripeKeyTest: 'pk_test_xkrclY7n0l6KbnAmG2huBZzK'
@@ -7,7 +7,7 @@ _.extend MeetMikey.Constants,
   mixpanelOff: false
   piwikOff: false
   googleAnalyticsOff: false
-  pollDelay: 60*1000
+  pollDelay: 10*1000
   onboardCheckPollDelay: 10*1000
   msPerDay: 1000 * 60 * 60 * 24
   paginationSize: 50
