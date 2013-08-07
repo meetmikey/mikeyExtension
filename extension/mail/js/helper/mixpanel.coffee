@@ -42,7 +42,6 @@ class Mixpanel
       $first_name: allProps.firstName
       $last_name: allProps.lastName
       $extension_version: allProps.extensionVersion
-      $multiple_inbox: allProps.multipleInbox
       $created : allProps.timestamp
 
 MeetMikey.Helper.Mixpanel = new Mixpanel()

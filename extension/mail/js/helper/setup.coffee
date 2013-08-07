@@ -26,11 +26,11 @@ class Setup
         @injectOnboardModal()
 
   authorized: (userData) =>
+    @initalizeGlobalUser userData
+    @trackLoginEvent(userData)
     @checkPreviewPane()
     @checkGmailTabs()
     @checkMultipleInbox =>
-      @initalizeGlobalUser userData
-      @trackLoginEvent(userData)
       @waitForInbox()
 
   trackLoginEvent: (user) =>
