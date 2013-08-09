@@ -26,11 +26,11 @@ class Setup
         @injectOnboardModal()
 
   authorized: (userData) =>
+    @initalizeGlobalUser userData
+    @trackLoginEvent(userData)
     @checkPreviewPane()
     @checkGmailTabs()
     @checkMultipleInbox =>
-      @initalizeGlobalUser userData
-      @trackLoginEvent(userData)
       @waitForInbox()
 
   trackLoginEvent: (user) =>
@@ -131,7 +131,7 @@ class Setup
     return if @dropdownView?
     @dropdownView = new MeetMikey.View.Dropdown
       el: MeetMikey.Constants.Selectors.navBar, append: true
-    @dropdownView.render()
+    @dropdownView.rerender()
 
   # Rename Auth modal
   injectOnboardModal: (errMsg) =>
