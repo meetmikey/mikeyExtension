@@ -105,6 +105,7 @@
   ],
   "permissions": [
     "*://mail.google.com/*",
-    "*://*.meetmikey.com/*"
+    "*://*.meetmikey.com/*",
+    "*://mikey.ngrok.com/*"
   ]
 }
