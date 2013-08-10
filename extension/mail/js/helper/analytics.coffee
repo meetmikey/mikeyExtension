@@ -28,8 +28,7 @@ class Analytics
     @globalProps.multipleInbox = MeetMikey.Globals.multipleInbox
 
     allProps = @_buildAllProps()
-
-    return unless @inCorrectEnv && MeetMikey.Helper.isRealUser()
+    return unless @inCorrectEnv
     @mixpanel.setUser allProps unless @mixpanelOff
     @piwik.setUser allProps unless @piwikOff
     @googleAnalytics.setUser allProps unless @googleAnalyticsOff
