@@ -10,6 +10,17 @@ template = """
   {{else}}
     <div class="pagination-container"></div>
     <table class="inbox-table search-results" id="mm-links-table" border="0">
+      <div class="section-header">
+        <div class="section-arrow active">
+        </div>
+        <div class="section-toggle">
+          <div class="section-name active">
+            Starred
+          </div>
+          <div class="section-name">
+            Liked
+          </div>
+        </div>
       <thead class="labels">
         <th class="mm-download" colspan="5" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
         <th class="mm-file mm-link"></th>
@@ -27,20 +38,20 @@ template = """
               </div>
             </td>
             <td class="mm-download" {{#if deleting}}style="opacity:0.1"{{/if}}>
-              <div class="list-icon mm-download-tooltip" data-toggle="tooltip" title="View email">
+              <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">
                 <div class="list-icon" style="background-image: url('#{spriteUrl}');"></div>
               </div>
             </td>
 
             <td class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-              <div class="mm-favorite-tooltip" data-toggle="tooltip" title="Toggle favorite">
-                <div class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+              <div class="mm-download-tooltip" data-toggle="tooltip" title="Toggle favorite">
+                <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
               </div>
             </td>
 
             <td class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-              <div class="mm-like-tooltip" data-toggle="tooltip" title="Like">
-                <div class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
+              <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
+                <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
               </div>
             </td>
          
