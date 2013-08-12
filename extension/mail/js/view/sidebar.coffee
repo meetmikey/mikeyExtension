@@ -1,39 +1,74 @@
-chrome.extension.getURL MeetMikey.Constants.imgPath + '/' + @mikeyIcon
-
-
 attachmentTemplate = """
   <br/>
   <br/>
-  I'm an attachment!
-  <br/>
 
-  <img src="{{iconUrl}}">
-  <a href="{{url}}" target="_blank">{{filename}}</a>
+  <div class="resource" data-cid="{{cid}}" data-type="attachment">
+    I'm an attachment!
+    <br/>
+
+    <img src="{{iconUrl}}">
+    <a href="{{url}}" target="_blank">{{filename}}</a>
+    <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
+      <div class="mm-download-tooltip" data-toggle="tooltip" title="Toggle favorite">
+        <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+      </div>
+    </div>
+
+    <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
+      <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
+        <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+      </div>
+    </div>
+  </div>
+
   <br/>
 """
 
 imageTemplate = """
   <br/>
   <br/>
-  I'm an image!
-  <br/>
 
-  <img src="{{image}}" style="max-width:200px;max-height:150px;">
-  {{filename}}
+  <div class="resource" data-cid="{{cid}}" data-type="image">
+    I'm an image!
+    <br/>
+
+    <img src="{{image}}" style="max-width:200px;max-height:150px;">
+    {{filename}}
+    <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
+      <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
+        <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+      </div>
+    </div>
+  </div>
+
   <br/>
 """
 
 linkTemplate = """
   <br/>
   <br/>
-  I'm a link!
-  <br/>
+  <div class="resource" data-cid="{{cid}}" data-type="link">
+    I'm a link!
+    <br/>
 
-  {{title}}
-  <a href="{{url}}">{{url}}</a>
+    {{title}}
+    <a href="{{url}}">{{url}}</a>
+    {{summary}}
+    <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
+      <div class="mm-download-tooltip" data-toggle="tooltip" title="Toggle favorite">
+        <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+      </div>
+    </div>
+
+    <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
+      <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
+        <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+      </div>
+    </div>
+  </div>
+
   <br/>
 """
-
 
 template = """
   <div>Mikey sidebar!</div>
@@ -55,19 +90,77 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   template: Handlebars.compile(template)
   containerSelector: MeetMikey.Constants.Selectors.sidebarContainer
 
+  events:
+    'click .mm-favorite': 'toggleFavoriteEvent'
+    'click .mm-like': 'toggleLikeEvent'
+
   postInitialize: =>
     @attachmentsCollection = new MeetMikey.Collection.Attachments()
-    @attachmentsCollection.on 'reset', @renderTemplate
+    @attachmentsCollection.on 'reset', @renderTemplateAndDelegateEvents
+
     @imagesCollection = new MeetMikey.Collection.Images()
-    @imagesCollection.on 'reset', @renderTemplate
+    @imagesCollection.on 'reset', @renderTemplateAndDelegateEvents
+
     @linksCollection = new MeetMikey.Collection.Links()
-    @linksCollection.on 'reset', @renderTemplate
+    @linksCollection.on 'reset', @renderTemplateAndDelegateEvents
 
   postRender: =>
     if @inThread()
       @$el.show()
     else
       @$el.hide()
+
+  renderTemplateAndDelegateEvents: () =>
+    @renderTemplate()
+    @delegateEvents()
+
+  toggleFavoriteEvent: (event) =>
+    event.preventDefault()
+    model = @getModelFromEvent event
+    @toggleFavorite model
+
+  toggleFavorite: (model) =>
+    if not model
+      console.log 'toggleFavorite, no model!'
+      return
+    oldIsFavorite = model.get('isFavorite')
+    newIsFavorite = true
+    if oldIsFavorite
+      newIsFavorite = false
+    model.set 'isFavorite', newIsFavorite
+    model.putIsFavorite newIsFavorite, (response, status) =>
+      if status == 'success'
+        @renderTemplate()
+      else
+        console.log 'putIsFavorite failed'
+
+  getModelFromEvent: (event) =>
+    cid = $(event.currentTarget).closest('.resource').attr('data-cid')
+    resourceType = $(event.currentTarget).closest('.resource').attr('data-type')
+    model = null
+    if resourceType == 'attachment'
+      model = @attachmentsCollection.get(cid)
+    else if resourceType == 'image'
+      model = @imagesCollection.get(cid)
+    else
+      model = @linksCollection.get(cid)
+    model
+
+  toggleLikeEvent: (event) =>
+    event.preventDefault()
+    model = @getModelFromEvent event
+    @toggleLike model
+
+  toggleLike: (model) =>
+    if not model
+      console.log 'toggleLike, no model!'
+      return
+    if not model.get('isLiked')
+      model.set 'isLiked', true
+      @renderTemplate()
+      model.putIsLiked true, (response, status) =>
+        if status != 200
+          @renderTemplate()
 
   pageNavigationEvent: =>
     if @inThread()
@@ -85,7 +178,6 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   getResources: (callback) =>
     email = MeetMikey.globalUser?.get('email')
     threadHex = MeetMikey.Helper.Url.getThreadHex()
-    console.log 'threadHex: ', threadHex
     if threadHex
       MeetMikey.Helper.callAPI
         url: 'resource/thread/' + threadHex
@@ -119,7 +211,6 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
         @linksCollection.reset newLinks
       catch e
         console.log 'parse error, e: ', e
-      console.log 'handleGetResourceResponse, resources: ', resources
 
   inThread: =>
     MeetMikey.Helper.Url.inThread()
