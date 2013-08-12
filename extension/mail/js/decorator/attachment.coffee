@@ -17,6 +17,7 @@ class AttachmentDecorator
     object.filename = model.get('filename')
     object.from = @formatSender model
     object.to = @formatRecipients model
+    object.rawSentDate = model.get 'sentDate'
     object.sentDate = @formatDate model
     object.size = @formatFileSize model
     object.url = model.getUrl()
@@ -30,6 +31,11 @@ class AttachmentDecorator
     object.deleting = model.get('deleting')
     object.isFavorite = model.get 'isFavorite'
     object.isLiked = model.get 'isLiked'
+    #either isImage or isAttachment
+    if model.get 'isImage'
+      object.isImage = true
+    else
+      object.isAttachment = true
 
     object
 
