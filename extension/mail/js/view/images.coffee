@@ -20,12 +20,7 @@ imageTemplate = """
         </div>
 
         <div class="rollover-actions">
-          <a href="#inbox/{{msgHex}}" class="open-message">
-            <div data-toggle="tooltip" data-animation="false" title="View email">
-              <div class="list-icon" style="background-image: url('#{downloadUrl}');"></div>
-
-            </div>
-          </a>
+          <div  href="#inbox/{{msgHex}}" class="list-icon open-message" style="background-image: url('#{downloadUrl}');"></div>
           <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
           <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
         </div>
