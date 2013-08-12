@@ -113,14 +113,3 @@ class MeetMikey.View.UpgradeModal extends MeetMikey.View.BaseModal
     object.billingPlanCapitalized = MeetMikey.globalUser.getBillingPlan().capitalize()
     object.isGrantedPremium = MeetMikey.globalUser.get('isGrantedPremium')
     object
-
-  notifyAboutUpgradeInterest: (eventData) =>
-    eventData = eventData || {}
-    if MeetMikey.Constants.env is 'production'
-      MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal', eventData
-      email = MeetMikey.globalUser?.get('email')
-      MeetMikey.Helper.callAPI
-        url: 'upgrade'
-        type: 'POST'
-        data:
-          userEmail: email

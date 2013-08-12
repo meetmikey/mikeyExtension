@@ -1,5 +1,5 @@
-class MeetMikey.View.Sidebar extends MeetMikey.View.Base
-  linkSelector: MeetMikey.Constants.Selectors.sideBarLink
+class MeetMikey.View.LeftNavBar extends MeetMikey.View.Base
+  linkSelector: MeetMikey.Constants.Selectors.leftNavBarLink
   renderSelf: false
 
   preInitialize: =>

@@ -88,6 +88,7 @@
             "mail/js/view/searchBar.js",
             "mail/js/view/search.js",
             "mail/js/view/sidebar.js",
+            "mail/js/view/leftNavBar.js",
             "mail/js/view/dropdown.js",
             "mail/js/view/main.js",
             "mail/js/helper/setup.js",

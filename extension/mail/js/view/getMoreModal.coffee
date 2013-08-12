@@ -133,4 +133,4 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     $('body').append $('<div id="mm-upgrade-modal"></div>')
     @upgradeModal = new MeetMikey.View.UpgradeModal el: '#mm-upgrade-modal'
     @upgradeModal.render()
-    @upgradeModal.notifyAboutUpgradeInterest {link: 'upgrade'}
+    MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal', {link: 'upgrade'}
