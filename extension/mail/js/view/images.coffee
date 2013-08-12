@@ -1,6 +1,8 @@
 downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 
 imageTemplate = """
+    
+
   <div class="image-box" data-cid="{{cid}}">
     <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" data-animation="false" title="Hide this image"><div class="close-x">x</div></div>
     {{#if deleting}}
@@ -19,11 +21,13 @@ imageTemplate = """
 
         <div class="rollover-actions">
           <a href="#inbox/{{msgHex}}" class="open-message">
-            <div class="list-icon" data-toggle="tooltip" data-animation="false" title="View email">
-              <div class="list-icon" style="background-image: url('#{downloadUrl}');">
-              </div>
+            <div data-toggle="tooltip" data-animation="false" title="View email">
+              <div class="list-icon" style="background-image: url('#{downloadUrl}');"></div>
+
             </div>
           </a>
+          <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+          <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
         </div>
       </div>
     </div>

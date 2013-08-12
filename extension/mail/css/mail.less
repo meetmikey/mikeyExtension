@@ -3,6 +3,8 @@
 @media only screen and (max-width: 1200px) {
   .mail-counts-container {
     display: none;
+    margin-top: -20px;
+    vertical-align: middle;
   }
 }
 
@@ -245,20 +247,31 @@ body {
   }
 }
 
-.sidebar-icon {
+.inbox-icon {
   background-image: url('@{pathPrefix}/mail/img/sidebar-icons.png');
   width: 18px;
   height: 18px;
   overflow: hidden;
-  opacity: 0.55;
+  opacity: 0.35;
   margin-left: -7px;
 
+  .image-box & {
+    float: right;
+    margin-left: 6px;
+  }
+
+  .carousel-inner & {
+    float: right;
+    margin-left: 6px;
+  }
+
   &:hover {
-    opacity: 0.9;
+    opacity: 0.55;
   }
 
   &.favoriteOn {
-    background-position: 38px -3px;
+    background-position: 38px -2px;
+    opacity: 1;
   }
 
   &.favorite {
@@ -267,10 +280,37 @@ body {
 
   &.likeOn {
     background-position: 38px -20px;
+    opacity: 1;
   }
 
   &.like {
     background-position: 57px -20px;
+  }
+
+  .dark-blocks & {
+    &.favorite {
+    background-position: 75px -2px;
+    }
+    &.like {
+    background-position: 75px -20px;
+    }
+  }
+  .dark-blocks .image-box & {
+    &.favorite {
+      background-position: 57px -2px;
+    }
+    &.like {
+    background-position: 57px -20px;
+    }
+  }
+
+  .dark-blocks .carousel-inner & {
+    &.favorite {
+      background-position: 57px -2px;
+    }
+    &.like {
+    background-position: 57px -20px;
+    }
   }
 }
 
@@ -279,13 +319,14 @@ body {
   width: 16px;
   height: 16px;
   overflow: hidden;
-  opacity: 0.55;
+  opacity: 0.35;
+  margin-top: -1px;
   &:hover {
-    opacity: 0.9;
+    opacity: 0.55;
   }
   .dark-blocks & {
   background-position: -65px -191px !important;
-  opacity: 0.55 !important;
+  opacity: 0.35 !important;
   }
   
   .dark-blocks .modal & {
@@ -294,10 +335,15 @@ body {
 
   .rollover-actions & {
   background-position: -65px -86px !important;
-  opacity: 0.55 !important;
   }
   .dark-blocks &:hover {
-    opacity: 0.9 !important;
+    opacity: 0.55 !important;
+  }
+
+  .carousel-inner & {
+    margin-left: 6px;
+    float: right;
+    margin-top: 1px;
   }
 }
 
@@ -315,7 +361,13 @@ body {
 }
 
 
+.mm-favorite {
+  width: 40px;
+}
 
+.mm-like {
+  width: 40px;
+}
 
 
 
@@ -478,7 +530,7 @@ background-size: 18px 18px !important;
 }
 
 th.mm-download {
-  width: 75px;
+  width: 130px;
 }
 
 .inbox-table td.mm-download {
@@ -925,11 +977,12 @@ font-size: 13px;
   color: #000;
   font-size: 18px;
   opacity: 0.2;
+  margin-top: -2px;
   .hide-image-x:hover & {
     opacity: 0.4;
   }
   .mm-hide:hover & {
-    opacity: 0.9;
+    opacity: 0.55;
   }
 
   .dark-blocks .mm-hide & {
@@ -969,7 +1022,7 @@ cursor: pointer;
 }
 
 .mm-image {
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   max-width: 250px;
   text-align: center;
   cursor: pointer;
@@ -995,9 +1048,10 @@ cursor: pointer;
 .image-filename {
   display: inline-block;
   overflow: hidden;
-  max-width: 170px;
+  max-width: 150px;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding-top: 3px;
 }
 
 
@@ -1136,13 +1190,17 @@ cursor: pointer;
 
 }
 
+.open-message {
+  padding-top: 2px;
+}
+
 .rollover-icon-mail {
   display: inline-block;
   width: 16px;
   height: 16px;
   background:url("../img/rollover-mail.png") no-repeat;
 
-  opacity: .4;
+  opacity: .35;
 
 }
 
@@ -1159,7 +1217,7 @@ cursor: pointer;
   }
 
 .rollover-icon-mail:hover {
-  opacity: .5;
+  opacity: .55;
   }
 
 
@@ -1181,6 +1239,12 @@ cursor: pointer;
 
 .rollover-actions {
   float: right;
+  width: 72px;
+
+  & a {
+    float: right;
+    margin-left: 4px;
+  }
 }
 
 
@@ -1415,7 +1479,7 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 
 
 
-.mm-download, {
+.mm-download {
     .tooltip {
       position: absolute;
       z-index: 1030;
@@ -2020,9 +2084,11 @@ body::-webkit-scrollbar-corner {
 .mail-counts-container {
   display: inline-block;
   padding-bottom: 8px;
-  margin-top: -10px;
+  margin-top: -20px;
+  vertical-align: middle;
   .compact & {
     padding-bottom: 0px;
+    margin-top: -14px;
   }
 }
 
@@ -2169,7 +2235,7 @@ a.get-more-link {
   font-size: 13px;
   line-height: 15px;
   margin-top: 0px;
-  padding: 15px 20px 15px 20px;
+  padding: 13px 20px 15px 20px;
   background-color: #fff;
   display: block;
   border-top: 1px solid #e0e0e0;
@@ -2770,4 +2836,58 @@ color: #FFF;
     text-decoration: none;
   }
 
+}
+
+/* ----------------- FAVORITES INBOX --------------------- */
+
+.section-header {
+  margin-top: 14px;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 8px;
+
+  .dark-blocks & {
+    border-bottom: 1px solid #3B3A3D;
+  }
+}
+
+.section-name {
+  display: inline-block;
+  font-size: 15px;
+  color: #222;
+  margin-right: 14px;
+  opacity: 0.55;
+
+  .dark-blocks & {
+    color: #fff;
+  }
+
+  &.active {
+    opacity: 1;
+  }
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+}
+
+.section-arrow {
+  background-image: url('@{pathPrefix}/mail/img/arrow_down.png');
+  background-repeat: no-repeat;
+  background-position: 3px 3px;
+  height: 12px;
+  width: 13px;
+  margin: 0 4px -1px 2px;
+  display: inline-block;
+  opacity: 0;
+  &.active {
+    opacity: 1;
+  }
+  .dark-blocks & {
+    background-image: url('@{pathPrefix}/mail/img/arrow_down_white.png');
+  }
+}
+
+.section-toggle {
+  display: inline-block;
 }

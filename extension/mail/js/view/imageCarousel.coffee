@@ -15,8 +15,10 @@ template = """
             <div class="image-subject">{{subject}}</div>
 
             <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">
-              <div class="list-icon" style="float:right; display:inline-blocks;">
-                <div class="list-icon" style="background-image: url('#{downloadUrl}');"></div>
+              <div style="float:right; display:inline-block; width: 72px;">
+                <div class="list-icon" style="background-image: url('#{downloadUrl}'); float:right;"></div>
+                <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+                <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
               </div>
             </a>
 
