@@ -21,8 +21,8 @@ imageTemplate = """
 
         <div class="rollover-actions">
           <div  href="#" class="list-icon open-message" style="background-image: url('#{downloadUrl}');"></div>
-          <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-          <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+          <div class="mm-image-favorite inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+          <div class="mm-image-like inbox-icon like{{#if isLiked}}On{{/if}}"></div>
         </div>
       </div>
     </div>
@@ -73,6 +73,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     'click .image-filename a': 'openImage'
     'click .open-message': 'openMessage'
     'click .hide-image-x' : 'markDeleting'
+    'click .mm-image-favorite': 'toggleFavoriteEvent'
+    'click .mm-image-like': 'toggleLikeEvent'
 
   postInitialize: =>
     @on 'showTab', @isotopeUntilImagesLoaded
@@ -335,3 +337,41 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       data: data
       success: @waitAndPoll
       error: @waitAndPoll
+
+  toggleFavoriteEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
+    model = @collection.get(cid)
+    @toggleFavorite(model)
+
+  toggleFavorite: (model) =>
+    oldIsFavorite = model.get('isFavorite')
+    newIsFavorite = true
+    if oldIsFavorite
+      newIsFavorite = false
+    model.set 'isFavorite', newIsFavorite
+    model.putIsFavorite newIsFavorite, (response, status) =>
+      if status == 'success'
+        @renderTemplate()
+        @runIsotope()
+      else
+        console.log 'putIsFavorite failed'
+
+  toggleLikeEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
+    model = @collection.get(cid)
+    @toggleLike(model)
+
+  toggleLike: (model) =>
+    if not model.get('isLiked')
+      MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
+        if shouldProceed
+          model.set 'isLiked', true
+          @renderTemplate()
+          model.putIsLiked true, (response, status) =>
+            if status != 200
+              @renderTemplate()
+              @runIsotope()
+            else if @isSearch()
+              MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'

@@ -2,7 +2,7 @@ template = """
   <div class="modal hide fade modal-wide" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Alright!  It's your first "like" with Mikey!</h3>
+      <h3>Alright!  It's your first 'like' with Mikey!</h3>
     </div>
     <div class="modal-body">
       <p>When you click Mikey's like buttons, the people in that conversation see that you liked that attachment, link, or image.</p>
