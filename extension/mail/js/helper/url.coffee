@@ -5,7 +5,7 @@ class Url
   inboxHashRegex: /^(?:$|#inbox(?!\/))/
   searchHashRegex: /^#(?:search|apps)(?!.+\/)/
   appsSearchHashRegex: /^#apps/
-  threadHashRegex: /#((?!search|\s).)+\/[a-f0-9]{16}/
+  threadHashRegex: /#(search\/){0,1}((?!search|\s|\/).)+\/[a-f0-9]{16}/
 
   searchQueryHashRegex: /#(?:search|apps)\/([^\/]+)(?!.+\/)$/
 

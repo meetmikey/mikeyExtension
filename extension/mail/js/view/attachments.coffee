@@ -238,11 +238,11 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   openMessage: (event) =>
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
-    msgHex = model.get 'gmMsgHex'
+    threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
     if @options.fetch
-      hash = "#inbox/#{msgHex}"
+      hash = "#inbox/#{threadHex}"
     else
-      hash = "#search/#{@searchQuery}/#{msgHex}"
+      hash = "#search/#{@searchQuery}/#{threadHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
