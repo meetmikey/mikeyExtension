@@ -17,9 +17,9 @@ template = """
 
     <div class="rollover-footer">
       {{#if searchQuery}}
-        <a class="rollover-message-link" href="#search/{{searchQuery}}/{{msgHex}}">View email thread</a>
+        <a class="rollover-message-link" href="#search/{{searchQuery}}/{{threadHex}}">View email thread</a>
       {{else}}
-        <a class="rollover-message-link" href="#inbox/{{msgHex}}">View email thread</a>
+        <a class="rollover-message-link" href="#inbox/{{threadHex}}">View email thread</a>
       {{/if}}
 
       <div class="rollover-actions">

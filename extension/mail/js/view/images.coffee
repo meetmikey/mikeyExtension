@@ -20,7 +20,7 @@ imageTemplate = """
         </div>
 
         <div class="rollover-actions">
-          <div  href="#inbox/{{msgHex}}" class="list-icon open-message" style="background-image: url('#{downloadUrl}');"></div>
+          <div  href="#" class="list-icon open-message" style="background-image: url('#{downloadUrl}');"></div>
           <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
           <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
         </div>

@@ -7,7 +7,7 @@ class LinkDecorator
     object.title = model.get('title') ? model.get('url')
     object.summary = model.get('summary')
     object.image = model.get('image')
-    object.msgHex = model.get('gmMsgHex')
+    object.threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
     object.url = model.get 'url'
     object.displayUrl = @formatUrl model
     object.from = @formatSender model

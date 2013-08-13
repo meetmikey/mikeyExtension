@@ -26,7 +26,7 @@ class AttachmentDecorator
     object.type = model.get 'docType'
     object.iconUrl = @iconUrls[model.get 'docType']
     object.image = model.get 'image'
-    object.msgHex = model.get('gmMsgHex')
+    object.threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
     object.subject = model.get('mailCleanSubject')
     object.deleting = model.get('deleting')
     object.isFavorite = model.get 'isFavorite'

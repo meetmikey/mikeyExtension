@@ -14,7 +14,7 @@ template = """
             <div class="image-sender">{{from}}</div>
             <div class="image-subject">{{subject}}</div>
 
-            <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">
+            <a href="#" class="open-message" data-dismiss="modal">
               <div style="float:right; display:inline-block; width: 72px;">
                 <div class="list-icon" style="background-image: url('#{downloadUrl}'); float:right;"></div>
                 <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
@@ -205,11 +205,11 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     model = @localCollection.get cid
     if ! model
       return
-    msgHex = model.get 'gmMsgHex'
+    threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
     if @parentView.searchQuery
-      hash = "#search/#{@parentView.searchQuery}/#{msgHex}"
+      hash = "#search/#{@parentView.searchQuery}/#{threadHex}"
     else
-      hash = "#inbox/#{msgHex}"
+      hash = "#inbox/#{threadHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
