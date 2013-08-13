@@ -15,6 +15,15 @@ class MeetMikey.Model.User extends Backbone.Model
     else
       @fetchOnboard()
 
+  checkLikeInfoMessaging: =>
+    if MeetMikey.Helper.LocalStore.get @likeInfoMessagingKey()
+      return true
+    else
+      return false
+
+  setLikeInfoMessaging: =>
+    MeetMikey.Helper.LocalStore.set @likeInfoMessagingKey(), true
+
   checkInvalidToken: =>
     @.get('invalidToken') == true
 
@@ -75,6 +84,8 @@ class MeetMikey.Model.User extends Backbone.Model
           @waitAndFetchOnboard()
 
   onboardKey: => "meetmikey-#{@get('email')}-onboarded"
+
+  likeInfoMessagingKey: => "meetmikey-#{@get('email')}-likeInfoMessaging"
 
   deleteUser: (callback) =>
     return callback null unless @get ('asymHash')

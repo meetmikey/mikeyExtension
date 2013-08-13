@@ -1,6 +1,7 @@
 class MeetMikey.View.BaseModal extends MeetMikey.View.Base
 
   postRender: =>
+    console.log 'modal postRender'
     @show()
 
   show: =>

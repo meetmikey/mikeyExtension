@@ -162,13 +162,15 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   toggleLike: (model) =>
     if not model.get('isLiked')
-      model.set 'isLiked', true
-      @renderTemplate()
-      model.putIsLiked true, (response, status) =>
-        if status != 200
+      MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
+        if shouldProceed
+          model.set 'isLiked', true
           @renderTemplate()
-        else if @isSearch()
-          MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
+          model.putIsLiked true, (response, status) =>
+            if status != 200
+              @renderTemplate()
+            else if @isSearch()
+              MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
 
   moveModelToOtherSubview: (model) =>
     if @isSearch()
@@ -258,11 +260,11 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   openMessage: (event) =>
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
-    msgHex = model.get 'gmMsgHex'
+    threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
     if @options.fetch
-      hash = "#inbox/#{msgHex}"
+      hash = "#inbox/#{threadHex}"
     else
-      hash = "#search/#{@searchQuery}/#{msgHex}"
+      hash = "#search/#{@searchQuery}/#{threadHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false

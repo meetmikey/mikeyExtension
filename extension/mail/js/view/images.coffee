@@ -179,11 +179,11 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     model = @collection.get cid
     if ! model
       return
-    msgHex = model.get 'gmMsgHex'
+    threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
     if @searchQuery
-      hash = "#search/#{@searchQuery}/#{msgHex}"
+      hash = "#search/#{@searchQuery}/#{threadHex}"
     else
-      hash = "#inbox/#{msgHex}"
+      hash = "#inbox/#{threadHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
       currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
