@@ -116,8 +116,8 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   setFetch: (isFetch) =>
     @options.fetch = isFetch
     if isFetch
-      MeetMikey.globalEvents.off 'searchFavoriteAction', @initialFetch
-      MeetMikey.globalEvents.on 'searchFavoriteAction', @initialFetch
+      MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
+      MeetMikey.globalEvents.on 'favoriteOrLikeAction', @initialFetch
 
   teardown: =>
     @clearTimeout()
@@ -155,10 +155,12 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
       model.putIsLiked true, (response, status) =>
         if status != 200
           @renderTemplate()
+        else if @isSearch()
+          MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
 
   moveModelToOtherSubview: (model) =>
     if @isSearch()
-      MeetMikey.globalEvents.trigger 'searchFavoriteAction'
+      MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
     else
       @collection.remove model
       if model.get('isFavorite')

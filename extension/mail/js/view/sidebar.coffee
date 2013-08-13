@@ -130,6 +130,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
     model.set 'isFavorite', newIsFavorite
     model.putIsFavorite newIsFavorite, (response, status) =>
       if status == 'success'
+        MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
         @renderTemplate()
       else
         console.log 'putIsFavorite failed'
@@ -161,6 +162,8 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       model.putIsLiked true, (response, status) =>
         if status != 200
           @renderTemplate()
+        else
+          MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
 
   pageNavigationEvent: =>
     if @inThread()
