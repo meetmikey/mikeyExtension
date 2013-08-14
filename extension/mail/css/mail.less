@@ -376,6 +376,17 @@ body {
   width: 40px;
 }
 
+.sidebar-buttons {
+  & .mm-favorite {
+    width: 18px;
+    display: inline-block;
+  }
+  & .mm-like {
+    width: 18px;
+    display: inline-block;
+  }
+}
+
 
 
 
@@ -2897,4 +2908,226 @@ color: #FFF;
 
 .section-toggle {
   display: inline-block;
+}
+
+/* -------------- SIDEBAR ------------------------ */
+
+.sidebar-item-title {
+  font-size: 16px;
+  line-height: 20px;
+  width: 202px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 4px;
+  .sidebar-image & {
+    font-size: 13px;
+    margin-top: 4px;
+    width: 158px;
+    display: inline-block;
+    float: left;
+    .many& {
+      float: left;
+      margin-top: 0px;
+      margin-left: 8px;
+      width: 140px;
+      line-height: 18px;
+    }
+
+  }
+}
+
+.sidebar-url {
+  color: #595959;
+  width: 202px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 15px;
+  & a {
+   color: #595959;
+  }
+
+}
+
+
+.sidebar-summary {
+  font-size: 11px;
+  line-height: 14px;
+  height: 44px;
+  overflow: hidden;
+  margin-top: 4px;
+
+  .sidebar-image & {
+    .many& {
+      diplay:none;
+    }
+  }
+}
+
+.resource {
+  width: 202px;
+}
+
+
+.sidebar-icon {
+  background-image: url('@{pathPrefix}/mail/img/sidebar-icons.png');
+  width: 18px;
+  height: 18px;
+  overflow: hidden;
+  opacity: 0.55;
+  display: inline-block;
+  margin-right: 2px;
+  cursor: pointer;
+
+  .image-box & {
+    float: right;
+    margin-left: 6px;
+  }
+
+  .carousel-inner & {
+    float: right;
+    margin-left: 6px;
+  }
+
+  &:hover {
+    opacity: 0.95;
+  }
+
+  &.favoriteOn {
+    background-position: 38px -2px;
+    opacity: 1;
+  }
+
+  &.favorite {
+    background-position: 57px -2px;
+  }
+
+  &.likeOn {
+    background-position: 38px -20px;
+    opacity: 1;
+  }
+
+  &.like {
+    background-position: 57px -20px;
+  }
+
+  .dark-blocks & {
+    &.favorite {
+    background-position: 75px -2px;
+    }
+    &.like {
+    background-position: 75px -20px;
+    }
+  }
+  .dark-blocks .image-box & {
+    &.favorite {
+      background-position: 57px -2px;
+    }
+    &.like {
+    background-position: 57px -20px;
+    }
+  }
+
+  .dark-blocks .carousel-inner & {
+    &.favorite {
+      background-position: 57px -2px;
+    }
+    &.like {
+    background-position: 57px -20px;
+    }
+  }
+
+}
+
+.sidebar-buttons {
+  margin-top: 0px;
+  float: right;
+  height: 18px;
+  display: inline-block;
+    .sidebar-image.many & {
+    float: right;
+  }
+}
+
+.sidebar-buttons-wrapper {
+  height: 20px;
+  width: 88px;
+  margin-bottom: 4px;
+  display: inline-block;
+  margin-top: 3px;
+
+  .sidebar-image & {
+    margin-top: 0px;
+    width: 40px;
+    margin-bottom: 4px;
+    display: inline-block;
+    margin-top: 3px;
+    .many& {
+      width:150px;
+      margin-top: 0px;
+    }
+
+
+  }
+  .sidebar-link & {
+    height: 20px;
+    width: 202px;
+    margin-bottom: 4px;
+    display: inline-block;
+    margin-top: 3px;
+  }
+
+}
+
+.image {
+
+  .side-bar-link & {
+  height: 44px;
+  width: 44px;
+  float: left;
+  margin-top: 4px;
+  margin-left: 0px;
+  margin-right: 8px; 
+  }
+  .sidebar-image & {
+    width: 202px;
+    .many& {
+      width: 50px;
+      height: 50px;
+      float: left;
+
+    }
+
+
+  }
+}
+
+.resource {
+  padding: 12px 9px 8px 9px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+
+.sidebar-file-icon {
+  float: left;
+  display: inline-block;
+  margin-right: 8px;
+  margin-top: 2px;
+
+
+}
+
+.sidebar-size {
+    color: #444;
+  width: 84px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 20px;
+  display: inline-block;
+  float: left;
+  margin-top: 2px;
 }

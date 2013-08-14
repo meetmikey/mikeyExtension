@@ -1,78 +1,75 @@
 attachmentTemplate = """
-  <br/>
-  <br/>
 
-  <div class="resource" data-cid="{{cid}}" data-type="attachment">
-    I'm an attachment!
-    <br/>
 
-    <img src="{{iconUrl}}">
-    <a href="{{url}}" target="_blank">{{filename}}</a>
-    <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-      <div class="mm-download-tooltip" data-toggle="tooltip" title="Toggle favorite">
-        <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-      </div>
-    </div>
+  <div class="resource sidebar-file" data-cid="{{cid}}" data-type="attachment">
 
-    <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-      <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
-        <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+    
+    <div class="sidebar-item-title  many"><a href="{{url}}" target="_blank">{{filename}}</a></div>
+    <img class="sidebar-file-icon" src="{{iconUrl}}">
+    <div class="sidebar-size">{{size}}</div>
+    
+    <div class="sidebar-buttons-wrapper">
+      <div class="sidebar-buttons">
+        <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
+          <div class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+        </div>
+        <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
+          <div class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <br/>
 """
 
 imageTemplate = """
-  <br/>
-  <br/>
 
-  <div class="resource" data-cid="{{cid}}" data-type="image">
-    I'm an image!
-    <br/>
 
-    <img src="{{image}}" style="max-width:200px;max-height:150px;">
-    {{filename}}
-    <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-      <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
-        <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+  <div class="resource sidebar-image  many" data-cid="{{cid}}" data-type="image">
+
+
+    <a href="{{url}}" target="_blank"><img class="image" src="{{image}}"></a>
+    <a href="{{url}}" target="_blank"><div class="sidebar-item-title">{{filename}}</div></a>
+    <div class="sidebar-buttons-wrapper">
+      <div class="sidebar-buttons">
+        <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
+          <div class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+        </div>
+        <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
+          <div class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
+        </div>
       </div>
     </div>
+   
   </div>
 
-  <br/>
+
 """
 
 linkTemplate = """
-  <br/>
-  <br/>
-  <div class="resource" data-cid="{{cid}}" data-type="link">
-    I'm a link!
-    <br/>
-
-    {{title}}
-    <a href="{{url}}">{{url}}</a>
-    {{summary}}
-    <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-      <div class="mm-download-tooltip" data-toggle="tooltip" title="Toggle favorite">
-        <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-      </div>
-    </div>
-
-    <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-      <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
-        <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+  <div class="resource sidebar-link  many" data-cid="{{cid}}" data-type="link">
+   
+    <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{title}}</a></div>
+    <div class="sidebar-url"><a href="{{url}}">{{url}}</a></div>
+    <img class="sidebar-link image" src="{{image}}">
+    <div class="sidebar-summary">{{summary}}</div>
+      
+    <div class="sidebar-buttons-wrapper">
+      <div class="sidebar-buttons">
+        <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
+          <div class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+        </div>
+        <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
+          <div class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <br/>
+
 """
 
 template = """
-  <div>Mikey sidebar!</div>
-  <img src="{{mikeyImage}}" style="max-width:20px;max-height:20px;"/>
   {{#each models}}
     {{#if isAttachment}}
       """ + attachmentTemplate + """
