@@ -1,8 +1,6 @@
 downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 
 imageTemplate = """
-    
-
   <div class="image-box" data-cid="{{cid}}">
     <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" data-animation="false" title="Hide this image"><div class="close-x">x</div></div>
     {{#if deleting}}
