@@ -12,9 +12,9 @@ resourceButtonsTemplate = """
 """
 
 attachmentTemplate = """
-  <div class="resource sidebar-file" data-cid="{{cid}}" data-type="attachment">
+  <div class="resource sidebar-file {{#if hasMoreThanThreeResources}}many{{/if}}" data-cid="{{cid}}" data-type="attachment">
 
-    <div class="sidebar-item-title  many"><a href="{{url}}" target="_blank">{{filename}}</a></div>
+    <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{filename}}</a></div>
     <img class="sidebar-file-icon" src="{{iconUrl}}">
     <div class="sidebar-size">{{size}}</div>
 
@@ -24,7 +24,7 @@ attachmentTemplate = """
 """
 
 imageTemplate = """
-  <div class="resource sidebar-image  many" data-cid="{{cid}}" data-type="image">
+  <div class="resource sidebar-image {{#if hasMoreThanThreeResources}}many{{/if}}" data-cid="{{cid}}" data-type="image">
 
     <a href="{{url}}" target="_blank"><img class="image" src="{{image}}"></a>
     <a href="{{url}}" target="_blank"><div class="sidebar-item-title">{{filename}}</div></a>
@@ -35,12 +35,14 @@ imageTemplate = """
 """
 
 linkTemplate = """
-  <div class="resource sidebar-link  many" data-cid="{{cid}}" data-type="link">
+  <div class="resource sidebar-link {{#if hasMoreThanThreeResources}}many{{else}}{{#unless summary}}many{{/unless}}{{/if}}" data-cid="{{cid}}" data-type="link">
    
     <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{title}}</a></div>
     <div class="sidebar-url"><a href="{{url}}">{{url}}</a></div>
     <img class="sidebar-link image" src="{{image}}">
-    <div class="sidebar-summary">{{summary}}</div>
+    {{#if summary}}
+      <div class="sidebar-summary">{{summary}}</div>
+    {{/if}}
 
     """ + resourceButtonsTemplate + """
     
@@ -189,8 +191,6 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
         complete: (response, status) =>
           @handleGetResourceResponse response, status
           callback()
-    else
-      console.log 'no thread hex'
 
   handleGetResourceResponse: (response, status) =>
     if ( status == 'success' and response.responseText )
@@ -234,7 +234,12 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       0
 
   getTemplateData: =>
+    models = @getModels()
+    if models and models.length > 3
+      _.each models, (model) =>
+        model.hasMoreThanThreeResources = true
+
     object = {}
     object.mikeyImage = chrome.extension.getURL MeetMikey.Constants.imgPath + '/mikeyIcon120x120.png'
-    object.models = @getModels()
+    object.models = models
     object
