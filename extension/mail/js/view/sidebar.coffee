@@ -109,6 +109,8 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       @$el.show()
     else
       @$el.hide()
+    @$el.parent().off 'DOMSubtreeModified'
+    @$el.parent().one 'DOMSubtreeModified', @pageNavigationEvent
 
   renderTemplateAndDelegateEvents: () =>
     @renderTemplate()
