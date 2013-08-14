@@ -354,15 +354,29 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     if oldIsFavorite
       newIsFavorite = false
     model.set 'isFavorite', newIsFavorite
+    @updateModelFavoriteDisplay model
     model.putIsFavorite newIsFavorite, (response, status) =>
-      if status == 'success'
-        elementId = '#mm-image-favorite-' + model.cid
-        @$(elementId).removeClass 'favorite'
-        @$(elementId).removeClass 'favoriteOn'
-        if newIsFavorite
-          @$(elementId).addClass 'favoriteOn'
-        else
-          @$(elementId).addClass 'favorite'
+      if status != 'success'
+        model.set 'isFavorite', oldIsFavorite
+        @updateModelFavoriteDisplay model
+
+  updateModelFavoriteDisplay: (model) =>
+    elementId = '#mm-image-favorite-' + model.cid
+    @$(elementId).removeClass 'favorite'
+    @$(elementId).removeClass 'favoriteOn'
+    if model.get 'isFavorite'
+      @$(elementId).addClass 'favoriteOn'
+    else
+      @$(elementId).addClass 'favorite'
+
+  updateModelLikeDisplay: (model) =>
+    elementId = '#mm-image-like-' + model.cid
+    @$(elementId).removeClass 'like'
+    @$(elementId).removeClass 'likeOn'
+    if model.get 'isLiked'
+      @$(elementId).addClass 'likeOn'
+    else
+      @$(elementId).addClass 'like'
 
   toggleLikeEvent: (event) =>
     event.preventDefault()
@@ -375,14 +389,10 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
         if shouldProceed
           model.set 'isLiked', true
-          elementId = '#mm-image-like-' + model.cid
-          @$(elementId).removeClass 'like'
-          @$(elementId).removeClass 'likeOn'
-          @$(elementId).addClass 'likeOn'
+          @updateModelLikeDisplay model
           model.putIsLiked true, (response, status) =>
             if status != 'success'
               model.set 'isLiked', false
-              @$(elementId).removeClass 'likeOn'
-              @$(elementId).addClass 'like'
+              @updateModelLikeDisplay model
             else if @isSearch()
                 MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'

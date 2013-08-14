@@ -11,10 +11,10 @@ attachmentTemplate = """
     <div class="sidebar-buttons-wrapper">
       <div class="sidebar-buttons">
         <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-          <div class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+          <div id="mm-sidebar-favorite-{{cid}}" class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
         </div>
         <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-          <div class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
+          <div id="mm-sidebar-like-{{cid}}" class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
         </div>
       </div>
     </div>
@@ -33,10 +33,10 @@ imageTemplate = """
     <div class="sidebar-buttons-wrapper">
       <div class="sidebar-buttons">
         <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-          <div class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+          <div id="mm-sidebar-favorite-{{cid}}" class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
         </div>
         <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-          <div class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
+          <div id="mm-sidebar-like-{{cid}}" class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
         </div>
       </div>
     </div>
@@ -57,10 +57,10 @@ linkTemplate = """
     <div class="sidebar-buttons-wrapper">
       <div class="sidebar-buttons">
         <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-          <div class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+          <div id="mm-sidebar-favorite-{{cid}}" class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
         </div>
         <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-          <div class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
+          <div id="mm-sidebar-like-{{cid}}" class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
         </div>
       </div>
     </div>
@@ -120,19 +120,20 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
 
   toggleFavorite: (model) =>
     if not model
-      console.log 'toggleFavorite, no model!'
+      #console.log 'toggleFavorite, no model!'
       return
     oldIsFavorite = model.get('isFavorite')
     newIsFavorite = true
     if oldIsFavorite
       newIsFavorite = false
     model.set 'isFavorite', newIsFavorite
+    @updateModelFavoriteDisplay model
     model.putIsFavorite newIsFavorite, (response, status) =>
-      if status == 'success'
-        MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
-        @renderTemplate()
+      if status != 'success'
+        model.set 'isFavorite', oldIsFavorite
+        @updateModelFavoriteDisplay model
       else
-        console.log 'putIsFavorite failed'
+        MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
 
   getModelFromEvent: (event) =>
     cid = $(event.currentTarget).closest('.resource').attr('data-cid')
@@ -145,6 +146,24 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
     else
       model = @linksCollection.get(cid)
     model
+
+  updateModelFavoriteDisplay: (model) =>
+    elementId = '#mm-sidebar-favorite-' + model.cid
+    @$(elementId).removeClass 'favorite'
+    @$(elementId).removeClass 'favoriteOn'
+    if model.get 'isFavorite'
+      @$(elementId).addClass 'favoriteOn'
+    else
+      @$(elementId).addClass 'favorite'
+
+  updateModelLikeDisplay: (model) =>
+    elementId = '#mm-sidebar-like-' + model.cid
+    @$(elementId).removeClass 'like'
+    @$(elementId).removeClass 'likeOn'
+    if model.get 'isLiked'
+      @$(elementId).addClass 'likeOn'
+    else
+      @$(elementId).addClass 'like'
 
   toggleLikeEvent: (event) =>
     event.preventDefault()
@@ -159,10 +178,11 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
         if shouldProceed
           model.set 'isLiked', true
-          @renderTemplate()
+          @updateModelLikeDisplay model
           model.putIsLiked true, (response, status) =>
             if status != 'success'
-              @renderTemplate()
+              model.set 'isLiked', false
+              @updateModelLikeDisplay model
             else
               MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
 

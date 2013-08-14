@@ -1,8 +1,6 @@
 spriteUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 openIconUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 driveIcon = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/google-drive-icon.png")
-favoriteOnURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOn.jpg")
-favoriteOffURL = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/favoriteOff.png")
 
 template = """
   {{#unless models}}
@@ -51,7 +49,7 @@ template = """
 
             <td class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
-                <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+                <div id="mm-link-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
               </div>
             </td>
          
@@ -160,15 +158,25 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     model = @collection.get(cid)
     @toggleLike(model)
 
+  updateModelLikeDisplay: (model) =>
+    elementId = '#mm-link-like-' + model.cid
+    @$(elementId).removeClass 'like'
+    @$(elementId).removeClass 'likeOn'
+    if model.get 'isLiked'
+      @$(elementId).addClass 'likeOn'
+    else
+      @$(elementId).addClass 'like'
+
   toggleLike: (model) =>
     if not model.get('isLiked')
       MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
         if shouldProceed
           model.set 'isLiked', true
-          @renderTemplate()
+          @updateModelLikeDisplay model
           model.putIsLiked true, (response, status) =>
             if status != 'success'
-              @renderTemplate()
+              model.set 'isLiked', false
+              @updateModelLikeDisplay model
             else if @isSearch()
               MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
 

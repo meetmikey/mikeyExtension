@@ -52,7 +52,7 @@ template = """
 
           <td class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
             <div class="mm-download-tooltip" data-toggle="tooltip" title="Like item">
-              <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+              <div id="mm-attachment-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
             </div>
           </td>
 
@@ -148,15 +148,25 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     model = @collection.get(cid)
     @toggleLike(model)
 
+  updateModelLikeDisplay: (model) =>
+    elementId = '#mm-attachment-like-' + model.cid
+    @$(elementId).removeClass 'like'
+    @$(elementId).removeClass 'likeOn'
+    if model.get 'isLiked'
+      @$(elementId).addClass 'likeOn'
+    else
+      @$(elementId).addClass 'like'
+
   toggleLike: (model) =>
     if not model.get('isLiked')
       MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
         if shouldProceed
           model.set 'isLiked', true
-          @renderTemplate()
+          @updateModelLikeDisplay model
           model.putIsLiked true, (response, status) =>
             if status != 'success'
-              @renderTemplate()
+              model.set 'isLiked', false
+              @updateModelLikeDisplay model
             else if @isSearch()
               MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
 
