@@ -32,6 +32,7 @@ class Setup
     @checkGmailTabs()
     @checkMultipleInbox =>
       @waitForInbox()
+    @injectSidebarView()
 
   trackLoginEvent: (user) =>
     if !@hasLoggedIn
@@ -169,6 +170,23 @@ class Setup
     $('body').append $('<div id="mm-feedback-modal"></div>')
     view = new MeetMikey.View.FeedbackModal el: '#mm-feedback-modal'
     view.render()
+
+  injectSidebarView: =>
+    @sidebarView = new MeetMikey.View.Sidebar el: '#mm-sidebar-container', owned: true
+    $(window).on 'hashchange', () =>
+      @sidebarView.pageNavigationEvent()
+    setTimeout () =>
+      @sidebarView.pageNavigationEvent()
+    , 500
+    setTimeout () =>
+      @sidebarView.pageNavigationEvent()
+    , 1000
+    setTimeout () =>
+      @sidebarView.pageNavigationEvent()
+    , 2000
+    setTimeout () =>
+      @sidebarView.pageNavigationEvent()
+    , 5000
 
   injectMainView: =>
     @mainView = new MeetMikey.View.Main el: 'body', owned: false, multipleInbox: @multipleInbox

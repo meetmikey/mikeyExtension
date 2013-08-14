@@ -18,10 +18,6 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       viewClass: MeetMikey.View.LeftNavBar
       selector: MeetMikey.Constants.Selectors.leftNavBar
       args: {render: false, owned: false}
-    'sidebar':
-      viewClass: MeetMikey.View.Sidebar
-      selector: '#mm-sidebar-container'
-      args: {}
 
   preInitialize: =>
     @setSelectors()
@@ -119,7 +115,6 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
   pageNavigated: =>
     @managePushdownDisplay()
     @manageMultipleInboxDisplay()
-    @subView('sidebar').pageNavigationEvent()
 
   inInbox: MeetMikey.Helper.Url.inInbox
 

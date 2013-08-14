@@ -86,8 +86,9 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       @$el.show()
     else
       @$el.hide()
-    @$el.parent().off 'DOMSubtreeModified'
-    @$el.parent().one 'DOMSubtreeModified', @pageNavigationEvent
+    element = $(@containerSelector).parent()
+    element.off 'DOMSubtreeModified'
+    element.one 'DOMSubtreeModified', @pageNavigationEvent
 
   renderTemplateAndDelegateEvents: () =>
     @renderTemplate()
@@ -168,6 +169,8 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
 
   pageNavigationEvent: =>
     if @inThread()
+      if $('#mm-sidebar-container') and $('#mm-sidebar-container').is(':visible')
+        return
       @injectContainer () =>
         @getResources () =>
           @render()
