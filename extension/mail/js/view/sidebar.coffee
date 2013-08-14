@@ -162,7 +162,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
           model.set 'isLiked', true
           @renderTemplate()
           model.putIsLiked true, (response, status) =>
-            if status != 200
+            if status != 'success'
               @renderTemplate()
             else
               MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'

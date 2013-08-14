@@ -61,8 +61,7 @@ class MeetMikey.View.LikeInfoMessagingModal extends MeetMikey.View.BaseModal
     recipients = []
     if @resourceModel
       if @resourceModel.get('recipients') and @resourceModel.get('recipients').length
-        recipients = @resourceModel.get('recipients')
-
+        recipients = _.clone @resourceModel.get('recipients')
       sender = @resourceModel.get 'sender'
       if sender
         recipients.push sender

@@ -19,8 +19,8 @@ imageTemplate = """
 
         <div class="rollover-actions">
           <div  href="#" class="list-icon open-message" style="background-image: url('#{downloadUrl}');"></div>
-          <div class="mm-image-favorite inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-          <div class="mm-image-like inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+          <div id="mm-image-favorite-{{cid}}" class="mm-image-favorite inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+          <div id="mm-image-like-{{cid}}" class="mm-image-like inbox-icon like{{#if isLiked}}On{{/if}}"></div>
         </div>
       </div>
     </div>
@@ -91,6 +91,12 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   setFetch: (isFetch) =>
     @options.fetch = isFetch
+    if isFetch
+      MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
+      MeetMikey.globalEvents.on 'favoriteOrLikeAction', @initialFetch
+
+  isSearch: =>
+    not @options.fetch
 
   isModalVisible: =>
     @$('.mmCarouselModal').hasClass 'fade-in'
@@ -350,10 +356,13 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     model.set 'isFavorite', newIsFavorite
     model.putIsFavorite newIsFavorite, (response, status) =>
       if status == 'success'
-        @renderTemplate()
-        @runIsotope()
-      else
-        console.log 'putIsFavorite failed'
+        elementId = '#mm-image-favorite-' + model.cid
+        @$(elementId).removeClass 'favorite'
+        @$(elementId).removeClass 'favoriteOn'
+        if newIsFavorite
+          @$(elementId).addClass 'favoriteOn'
+        else
+          @$(elementId).addClass 'favorite'
 
   toggleLikeEvent: (event) =>
     event.preventDefault()
@@ -366,10 +375,14 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
         if shouldProceed
           model.set 'isLiked', true
-          @renderTemplate()
+          elementId = '#mm-image-like-' + model.cid
+          @$(elementId).removeClass 'like'
+          @$(elementId).removeClass 'likeOn'
+          @$(elementId).addClass 'likeOn'
           model.putIsLiked true, (response, status) =>
-            if status != 200
-              @renderTemplate()
-              @runIsotope()
+            if status != 'success'
+              model.set 'isLiked', false
+              @$(elementId).removeClass 'likeOn'
+              @$(elementId).addClass 'like'
             else if @isSearch()
-              MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
+                MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
