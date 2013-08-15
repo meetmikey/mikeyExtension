@@ -86,7 +86,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       @$el.show()
     else
       @$el.hide()
-    element = $(@containerSelector).parent()
+    element = $(@containerSelector).parent().parent()
     element.off 'DOMSubtreeModified'
     element.one 'DOMSubtreeModified', @pageNavigationEvent
 
