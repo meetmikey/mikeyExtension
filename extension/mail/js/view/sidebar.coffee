@@ -37,6 +37,7 @@ imageTemplate = """
 linkTemplate = """
   <div class="resource sidebar-link {{#if hasMoreThanThreeResources}}many{{else}}{{#unless summary}}many{{/unless}}{{/if}}" data-cid="{{cid}}" data-type="link">
    
+    <img class="sidebar-favicon" src="{{faviconURL}}"></img>
     <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{title}}</a></div>
     <div class="sidebar-url"><a href="{{url}}">{{url}}</a></div>
     <img class="sidebar-link image" src="{{image}}">

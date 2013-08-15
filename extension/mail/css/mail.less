@@ -2915,7 +2915,7 @@ color: #FFF;
 .sidebar-item-title {
   font-size: 16px;
   line-height: 20px;
-  width: 202px;
+  width: 178px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -2948,6 +2948,13 @@ color: #FFF;
   & a {
    color: #595959;
   }
+    .sidebar-link & {
+    .many& {
+      width: 150px;
+      float: left;
+      height: 20px;
+    }
+  }
 
 }
 
@@ -2958,6 +2965,9 @@ color: #FFF;
   height: 44px;
   overflow: hidden;
   margin-top: 4px;
+  display: inline-block;
+  float: left;
+  width: 150px;
 
   .sidebar-link & {
     .many& {
@@ -2968,6 +2978,15 @@ color: #FFF;
 
 .resource {
   width: 202px;
+  &.sidebar-link.many {
+    min-height: 44px;
+  }
+
+  a {color: #15c}
+  a:hover {color: #15c}
+  a:active {color: #15c}
+  a:visited {color: #15c}
+
 }
 
 
@@ -3077,30 +3096,40 @@ color: #FFF;
     margin-bottom: 4px;
     display: inline-block;
     margin-top: 3px;
+
+    .many& {
+      width: 40px;
+      float: right;
+      margin-top: 0px;
+    }
   }
 
 }
 
 .image {
 
-  .side-bar-link & {
-  height: 44px;
-  width: 44px;
+  border: 1px solid #f9f9f9;
+
+  .sidebar-link & {
+  height: 42px;
+  width: 42px;
   float: left;
   margin-top: 4px;
   margin-left: 0px;
   margin-right: 8px; 
+  display: inline-block;
       .many& {
       display: none;
 
     }
   }
   .sidebar-image & {
-    width: 202px;
+    width: 200px;
     .many& {
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       float: left;
+
 
     }
 
@@ -3109,7 +3138,7 @@ color: #FFF;
 }
 
 .resource {
-  padding: 12px 9px 8px 9px;
+  padding: 8px 9px 8px 9px;
   border-bottom: 1px solid #e5e5e5;
 }
 
@@ -3134,4 +3163,11 @@ color: #FFF;
   display: inline-block;
   float: left;
   margin-top: 2px;
+}
+
+.sidebar-favicon {
+  float: left;
+  display: inline-block;
+  margin-right: 8px;
+  margin-top: 1px;
 }
