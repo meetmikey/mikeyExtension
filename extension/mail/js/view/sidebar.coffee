@@ -14,8 +14,8 @@ resourceButtonsTemplate = """
 attachmentTemplate = """
   <div class="resource sidebar-file {{#if hasMoreThanThreeResources}}many{{/if}}" data-cid="{{cid}}" data-type="attachment">
 
-    <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{filename}}</a></div>
     <img class="sidebar-file-icon" src="{{iconUrl}}">
+    <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{filename}}</a></div>
     <div class="sidebar-size">{{size}}</div>
 
     """ + resourceButtonsTemplate + """
@@ -26,8 +26,8 @@ attachmentTemplate = """
 imageTemplate = """
   <div class="resource sidebar-image {{#if hasMoreThanThreeResources}}many{{/if}}" data-cid="{{cid}}" data-type="image">
 
-    <a href="{{url}}" target="_blank"><img class="image" src="{{image}}"></a>
-    <a href="{{url}}" target="_blank"><div class="sidebar-item-title">{{filename}}</div></a>
+    <a href="{{url}}" target="_blank"><div class="image"><img class="sidebar-inner" src="{{image}}"></div></a>
+    <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{filename}}</a></div>
 
     """ + resourceButtonsTemplate + """
     
@@ -40,17 +40,23 @@ linkTemplate = """
     <img class="sidebar-favicon" src="{{faviconURL}}"></img>
     <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{title}}</a></div>
     <div class="sidebar-url"><a href="{{url}}">{{url}}</a></div>
-    <img class="sidebar-link image" src="{{image}}">
-    {{#if summary}}
-      <div class="sidebar-summary">{{summary}}</div>
-    {{/if}}
-
     """ + resourceButtonsTemplate + """
+    
+    <div class="sidebar-link-preview">
+      <div class="sidebar-link image"><img class="sidebar-inner" src="{{image}}"></div>
+      {{#if summary}}
+        <div class="sidebar-summary">{{summary}}</div>
+      {{/if}}
+    </div>
+
+    
     
   </div>
 """
 
 template = """
+<div class="mm-sidebar-header">From this thread:</div>
+<div class="mm-sidebar">
   {{#each models}}
     {{#if isAttachment}}
       """ + attachmentTemplate + """
@@ -62,6 +68,7 @@ template = """
       {{/if}}
     {{/if}}
   {{/each}}
+</div>
 """
 
 class MeetMikey.View.Sidebar extends MeetMikey.View.Base
