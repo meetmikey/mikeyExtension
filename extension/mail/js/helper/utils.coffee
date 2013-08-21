@@ -79,11 +79,22 @@ MeetMikey.Helper.getResourceProperties = (resource) ->
 
     props
 
-MeetMikey.Helper.trackResourceEvent = (event, model, opts) ->
+MeetMikey.Helper.trackResourceEvent = (eventType, model, opts) ->
   resourceProps = MeetMikey.Helper.getResourceProperties(model)
   props = _.extend resourceProps, opts
 
   MeetMikey.Helper.Analytics.trackEvent event, props
+
+MeetMikey.Helper.trackResourceInteractionEvent = (event, resourceType, isOnInput, sourceInput) ->
+  source = 'thread'
+  if sourceInput
+    source = sourceInput
+  isOn = false
+  if isOnInput
+    isOn = true
+  if event == 'resourceLike'
+    isOn = true
+  MeetMikey.Helper.Analytics.trackEvent event, {resourceType: resourceType, isOn: isOn, source: source}
 
 MeetMikey.Helper.getHash = (input) ->
   hash = 0

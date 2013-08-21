@@ -355,6 +355,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       newIsFavorite = false
     model.set 'isFavorite', newIsFavorite
     @updateModelFavoriteDisplay model
+    MeetMikey.Helper.trackResourceInteractionEvent 'resourceFavorite', 'image', newIsFavorite, 'tab'
     model.putIsFavorite newIsFavorite, (response, status) =>
       if status != 'success'
         model.set 'isFavorite', oldIsFavorite
@@ -390,6 +391,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         if shouldProceed
           model.set 'isLiked', true
           @updateModelLikeDisplay model
+          MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', 'image', true, 'tab'
           model.putIsLiked true, (response, status) =>
             if status != 'success'
               model.set 'isLiked', false

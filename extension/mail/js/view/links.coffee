@@ -145,6 +145,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     if oldIsFavorite
       newIsFavorite = false
     model.set 'isFavorite', newIsFavorite
+    MeetMikey.Helper.trackResourceInteractionEvent 'resourceFavorite', 'link', newIsFavorite, 'tab'
     model.putIsFavorite newIsFavorite, (response, status) =>
       if status == 'success'
         @moveModelToOtherSubview model
@@ -173,6 +174,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
         if shouldProceed
           model.set 'isLiked', true
           @updateModelLikeDisplay model
+          MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', 'link', true, 'tab'
           model.putIsLiked true, (response, status) =>
             if status != 'success'
               model.set 'isLiked', false

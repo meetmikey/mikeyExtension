@@ -115,12 +115,23 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       newIsFavorite = false
     model.set 'isFavorite', newIsFavorite
     @updateModelFavoriteDisplay model
+    MeetMikey.Helper.trackResourceInteractionEvent 'resourceFavorite', @getResourceType(model), newIsFavorite, 'thread'
     model.putIsFavorite newIsFavorite, (response, status) =>
       if status != 'success'
         model.set 'isFavorite', oldIsFavorite
         @updateModelFavoriteDisplay model
       else
         MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
+
+  getResourceType: (model) =>
+    type = 'image'
+    if model
+      decoratedModel = model.decorate()
+      if decoratedModel.isAttachment
+        type = 'attachment'
+      else if decoratedModel.isLink
+        type = 'link'
+    type
 
   getModelFromEvent: (event) =>
     cid = $(event.currentTarget).closest('.resource').attr('data-cid')
@@ -166,6 +177,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
         if shouldProceed
           model.set 'isLiked', true
           @updateModelLikeDisplay model
+          MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', @getResourceType(model), true, 'thread'
           model.putIsLiked true, (response, status) =>
             if status != 'success'
               model.set 'isLiked', false
