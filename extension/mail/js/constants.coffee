@@ -1,5 +1,5 @@
 _.extend MeetMikey.Constants,
-  env: 'ngrok'
+  env: 'local'
   imgPath: 'mail/img'
   mixpanelId: '4025d8a58a875ce9a39db05bcf86fd71'
   #mixpanelIdTest: '0d4029b8e19dddbfacd1da118b47c01b'
