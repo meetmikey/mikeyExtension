@@ -50,20 +50,22 @@ linkTemplate = """
 """
 
 template = """
-<div class="mm-sidebar-header">From this thread:</div>
-<div class="mm-sidebar">
-  {{#each models}}
-    {{#if isAttachment}}
-      """ + attachmentTemplate + """
-    {{else}}
-      {{#if isImage}}
-        """ + imageTemplate + """
+{{#if threadHasAnyResources}}
+  <div class="mm-sidebar-header">From this thread:</div>
+  <div class="mm-sidebar">
+    {{#each models}}
+      {{#if isAttachment}}
+        """ + attachmentTemplate + """
       {{else}}
-        """ + linkTemplate + """
+        {{#if isImage}}
+          """ + imageTemplate + """
+        {{else}}
+          """ + linkTemplate + """
+        {{/if}}
       {{/if}}
-    {{/if}}
-  {{/each}}
-</div>
+    {{/each}}
+  </div>
+{{/if}}
 """
 
 class MeetMikey.View.Sidebar extends MeetMikey.View.Base
@@ -242,13 +244,18 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
 
   getTemplateData: =>
     models = @getModels()
+    threadHasAnyResources = false
+    if models and models.length > 0
+      threadHasAnyResources = true
     if models and models.length > 3
       _.each models, (model) =>
         model.hasMoreThanThreeResources = true
 
+
     object = {}
     object.mikeyImage = chrome.extension.getURL MeetMikey.Constants.imgPath + '/mikeyIcon120x120.png'
     object.models = models
+    object.threadHasAnyResources = threadHasAnyResources
     object
 
   openResource: (event) =>
