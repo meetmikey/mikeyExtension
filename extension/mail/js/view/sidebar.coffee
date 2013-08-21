@@ -115,7 +115,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       newIsFavorite = false
     model.set 'isFavorite', newIsFavorite
     @updateModelFavoriteDisplay model
-    MeetMikey.Helper.trackResourceInteractionEvent 'resourceFavorite', @getResourceType(model), newIsFavorite, 'thread'
+    MeetMikey.Helper.trackResourceInteractionEvent 'resourceFavorite', @getResourceType(model), newIsFavorite, 'sidebar'
     model.putIsFavorite newIsFavorite, (response, status) =>
       if status != 'success'
         model.set 'isFavorite', oldIsFavorite
@@ -177,7 +177,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
         if shouldProceed
           model.set 'isLiked', true
           @updateModelLikeDisplay model
-          MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', @getResourceType(model), true, 'thread'
+          MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', @getResourceType(model), true, 'sidebar'
           model.putIsLiked true, (response, status) =>
             if status != 'success'
               model.set 'isLiked', false
@@ -274,7 +274,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
     model = @getModelFromEvent event
     decoratedModel = model.decorate()
     MeetMikey.Helper.trackResourceEvent 'openResource', model,
-      currentTab: 'thread'
+      currentTab: 'sidebar'
     if decoratedModel.isImage
       @openImageCarousel model
     else

@@ -86,7 +86,7 @@ MeetMikey.Helper.trackResourceEvent = (eventType, model, opts) ->
   MeetMikey.Helper.Analytics.trackEvent event, props
 
 MeetMikey.Helper.trackResourceInteractionEvent = (event, resourceType, isOnInput, sourceInput) ->
-  source = 'thread'
+  source = 'sidebar'
   if sourceInput
     source = sourceInput
   isOn = false
