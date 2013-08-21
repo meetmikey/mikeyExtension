@@ -15,22 +15,20 @@ attachmentTemplate = """
   <div class="resource sidebar-file {{#if hasMoreThanThreeResources}}many{{/if}}" data-cid="{{cid}}" data-type="attachment">
 
     <img class="sidebar-file-icon" src="{{iconUrl}}">
-    <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{filename}}</a></div>
+    <div class="sidebar-item-title"><a href="#" class="mm-open-resource">{{filename}}</a></div>
     <div class="sidebar-size">{{size}}</div>
-
     """ + resourceButtonsTemplate + """
-    
+
   </div>
 """
 
 imageTemplate = """
   <div class="resource sidebar-image {{#if hasMoreThanThreeResources}}many{{/if}}" data-cid="{{cid}}" data-type="image">
 
-    <a href="{{url}}" target="_blank"><div class="image"><img class="sidebar-inner" src="{{image}}"></div></a>
-    <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{filename}}</a></div>
-
+    <a href="#" class="mm-open-resource"><div class="image"><img class="sidebar-inner" src="{{image}}"></div></a>
+    <div class="sidebar-item-title"><a href="#" class="mm-open-resource">{{filename}}</a></div>
     """ + resourceButtonsTemplate + """
-    
+
   </div>
 """
 
@@ -38,10 +36,9 @@ linkTemplate = """
   <div class="resource sidebar-link {{#if hasMoreThanThreeResources}}many{{else}}{{#unless summary}}many{{/unless}}{{/if}}" data-cid="{{cid}}" data-type="link">
    
     <img class="sidebar-favicon" src="{{faviconURL}}"></img>
-    <div class="sidebar-item-title"><a href="{{url}}" target="_blank">{{title}}</a></div>
-    <div class="sidebar-url"><a href="{{url}}">{{url}}</a></div>
+    <div class="sidebar-item-title"><a href="#" class="mm-open-resource">{{title}}</a></div>
+    <div class="sidebar-url"><a href="#" class="mm-open-resource">{{url}}</a></div>
     """ + resourceButtonsTemplate + """
-    
     <div class="sidebar-link-preview">
       <div class="sidebar-link image"><img class="sidebar-inner" src="{{image}}"></div>
       {{#if summary}}
@@ -49,26 +46,26 @@ linkTemplate = """
       {{/if}}
     </div>
 
-    
-    
   </div>
 """
 
 template = """
-<div class="mm-sidebar-header">From this thread:</div>
-<div class="mm-sidebar">
-  {{#each models}}
-    {{#if isAttachment}}
-      """ + attachmentTemplate + """
-    {{else}}
-      {{#if isImage}}
-        """ + imageTemplate + """
+{{#if threadHasAnyResources}}
+  <div class="mm-sidebar-header">From this thread:</div>
+  <div class="mm-sidebar">
+    {{#each models}}
+      {{#if isAttachment}}
+        """ + attachmentTemplate + """
       {{else}}
-        """ + linkTemplate + """
+        {{#if isImage}}
+          """ + imageTemplate + """
+        {{else}}
+          """ + linkTemplate + """
+        {{/if}}
       {{/if}}
-    {{/if}}
-  {{/each}}
-</div>
+    {{/each}}
+  </div>
+{{/if}}
 """
 
 class MeetMikey.View.Sidebar extends MeetMikey.View.Base
@@ -78,6 +75,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   events:
     'click .mm-favorite': 'toggleFavoriteEvent'
     'click .mm-like': 'toggleLikeEvent'
+    'click .mm-open-resource': 'openResource'
 
   postInitialize: =>
     @attachmentsCollection = new MeetMikey.Collection.Attachments()
@@ -246,11 +244,41 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
 
   getTemplateData: =>
     models = @getModels()
+    threadHasAnyResources = false
+    if models and models.length > 0
+      threadHasAnyResources = true
     if models and models.length > 3
       _.each models, (model) =>
         model.hasMoreThanThreeResources = true
 
+
     object = {}
     object.mikeyImage = chrome.extension.getURL MeetMikey.Constants.imgPath + '/mikeyIcon120x120.png'
     object.models = models
+    object.threadHasAnyResources = threadHasAnyResources
     object
+
+  openResource: (event) =>
+    model = @getModelFromEvent event
+    decoratedModel = model.decorate()
+    MeetMikey.Helper.trackResourceEvent 'openResource', model,
+      currentTab: 'thread'
+    if decoratedModel.isImage
+      @openImageCarousel model
+    else
+      window.open decoratedModel.url
+
+  getImages: =>
+    models = @getModels()
+    images = _.filter models, (model) =>
+      if model.isImage
+        return true
+      return false
+    images
+
+  openImageCarousel: (model) =>
+    $('body').append $('<div id="mm-sidebar-image-carousel"></div>')
+    @sidebarImageCarouselModal = new MeetMikey.View.SidebarImageCarouselModal el: '#mm-sidebar-image-carousel'
+    @sidebarImageCarouselModal.setImages @getImages()
+    @sidebarImageCarouselModal.render()
+    @sidebarImageCarouselModal.activateModel model
