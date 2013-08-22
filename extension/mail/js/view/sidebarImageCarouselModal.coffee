@@ -1,5 +1,5 @@
 template = """
-  <div class="modal hide fade">
+  <div class="mmCarouselModal mm-sidebar-carousel modal hide fade">
     <div class="mmCarousel carousel slide">
 
     <!-- Carousel items -->
@@ -7,8 +7,21 @@ template = """
       
       {{#each models}}
         <div class="item" data-cid="{{cid}}">
+          <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide"><div class="close-x">x</div></div>
           <div class="modal-image-box">
             <img class="max-image" src="{{url}}"/>
+          </div>
+          <div class="image-info">
+            <div class="image-sender">{{from}}</div>
+            <div class="image-subject">{{subject}}</div>
+
+            <a href="#" class="open-message" data-dismiss="modal">
+              <div style="float:right; display:inline-block; width: 72px;">
+                <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+                <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+              </div>
+            </a>
+
           </div>
         </div>
       {{/each}}

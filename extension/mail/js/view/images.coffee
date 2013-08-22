@@ -2,7 +2,7 @@ downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png
 
 imageTemplate = """
   <div class="image-box" data-cid="{{cid}}">
-    <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" data-animation="false" title="Hide this image"><div class="close-x">x</div></div>
+    <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" data-animation="false" title="Hide"><div class="close-x">x</div></div>
     {{#if deleting}}
 
       <div class="undo-delete">This image will no longer appear.<br>Click to undo.</div>
@@ -12,18 +12,27 @@ imageTemplate = """
       <div class="image-subbox">
     {{/if}}
       <img class="mm-image" src="{{image}}"/>
-      <div class="image-text">
+     
         <div class="image-filename">
           <a href="#">{{filename}}&nbsp;</a>
         </div>
 
         <div class="rollover-actions">
-          <div  href="#" class="list-icon open-message" style="background-image: url('#{downloadUrl}');"></div>
-          <div id="mm-image-favorite-{{cid}}" class="mm-image-favorite inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-          <div id="mm-image-like-{{cid}}" class="mm-image-like inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+          <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
+            <div id="mm-image-like-{{cid}}" class="mm-image-like inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+          </div>
+          <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
+            <div id="mm-image-favorite-{{cid}}" class="mm-image-favorite inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+          </div>
+          <div class="mm-download-tooltip" data-toggle="tooltip" title="Open email">
+            <div class="list-icon open-message" style="background-image: url('#{downloadUrl}');"></div>
+          </div>
         </div>
+
+        
       </div>
-    </div>
+      
+    
   </div>
 """
 
