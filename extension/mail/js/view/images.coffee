@@ -231,22 +231,27 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @safeFindEither(MeetMikey.Constants.Selectors.scrollContainer, MeetMikey.Constants.Selectors.scrollContainer2)
 
   bindScrollHandler: =>
+    console.log 'bindScrollHandler'
     @unbindScrollHandler()
     @$scrollElem().on 'scroll', @scrollHandler
 
   unbindScrollHandler: =>
+    console.log 'unbindScrollHandler'
     @$scrollElem().off 'scroll', @scrollHandler
 
   scrollHandler: (event)=>
+    console.log 'scrollHandler'
     @fetchMoreImages() if @nearBottom()
 
   nearBottom: =>
     $scrollElem = @$scrollElem()
     elHeight = @$el.parent().parent().height()
     nearBottom = $scrollElem.scrollTop() + $scrollElem.height() > ( elHeight - @infiniteScrollThreshold )
+    console.log 'nearBottom(), nearBottom: ', nearBottom
     nearBottom
 
   fetchMoreImages: (forceNumToFetch) =>
+    console.log 'fetchMoreImages'
     if not @endOfImages and not @fetching
       if @options.fetch
         numToFetch = @defaultNumImagesToFetch
