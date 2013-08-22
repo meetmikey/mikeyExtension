@@ -251,13 +251,14 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     nearBottom
 
   fetchMoreImages: (forceNumToFetch) =>
-    console.log 'fetchMoreImages'
+    console.log 'fetchMoreImages, endOfImages: ', @endOfImages, ', fetching: ', fetching
     if not @endOfImages and not @fetching
       if @options.fetch
         numToFetch = @defaultNumImagesToFetch
         if forceNumToFetch
           numToFetch = forceNumToFetch
         @fetching = true
+        console.log 'fetching...'
         MeetMikey.Helper.callAPI
           url: 'image'
           data:
@@ -289,6 +290,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         @logger.info 'search failed'
 
   addImagesFromFetchResponse: (res) =>
+    console.log 'addImagesFromFetchResponse...'
     if _.isEmpty(res)
       @endOfImages = true
       console.log 'END OF IMAGES!, res: ', res
