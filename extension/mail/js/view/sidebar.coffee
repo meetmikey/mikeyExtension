@@ -2,10 +2,14 @@ resourceButtonsTemplate = """
   <div class="sidebar-buttons-wrapper">
     <div class="sidebar-buttons">
       <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-        <div id="mm-sidebar-favorite-{{cid}}" class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+        <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
+          <div id="mm-sidebar-favorite-{{cid}}" class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+        </div>
       </div>
       <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-        <div id="mm-sidebar-like-{{cid}}" class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
+        <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
+          <div id="mm-sidebar-like-{{cid}}" class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -95,6 +99,8 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
     element = $(@containerSelector).parent().parent()
     element.off 'DOMSubtreeModified'
     element.one 'DOMSubtreeModified', @pageNavigationEvent
+    $('.mm-download-tooltip').tooltip placement: 'bottom'
+
 
   renderTemplateAndDelegateEvents: () =>
     @renderTemplate()

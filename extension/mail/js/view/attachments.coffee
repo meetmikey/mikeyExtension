@@ -33,7 +33,7 @@ template = """
     {{#each models}}
         <tr class="files" data-cid="{{cid}}">
           <td class="mm-hide" {{#if deleting}}style="opacity:0.1"{{/if}}>
-            <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide this file">
+            <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide">
               <a href="#"><div class="close-x">x</div></a>
             </div>
           </td>
@@ -45,13 +45,13 @@ template = """
           </td>
 
           <td class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-            <div class="mm-download-tooltip" data-toggle="tooltip" title="Star or unstar item">
+            <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
               <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
             </div>
           </td>
 
           <td class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-            <div class="mm-download-tooltip" data-toggle="tooltip" title="Like item">
+            <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
               <div id="mm-attachment-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
             </div>
           </td>
