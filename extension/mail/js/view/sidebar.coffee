@@ -18,8 +18,8 @@ resourceButtonsTemplate = """
 attachmentTemplate = """
   <div class="resource sidebar-file {{#if hasMoreThanThreeResources}}many{{/if}}" data-cid="{{cid}}" data-type="attachment">
 
-    <img class="sidebar-file-icon" src="{{iconUrl}}">
-    <div class="sidebar-item-title"><a href="#" class="mm-open-resource">{{filename}}</a></div>
+    <img class="sidebar-file-icon mm-open-resource" src="{{iconUrl}}">
+    <div class="sidebar-item-title mm-open-resource">{{filename}}</div>
     <div class="sidebar-size">{{size}}</div>
     """ + resourceButtonsTemplate + """
 
@@ -29,8 +29,8 @@ attachmentTemplate = """
 imageTemplate = """
   <div class="resource sidebar-image {{#if hasMoreThanThreeResources}}many{{/if}}" data-cid="{{cid}}" data-type="image">
 
-    <a href="#" class="mm-open-resource"><div class="image"><img class="sidebar-inner" src="{{image}}"></div></a>
-    <div class="sidebar-item-title"><a href="#" class="mm-open-resource">{{filename}}</a></div>
+    <div class="image mm-open-resource"><img class="sidebar-inner" src="{{image}}"></div>
+    <div class="sidebar-item-title mm-open-resource">{{filename}}</div>
     """ + resourceButtonsTemplate + """
 
   </div>
