@@ -82,8 +82,7 @@ MeetMikey.Helper.getResourceProperties = (resource) ->
 MeetMikey.Helper.trackResourceEvent = (eventType, model, opts) ->
   resourceProps = MeetMikey.Helper.getResourceProperties(model)
   props = _.extend resourceProps, opts
-
-  MeetMikey.Helper.Analytics.trackEvent event, props
+  MeetMikey.Helper.Analytics.trackEvent eventType, props
 
 MeetMikey.Helper.trackResourceInteractionEvent = (event, resourceType, isOnInput, sourceInput) ->
   source = 'sidebar'
