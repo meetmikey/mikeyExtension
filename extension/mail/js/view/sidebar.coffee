@@ -44,7 +44,9 @@ linkTemplate = """
     <div class="sidebar-url"><a href="#" class="mm-open-resource">{{url}}</a></div>
     """ + resourceButtonsTemplate + """
     <div class="sidebar-link-preview">
-      <div class="sidebar-link image"><img class="sidebar-inner" src="{{image}}"></div>
+      {{#if image}}
+        <div class="sidebar-link image"><img class="sidebar-inner" src="{{image}}"></div>
+      {{/if}}
       {{#if summary}}
         <div class="sidebar-summary">{{summary}}</div>
       {{/if}}
@@ -98,9 +100,11 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       @$el.hide()
     element = $(@containerSelector).parent().parent()
     element.off 'DOMSubtreeModified'
-    element.one 'DOMSubtreeModified', @pageNavigationEvent
+    element.on 'DOMSubtreeModified', @domSubtreeModified
     $('.mm-download-tooltip').tooltip placement: 'bottom'
 
+  domSubtreeModified: (event) =>
+    @pageNavigationEvent()
 
   renderTemplateAndDelegateEvents: () =>
     @renderTemplate()
@@ -202,9 +206,10 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   injectContainer: (callback) =>
     $('#mm-sidebar-container').remove()
     element = '<div id="mm-sidebar-container" class="mm-container"></div>'
-    MeetMikey.Helper.DOMManager.injectInto @containerSelector, element, () =>
-      @$el = $('#mm-sidebar-container')
-      callback()
+    MeetMikey.Helper.DOMManager.waitAndFind @containerSelector, () =>
+      MeetMikey.Helper.DOMManager.injectInto @containerSelector, element, () =>
+        @$el = $('#mm-sidebar-container')
+        callback()
 
   getResources: (callback) =>
     email = MeetMikey.globalUser?.get('email')
