@@ -43,7 +43,7 @@ linkTemplate = """
     <div class="sidebar-item-title"><a href="#" class="mm-open-resource">{{title}}</a></div>
     <div class="sidebar-url"><a href="#" class="mm-open-resource">{{url}}</a></div>
     """ + resourceButtonsTemplate + """
-    <div class="sidebar-link-preview">
+    <div class="sidebar-link-preview mm-open-resource">
       {{#if image}}
         <div class="sidebar-link image"><img class="sidebar-inner" src="{{image}}"></div>
       {{/if}}
