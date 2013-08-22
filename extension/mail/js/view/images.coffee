@@ -231,42 +231,38 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
       @safeFindEither(MeetMikey.Constants.Selectors.scrollContainer, MeetMikey.Constants.Selectors.scrollContainer2)
 
   bindScrollHandler: =>
-    console.log 'bindScrollHandler'
     @unbindScrollHandler()
     @$scrollElem().on 'scroll', @scrollHandler
 
   unbindScrollHandler: =>
-    console.log 'unbindScrollHandler'
     @$scrollElem().off 'scroll', @scrollHandler
 
   scrollHandler: (event)=>
-    console.log 'scrollHandler'
     @fetchMoreImages() if @nearBottom()
 
   nearBottom: =>
     $scrollElem = @$scrollElem()
     elHeight = @$el.parent().parent().height()
     nearBottom = $scrollElem.scrollTop() + $scrollElem.height() > ( elHeight - @infiniteScrollThreshold )
-    console.log 'nearBottom(), nearBottom: ', nearBottom
     nearBottom
 
   fetchMoreImages: (forceNumToFetch) =>
-    console.log 'fetchMoreImages, endOfImages: ', @endOfImages, ', fetching: ', fetching
     if not @endOfImages and not @fetching
       if @options.fetch
         numToFetch = @defaultNumImagesToFetch
         if forceNumToFetch
           numToFetch = forceNumToFetch
         @fetching = true
-        console.log 'fetching...'
+        apiData = {
+          userEmail: MeetMikey.globalUser.get('email')
+          asymHash: MeetMikey.globalUser.get('asymHash')
+          extensionVersion: MeetMikey.Constants.extensionVersion
+          before: @earliestSentDate
+          limit: numToFetch
+        }
         MeetMikey.Helper.callAPI
           url: 'image'
-          data:
-            userEmail: MeetMikey.globalUser.get('email')
-            asymHash: MeetMikey.globalUser.get('asymHash')
-            extensionVersion: MeetMikey.Constants.extensionVersion
-            before: @collection.last()?.get('sentDate')
-            limit: numToFetch
+          data: apiData
           success: (res) =>
             @addImagesFromFetchResponse res
           #error: (err) =>
@@ -290,12 +286,12 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         @logger.info 'search failed'
 
   addImagesFromFetchResponse: (res) =>
-    console.log 'addImagesFromFetchResponse...'
     if _.isEmpty(res)
       @endOfImages = true
-      console.log 'END OF IMAGES!, res: ', res
     newModels = []
     _.each res, (imageData) =>
+      if imageData.sentDate and ( ! @earliestSentDate or ( imageData.sentDate < @earliestSentDate ) )
+        @earliestSentDate = imageData.sentDate
       newModel = new MeetMikey.Model.Image imageData
       isDupe = false
       @collection.each (oldModel) =>
