@@ -48,7 +48,7 @@ linkTemplate = """
         <div class="sidebar-link image"><img class="sidebar-inner" src="{{image}}"></div>
       {{/if}}
       {{#if summary}}
-        <div class="sidebar-summary">{{summary}}</div>
+        <div class="sidebar-summary {{#unless image}}no-image{{/unless}}">{{summary}}</div>
       {{/if}}
     </div>
 
