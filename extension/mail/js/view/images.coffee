@@ -289,7 +289,9 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         @logger.info 'search failed'
 
   addImagesFromFetchResponse: (res) =>
-    @endOfImages = true if _.isEmpty(res)
+    if _.isEmpty(res)
+      @endOfImages = true
+      console.log 'END OF IMAGES!, res: ', res
     newModels = []
     _.each res, (imageData) =>
       newModel = new MeetMikey.Model.Image imageData
