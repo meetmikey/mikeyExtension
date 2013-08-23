@@ -4,12 +4,13 @@ template = """
   {{#unless models}}
     <div class="mm-placeholder"></div>
   {{else}}
-  <div class="section-header">
+  <div class="section-header active">
     <div class="section-toggle">
       <div class="section-arrow active"></div>
       <div class="section-name active">
         {{sectionHeader}}
       </div>
+      <div class="section-border active"></div>
     </div>
     <div class='sectionContents'>
       <div class="pagination-container"></div>
@@ -17,7 +18,7 @@ template = """
         <thead class="labels">
           <!-- <th class="mm-toggle-box"></th> -->
 
-          <th class="mm-download" colspan="5" data-mm-field="filename">File<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+          <th class="mm-download" colspan="5" data-mm-field="filename">file<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
           <th class="mm-file">&nbsp;</th>
           <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
           <th class="mm-to" data-mm-field="recipients">To<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
@@ -130,10 +131,12 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
       @sectionIsOpen = false
       @$('.sectionContents').hide()
       @$('.section-arrow').removeClass 'active'
+      @$('.section-header').removeClass 'active'
     else
       @sectionIsOpen = true
       @$('.sectionContents').show()
       @$('.section-arrow').addClass 'active'
+      @$('.section-header').addClass 'active'
 
   toggleFavoriteEvent: (event) =>
     event.preventDefault()
@@ -212,7 +215,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   getTemplateData: =>
 
-    sectionHeader = 'Everything else'
+    sectionHeader = 'Everything'
     if @options.isFavorite
       sectionHeader = 'Starred'
 
