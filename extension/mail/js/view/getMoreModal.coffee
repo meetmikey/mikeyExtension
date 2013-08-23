@@ -78,12 +78,9 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     @creditUserWithReview()
 
   creditUserWithReview: =>
-    email = MeetMikey.globalUser?.get('email')
     MeetMikey.Helper.callAPI
       url: 'creditChromeStoreReview'
       type: 'POST'
-      data:
-        userEmail: email
       complete: () =>
         MeetMikey.globalUser.refreshFromServer()
 

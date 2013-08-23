@@ -42,14 +42,18 @@ MeetMikey.Helper.findSelectors = (selectors..., callback) ->
     else setTimeout find, 200
   find()
 
-MeetMikey.Helper.callAPI = (options) ->
-  options ?= {}
-  options.url = "#{MeetMikey.Helper.getAPIUrl()}/#{options.url}"
-  options.cache = false
+MeetMikey.Helper.getBasicAPIData = ->
   apiData =
     userEmail: MeetMikey.globalUser?.get('email')
     asymHash: MeetMikey.globalUser?.get('asymHash')
     extensionVersion: MeetMikey.Constants.extensionVersion
+  apiData
+
+MeetMikey.Helper.callAPI = (options) ->
+  options ?= {}
+  options.url = "#{MeetMikey.Helper.getAPIUrl()}/#{options.url}"
+  options.cache = false
+  apiData = MeetMikey.Helper.getBasicAPIData()
 
   _.extend apiData, options.data if options.data?
   options.data = apiData

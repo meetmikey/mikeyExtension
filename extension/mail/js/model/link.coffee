@@ -3,42 +3,22 @@ class MeetMikey.Model.Link extends MeetMikey.Model.Base
   decorator: MeetMikey.Decorator.Link
 
   putIsFavorite: (isFavorite, callback) =>
-    apiData =
-      userEmail: MeetMikey.globalUser.get('email')
-      asymHash: MeetMikey.globalUser.get('asymHash')
-      extensionVersion: MeetMikey.Constants.extensionVersion
-      isFavorite: isFavorite
-
-    $.ajax
+    MeetMikey.Helper.callAPI
       type: 'PUT'
-      url: MeetMikey.Helper.getAPIUrl() + '/link/' + @get('_id')
-      data: apiData
+      url: 'link/' + @get('_id')
       complete: callback
+      data:
+        isFavorite: isFavorite
 
   putIsLiked: (isLiked, callback) =>
-    apiData =
-      userEmail: MeetMikey.globalUser.get('email')
-      asymHash: MeetMikey.globalUser.get('asymHash')
-      extensionVersion: MeetMikey.Constants.extensionVersion
-      isLiked: isLiked
-
-    $.ajax
+    MeetMikey.Helper.callAPI
       type: 'PUT'
-      url: MeetMikey.Helper.getAPIUrl() + '/link/' + @get('_id')
-      data: apiData
+      url: 'link/' + @get('_id')
       complete: callback
+      data:
+        isLiked: isLiked
 
   delete: =>
-    apiData =
-      userEmail: MeetMikey.globalUser.get('email')
-      asymHash: MeetMikey.globalUser.get('asymHash')
-      extensionVersion: MeetMikey.Constants.extensionVersion
-
-    $.ajax
+    MeetMikey.Helper.callAPI
       type: 'DELETE'
-      url: MeetMikey.Helper.getAPIUrl() + '/link/' + @get('_id')
-      data: apiData
-      error: (data) ->
-        console.log 'hide error', data
-      #success: (data) ->
-        #console.log 'hide success', data
+      url: 'link/' + @get('_id')

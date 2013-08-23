@@ -93,9 +93,6 @@ class MeetMikey.Model.User extends Backbone.Model
     MeetMikey.Helper.callAPI
       url: 'user'
       type: 'DELETE'
-      data:
-        asymHash: @get('asymHash')
-        userEmail: @get('email')
       success: (res) =>
         callback res
       error: (err) =>

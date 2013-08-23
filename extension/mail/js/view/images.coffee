@@ -257,16 +257,11 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         if forceNumToFetch
           numToFetch = forceNumToFetch
         @fetching = true
-        apiData = {
-          userEmail: MeetMikey.globalUser.get('email')
-          asymHash: MeetMikey.globalUser.get('asymHash')
-          extensionVersion: MeetMikey.Constants.extensionVersion
-          before: @earliestSentDate
-          limit: numToFetch
-        }
         MeetMikey.Helper.callAPI
           url: 'image'
-          data: apiData
+          data:
+            before: @earliestSentDate
+            limit: numToFetch
           success: (res) =>
             @addImagesFromFetchResponse res
           #error: (err) =>

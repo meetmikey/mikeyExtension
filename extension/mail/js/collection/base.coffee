@@ -36,11 +36,10 @@ class MeetMikey.Collection.Base extends Backbone.Collection
     opts.cache = false
     return super opts unless MeetMikey.globalUser?
 
+    MeetMikey.Helper.callAPI
+
     opts ?= {}
-    apiData =
-      userEmail: MeetMikey.globalUser.get('email')
-      asymHash: MeetMikey.globalUser.get('asymHash')
-      extensionVersion: MeetMikey.Constants.extensionVersion
+    apiData = MeetMikey.Helper.getBasicAPIData()
     if opts.data?
       _.extend opts.data, apiData
     else

@@ -161,17 +161,14 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
         callback()
 
   getResources: (callback) =>
-    email = MeetMikey.globalUser?.get('email')
     threadHex = MeetMikey.Helper.Url.getThreadHex()
-    if threadHex
-      MeetMikey.Helper.callAPI
-        url: 'resource/thread/' + threadHex
-        type: 'GET'
-        data:
-          userEmail: email
-        complete: (response, status) =>
-          @handleGetResourceResponse response, status
-          callback()
+    if not threadHex
+      return
+    MeetMikey.Helper.callAPI
+      url: 'resource/thread/' + threadHex
+      complete: (response, status) =>
+        @handleGetResourceResponse response, status
+        callback()
 
   handleGetResourceResponse: (response, status) =>
     if ( status == 'success' and response.responseText )

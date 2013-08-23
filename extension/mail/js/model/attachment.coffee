@@ -11,43 +11,22 @@ class MeetMikey.Model.Attachment extends MeetMikey.Model.Base
     "#{MeetMikey.Helper.getAPIUrl()}/attachmentURL/#{this.id}?userEmail=#{email}&asymHash=#{asymHash}"
 
   putIsFavorite: (isFavorite, callback) =>
-    apiData =
-      userEmail: MeetMikey.globalUser.get('email')
-      asymHash: MeetMikey.globalUser.get('asymHash')
-      extensionVersion: MeetMikey.Constants.extensionVersion
-      isFavorite: isFavorite
-
-    $.ajax
+    MeetMikey.Helper.callAPI
       type: 'PUT'
-      url: MeetMikey.Helper.getAPIUrl() + '/attachment/' + @get('_id')
-      data: apiData
+      url: 'attachment/' + @get('_id')
       complete: callback
+      data:
+        isFavorite: isFavorite
 
   putIsLiked: (isLiked, callback) =>
-    apiData =
-      userEmail: MeetMikey.globalUser.get('email')
-      asymHash: MeetMikey.globalUser.get('asymHash')
-      extensionVersion: MeetMikey.Constants.extensionVersion
-      isLiked: isLiked
-
-    $.ajax
+    MeetMikey.Helper.callAPI
       type: 'PUT'
-      url: MeetMikey.Helper.getAPIUrl() + '/attachment/' + @get('_id')
-      data: apiData
+      url: 'attachment/' + @get('_id')
       complete: callback
+      data:
+        isLiked: isLiked
 
   delete: =>
-
-    apiData =
-      userEmail: MeetMikey.globalUser.get('email')
-      asymHash: MeetMikey.globalUser.get('asymHash')
-      extensionVersion: MeetMikey.Constants.extensionVersion
-
-    $.ajax
+    MeetMikey.Helper.callAPI
       type: 'DELETE'
-      url: MeetMikey.Helper.getAPIUrl() + '/attachment/' + @get('_id')
-      data: apiData
-      error: (data) ->
-        console.log 'hide error', data
-      #success: (data) ->
-        #console.log 'hide success', data
+      url: 'attachment/' + @get('_id')
