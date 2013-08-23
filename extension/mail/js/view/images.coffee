@@ -100,6 +100,13 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   setFetch: (isFetch) =>
     @options.fetch = isFetch
+    if isFetch
+      MeetMikey.globalEvents.off 'favoriteOrLikeAction', @favoriteOrLikeAction
+      MeetMikey.globalEvents.on 'favoriteOrLikeAction', @favoriteOrLikeAction
+
+  favoriteOrLikeAction: =>
+    if not @isVisible()
+      @initialFetch()
 
   isSearch: =>
     not @options.fetch

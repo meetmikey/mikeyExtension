@@ -31,7 +31,7 @@ class FavoriteAndLike
     else
       $(elementId).addClass 'favorite'
 
-  toggleLike: (model, elementId, source) =>
+  toggleLike: (model, elementId, source, callback) =>
     if not model
       return
     if model.get('isLiked')
@@ -46,8 +46,12 @@ class FavoriteAndLike
         if status != 'success'
           model.set 'isLiked', false
           @updateModelLikeDisplay model
+          if callback
+            callback 'fail'
         else
           MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
+          if callback
+            callback 'success'
 
   updateModelLikeDisplay: (model, elementId) =>
     if ( not model ) or ( not elementId )

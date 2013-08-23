@@ -4,31 +4,37 @@ template = """
 
     <!-- Carousel items -->
     <div class="carousel-inner">
+
       {{#each models}}
         <div class="item" data-cid="{{cid}}">
+          
           <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide"><div class="close-x">x</div></div>
           <div class="modal-image-box">
             <img class="max-image" src="{{url}}"/>
           </div>
+
           <div class="image-info">
             <div class="image-sender">{{from}}</div>
             <div class="image-subject">{{subject}}</div>
 
-            <a href="#" class="open-message" data-dismiss="modal">
               <div style="float:right; display:inline-block; width: 72px;">
-                <div class="list-icon" style="background-image: url('#{downloadUrl}'); float:right;"></div>
-                <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-                <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+                <div class="open-message" data-dismiss="modal">
+                  <div class="list-icon" style="background-image: url('#{downloadUrl}'); float:right;"></div>
+                </div>
+                <div class="mm-image-carousel-interaction mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
+                  <div id="mm-image-carousel-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+                </div>
+                <div class="mm-image-carousel-interaction mm-download-tooltip mm-like" data-toggle="tooltip" title="Like">
+                  <div id="mm-image-carousel-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+                </div>
               </div>
             </a>
-
           </div>
-      </div>
 
+        </div>
       {{/each}}
+
     </div>
-
-
 
     <!-- Carousel nav -->
     <div class="carousel-control left" style="cursor:pointer;">&lsaquo;</div>
@@ -48,6 +54,8 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
   events:
     'click .open-message': 'openMessage'
+    'click .mm-favorite': 'toggleFavoriteEvent'
+    'click .mm-like': 'toggleLikeEvent'
     'click .left': 'goLeft'
     'click .right': 'goRight'
 
@@ -70,6 +78,28 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
   teardown: =>
     @unbindCarouselKeys()
+
+  toggleFavoriteEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.item').attr('data-cid')
+    model = @localCollection.get cid
+    elementId = '#mm-image-carousel-favorite-' + model.cid
+    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, elementId, 'imageCarousel', (status) =>
+      if status == 'success'
+        imageTabCId = @fullCollection.get(model.id).cid
+        imageTabElementId = '#mm-image-favorite-' + imageTabCId
+        MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, imageTabElementId
+
+  toggleLikeEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.item').attr('data-cid')
+    model = @localCollection.get cid
+    elementId = '#mm-image-carousel-like-' + model.cid
+    MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'imageCarousel', (status) =>
+      if status == 'success'
+        imageTabCId = @fullCollection.get(model.id).cid
+        imageTabElementId = '#mm-image-like-' + imageTabCId
+        MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay model, imageTabElementId
 
   getTemplateData: =>
     models: _.invoke(@localCollection.models, 'decorate')
