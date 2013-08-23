@@ -139,16 +139,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     event.preventDefault()
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
-    @toggleFavorite(model)
-
-  toggleFavorite: (model) =>
-    oldIsFavorite = model.get('isFavorite')
-    newIsFavorite = true
-    if oldIsFavorite
-      newIsFavorite = false
-    model.set 'isFavorite', newIsFavorite
-    MeetMikey.Helper.trackResourceInteractionEvent 'resourceFavorite', 'attachment', newIsFavorite, 'tab'
-    model.putIsFavorite newIsFavorite, (response, status) =>
+    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, null, 'tab', (status) =>
       if status == 'success'
         @moveModelToOtherSubview model
         @renderTemplate()
@@ -157,40 +148,17 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     event.preventDefault()
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
-    @toggleLike(model)
-
-  updateModelLikeDisplay: (model) =>
     elementId = '#mm-attachment-like-' + model.cid
-    @$(elementId).removeClass 'like'
-    @$(elementId).removeClass 'likeOn'
-    if model.get 'isLiked'
-      @$(elementId).addClass 'likeOn'
-    else
-      @$(elementId).addClass 'like'
-
-  toggleLike: (model) =>
-    if not model.get('isLiked')
-      MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
-        if shouldProceed
-          model.set 'isLiked', true
-          @updateModelLikeDisplay model
-          MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', 'attachment', true, 'tab'
-          model.putIsLiked true, (response, status) =>
-            if status != 'success'
-              model.set 'isLiked', false
-              @updateModelLikeDisplay model
-            else if @isSearch()
-              MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
+    MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'tab'
 
   moveModelToOtherSubview: (model) =>
     if @isSearch()
-      MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
+      return
+    @collection.remove model
+    if model.get('isFavorite')
+      @parentView.subView('attachmentsFavorite').collection.add model
     else
-      @collection.remove model
-      if model.get('isFavorite')
-        @parentView.subView('attachmentsFavorite').collection.add model
-      else
-        @parentView.subView('attachments').collection.add model
+      @parentView.subView('attachments').collection.add model
 
   markDeleting: (model) =>
     model.set('deleting', true)

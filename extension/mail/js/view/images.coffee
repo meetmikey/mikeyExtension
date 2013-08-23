@@ -100,9 +100,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   setFetch: (isFetch) =>
     @options.fetch = isFetch
-    if isFetch
-      MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
-      MeetMikey.globalEvents.on 'favoriteOrLikeAction', @initialFetch
 
   isSearch: =>
     not @options.fetch
@@ -360,55 +357,12 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
-    @toggleFavorite(model)
-
-  toggleFavorite: (model) =>
-    oldIsFavorite = model.get('isFavorite')
-    newIsFavorite = true
-    if oldIsFavorite
-      newIsFavorite = false
-    model.set 'isFavorite', newIsFavorite
-    @updateModelFavoriteDisplay model
-    MeetMikey.Helper.trackResourceInteractionEvent 'resourceFavorite', 'image', newIsFavorite, 'tab'
-    model.putIsFavorite newIsFavorite, (response, status) =>
-      if status != 'success'
-        model.set 'isFavorite', oldIsFavorite
-        @updateModelFavoriteDisplay model
-
-  updateModelFavoriteDisplay: (model) =>
     elementId = '#mm-image-favorite-' + model.cid
-    @$(elementId).removeClass 'favorite'
-    @$(elementId).removeClass 'favoriteOn'
-    if model.get 'isFavorite'
-      @$(elementId).addClass 'favoriteOn'
-    else
-      @$(elementId).addClass 'favorite'
-
-  updateModelLikeDisplay: (model) =>
-    elementId = '#mm-image-like-' + model.cid
-    @$(elementId).removeClass 'like'
-    @$(elementId).removeClass 'likeOn'
-    if model.get 'isLiked'
-      @$(elementId).addClass 'likeOn'
-    else
-      @$(elementId).addClass 'like'
+    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, elementId, 'tab'
 
   toggleLikeEvent: (event) =>
     event.preventDefault()
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
     model = @collection.get(cid)
-    @toggleLike(model)
-
-  toggleLike: (model) =>
-    if not model.get('isLiked')
-      MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
-        if shouldProceed
-          model.set 'isLiked', true
-          @updateModelLikeDisplay model
-          MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', 'image', true, 'tab'
-          model.putIsLiked true, (response, status) =>
-            if status != 'success'
-              model.set 'isLiked', false
-              @updateModelLikeDisplay model
-            else if @isSearch()
-                MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
+    elementId = '#mm-image-like-' + model.cid
+    MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'tab'

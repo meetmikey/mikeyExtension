@@ -113,25 +113,8 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   toggleFavoriteEvent: (event) =>
     event.preventDefault()
     model = @getModelFromEvent event
-    @toggleFavorite model
-
-  toggleFavorite: (model) =>
-    if not model
-      #console.log 'toggleFavorite, no model!'
-      return
-    oldIsFavorite = model.get('isFavorite')
-    newIsFavorite = true
-    if oldIsFavorite
-      newIsFavorite = false
-    model.set 'isFavorite', newIsFavorite
-    @updateModelFavoriteDisplay model
-    MeetMikey.Helper.trackResourceInteractionEvent 'resourceFavorite', @getResourceType(model), newIsFavorite, 'sidebar'
-    model.putIsFavorite newIsFavorite, (response, status) =>
-      if status != 'success'
-        model.set 'isFavorite', oldIsFavorite
-        @updateModelFavoriteDisplay model
-      else
-        MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
+    elementId = '#mm-sidebar-favorite-' + model.cid
+    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, elementId, 'sidebar'
 
   getResourceType: (model) =>
     type = 'image'
@@ -155,45 +138,11 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       model = @linksCollection.get(cid)
     model
 
-  updateModelFavoriteDisplay: (model) =>
-    elementId = '#mm-sidebar-favorite-' + model.cid
-    @$(elementId).removeClass 'favorite'
-    @$(elementId).removeClass 'favoriteOn'
-    if model.get 'isFavorite'
-      @$(elementId).addClass 'favoriteOn'
-    else
-      @$(elementId).addClass 'favorite'
-
-  updateModelLikeDisplay: (model) =>
-    elementId = '#mm-sidebar-like-' + model.cid
-    @$(elementId).removeClass 'like'
-    @$(elementId).removeClass 'likeOn'
-    if model.get 'isLiked'
-      @$(elementId).addClass 'likeOn'
-    else
-      @$(elementId).addClass 'like'
-
   toggleLikeEvent: (event) =>
     event.preventDefault()
     model = @getModelFromEvent event
-    @toggleLike model
-
-  toggleLike: (model) =>
-    if not model
-      console.log 'toggleLike, no model!'
-      return
-    if not model.get('isLiked')
-      MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
-        if shouldProceed
-          model.set 'isLiked', true
-          @updateModelLikeDisplay model
-          MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', @getResourceType(model), true, 'sidebar'
-          model.putIsLiked true, (response, status) =>
-            if status != 'success'
-              model.set 'isLiked', false
-              @updateModelLikeDisplay model
-            else
-              MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
+    elementId = '#mm-sidebar-like-' + model.cid
+    MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'sidebar'
 
   pageNavigationEvent: =>
     if @inThread()

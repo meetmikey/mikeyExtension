@@ -45,6 +45,7 @@
             "mail/js/helper/piwik.js",
             "mail/js/helper/googleAnalytics.js",
             "mail/js/helper/analytics.js",
+            "mail/js/helper/favoriteAndLike.js",
             "mail/js/collection/base.js",
             "mail/js/model/base.js",
             "mail/js/model/paginationState.js",

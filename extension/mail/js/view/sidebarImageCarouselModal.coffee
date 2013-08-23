@@ -17,8 +17,8 @@ template = """
 
             <a href="#" class="open-message" data-dismiss="modal">
               <div style="float:right; display:inline-block; width: 72px;">
-                <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-                <div class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+                <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}} mm-favorite"></div>
+                <div class="inbox-icon like{{#if isLiked}}On{{/if}} mm-like"></div>
               </div>
             </a>
 
@@ -43,6 +43,8 @@ class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
   events:
     'hidden .modal': 'modalHidden'
     'hide .modal': 'unbindCarouselKeys'
+    'click .mm-favorite': 'toggleFavoriteEvent'
+    'click .mm-like': 'toggleLikeEvent'
     'click .left': 'goLeft'
     'click .right': 'goRight'
 
