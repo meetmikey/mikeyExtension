@@ -251,6 +251,6 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   openImageCarousel: (model) =>
     $('body').append $('<div id="mm-sidebar-image-carousel"></div>')
     @sidebarImageCarouselModal = new MeetMikey.View.SidebarImageCarouselModal el: '#mm-sidebar-image-carousel'
-    @sidebarImageCarouselModal.setImages @getImages()
+    @sidebarImageCarouselModal.setImageModelsCollection @imagesCollection
     @sidebarImageCarouselModal.render()
     @sidebarImageCarouselModal.activateModel model

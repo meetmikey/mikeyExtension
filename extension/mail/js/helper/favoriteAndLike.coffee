@@ -39,15 +39,15 @@ class FavoriteAndLike
     MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
       if not shouldProceed
         return
-    model.set 'isLiked', true
-    @updateModelLikeDisplay model, elementId
-    MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', @getResourceType(model), true, source
-    model.putIsLiked true, (response, status) =>
-      if status != 'success'
-        model.set 'isLiked', false
-        @updateModelLikeDisplay model
-      else
-        MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
+      model.set 'isLiked', true
+      @updateModelLikeDisplay model, elementId
+      MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', @getResourceType(model), true, source
+      model.putIsLiked true, (response, status) =>
+        if status != 'success'
+          model.set 'isLiked', false
+          @updateModelLikeDisplay model
+        else
+          MeetMikey.globalEvents.trigger 'favoriteOrLikeAction'
 
   updateModelLikeDisplay: (model, elementId) =>
     if ( not model ) or ( not elementId )

@@ -15,12 +15,14 @@ template = """
             <div class="image-sender">{{from}}</div>
             <div class="image-subject">{{subject}}</div>
 
-            <a href="#" class="open-message" data-dismiss="modal">
-              <div style="float:right; display:inline-block; width: 72px;">
-                <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}} mm-favorite"></div>
-                <div class="inbox-icon like{{#if isLiked}}On{{/if}} mm-like"></div>
+            <div style="float:right; display:inline-block; width: 72px;">
+              <div class="mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
+                <div id="mm-sidebar-image-carousel-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
               </div>
-            </a>
+              <div class="mm-download-tooltip mm-like" data-toggle="tooltip" title="Like">
+                <div id="mm-sidebar-image-carousel-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+              </div>
+            </div>
 
           </div>
         </div>
@@ -48,8 +50,8 @@ class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
     'click .left': 'goLeft'
     'click .right': 'goRight'
 
-  setImages: (decoratedImageModels) =>
-    @decoratedImageModels = decoratedImageModels
+  setImageModelsCollection: (imageModelsCollection) =>
+    @imageModelsCollection = imageModelsCollection
 
   postRender: =>
     @show()
@@ -62,25 +64,45 @@ class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
     cid = model.cid
     selector = '.item[data-cid=' + cid + ']'
     @$(selector).addClass 'active'
-    foundModel = _.find @decoratedImageModels, (curModel) =>
+    foundModel = _.find @imageModelsCollection.models, (curModel) =>
       if curModel.cid == model.cid
         return true
       return false
     if foundModel
-      @activeIndex = @decoratedImageModels.indexOf foundModel
+      @activeIndex = @imageModelsCollection.models.indexOf foundModel
 
   teardown: =>
     @unbindCarouselKeys()
 
   getTemplateData: =>
     moreThanOneImage = false
-    if @decoratedImageModels and ( @decoratedImageModels.length > 1 )
+    if @imageModelsCollection and ( @imageModelsCollection.length > 1 )
       moreThanOneImage = true
       
     object = {}
-    object.models = @decoratedImageModels
+    object.models = _.invoke(@imageModelsCollection.models, 'decorate')
     object.moreThanOneImage = moreThanOneImage
     object
+
+  toggleFavoriteEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.item').attr('data-cid')
+    model = @imageModelsCollection.get cid
+    elementId = '#mm-sidebar-image-carousel-favorite-' + model.cid
+    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, elementId, 'sidebarImageCarousel', (status) =>
+      if status == 'success'
+        sidebarElementId = '#mm-sidebar-favorite-' + model.cid
+        MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, sidebarElementId
+
+  toggleLikeEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.item').attr('data-cid')
+    model = @imageModelsCollection.get cid
+    elementId = '#mm-sidebar-image-carousel-like-' + model.cid
+    MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'sidebarImageCarousel', (status) =>
+      if status == 'success'
+        sidebarElementId = '#mm-sidebar-like-' + model.cid
+        MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay model, sidebarElementId
 
   bindCarouselKeys: =>
     @unbindCarouselKeys()
@@ -92,12 +114,12 @@ class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
   goLeft: =>
     if @activeIndex and ( @activeIndex > 0 )
       @activeIndex--
-    @activateModel @decoratedImageModels[ @activeIndex ]
+    @activateModel @imageModelsCollection.models[ @activeIndex ]
 
   goRight: =>
-    if ( @activeIndex == 0 or @activeIndex > 0 ) and ( @activeIndex < ( @decoratedImageModels.length - 1 ) )
+    if ( @activeIndex == 0 or @activeIndex > 0 ) and ( @activeIndex < ( @imageModels.length - 1 ) )
       @activeIndex++
-    @activateModel @decoratedImageModels[ @activeIndex ]
+    @activateModel @imageModels[ @activeIndex ]
 
   isModalVisible: =>
     @$('.mmCarousel').parent().hasClass 'fade-in'
