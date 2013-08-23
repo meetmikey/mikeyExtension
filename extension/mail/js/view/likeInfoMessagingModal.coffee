@@ -71,6 +71,9 @@ class MeetMikey.View.LikeInfoMessagingModal extends MeetMikey.View.BaseModal
         if input.email == myEmail
           return true
         false
+      _.each recipients, (recipient) =>
+        if not recipient.name
+          recipient.name = recipient.email
     recipients
 
   getTemplateData: =>
