@@ -17,9 +17,9 @@ template = """
             <div class="image-sender">{{from}}</div>
             <div class="image-subject">{{subject}}</div>
 
-              <div style="float:right; display:inline-block; width: 72px;">
-                <div class="open-message" data-dismiss="modal">
-                  <div class="list-icon" style="background-image: url('#{downloadUrl}'); float:right;"></div>
+              <div style="float:right; display:inline-block; width: 85px;">
+                <div class="open-message mm-download-tooltip mm-image-carousel-interaction" data-dismiss="modal" data-toggle="tooltip" title="Open email">
+                  <div class="list-icon" style="margin-top: 0px; background-image: url('#{downloadUrl}');"></div>
                 </div>
                 <div class="mm-image-carousel-interaction mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
                   <div id="mm-image-carousel-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
@@ -86,7 +86,9 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     elementId = '#mm-image-carousel-favorite-' + model.cid
     MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, elementId, 'imageCarousel', (status) =>
       if status == 'success'
-        imageTabCId = @fullCollection.get(model.id).cid
+        imageTabModel = @fullCollection.get(model.id)
+        imageTabModel.set 'isFavorite', model.get('isFavorite')
+        imageTabCId = imageTabModel.cid
         imageTabElementId = '#mm-image-favorite-' + imageTabCId
         MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, imageTabElementId
 
@@ -97,7 +99,9 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     elementId = '#mm-image-carousel-like-' + model.cid
     MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'imageCarousel', (status) =>
       if status == 'success'
-        imageTabCId = @fullCollection.get(model.id).cid
+        imageTabModel = @fullCollection.get(model.id)
+        imageTabModel.set 'isLiked', model.get('isLiked')
+        imageTabCId = imageTabModel.cid
         imageTabElementId = '#mm-image-like-' + imageTabCId
         MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay model, imageTabElementId
 

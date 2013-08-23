@@ -16,10 +16,10 @@ template = """
             <div class="image-subject">{{subject}}</div>
 
             <div style="float:right; display:inline-block; width: 72px;">
-              <div class="mm-sidebar-image-carousel-interaction mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
+              <div class="mm-image-carousel-interaction mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
                 <div id="mm-sidebar-image-carousel-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
               </div>
-              <div class="mm-sidebar-image-carousel-interaction mm-download-tooltip mm-like" data-toggle="tooltip" title="Like">
+              <div class="mm-image-carousel-interaction mm-download-tooltip mm-like" data-toggle="tooltip" title="Like">
                 <div id="mm-sidebar-image-carousel-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
               </div>
             </div>
