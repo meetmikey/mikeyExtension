@@ -18,6 +18,9 @@ template = """
         {{/if}}
       {{/if}}
 
+      <p>The email will be from you and look like this:</p>
+      <div id="mm-like-info-email-template"></div>
+
       <p>Ready? Click ok below to send your like, and we won't show you this message again.</p>
     </div>
     <div class="footer-buttons">
@@ -47,6 +50,20 @@ class MeetMikey.View.LikeInfoMessagingModal extends MeetMikey.View.BaseModal
     if ! @hasReturned
       @trigger 'cancel'
       @hasReturned = true
+
+  postRender: =>
+    modelId = @resourceModel.id
+    modelType = MeetMikey.Helper.FavoriteAndLike.getResourceType @resourceModel
+
+    MeetMikey.Helper.callAPI
+      url: 'likeEmailTemplate'
+      data:
+        modelId: modelId
+        modelType: modelType
+      success: (response, status) =>
+        if status == 'success'
+          @$('#mm-like-info-email-template').html response
+    @show()
 
   thisModalHidden: (event) =>
     if ! @hasReturned
