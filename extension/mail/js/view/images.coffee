@@ -11,10 +11,13 @@ imageTemplate = """
       <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click to undo.</div>
       <div class="image-subbox">
     {{/if}}
-      <img class="mm-image" src="{{image}}"/>
+      
+      <div class="mm-image-container">
+        <img class="mm-image" src="{{image}}"/>
+      </div>
      
         <div class="image-filename">
-          <a href="#">{{filename}}&nbsp;</a>
+          <a href="#">{{subject}}</a>
         </div>
 
         <div class="rollover-actions">
@@ -25,7 +28,7 @@ imageTemplate = """
             <div id="mm-image-favorite-{{cid}}" class="mm-image-favorite inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
           </div>
           <div class="mm-download-tooltip" data-toggle="tooltip" title="Open email">
-            <div class="list-icon open-message" style="background-image: url('#{downloadUrl}');"></div>
+            <div class="list-icon message" style="background-image: url('#{downloadUrl}');"></div>
           </div>
         </div>
 
@@ -78,7 +81,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   events:
     'click .mm-image': 'openImage'
     'click .image-filename a': 'openImage'
-    'click .open-message': 'openMessage'
+    'click .message': 'openMessage'
     'click .hide-image-x' : 'markDeleting'
     'click .mm-image-favorite': 'toggleFavoriteEvent'
     'click .mm-image-like': 'toggleLikeEvent'

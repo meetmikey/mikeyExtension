@@ -30,25 +30,24 @@ template = """
         <tbody>
       {{#each models}}
           <tr class="files" data-cid="{{cid}}">
-            <td class="mm-hide" {{#if deleting}}style="opacity:0.1"{{/if}}>
+            <td class="mm-madness shift-right mm-hide" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide">
-                <a href="#"><div class="close-x">x</div></a>
+                <div class="mm-hide inbox-icon"></div>
               </div>
             </td>
-            <td class="mm-download" {{#if deleting}}style="opacity:0.1"{{/if}}>
+            <td class="mm-madness mm-download" {{#if deleting}}style="opacity:0.1"{{/if}}>
                 <div class="mm-download-tooltip" data-toggle="tooltip" title="Open email">
-                  <div class="list-icon" style="background-image: url('#{spriteUrl}');">
-                  </div>
+                  <div class="inbox-icon message"></div>
                 </div>
             </td>
 
-            <td class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
+            <td class="mm-madness mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
                 <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
               </div>
             </td>
 
-            <td class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
+            <td class="mm-madness mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
                 <div id="mm-attachment-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
               </div>
@@ -79,7 +78,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   events:
     'click .files .mm-file': 'openAttachment'
     'click .files .mm-download': 'openMessage'
-    'click .close-x' : 'markDeletingEvent'
+    'click .mm-hide' : 'markDeletingEvent'
     'click .files .mm-undo' : 'unMarkDeletingEvent'
     'click th': 'sortByColumn'
     'click .mm-favorite': 'toggleFavoriteEvent'

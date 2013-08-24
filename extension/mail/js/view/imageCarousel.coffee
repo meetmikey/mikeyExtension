@@ -17,15 +17,16 @@ template = """
             <div class="image-sender">{{from}}</div>
             <div class="image-subject">{{subject}}</div>
 
-              <div style="float:right; display:inline-block; width: 85px;">
-                <div class="open-message mm-download-tooltip mm-image-carousel-interaction" data-dismiss="modal" data-toggle="tooltip" title="Open email">
-                  <div class="list-icon" style="margin-top: 0px; background-image: url('#{downloadUrl}');"></div>
-                </div>
+              <div class="rollover-actions">
+                
                 <div class="mm-image-carousel-interaction mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
                   <div id="mm-image-carousel-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
                 </div>
                 <div class="mm-image-carousel-interaction mm-download-tooltip mm-like" data-toggle="tooltip" title="Like">
                   <div id="mm-image-carousel-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+                </div>
+                <div class="open-message mm-download-tooltip mm-image-carousel-interaction" data-dismiss="modal" data-toggle="tooltip" title="Open email">
+                  <div class="list-icon" style="margin-top: 0px; background-image: url('#{downloadUrl}');"></div>
                 </div>
               </div>
             </a>

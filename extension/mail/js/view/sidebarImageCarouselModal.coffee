@@ -15,7 +15,7 @@ template = """
             <div class="image-sender">{{from}}</div>
             <div class="image-subject">{{subject}}</div>
 
-            <div style="float:right; display:inline-block; width: 72px;">
+            <div class="rollover-actions">
               <div class="mm-image-carousel-interaction mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
                 <div id="mm-sidebar-image-carousel-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
               </div>

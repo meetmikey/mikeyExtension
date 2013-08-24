@@ -194,6 +194,10 @@ z-index: 4;
   height: auto !important;
 } 
 
+.u5 {
+  height: auto !important;
+}
+
 /* ------------------------ */
 
 
@@ -220,6 +224,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding-left: 10px;
 }
 
 
@@ -262,23 +267,47 @@ body {
 .inbox-table td {
 
   .comfortable & {
-    padding: 10px 10px 10px 10px;
+    padding: 10px 10px 10px 0px;
     height: 19px;
     border:0px;
   }
 
   .cozy & {
-    padding: 7px 10px 7px 10px;
+    padding: 7px 10px 7px 0px;
     height: 19px;
     border:0px;
   }
 
   .compact & {
-    padding: 3px 10px 3px 10px;
+    padding: 3px 10px 3px 0px;
     height: 19px;
     border:0px;
-  }
+  } 
 }
+
+.mm-favorite, .mm-like, .mm-hide, .mm-download {
+    .comfortable & td {
+      padding: 10px 6px 10px 0px;
+    }
+    .cozy & td {
+      padding: 7px 6px 7px 0px;
+    }
+    .compact & td {
+      padding: 3px 6px 3px 0px;
+    }
+  }
+
+.mm-icon {
+    .comfortable & td {
+      padding: 10px 6px 10px 10px;
+    }
+    .cozy & td {
+      padding: 7px 6px 7px 10px;
+    }
+    .compact & td {
+      padding: 3px 0px 3px 10px;
+    }
+  }
 
 .inbox-icon {
   background-image: url('@{pathPrefix}/mail/img/sidebar-icons.png');
@@ -286,7 +315,6 @@ body {
   height: 18px;
   overflow: hidden;
   opacity: 0.35;
-  margin-left: -7px;
 
   .image-box & {
     float: right;
@@ -300,6 +328,15 @@ body {
 
   &:hover {
     opacity: 0.55;
+  }
+
+  &.mm-hide {
+    background-position: 2px -75px;
+  }
+
+
+  &.message {
+    background-position: 0px -58px;
   }
 
   &.favoriteOn {
@@ -327,6 +364,12 @@ body {
     &.like {
     background-position: 75px -20px;
     }
+    &.message {
+     background-position: 75px -58px;
+    }
+    &.mm-hide {
+    background-position: 78px -75px;
+    }
   }
   .dark-blocks .image-box & {
     &.favorite {
@@ -335,6 +378,9 @@ body {
     &.like {
     background-position: 57px -20px;
     }
+    &.message {
+    background-position: 0px -75px;
+  }
   }
 
   .dark-blocks .carousel-inner & {
@@ -344,6 +390,9 @@ body {
     &.like {
     background-position: 57px -20px;
     }
+    &.message {
+    background-position: 0px -75px;
+  }
   }
 }
 
@@ -401,13 +450,9 @@ body {
 }
 
 
-.mm-favorite {
-  width: 40px;
-}
 
-.mm-like {
-  width: 40px;
-}
+
+
 
 .mm-image-carousel-interaction {
   float: left;
@@ -430,8 +475,6 @@ body {
 
 
 
-/* .mm-container .labels th:hover {
-  color: #777; */
 
 #mm-attachments-table .files {
   cursor: pointer;
@@ -528,7 +571,7 @@ body {
 
 table tr td .flex {
   overflow:hidden;
-  padding-left: 0px;
+  padding-left: 6px;
   min-width: 200px;
   width: 92%;
   white-space: nowrap;
@@ -542,10 +585,13 @@ table tr td .flex {
 }
 
 .mm-icon {
-  padding-left: 5px !important;
   width:18px;
   background-position: 5px 10px !important;
   background-size: 18px 18px !important;
+}
+
+.truncate td {
+  padding-left: 10px;
 }
 
 .compact .mm-icon {
@@ -590,29 +636,17 @@ th.mm-download {
   width: 130px;
 }
 
-.inbox-table td.mm-download {
-  padding-left: 2px;
-} 
 
 
 
-.mm-download {
-
-
-  .comfortable & {
-     background-position: 0px 13px !important;
-     background-repeat: no-repeat;
-    }
-
-  .compact & {
-     background-position: 0px 6px !important;
-     background-repeat: no-repeat;
-   }
-
-  .cozy & {
-     background-position: 0px 10px !important;
-     background-repeat: no-repeat;
-    }
+.mm-download-tooltip {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  .rollover-actions & {
+    float: right;
+    margin-left: 8px;
+  }
 }
 
 
@@ -1038,9 +1072,6 @@ font-size: 13px;
   .hide-image-x:hover & {
     opacity: 0.4;
   }
-  .mm-hide:hover & {
-    opacity: 0.55;
-  }
 
   .dark-blocks .mm-hide & {
     color: #fff;
@@ -1079,10 +1110,22 @@ cursor: pointer;
 }
 
 .mm-image {
-  margin-bottom: 6px;
   max-width: 250px;
   text-align: center;
   cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #f5f5f5;
+  display: block;
+}
+
+.mm-image-container {
+  max-height: 800px;
+  width: 250px;
+  overflow: hidden;
+  
+  margin-bottom: 6px;
+
 }
 
 .mm-images-tab {
@@ -1333,7 +1376,7 @@ cursor: pointer;
 .image-filename {
   display: inline-block;
   overflow: hidden;
-  max-width: 150px;
+  max-width: 166px;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding-top: 3px;
@@ -1538,385 +1581,110 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 
 /* --------------- TABLES TOOLTIP -------------- */
 
-.mm-download-tooltip {
-  width: 18px;
-  height: 18px;
-  
-  .mm-hide & {
-    width: auto;
-    height: auto;
+.mail-counts, .mikey-tabs, .premium-modal, .image-box, .mm-madness {
+
+  .tooltip {
+    position: absolute;
+    z-index: 1030;
+    display: block;
+    visibility: visible;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 1.4;
+    opacity: 0;
+    filter: alpha(opacity=0);
   }
-  .rollover-actions & {
-    display: inline-block;
-    margin-left: 8px;
-    float: right;
+  .tooltip.in {
+    opacity: 1;
+    filter: alpha(opacity=80);
   }
-}
+  .tooltip.top {
+    margin-top: -3px;
+    padding: 5px 0;
+  }
+  .tooltip.right {
+    margin-left: 3px;
+    padding: 0 5px;
+  }
+  .tooltip.bottom {
+    margin-top: 3px;
+    padding: 5px 0;
+  }
 
-
-
-.mm-download {
-
- & .tooltip {
-      position: absolute;
-      z-index: 1030;
-      display: block;
-      visibility: visible;
-      border: none;
-      font-weight: bold;
-      font-size: 11px !important;
-      line-height: 11px;
-      opacity: 0;
-      filter: alpha(opacity=0);
-    }
-
-    & .tooltip.in {
-      opacity: 1 !important;
-      filter: alpha(opacity=100) !important;
-    }
-
-
-    & .tooltip.bottom {
-      margin-top: 3px;
-      margin-left: 0px;
-      padding: 5px 0;
-    }
-
-    & .tooltip-inner {
-      padding: 8px;
-      max-width: 200px;
-      -webkit-border-radius: 0px !important;
-      -moz-border-radius: 0px !important;
-      border-radius: 0px;
-      background-color: #2a2a2a;
-      color: #ffffff;
-      text-align: center;
-      text-decoration: none;
-      .dark-blocks & {
-        color: #222;
-        background-color: #fff;
-      }
-
-    }
-
-    & .tooltip-arrow {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-color: transparent;
-      border-style: solid;
-    }
-
-
-    & .tooltip.bottom .tooltip-arrow {
+  .tooltip.left {
+    margin-left: -3px;
+    padding: 0 5px;
+  }
+  .tooltip-inner {
+    max-width: 200px;
+    padding: 6px 8px 6px 8px;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    background-color: @black;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+  }
+  .tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+  }
+  .tooltip.top .tooltip-arrow {
+    bottom: 0;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px 5px 0;
+    border-top-color: @black;
+  }
+  .tooltip.right .tooltip-arrow {
+    top: 50%;
+    left: 0;
+    margin-top: -5px;
+    border-width: 5px 5px 5px 0;
+    border-right-color: @black;
+  }
+  .tooltip.left .tooltip-arrow {
+    top: 50%;
+    right: 0;
+    margin-top: -5px;
+    border-width: 5px 0 5px 5px;
+    border-left-color: @black;
+  }
+  .tooltip.bottom .tooltip-arrow {
     top: 0;
     left: 50%;
     margin-left: -5px;
     border-width: 0 5px 5px;
-    border-bottom-color: #2a2a2a;
-    .dark-blocks & {
-          color: #222;
-          border-bottom-color: #fff;
-        }
+    border-bottom-color: @black;
   }
 
-} 
-
-.mm-hide {
-    .tooltip {
-      position: absolute;
-      z-index: 1030;
-      display: block;
-      visibility: visible;
-      border: none;
-      font-weight: bold;
-      font-size: 11px !important;
-      line-height: 11px;
-      opacity: 0;
-      filter: alpha(opacity=0);
-    }
-
-    .tooltip.in {
-      opacity: 1 !important;
-      filter: alpha(opacity=100) !important;
-    }
-
-
+  &.shift-right {
     .tooltip.bottom {
-      margin-top: 1px;
-      margin-left: 6px;
-      padding: 5px 0;
+    margin-left: 13px;
+    padding: 5px 0;
     }
+    .tooltip.bottom .tooltip-arrow {
+    top: 0;
+    left: 50%;
+    margin-left: -14px;
+    border-width: 0 5px 5px;
+    border-bottom-color: @black;
+    }
+  }
 
+  .dark-blocks & {
     .tooltip-inner {
-      padding: 8px;
-      max-width: 200px;
-      -webkit-border-radius: 0px !important;
-      -moz-border-radius: 0px !important;
-      border-radius: 0px;
-      background-color: #2a2a2a;
-      color: #ffffff;
-      text-align: center;
-      text-decoration: none;
-      .dark-blocks & {
-        color: #222;
-        background-color: #fff;
-      }
-
+    color: @black;
+    background-color: @white;
+    }
+    .tooltip.bottom .tooltip-arrow {
+    border-bottom-color: @white;
     }
 
-    .tooltip-arrow {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-color: transparent;
-      border-style: solid;
-          }
-
-
-  .tooltip.bottom .tooltip-arrow {
-    top: 0;
-    left: 50%;
-    margin-left: -8px;
-    border-width: 0 5px 5px;
-    border-bottom-color: #2a2a2a;
-    .dark-blocks & {
-          color: #222;
-          border-bottom-color: #fff;
-        }
-  }
-
-}
-
-.mm-favorite, .mm-like {
-
-
-    & .tooltip {
-      position: absolute;
-      z-index: 1030;
-      display: block;
-      visibility: visible;
-      border: none;
-      font-weight: bold;
-      font-size: 11px !important;
-      line-height: 11px;
-      opacity: 0;
-      filter: alpha(opacity=0);
-    }
-
-    & .tooltip.in {
-      opacity: 1 !important;
-      filter: alpha(opacity=100) !important;
-    }
-
-
-    & .tooltip.bottom {
-      margin-top: 3px;
-      padding: 5px 0;
-    }
-
-    & .tooltip-inner {
-      padding: 8px;
-      max-width: 200px;
-      -webkit-border-radius: 0px !important;
-      -moz-border-radius: 0px !important;
-      border-radius: 0px;
-      background-color: #2a2a2a;
-      color: #ffffff;
-      text-align: center;
-      text-decoration: none;
-      margin-left: -10px;
-      .dark-blocks & {
-        color: #222;
-        background-color: #fff;
-      }
-
-    }
-
-    & .tooltip-arrow {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-color: transparent;
-      border-style: solid;
-    }
-
-
-    & .tooltip.bottom .tooltip-arrow {
-    top: 0;
-    left: 50%;
-    border-width: 0 5px 5px;
-    border-bottom-color: #2a2a2a;
-    margin-left: -10px;
-    .dark-blocks & {
-          color: #222;
-          border-bottom-color: #fff;
-        }
-    }
-
-  .sidebar-buttons & {
-    & .tooltip.bottom .tooltip-arrow {
-    top: 0;
-    left: 50%;
-    border-width: 0 5px 5px;
-    border-bottom-color: #2a2a2a;
-    margin-left: -4px;
-   
-    }
-
-    & .tooltip-inner {
-      padding: 8px;
-      max-width: 200px;
-      -webkit-border-radius: 0px !important;
-      -moz-border-radius: 0px !important;
-      border-radius: 0px;
-      background-color: #2a2a2a;
-      color: #ffffff;
-      text-align: center;
-      text-decoration: none;
-      margin-left: 0px;
-
-    }
-  }
-
-}
-
-
-.image-box {
-
-
-    & .tooltip {
-      position: absolute;
-      z-index: 1030;
-      display: block;
-      visibility: visible;
-      border: none;
-      font-weight: bold;
-      font-size: 11px !important;
-      line-height: 11px;
-      opacity: 0;
-      filter: alpha(opacity=0);
-    
-
-    }
-
-    & .tooltip.in {
-      opacity: 1 !important;
-      filter: alpha(opacity=100) !important;
-    }
-
-
-    & .tooltip.bottom {
-      margin-top: -3px;
-      padding: 5px 0;
-      margin-left: -3px;
-    }
-
-    & .tooltip-inner {
-      padding: 8px;
-      max-width: 200px;
-      -webkit-border-radius: 0px !important;
-      -moz-border-radius: 0px !important;
-      border-radius: 0px;
-      background-color: #2a2a2a;
-      color: #ffffff;
-      text-align: center;
-      text-decoration: none;
-
-    }
-
-    & .tooltip-arrow {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-color: transparent;
-      border-style: solid;
-    }
-
-
-  & .tooltip.bottom .tooltip-arrow {
-    top: 0;
-    left: 50%;
-    border-width: 0 5px 5px;
-    border-bottom-color: #2a2a2a;
-    margin-left: -5px;
-  }
-
-  & .rollover-actions {
-    & .tooltip.bottom {
-      margin-top: -1px;
-      padding: 5px 0;
-      margin-left: 0px;
-    }
-  }
-}
-
-/* --------------- MAILCOUNT TOOLTIP -------------- */
-
-
-
-.mail-counts, .mikey-tabs, .premium-modal {
-    .tooltip {
-      position: absolute;
-      z-index: 1030;
-      display: block;
-      visibility: visible;
-      border: none;
-      font-weight: bold;
-      font-size: 11px !important;
-      line-height: 11px;
-      opacity: 0;
-      filter: alpha(opacity=0);
-    }
-
-    .tooltip.in {
-      opacity: 1 !important;
-      filter: alpha(opacity=100) !important;
-    }
-
-
-    .tooltip.bottom {
-      margin-top: 3px;
-      margin-left: 0px;
-      padding: 5px 0;
-    }
-
-    .tooltip-inner {
-      padding: 8px;
-      max-width: 500px;
-      -webkit-border-radius: 0px !important;
-      -moz-border-radius: 0px !important;
-      border-radius: 0px;
-      background-color: #2a2a2a;
-      color: #ffffff;
-      text-align: center;
-      text-decoration: none;
-      .dark-blocks & {
-        color: #222;
-        background-color: #fff;
-      }
-
-    }
-
-    .tooltip-arrow {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-color: transparent;
-      border-style: solid;
-    }
-
-
-  .tooltip.bottom .tooltip-arrow {
-    top: 0;
-    left: 50%;
-    margin-left: 0px;
-    border-width: 0 5px 5px;
-    border-bottom-color: #2a2a2a;
-    .dark-blocks & {
-          color: #222;
-          border-bottom-color: #fff;
-        }
   }
 
 }
@@ -2434,10 +2202,6 @@ a.get-more-link {
 
 }
 
-.list-icon.image-boxness {
-  float: right;
-  display: inline-block;
-}
 
 .max-image {
   max-width: 800px;
@@ -3057,7 +2821,7 @@ color: #FFF;
   opacity: 0.55;
 
   .dark-blocks & {
-    color: #fff;
+    color: #eee;
   }
 
   &.active {
