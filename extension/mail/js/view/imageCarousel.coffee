@@ -8,7 +8,7 @@ template = """
       {{#each models}}
         <div class="item" data-cid="{{cid}}">
           
-          <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide"><div class="close-x">x</div></div>
+          <div class="hide-image-x mm-download-mm-d" data-toggle="tooltip" title="Hide"><div class="close-x">x</div></div>
           <div class="modal-image-box">
             <img class="max-image" src="{{url}}"/>
           </div>
@@ -29,6 +29,8 @@ template = """
                   <div class="list-icon" style="margin-top: 0px; background-image: url('#{downloadUrl}');"></div>
                 </div>
               </div>
+
+              
             </a>
           </div>
 
@@ -70,6 +72,7 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     @$('.mmCarousel').carousel
       interval: false
     @bindCarouselKeys()
+    $('.mm-download-tooltip').tooltip placement: 'top'
 
   activateModel: =>
     $('.item').removeClass 'active'

@@ -2,7 +2,7 @@ downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png
 
 imageTemplate = """
   <div class="image-box" data-cid="{{cid}}">
-    <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" data-animation="false" title="Hide"><div class="close-x">x</div></div>
+    <div class="hide-image-x download-tooltip" data-toggle="tooltip" data-animation="false" title="Hide"><div class="close-x">x</div></div>
     {{#if deleting}}
 
       <div class="undo-delete">This image will no longer appear.<br>Click to undo.</div>
@@ -126,8 +126,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   postRender: =>
     @hasInitializedIsotope = false
-    $('.mm-download-tooltip').tooltip placement: 'bottom'
-    $('.image-box-tooltip').tooltip placement: 'top'
+    $('.download-tooltip').tooltip placement: 'bottom'
+    $('.mm-download-tooltip').tooltip placement: 'top'
     if MeetMikey.Globals.tabState == 'images'
       @isotopeUntilImagesLoaded()
 

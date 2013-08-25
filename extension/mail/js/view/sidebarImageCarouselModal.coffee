@@ -58,6 +58,8 @@ class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
     @$('.mmCarousel').carousel
       interval: false
     @bindCarouselKeys()
+    $('.mm-download-tooltip').tooltip placement: 'top'
+
 
   activateModel: (model) =>
     @$('.item').removeClass 'active'
