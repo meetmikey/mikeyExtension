@@ -145,15 +145,17 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
     MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'sidebar'
 
   pageNavigationEvent: =>
-    if @inThread()
-      if $('#mm-sidebar-container') and $('#mm-sidebar-container').is(':visible')
-        return
-      @injectContainer () =>
-        @getResources () =>
-          @render()
+    if not @inThread()
+      return
+    if $('#mm-sidebar-container') and $('#mm-sidebar-container').is(':visible')
+      return
+    @injectContainer () =>
+      @getResources () =>
+        @render()
 
   injectContainer: (callback) =>
-    $('#mm-sidebar-container').remove()
+    if $('#mm-sidebar-container') and $('#mm-sidebar-container').length
+      $('#mm-sidebar-container').remove()
     element = '<div id="mm-sidebar-container" class="mm-container"></div>'
     MeetMikey.Helper.DOMManager.waitAndFind @containerSelector, () =>
       MeetMikey.Helper.DOMManager.injectInto @containerSelector, element, () =>

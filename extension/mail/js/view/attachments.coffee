@@ -187,10 +187,10 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     MeetMikey.Helper.trackResourceEvent 'deleteResource', model,
       search: @searchQuery?, currentTab: MeetMikey.Globals.tabState, rollover: false
 
-  deleteAfterDelay: (modelId) =>
+  deleteAfterDelay: (modelCId) =>
     setTimeout =>
-      model = @collection.get(modelId)
-      if model.get('deleting')
+      model = @collection.get(modelCId)
+      if model and model.get('deleting')
         @collection.remove(model)
         model.delete()
     , MeetMikey.Constants.deleteDelay

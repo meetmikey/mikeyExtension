@@ -182,10 +182,10 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     imageElement.css('opacity', 1) if imageElement?
     element.children('.undo-delete').hide()
 
-  deleteAfterDelay: (modelId) =>
+  deleteAfterDelay: (modelCId) =>
     setTimeout =>
-      model = @collection.get modelId
-      if model.get 'deleting'
+      model = @collection.get modelCId
+      if model and model.get 'deleting'
         @collection.remove model
         model.delete()
         isotopeItem = @$('.image-box[data-cid='+model.cid+']')
