@@ -89,6 +89,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     'click #twitterReferralButton': 'twitterReferralClick'
     'click #facebookReferralButton': 'facebookReferralClick'
     'click #rateOnChromeStoreButton': 'rateOnChromeStoreClick'
+    'click #facebookLikeButton': 'facebookLikeClick'
     'click #upgradeButton': 'showUpgradeModal'
     'click #copyButton': 'copyTextToClipboard'
     'hidden .modal': 'modalHidden'
@@ -117,12 +118,18 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     url = MeetMikey.Constants.chromeStoreReviewURL
     window.open url
     @hide()
-    @creditUserWithReview()
+    @creditUserWithPromotionAction 'chromeStoreReview'
 
-  creditUserWithReview: =>
+  facebookLikeClick: =>
+    MeetMikey.Helper.Analytics.trackEvent 'facebookLikeClick'
+    @creditUserWithPromotionAction 'facebookLike'
+
+  creditUserWithPromotionAction: (promotionType) =>
     MeetMikey.Helper.callAPI
-      url: 'creditChromeStoreReview'
+      url: 'creditPromotionAction'
       type: 'POST'
+      data:
+        'promotionType': promotionType
       complete: () =>
         MeetMikey.globalUser.refreshFromServer()
 
