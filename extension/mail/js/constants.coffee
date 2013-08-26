@@ -31,6 +31,7 @@ _.extend MeetMikey.Constants,
 
   APIUrls:
     local: "https://local.meetmikey.com"
+    ngrok: "https://mikey.ngrok.com"
     development: "https://dev.meetmikey.com"
     production: "https://api.meetmikey.com"
 
