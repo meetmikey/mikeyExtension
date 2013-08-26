@@ -1712,9 +1712,8 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 
 #mm-welcome-modal .modal-header h3 {
 margin: 0;
-line-height: 30px;
-font-size: 20px;
-line-height: 24px;
+line-height: 30px !important;
+font-size: 24px !important;
 }
 
 #mm-welcome-modal .carousel {
@@ -2051,20 +2050,21 @@ body::-webkit-scrollbar-corner {
 
 .share-modal-button {
   display: inline-block;
-  width: 110px;
-  height: 110px;
+  width: auto;
+  height: 42px;
   text-transform: uppercase;
   text-decoration: none;
   font-size: 11px;
-  margin-right: 15px;
+  margin-right: 12px;
   background-repeat: no-repeat;
-  background-position: 50% 10px;
+  background-position: 4px 6px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
   color: #fff;
-  background-size: 70px 70px;
+  background-size: 30px 30px;
   background-color: #2372C1;
+  float: left;
 
   &:hover {
     background-color: darken(#2372C1, 10%);
@@ -2115,15 +2115,15 @@ body::-webkit-scrollbar-corner {
 .buttons-cluster {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10px;
+  margin-top: 14px;
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
+  min-height: 42px;
 }
 
 .referral-button-text {
-  text-align: center;
-  margin-top: 86px;
   display: block;
+  padding: 15px 16px 10px 40px;
 }
 
 .mail-days {
@@ -2171,6 +2171,86 @@ a.get-more-link {
     }
   }
 }
+
+.modal .url-copy-box input {
+  margin-top: 1px;
+}
+
+/* ------------------ REFERRALS NEW ---------------------- */
+
+.modal-subheader {
+  margin: 0px 0px 10px 0px;
+}
+
+.modal-subheader-text {
+  text-transform: uppercase;
+  font-size: 13px;
+  color: @black;
+  display: inline-block;
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.modal-subtext {
+  color: #777;
+  font-size: 10px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+#directReferralLinkText {
+  width: 122px;
+  height: 30px;
+}
+
+a.copy-button {
+  height: 40px;
+  background-color: #2372C1;
+  -webkit-border-radius: 0px 2px 2px 0px;
+  -moz-border-radius: 0px 2px 2px 0px;
+  border-radius: 0px 2px 2px 0px;
+  color: #fff;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 15px 16px 15px 16px;
+  line-height: 20px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: darken(#2372C1, 10%);
+  }
+}
+
+.url-copy-box {
+  margin-top: -1px;
+  display: inline-block;
+  float:left;
+}
+
+.get-more-options {
+  background-color: #e5e5e5;
+  padding: 20px 20px 20px 20px;
+  margin-bottom: 20px;
+}
+
+.pluginButton {
+  height: 40px !important;
+  background-color: #2372C1 !important;
+  -webkit-border-radius: 0px 2px 2px 0px !important;
+  -moz-border-radius: 0px 2px 2px 0px !important;
+  border-radius: 0px 2px 2px 0px !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  padding: 15px 16px 15px 16px !important;
+  line-height: 20px !important;
+  text-decoration: none !important;
+
+  &:hover {
+    background-color: darken(#2372C1, 10%);
+  }
+}
+
 
 /* ------------------ HIDE AND UNDO ---------------------- */
 
