@@ -1,50 +1,49 @@
 template = """
 <div class="mikey-tabs-box">
-<table class="tabs-table">
-  <tbody>
-    <tr class="mikey-tabs {{disabledClass}}">
-      <td href="#" class="mikey-tab active email-tab" data-mm-tab="email">
-     
-          <div class="tab-highlight"></div>
-          <div class="tab-content">
-            <div class="tab-icon"></div>
-            <div class="tab-label">Email<div class="mm-count"></div></div>
-          </div>
-      </td>
+  <table class="tabs-table">
+    <tbody>
+      <tr class="mikey-tabs {{disabledClass}}">
+        <td href="#" class="mikey-tab active email-tab" data-mm-tab="email">
+       
+            <div class="tab-highlight"></div>
+            <div class="tab-content">
+              <div class="tab-icon"></div>
+              <div class="tab-label">Email<div class="mm-count"></div></div>
+            </div>
+        </td>
 
-      <td href="#" class="mikey-tab files-tab" data-mm-tab="attachments" data-placement="bottom" title="Mikey is at work. We'll let you know when your files are ready.">
-     
-          <div class="tab-highlight"></div>
-          <div class="tab-content">
-            <div class="tab-icon files-tab"></div>
-            <div class="tab-label">Files<div class="mm-count"></div></div>
-          </div>
-      </td>
+        <td href="#" class="mikey-tab files-tab" data-mm-tab="attachments" data-placement="bottom" title="Mikey is at work. We'll let you know when your files are ready.">
+       
+            <div class="tab-highlight"></div>
+            <div class="tab-content">
+              <div class="tab-icon files-tab"></div>
+              <div class="tab-label">Files<div class="mm-count"></div></div>
+            </div>
+        </td>
 
-      <td href="#" class="mikey-tab links-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your links are ready." data-mm-tab="links">
-     
-          <div class="tab-highlight"></div>
-          <div class="tab-content">
-            <div class="tab-icon links-tab"></div>
-            <div class="tab-label">Links<div class="mm-count"></div></div>
-          </div>
-      </td>
+        <td href="#" class="mikey-tab links-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your links are ready." data-mm-tab="links">
+       
+            <div class="tab-highlight"></div>
+            <div class="tab-content">
+              <div class="tab-icon links-tab"></div>
+              <div class="tab-label">Links<div class="mm-count"></div></div>
+            </div>
+        </td>
 
-      <td href="#" class="mikey-tab images-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your images are ready." data-mm-tab="images">
-     
-          <div class="tab-highlight"></div>
-          <div class="tab-content">
-            <div class="tab-icon images-tab"></div>
-            <div class="tab-label">Images<div class="mm-count"></div></div>
-          </div>
-      </td>
+        <td href="#" class="mikey-tab images-tab" data-placement="bottom" title="Mikey is at work. We'll let you know when your images are ready." data-mm-tab="images">
+       
+            <div class="tab-highlight"></div>
+            <div class="tab-content">
+              <div class="tab-icon images-tab"></div>
+              <div class="tab-label">Images<div class="mm-count"></div></div>
+            </div>
+        </td>
 
-    </tr>
+      </tr>
 
-  </tbody>
-</table>
-    <div class="mail-counts-container"></div>
-    <div class="pagination-container"></div> 
+    </tbody>
+  </table>
+  <div class="mail-counts-container"></div>
 </div>
 """
 
@@ -55,10 +54,6 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
   disabled: false
 
   subViews:
-    'pagination':
-      selector: '.pagination-container'
-      viewClass: MeetMikey.View.Pagination
-      args: {}
     'mailCounts':
       selector: '.mail-counts-container'
       viewClass: MeetMikey.View.MailCounts
@@ -66,9 +61,6 @@ class MeetMikey.View.Tabs extends MeetMikey.View.Base
 
   events:
     'click .mikey-tab': 'tabClick'
-
-  postInitialize: =>
-    @subView('pagination').options.render = false if @options.search
 
   postRender: =>
     @adjustWidth()

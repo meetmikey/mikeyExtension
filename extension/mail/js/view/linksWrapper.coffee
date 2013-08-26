@@ -12,14 +12,14 @@ class MeetMikey.View.LinksWrapper extends MeetMikey.View.Base
     'links':
       viewClass: MeetMikey.View.Links
       selector: '.mm-links-nonfavorite'
-      args: {}
+      args: {fetch: true}
 
   preInitialize: =>
     if not @isSearch()
       @subViews.linksFavorite = {
         viewClass: MeetMikey.View.Links
         selector: '.mm-links-favorite'
-        args: {isFavorite: true}
+        args: {isFavorite: true, fetch: true}
       }
 
   postInitialize: =>
@@ -29,8 +29,6 @@ class MeetMikey.View.LinksWrapper extends MeetMikey.View.Base
       @subView('linksFavorite').collection.on 'reset add remove', () =>
         @trigger 'updateTabCount', @getCount()
     @subView('links').setFetch @options.fetch
-    if not @isSearch()
-      @subView('linksFavorite').setFetch @options.fetch
 
   isSearch: =>
     not @options.fetch

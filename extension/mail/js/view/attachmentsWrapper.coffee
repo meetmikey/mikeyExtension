@@ -12,25 +12,24 @@ class MeetMikey.View.AttachmentsWrapper extends MeetMikey.View.Base
     'attachments':
       viewClass: MeetMikey.View.Attachments
       selector: '.mm-attachments-nonfavorite'
-      args: {}
+      args: {fetch: true}
 
   preInitialize: =>
     if not @isSearch()
       @subViews.attachmentsFavorite = {
         viewClass: MeetMikey.View.Attachments
         selector: '.mm-attachments-favorite'
-        args: {isFavorite: true}
+        args: {isFavorite: true, fetch: true}
       }
-
+      
   postInitialize: =>
     @subView('attachments').collection.on 'reset add remove', () =>
       @trigger 'updateTabCount', @getCount()
-    if not @isSearch()
+    if @isSearch()
+      @subView('attachments').setFetch false
+    else
       @subView('attachmentsFavorite').collection.on 'reset add remove', () =>
         @trigger 'updateTabCount', @getCount()
-    @subView('attachments').setFetch @options.fetch
-    if not @isSearch()
-      @subView('attachmentsFavorite').setFetch @options.fetch
 
   isSearch: =>
     not @options.fetch

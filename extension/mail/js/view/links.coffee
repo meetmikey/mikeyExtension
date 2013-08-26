@@ -14,8 +14,8 @@ template = """
         </div>
       </div>
     </div>
+    <div class="pagination-container"></div>
     <div class='sectionContents'>
-      <div class="pagination-container"></div>
       <table class="inbox-table search-results" id="mm-links-table" border="0">
         <thead class="labels">
           <th class="mm-download" colspan="5" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
@@ -84,6 +84,12 @@ template = """
 class MeetMikey.View.Links extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  subViews:
+    'pagination':
+      selector: '.pagination-container'
+      viewClass: MeetMikey.View.Pagination
+      args: {}
+
   events:
     'click .files .mm-file': 'openLink'
     'click .files .mm-source': 'openLink'
@@ -105,14 +111,19 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   postInitialize: =>
     @collection = new MeetMikey.Collection.Links()
     @rollover = new MeetMikey.View.LinkRollover collection: @collection, search: !@options.fetch
-    @pagination = new MeetMikey.Model.PaginationState items: @collection
 
-    @collection.on 'reset add remove', _.debounce(@render, MeetMikey.Constants.paginationSize)
+    @collection.on 'reset add remove', _.debounce(@render, 50)
     @collection.on 'sort', @render
-    @pagination.on 'change:page', @render
     @collection.on 'remove', @render
     @collection.on 'delete', @markDeleting
     @collection.on 'undoDelete', @unMarkDeleting
+    
+    MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
+    MeetMikey.globalEvents.on 'favoriteOrLikeAction', @initialFetch
+
+    @paginationState = new MeetMikey.Model.PaginationState items: @collection
+    @paginationState.on 'change:page', @render
+    @subView('pagination').setState @paginationState
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
@@ -121,8 +132,11 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   setFetch: (isFetch) =>
     @options.fetch = isFetch
-    if isFetch
-      MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
+    MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
+    if @isSearch()
+      @subView('pagination').options.render = false
+      @subView('pagination').render()
+    else
       MeetMikey.globalEvents.on 'favoriteOrLikeAction', @initialFetch
 
   isSearch: =>
@@ -219,9 +233,19 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
   restoreFromCache: =>
     @collection.reset(@cachedModels)
 
+  areFavoritesInView: =>
+    areFavoritesInView = false
+    if @parentView.subView('linksFavorite')
+      models = @parentView.subView('linksFavorite').getModels()
+      if models and models.length
+        areFavoritesInView = true
+    areFavoritesInView
+
   getTemplateData: =>
 
-    sectionHeader = 'Everything else'
+    sectionHeader = 'Everything'
+    if @areFavoritesInView()
+      sectionHeader += ' else'
     if @options.isFavorite
       sectionHeader = 'Starred'
 
@@ -233,7 +257,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   getModels: =>
     if @options.fetch
-      @pagination.getPageItems()
+      @paginationState.getPageItems()
     else
       @collection.models
 

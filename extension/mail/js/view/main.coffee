@@ -28,14 +28,9 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
   postInitialize: =>
     @subView('leftNavBar').on 'clicked:inbox', @showEmailTab
     @subView('inbox').on 'updateTabCount', @subView('tabs').updateTabCount
-    Backbone.on 'change:tab', @setPaginationStateForTab
     $(window).on 'hashchange', @pageNavigated
     MeetMikey.Globals.tabState = 'email'
     @setupWhenUserOnboards()
-
-  preRender: =>
-
-  postRender: =>
 
   teardown: =>
     Backbone.off 'change:tab'
@@ -53,12 +48,6 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
       @subView('tabs').enable()
       @subView('search').enableSearch()
       @subView('inbox').initialFetch()
-
-  setPaginationStateForTab: (tab) =>
-    @setPaginationState @subView('inbox').paginationForTab(tab)
-
-  setPaginationState: (pagination) =>
-    @subView('tabs').subView('pagination').setState pagination
 
   setSelectors: =>
     selectors = MeetMikey.Constants.Selectors

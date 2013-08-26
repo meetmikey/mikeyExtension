@@ -10,6 +10,8 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
     'click .rollover-resource-undo' : 'unDeleteResource'
 
   getTemplateData: =>
+    if not @model
+      return
     _.extend @model.decorate(), {searchQuery: @searchQuery}
 
   postInitialize: =>
