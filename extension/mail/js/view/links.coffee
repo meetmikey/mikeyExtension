@@ -28,7 +28,7 @@ template = """
         <tbody>
           {{#each models}}
             <tr class="files" data-cid="{{cid}}">
-              <td class="mm-madness shift-right mm-hide" {{#if deleting}}style="opacity:0.1"{{/if}}>
+              <td class="mm-madness shift-right mm-hide close-x" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide">
                 <div class="mm-hide inbox-icon"></div>
               </div>
