@@ -101,7 +101,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
     element = $(@containerSelector).parent().parent()
     element.off 'DOMSubtreeModified'
     element.on 'DOMSubtreeModified', @domSubtreeModified
-    $('.mm-download-tooltip').tooltip placement: 'bottom'
+    $('.mm-download-tooltip').tooltip placement: 'top'
 
   domSubtreeModified: (event) =>
     @pageNavigationEvent()

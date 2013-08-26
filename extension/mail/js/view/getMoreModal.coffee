@@ -52,8 +52,8 @@ template = """
           </div>
         </div>
         <div class="buttons-cluster">
-          <a href="#" id="rateOnChromeStoreButton" class="share-modal-button chrome-share"><div class="referral-button-text">rate mikey</div></a>
-          <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FMikey-for-Gmail%2F1400138380211355&amp;width=340&amp;height=60&amp;colorscheme=light&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;send=false&amp;appId=172776159468128" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:340px; height:60px;" allowTransparency="true"></iframe>
+          <a href="#" id="rateOnChromeStoreButton" class="share-modal-button chrome-share"><div class="referral-button-text">Rate Mikey</div></a>
+          <a href="#" id="facebookLikeButton" class="share-modal-button facebook-share"><div class="referral-button-text">Like Mikey</div></a>
         </div>
       </div>
 

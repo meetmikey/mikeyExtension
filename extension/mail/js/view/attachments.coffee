@@ -18,7 +18,7 @@ template = """
         <thead class="labels">
           <!-- <th class="mm-toggle-box"></th> -->
 
-          <th class="mm-download" colspan="5" data-mm-field="filename">file<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+          <th class="mm-download" colspan="4" data-mm-field="filename">file<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
           <th class="mm-file">&nbsp;</th>
           <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
           <th class="mm-to" data-mm-field="recipients">To<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
@@ -30,13 +30,13 @@ template = """
         <tbody>
       {{#each models}}
           <tr class="files" data-cid="{{cid}}">
-            <td class="mm-madness shift-right mm-hide" {{#if deleting}}style="opacity:0.1"{{/if}}>
+            <!-- <td class="mm-madness shift-right mm-hide" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide">
                 <div class="mm-hide inbox-icon"></div>
-              </div>
-            </td>
-            <td class="mm-madness mm-download" {{#if deleting}}style="opacity:0.1"{{/if}}>
-                <div class="mm-download-tooltip" data-toggle="tooltip" title="Open email">
+              </div> 
+            </td> -->
+            <td style="padding-left:4px;" class="mm-madness mm-download" {{#if deleting}}style="opacity:0.1"{{/if}}>
+                <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">
                   <div class="inbox-icon message"></div>
                 </div>
             </td>
