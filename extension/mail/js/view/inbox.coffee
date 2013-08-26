@@ -131,17 +131,6 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     Backbone.on 'clicked:next-page', @nextPage
     Backbone.on 'clicked:prev-page', @prevPage
 
-  paginationForTab: =>
-    @subView(@tabState())?.pagination
-
-  nextPage: =>
-    view = @subView @tabState()
-    view.pagination.nextPage()
-
-  prevPage: =>
-    view = @subView @tabState()
-    view.pagination.prevPage()
-
   # not needed anymore ?
   bindCountUpdate: =>
     @unbindCountUpdate()

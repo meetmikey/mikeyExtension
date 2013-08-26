@@ -91,7 +91,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     #@on 'showTab', @bindScrollHandler
     Backbone.on 'change:tab', @hashChange
     @collection = new MeetMikey.Collection.Images()
-    @collection.on 'reset', _.debounce(@render, MeetMikey.Constants.imagePaginationSize)
+    @collection.on 'reset', _.debounce(@render, 50)
     @subViews.imageCarousel.view.setImageCollection @collection
     $(window).off 'hashchange', @hashChange
     $(window).on 'hashchange', @hashChange

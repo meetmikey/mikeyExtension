@@ -53,7 +53,7 @@ class MeetMikey.View.Base extends Backbone.View
       @$el.append renderedTemplate
     else
       @$el.html renderedTemplate
-
+      
   preRender: ->
   postRender: ->
 

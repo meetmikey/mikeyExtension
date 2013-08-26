@@ -1,7 +1,7 @@
 imgPath = MeetMikey.Constants.imgPath
 arrowSprite = chrome.extension.getURL "#{imgPath}/sprite.png"
 template = """
-  <div class="pagination-wrapper" style="display: {{display}};">
+  <div class="pagination-wrapper" style="display: block;">
     
     <div class="arrow-buttons">
       
@@ -30,14 +30,10 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
 
   page: 0
 
-  postInitialize: =>
-
   getTemplateData: =>
     data = @state?.getStateData() ? {}
-    data.display = @getDisplay()
     data.prevPageClass = if data.firstPage then 'disable' else ''
     data.nextPageClass = if data.lastPage then 'disable' else ''
-
     data
 
   setState: (state) =>
@@ -65,7 +61,3 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
   trackPrevPageEvent: =>
     MeetMikey.Helper.Analytics.trackEvent 'prevPage',
       currentTab: MeetMikey.Globals.tabState, page: @page
-
-  getDisplay: =>
-    tab = MeetMikey.Globals.tabState
-    method = if (tab is 'email' or tab is 'images') then 'none' else 'block'
