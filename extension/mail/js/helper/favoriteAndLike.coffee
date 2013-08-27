@@ -8,6 +8,7 @@ likeAlertTemplate = """
 class FavoriteAndLike
 
   modelsCache: {}
+  currentAlertCId: null
 
   toggleFavorite: (model, elementId, source, callback) =>
     if not model
@@ -50,23 +51,58 @@ class FavoriteAndLike
         return
       model.set 'isLiked', true
       model.set 'elementId', elementId
+      model.set 'likeCallback', callback
       @updateModelLikeDisplay model, elementId
       MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', @getResourceType(model), true, source
       @likeAfterDelay model, elementId, callback
 
   showLikeAlert: (model) =>
+    if @currentAlertCId
+      $('#mm-undo-like-' + @currentAlertCId).remove()
+      previousModel = @modelsCache[@currentAlertCId]
+      if previousModel
+        @doLike previousModel
+      @currentAlertCId = null
     $('body').append $( @getLikeAlertHTML(model) )
     cid = model.cid
+    @currentAlertCId = cid
     $('#mm-undo-like-' + cid).on 'click', @handleUndoLikeClick
+
+  doLike: (model) =>
+    if not model
+      return
+    elementId = model.get 'elementId'
+    callback = model.get 'likeCallback'
+    likeTimeout = model.get 'likeTimeout'
+    if likeTimeout
+      clearTimeout likeTimeout
+    @sendLike model, elementId, callback
+    @cleanModel model
+    $('#mm-like-alert-' + model.cid).remove()
+    delete @modelsCache[model.cid]
 
   handleUndoLikeClick: (event) =>
     cid = $(event.currentTarget).closest('.mm-like-alert').attr('data-cid')
     model = @modelsCache[cid]
-    elementId = model.get 'elementId'
-    @cancelLike model, elementId
+    if not model
+      return
     $('#mm-like-alert-' + cid).remove()
-    model.unset 'elementId'
+    @currentAlertCId = null
     delete @modelsCache[cid]
+    likeTimeout = model.get('likeTimeout')
+    if likeTimeout
+      clearTimeout likeTimeout
+    model.set 'isLiked', false
+    elementId = model.get 'elementId'
+    @updateModelLikeDisplay model, elementId
+    @cleanModel model
+
+  cleanModel: (model) =>
+    if not model
+      return
+    model.unset 'likeTimeout'
+    model.unset 'elementId'
+    model.unset 'likeCallback'
 
   getLikeAlertHTML: (model) =>
     resourceType = @getResourceType( model )
@@ -91,23 +127,13 @@ class FavoriteAndLike
 
   likeAfterDelay: (model, elementId, callback) =>
     likeTimeout = setTimeout () =>
-        @sendLike model, elementId, callback
-        model.unset 'likeTimeout'
-        model.unset 'elementId'
-        cid = model.cid
-        $('#mm-like-alert-' + cid).remove()
-        delete @modelsCache[model.cid]
+        @doLike model
+        @currentAlertCId = null
     , MeetMikey.Constants.likeDelay
     model.set 'likeTimeout', likeTimeout
+    model.set 'likeCallback', callback
     @modelsCache[model.cid] = model
     @showLikeAlert model
-
-  cancelLike: (model, elementId) =>
-    if not model.get('likeTimeout')
-      return
-    clearTimeout model.get('likeTimeout')
-    model.set 'isLiked', false
-    @updateModelLikeDisplay model, elementId
 
   sendLike: (model, elementId, callback) =>
     model.putIsLiked true, (response, status) =>
