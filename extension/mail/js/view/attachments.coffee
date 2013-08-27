@@ -4,15 +4,17 @@ template = """
   {{#unless models}}
     <div class="mm-placeholder"></div>
   {{else}}
+  
   <div class="section-header active">
-    <div class="section-toggle">
-      <div class="section-arrow active"></div>
-      <div class="section-name active">
-        {{sectionHeader}}
+      <div class="section-toggle">
+        <div class="section-arrow active">
+        </div>
+        <div class="section-name active">
+          {{sectionHeader}}
+        </div>
       </div>
-      <div class="section-border active"></div>
-    </div>
-    <div class="pagination-container"></div>
+      <div class="pagination-container"></div>
+      <div class="section-border"></div>
     <div class='sectionContents'>
       <table class="inbox-table search-results" id="mm-attachments-table" border="0">
         <thead class="labels">
@@ -35,7 +37,8 @@ template = """
                 <div class="mm-hide inbox-icon"></div>
               </div> 
             </td> -->
-            <td style="padding-left:4px;" class="mm-madness mm-download" {{#if deleting}}style="opacity:0.1"{{/if}}>
+           
+            <td class="mm-madness mm-download shift-right" {{#if deleting}}style="opacity:0.1"{{/if}}>
                 <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">
                   <div class="inbox-icon message"></div>
                 </div>

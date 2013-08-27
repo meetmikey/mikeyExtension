@@ -264,50 +264,55 @@ body {
 }
 
 
-.inbox-table td {
+.inbox-table {
 
-  .comfortable & {
-    padding: 10px 10px 10px 0px;
-    height: 19px;
-    border:0px;
+  & td {
+
+    .comfortable & {
+      padding: 10px 0px 10px 0px;
+      height: 19px;
+      border:0px;
+    }
+
+    .cozy & {
+      padding: 7px 0px 7px 0px;
+      height: 19px;
+      border:0px;
+    }
+
+    .compact & {
+      padding: 3px 0px 3px 0px;
+      height: 19px;
+      border:0px;
+    } 
+  }
+  & td.mm-favorite {
+    padding-left: 5px;
   }
 
-  .cozy & {
-    padding: 7px 10px 7px 0px;
-    height: 19px;
-    border:0px;
+  & td.mm-download {
+    padding-left: 9px;
+    width: 22px;
   }
 
-  .compact & {
-    padding: 3px 10px 3px 0px;
-    height: 19px;
-    border:0px;
-  } 
+  & td.mm-sent {
+    padding-right: 10px;
+  }
+
+  & td.mm-from {
+    padding-right: 10px;
+  }
+  & td.mm-to {
+    padding-right: 10px;
+  }
+  & td.mm-type {
+    padding-right: 10px;
+  }
+  & td.mm-size {
+    padding-right: 10px;
+  }
+
 }
-
-.mm-favorite, .mm-like, .mm-hide, .mm-download {
-    .comfortable & td {
-      padding: 10px 6px 10px 0px;
-    }
-    .cozy & td {
-      padding: 7px 6px 7px 0px;
-    }
-    .compact & td {
-      padding: 3px 6px 3px 0px;
-    }
-  }
-
-.mm-icon {
-    .comfortable & td {
-      padding: 10px 6px 10px 10px;
-    }
-    .cozy & td {
-      padding: 7px 6px 7px 10px;
-    }
-    .compact & td {
-      padding: 3px 0px 3px 10px;
-    }
-  }
 
 .inbox-icon {
   background-image: url('@{pathPrefix}/mail/img/sidebar-icons.png');
@@ -337,6 +342,7 @@ body {
 
   &.message {
     background-position: 0px -58px;
+    width: 22px;
   }
 
   &.favoriteOn {
@@ -530,13 +536,15 @@ body {
     white-space: nowrap;
 }
 
-.labels .mm-sent {
+.mm-sent {
   padding-right: 10px;
 }
 
+
+
 .mm-size {
   width: 54px;
-  text-align: right;
+  text-align: left;
 }
 
 .labels .mm-size {
@@ -633,7 +641,7 @@ background-size: 18px 18px !important;
 }
 
 th.mm-download {
-  width: 130px;
+  width: 115px;
 }
 
 
@@ -643,6 +651,7 @@ th.mm-download {
   width: 18px;
   height: 18px;
   display: inline-block;
+  cursor: pointer;
   .rollover-actions & {
     float: right;
     margin-left: 8px;
@@ -1345,7 +1354,19 @@ cursor: pointer;
     float: right;
     margin-left: 4px;
   }
+
+  .rollover-footer & {
+    float: left;
+    width: 100%;
+    & .mm-download-tooltip {
+      float:left;
+      margin-left: 0px;
+      margin-right: 8px;
+    }
+  }
+
 }
+
 
 
 .image-inside {
@@ -1398,19 +1419,24 @@ cursor: pointer;
 /* ---------------- PAGINATION ---------------------- */
 
 .pagination-container {
-  display: inline-block;
   float:right;
-  margin-top: 0px;
+  margin-top: -4px;
   margin-right:0px;
+  display: none;
+  
+  .section-header.active & {
+    display: inline-block;
+  }
+
   .compact & {
-    margin-top:0px;
+  
   }
   .cozy & {
-    margin-top:0px;
+  
     margin-right: 0px;
   }
   .comfortable & {
-    margin-top:0px;
+
     margin-right: 0px;
   }
   .compact.multiple-inbox & {
@@ -1664,13 +1690,13 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 
   &.shift-right {
     .tooltip.bottom {
-    margin-left: 13px;
+    margin-left: 20px;
     padding: 5px 0;
     }
     .tooltip.bottom .tooltip-arrow {
     top: 0;
     left: 50%;
-    margin-left: -14px;
+    margin-left: -24px;
     border-width: 0 5px 5px;
     border-bottom-color: @black;
     }
@@ -2947,11 +2973,27 @@ color: #FFF;
 
 .section-toggle {
   display: inline-block;
-  padding-top: 12px;
+  padding-top: 6px;
 
   &:hover {
     opacity: 1;
     cursor: pointer;
+  }
+}
+
+.section-border {
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 8px;
+  display: none;
+  width: auto:
+  height: 1px;
+
+  .section-header.active & {
+    display: block;
+  }
+
+  .dark-blocks & {
+    border-bottom: 1px solid #3B3A3D;
   }
 }
 
