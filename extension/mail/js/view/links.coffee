@@ -49,7 +49,7 @@ template = """
 
             <td class="mm-madness mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
-                <div id="mm-attachment-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+                <div id="mm-link-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
               </div>
             </td>
            
