@@ -1098,6 +1098,11 @@ font-size: 13px;
     background-color: #fff;
     display: inline-block;
     font-weight: bold;
+
+    .dark-blocks & {
+      background-color: @black;
+      color: #f7f7f7;
+    }
     }
 
   .hide-image-x:hover & {
@@ -1107,6 +1112,10 @@ font-size: 13px;
   .hide-overlay:hover & {
     opacity: 1;
     color: #222;
+    .dark-blocks & {
+      background-color: @black;
+      color: #fff;
+    }
   }
 
   .dark-blocks .mm-hide & {
