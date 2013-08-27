@@ -1082,6 +1082,10 @@ font-size: 13px;
     opacity: 0.4;
   }
 
+  .hide-overlay:hover & {
+    opacity: 0.4;
+  }
+
   .dark-blocks .mm-hide & {
     color: #fff;
   }
@@ -2937,6 +2941,30 @@ color: #FFF;
   display: inline-block;
   cursor: pointer;
   text-decoration: underline;
+}
+
+/* ----------------- HIDE --------------------------- */
+
+.hide-overlay {
+  text-transform: uppercase;
+  background-color: @white;
+  color: @medium-grey;
+  cursor: pointer;
+  text-align: center;
+  height: 19px;
+  z-index: 990;
+  display: inline-block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  float: right;
+  padding:10px;
+  font-weight: bolder;
+  opacity: 1;
+}
+
+td.mm-sent {
+  position: relative;
 }
 
 

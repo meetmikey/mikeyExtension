@@ -64,12 +64,13 @@ template = """
             <td class="mm-to truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{to}}</td>
             <td class="mm-type truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{type}}</td>
             <td class="mm-size truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{size}}</td>
-            <td class="mm-sent truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{sentDate}}</td>
+            <td class="mm-sent truncate fader" {{#if deleting}}style="opacity:0.1"{{/if}}>{{sentDate}}<div class="hide-overlay"><div class="close-x">x</div></div></td>
+            
           </tr>
       {{/each}}
       </tbody>
       </table>
-      <div class="rollover-container"></div>
+      
     </div>
   {{/unless}}
 """
