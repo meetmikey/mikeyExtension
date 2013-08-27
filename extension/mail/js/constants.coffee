@@ -14,6 +14,7 @@ _.extend MeetMikey.Constants,
   paginationSize: 50
   imagePaginationSize: 20
   deleteDelay: 8000
+  likeDelay: 8000
   basicPlanPrice: '3'
   basicPlanNumAccounts: 1
   basicPlanDays: '365'
