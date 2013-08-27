@@ -6,19 +6,20 @@ template = """
   {{#unless models}}
     <div class="mm-placeholder"></div>
   {{else}}
-    <div class="section-header">
+    <div class="section-header active">
       <div class="section-toggle">
-        <div class="section-arrow active"></div>
+        <div class="section-arrow active">
+        </div>
         <div class="section-name active">
           {{sectionHeader}}
         </div>
       </div>
-    </div>
-    <div class="pagination-container"></div>
+      <div class="pagination-container"></div>
+      <div class="section-border"></div>
     <div class='sectionContents'>
       <table class="inbox-table search-results" id="mm-links-table" border="0">
         <thead class="labels">
-          <th class="mm-download" colspan="5" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
+          <th class="mm-download" colspan="4" data-mm-field="title">Link<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
           <th class="mm-file mm-link"></th>
           <th class="mm-source" data-mm-field="url">Source<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
           <th class="mm-from" data-mm-field="sender">From<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
@@ -28,22 +29,23 @@ template = """
         <tbody>
           {{#each models}}
             <tr class="files" data-cid="{{cid}}">
-              <td class="mm-madness shift-right mm-hide close-x" {{#if deleting}}style="opacity:0.1"{{/if}}>
-              <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide">
-                <div class="mm-hide inbox-icon"></div>
-              </div>
-            </td>
-            <td class="mm-madness mm-download" {{#if deleting}}style="opacity:0.1"{{/if}}>
-                <div class="mm-download-tooltip" data-toggle="tooltip" title="Open email">
-                  <div class="inbox-icon message"></div>
-                </div>
-            </td>
+              <!-- <td class="mm-madness shift-right mm-hide" {{#if deleting}}style="opacity:0.1"{{/if}}>
+                  <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide">
+                    <div class="mm-hide inbox-icon"></div>
+                  </div> 
+                </td> -->
+               
+                <td class="mm-madness mm-download shift-right" {{#if deleting}}style="opacity:0.1"{{/if}}>
+                    <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">
+                      <div class="inbox-icon message"></div>
+                    </div>
+                </td>
 
-            <td class="mm-madness mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-              <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
-                <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-              </div>
-            </td>
+                <td class="mm-madness mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
+                  <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
+                    <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+                  </div>
+                </td>
 
             <td class="mm-madness mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
