@@ -1089,20 +1089,18 @@ font-size: 13px;
 
 
   .hide-overlay & {
-    padding: 6px 8px 6px 8px;
+    padding: 4px 6px 4px 6px;
     font-weight: normal;
-    color: #999;
-    text-transform: uppercase;
-    font-size: 10px;
+    color: #444;
+    font-size: 11px;
+    height: 12px;
     opacity: 1;
-    background-color: #fff;
+    background-color: #e9e9e9;
     display: inline-block;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    border: 1px solid #b8b8b8;
     font-weight: bold;
-
-    .dark-blocks & {
-      background-color: @black;
-      color: #f7f7f7;
-    }
     }
 
   .hide-image-x:hover & {
@@ -1112,10 +1110,9 @@ font-size: 13px;
   .hide-overlay:hover & {
     opacity: 1;
     color: #222;
-    .dark-blocks & {
-      background-color: @black;
-      color: #fff;
-    }
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+
   }
 
   .dark-blocks .mm-hide & {
@@ -1238,6 +1235,7 @@ cursor: pointer;
   -moz-transition: opacity .13s linear;
   -o-transition: opacity .13s linear;
   transition: opacity .13s linear;
+  top: 20px;
 }
 
 .rollover-main {
@@ -2978,7 +2976,6 @@ color: #FFF;
 /* ----------------- HIDE --------------------------- */
 
 .hide-overlay {
-  text-transform: uppercase;
   cursor: pointer;
   text-align: center;
   height: 22px;
@@ -2990,15 +2987,15 @@ color: #FFF;
   font-weight: bolder;
   opacity: 1;
   width: 22px;
-  right: 54px;
-  top: 11px;
+  right: 44px;
+  top: 12px;
 
   .cozy & {
-    top: 8px;
+    top: 9px;
   }
 
   .compact & {
-    top: 4px;
+    top: 5px;
 
   }
 

@@ -65,7 +65,7 @@ template = """
                   <span class="mm-file-text">{{summary}}</span>
                 </div>
                 <div class="mm-hide hide-overlay">
-                  <div class="close-x">hide link</div>
+                  <div class="close-x">Hide link</div>
                 </div>
               </td>
               <td class="mm-undo truncate" {{#unless deleting}}style="display:none;{{/unless}}>

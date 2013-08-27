@@ -61,7 +61,7 @@ template = """
             <td class="mm-undo" {{#unless deleting}}style="display:none;"{{/unless}}>File is hidden! <strong>Undo</strong></td>
             <td class="mm-file truncate" {{#if deleting}}style="display:none;"{{/if}}><div class="inner-text">{{filename}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
               <div class="mm-hide hide-overlay">
-                <div class="close-x">hide file</div>
+                <div class="close-x">Hide file</div>
               </div>
             </td>
             <td class="mm-from truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{from}}</td>
