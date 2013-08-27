@@ -45,6 +45,8 @@ class FavoriteAndLike
     if not model
       return
     if model.get('isLiked')
+      if @currentAlertCId and @currentAlertCId == model.cid
+        @undoLike model
       return
     MeetMikey.Helper.Messaging.checkLikeInfoMessaging model, (shouldProceed) =>
       if not shouldProceed
@@ -84,8 +86,12 @@ class FavoriteAndLike
   handleUndoLikeClick: (event) =>
     cid = $(event.currentTarget).closest('.mm-like-alert').attr('data-cid')
     model = @modelsCache[cid]
+    @undoLike model
+
+  undoLike: (model) =>
     if not model
       return
+    cid = model.cid
     $('#mm-like-alert-' + cid).remove()
     @currentAlertCId = null
     delete @modelsCache[cid]
