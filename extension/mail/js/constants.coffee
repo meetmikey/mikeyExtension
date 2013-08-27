@@ -1,5 +1,5 @@
 _.extend MeetMikey.Constants,
-  env: 'local'
+  env: 'production'
   imgPath: 'mail/img'
   mixpanelId: '4025d8a58a875ce9a39db05bcf86fd71'
   #mixpanelIdTest: '0d4029b8e19dddbfacd1da118b47c01b'
@@ -14,7 +14,7 @@ _.extend MeetMikey.Constants,
   paginationSize: 50
   imagePaginationSize: 20
   deleteDelay: 8000
-  likeDelay: 8000
+  likeDelay: 300000
   basicPlanPrice: '3'
   basicPlanNumAccounts: 1
   basicPlanDays: '365'

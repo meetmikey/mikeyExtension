@@ -1,7 +1,7 @@
 likeAlertTemplate = """
   <div class="mm-like-alert" id="mm-like-alert-{{cid}}" data-cid="{{cid}}">
-    You just 'liked' a{{#if resourceTypeStartsWithVowel}}n{{/if}} {{resourceType}}.
-    <div class="mm-undo-like" id="mm-undo-like-{{cid}}">Undo.</div>
+    You just liked {{resourceType}}.
+    <div class="mm-undo-like" id="mm-undo-like-{{cid}}">Undo</div>
   </div>
 """
 
