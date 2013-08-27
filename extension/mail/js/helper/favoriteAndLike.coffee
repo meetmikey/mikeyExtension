@@ -1,6 +1,6 @@
 likeAlertTemplate = """
   <div class="mm-like-alert" id="mm-like-alert-{{cid}}" data-cid="{{cid}}">
-    You just liked {{resourceType}}.
+    You just liked {{resourceName}}.
     <div class="mm-undo-like" id="mm-undo-like-{{cid}}">Undo</div>
   </div>
 """
@@ -74,11 +74,18 @@ class FavoriteAndLike
     if resourceType == 'image' or resourceType == 'attachment'
       resourceTypeStartsWithVowel = true
 
+    resourceName = 'something'
+    if resourceType == 'link'
+      resourceName = model.get('title') ? model.get('url')
+    else if ( resourceType == 'image' ) or ( resourceType == 'attachment' )
+      resourceName = model.get 'filename'
+
     compiledTemplate = Handlebars.compile likeAlertTemplate
     templateData =
       resourceType: resourceType
       resourceTypeStartsWithVowel: resourceTypeStartsWithVowel
       cid: model.cid
+      resourceName: resourceName
     html = compiledTemplate templateData
     html
 
