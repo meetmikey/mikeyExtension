@@ -74,7 +74,7 @@ template = """
                 </div>
                
               </td>
-              <td class="mm-source truncate" {{#if deleting}}style="opacity:0.1"{{/if}}><div class="inner-text"{{displayUrl}}</td>
+              <td class="mm-source truncate" {{#if deleting}}style="opacity:0.1"{{/if}}><div class="inner-text">{{displayUrl}}</div></td>
               <td class="mm-from truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{from}}</td>
               <td class="mm-to truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{to}}</td>
               <td class="mm-sent truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{sentDate}}</td>

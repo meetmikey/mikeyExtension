@@ -39,3 +39,5 @@ template = """
     </div>
   </div>
 """
+class MeetMikey.View.LinkRollover extends MeetMikey.View.Rollover
+  template: Handlebars.compile(template)
