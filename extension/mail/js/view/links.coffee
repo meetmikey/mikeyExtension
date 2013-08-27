@@ -64,13 +64,17 @@ template = """
                   {{title}}
                   <span class="mm-file-text">{{summary}}</span>
                 </div>
+                <div class="mm-hide hide-overlay">
+                  <div class="close-x">hide link</div>
+                </div>
               </td>
               <td class="mm-undo truncate" {{#unless deleting}}style="display:none;{{/unless}}>
                 <div class="flex">
                   Link is hidden! <strong>Undo</strong> 
                 </div>
+               
               </td>
-              <td class="mm-source truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{displayUrl}}</td>
+              <td class="mm-source truncate" {{#if deleting}}style="opacity:0.1"{{/if}}><div class="inner-text">{{displayUrl}}</div></td>
               <td class="mm-from truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{from}}</td>
               <td class="mm-to truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{to}}</td>
               <td class="mm-sent truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{sentDate}}</td>

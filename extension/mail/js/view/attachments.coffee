@@ -59,12 +59,16 @@ template = """
 
             <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat; {{#if deleting}}opacity:0.1{{/if}}">&nbsp;</td>
             <td class="mm-undo" {{#unless deleting}}style="display:none;"{{/unless}}>File is hidden! <strong>Undo</strong></td>
-            <td class="mm-file truncate" {{#if deleting}}style="display:none;"{{/if}}>{{filename}}&nbsp;</td>
+            <td class="mm-file truncate" {{#if deleting}}style="display:none;"{{/if}}><div class="inner-text">{{filename}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+              <div class="mm-hide hide-overlay">
+                <div class="close-x">hide file</div>
+              </div>
+            </td>
             <td class="mm-from truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{from}}</td>
             <td class="mm-to truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{to}}</td>
             <td class="mm-type truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{type}}</td>
             <td class="mm-size truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{size}}</td>
-            <td class="mm-sent truncate fader" {{#if deleting}}style="opacity:0.1"{{/if}}>{{sentDate}}<div class="hide-overlay"><div class="close-x">x</div></div></td>
+            <td class="mm-sent truncate fader" {{#if deleting}}style="opacity:0.1"{{/if}}>{{sentDate}}</td>
             
           </tr>
       {{/each}}

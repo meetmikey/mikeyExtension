@@ -311,6 +311,11 @@ body {
   & td.mm-size {
     padding-right: 10px;
   }
+  &td.mm-source {
+    .comfortable & {
+    padding-right: 10px;
+  }
+  }
 
 }
 
@@ -565,12 +570,7 @@ body {
   width:180px;
 }
 
-.mm-container .file {
-}
 
-.inbox-table td.file {
-  margin-right: 30px;
-}
 
 .inbox-table td.source  {
   padding: 6px 10px 6px 10px;
@@ -662,12 +662,14 @@ th.mm-download {
 
 
 .mm-source {
-  overflow: hidden;
-  width:200px;
-  text-overflow: ellipsis;
-    white-space: nowrap;
-  .dark-blocks & {
+  width: 200px;
 
+  & .inner-text {
+    overflow: hidden;
+    width:190px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
   }
 }
 
@@ -693,11 +695,15 @@ th.mm-icon {
 }
 
 .mm-file {
-  overflow: hidden;
   min-width: 200px;
-  width:100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+  & .inner-text {
+    overflow: hidden;
+    width:90%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
 }
 
 th.mm-file  {
@@ -1075,15 +1081,32 @@ font-size: 13px;
 
 .close-x {
   color: #000;
-  font-size: 18px;
+  font-size: 14px;
   opacity: 0.2;
   margin-top: -2px;
+  font-weight: bold;
+  
+
+
+  .hide-overlay & {
+    padding: 6px 8px 6px 8px;
+    font-weight: normal;
+    color: #999;
+    text-transform: uppercase;
+    font-size: 10px;
+    opacity: 1;
+    background-color: #fff;
+    display: inline-block;
+    font-weight: bold;
+    }
+
   .hide-image-x:hover & {
     opacity: 0.4;
   }
 
   .hide-overlay:hover & {
-    opacity: 0.4;
+    opacity: 1;
+    color: #222;
   }
 
   .dark-blocks .mm-hide & {
@@ -2947,23 +2970,36 @@ color: #FFF;
 
 .hide-overlay {
   text-transform: uppercase;
-  background-color: @white;
-  color: @medium-grey;
   cursor: pointer;
   text-align: center;
-  height: 19px;
+  height: 22px;
   z-index: 990;
-  display: inline-block;
+  display: none;
   position: absolute;
-  right: 0px;
-  top: 0px;
+  right: 42px;
   float: right;
-  padding:10px;
   font-weight: bolder;
   opacity: 1;
+  width: 22px;
+  right: 54px;
+  top: 11px;
+
+  .cozy & {
+    top: 8px;
+  }
+
+  .compact & {
+    top: 4px;
+
+  }
+
+
+  tr:hover & {
+    display: inline-block;
+  }
 }
 
-td.mm-sent {
+td.mm-sent, td.mm-file {
   position: relative;
 }
 
