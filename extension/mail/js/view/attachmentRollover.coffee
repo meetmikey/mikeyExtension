@@ -16,23 +16,19 @@ template = """
     </div>
 
     <div class="rollover-footer">
+      {{#if searchQuery}}
+        <a class="rollover-message-link" href="#search/{{searchQuery}}/{{threadHex}}">View email thread</a>
+      {{else}}
+        <a class="rollover-message-link" href="#inbox/{{threadHex}}">View email thread</a>
+      {{/if}}
       <div class="rollover-actions">
-        <div class="mm-download-tooltip rollover-resource-delete" data-toggle="tooltip" title="Hide">
-          <div class="mm-hide inbox-icon "></div>
-        </div>
-        <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">
-          {{#if searchQuery}}
-            <a class="rollover-message-link inbox-icon message" href="#search/{{searchQuery}}/{{threadHex}}"></a>
-          {{else}}
-            <a class="rollover-message-link inbox-icon message" href="#inbox/{{threadHex}}"></a>
-          {{/if}}
-        </div>
-        <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
-          <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-        </div>
-        <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
-          <div id="mm-attachment-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
-        </div>
+        {{#if deleting}}
+          <a class="rollover-resource-delete" href="#" style="display:none;">Hide file</a>
+          <a class="rollover-resource-undo" href="#">Undo</a>
+        {{else}}
+          <a class="rollover-resource-delete" href="#">Hide file</a>
+          <a class="rollover-resource-undo" href="#" style="display:none;">Undo</a>
+        {{/if}}
       </div>
     </div>
   </div>
