@@ -36,8 +36,6 @@ class MeetMikey.Collection.Base extends Backbone.Collection
     opts.cache = false
     return super opts unless MeetMikey.globalUser?
 
-    MeetMikey.Helper.callAPI
-
     opts ?= {}
     apiData = MeetMikey.Helper.getBasicAPIData()
     if opts.data?
