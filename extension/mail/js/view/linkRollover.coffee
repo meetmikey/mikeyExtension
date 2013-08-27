@@ -23,9 +23,9 @@ template = """
 
     <div class="rollover-footer">
       {{#if searchQuery}}
-        <a class="rollover-message-link inbox-icon message" href="#search/{{searchQuery}}/{{threadHex}}"></a>
+        <a href="#search/{{searchQuery}}/{{threadHex}}"><div class="rollover-message-link inbox-icon message"></div></a>
       {{else}}
-        <a class="rollover-message-link inbox-icon message" href="#inbox/{{threadHex}}"></a>
+        <a href="#inbox/{{threadHex}}"><div class="rollover-message-link inbox-icon message"></div></a>
       {{/if}}
       <div class="rollover-actions">
         {{#if deleting}}

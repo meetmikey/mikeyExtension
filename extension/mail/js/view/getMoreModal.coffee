@@ -10,7 +10,7 @@ template = """
     </div>
     <div class="modal-body">
       {{#if isPremium}}
-        <p>You already have a premium account so we can't give you more days, but if Mikey has helped you out, we would be thrilled if you shared Mikey with your friends or rated us in the Chrome store.</p>
+        <p>You already have a premium account so we can't give you more days, but if Mikey has helped you out, you could really help Mikey out by:</p>
       {{else}}
         {{#if isFullyIndexed}}
           <p>Mikey is showing you stuff <strong>{{mailTotalDays}}</strong> days in your account, but you will be limited to <strong>{{mailDaysLimit}}</strong>. Not to worry though, you can get more days by:</p>
@@ -53,7 +53,9 @@ template = """
         </div>
         <div class="buttons-cluster">
           <a href="#" id="rateOnChromeStoreButton" class="share-modal-button chrome-share"><div class="referral-button-text">Rate Mikey</div></a>
-          <a href="#" id="facebookLikeButton" class="share-modal-button facebook-share"><div class="referral-button-text">Like Mikey</div></a>
+          <a href="#" id="facebookLikeButton">
+            <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FMikey-for-Gmail%2F1400138380211355%3Fref%3Dhl&amp;width=340&amp;height=62&amp;colorscheme=light&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;send=false&amp;appId=172776159468128" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:340px; height:62px;" allowTransparency="true"></iframe>
+          </a>
         </div>
       </div>
 

@@ -325,6 +325,8 @@ body {
   height: 18px;
   overflow: hidden;
   opacity: 0.35;
+  cursor: pointer;
+  display: inline-block;
 
   .image-box & {
     float: right;
@@ -1252,7 +1254,6 @@ cursor: pointer;
 }
 
 .rollover-footer {
-  .footer;
   position: relative;
   overflow: hidden;
   padding: 6px 15px 6px 15px;
@@ -1263,7 +1264,8 @@ cursor: pointer;
   background-color: #f9f9f9;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 16px;
+  line-height: 18px;
+  height: 18px;
 }
 
 .footer {
@@ -1277,6 +1279,7 @@ cursor: pointer;
     }
   }
 }
+
 
 .footer-actions {
   display: inline-block;
@@ -1389,6 +1392,12 @@ cursor: pointer;
   & a {
     float: right;
     margin-left: 4px;
+    color: #8e8e8e;
+    text-transform: none;
+    &:hover {
+      text-decoration: underline;
+      color: #777;
+    }
   }
 
   .rollover-footer & {
