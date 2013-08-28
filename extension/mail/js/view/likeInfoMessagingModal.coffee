@@ -1,17 +1,16 @@
 template = """
-  <div class="modal hide fade modal-wide" style="display: none; ">
+  <div class="modal hide fade modal-like" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Alright!  It's your first 'like' with Mikey!</h3>
+      <h3>Alright!  It's your first Like with Mikey!</h3>
     </div>
     <div class="modal-body">
-      <p>When you click Mikey's like buttons, the people in that conversation see that you liked that attachment, link, or image.</p>
+      <p>When you click Mikey's Like buttons, we shoot a quick notification to everyone in the conversation.</p>
       {{#if hasRecipients}}
         {{#if isMoreThanOneRecipient}}
-          <p>In this case, the following folks will get an email saying you liked this {{resourceType}}.
+          <p>In this case, the following folks will get an email saying you liked this {{resourceType}}:</p>
           {{#each recipients}}
-            <br/>
-            <b>{{name}}</b>
+            <b>{{name}}</b><br>
           {{/each}}
         {{else}}
           <p>In this case, <b>{{singleRecipient.name}}</b> will get an email saying you liked this {{resourceType}}.
@@ -19,13 +18,12 @@ template = """
       {{/if}}
 
       <p>The email will be from you and look like this:</p>
-      <div id="mm-like-info-email-template"></div>
+      <div class="like-email-wrapper"><div class="like-email-container" id="mm-like-info-email-template"></div></div>
 
-      <p>Ready? Click ok below to send your like, and we won't show you this message again.</p>
     </div>
-    <div class="footer-buttons">
-      <a href="#" data-dismiss="modal" class="button buttons" id="mmLikeInfoMessagingProceed">ok</a>
-      <a href="#" data-dismiss="modal" class="button buttons" id="mmLikeInfoMessagingCancel">cancel</a>
+    <div style="margin-top: 20px;" class="footer-buttons">
+      <a href="#" data-dismiss="modal" class="button buttons" id="mmLikeInfoMessagingProceed">Awesome. Let's do it.</a>
+      <a href="#" data-dismiss="modal" class="button buttons" id="mmLikeInfoMessagingCancel">No thanks.</a>
     </div>
   </div>
 """

@@ -2958,28 +2958,32 @@ color: #FFF;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: absolute;
-  top: 90px;
+  top: 86px;
   z-index: 990;
   font-size: 80%;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
   left: 50%;
-  margin-left: -110px;
-  max-width: 220px;
-  font-weight: bold;
+  margin-left: -200px;
+  max-width: 400px;
+  
 }
 
 .mm-like-alert-text {
-  max-width: 167px;
+  max-width: 320px;
   text-overflow: ellipsis;
   white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
 }
 
 .mm-undo-like {
   display: inline-block;
   cursor: pointer;
   text-decoration: underline;
+  font-weight: bold;
+  margin-left: 8px;
 }
 
 /* ----------------- HIDE --------------------------- */
@@ -3430,4 +3434,22 @@ td.mm-sent, td.mm-file {
 
 .mm-open-resource {
   cursor: pointer; 
+}
+
+/* ================ LIKE EMAIL MODAL ================= */
+
+.like-email-container {
+  overflow: hidden;
+  width: 700px;
+}
+
+.like-email-wrapper {
+  overflow: hidden;
+  width: 640px;
+  border: 1px solid #e5e5e5;
+}
+
+.modal-like {
+  width: 680px;
+  margin-left: -340px;
 }
