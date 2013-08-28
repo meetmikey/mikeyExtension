@@ -43,11 +43,13 @@ class MeetMikey.View.LikeInfoMessagingModal extends MeetMikey.View.BaseModal
   proceedClicked: =>
     if ! @hasReturned
       @trigger 'proceed'
+      MeetMikey.Helper.Analytics.trackEvent 'acceptLikeInfoMessagingModal'
       MeetMikey.globalUser.setLikeInfoMessaging()
       @hasReturned = true
 
   cancelClicked: =>
     if ! @hasReturned
+      MeetMikey.Helper.Analytics.trackEvent 'cancelLikeInfoMessagingModal', {source: 'cancelButton'}
       @trigger 'cancel'
       @hasReturned = true
 
@@ -67,6 +69,7 @@ class MeetMikey.View.LikeInfoMessagingModal extends MeetMikey.View.BaseModal
 
   thisModalHidden: (event) =>
     if ! @hasReturned
+      MeetMikey.Helper.Analytics.trackEvent 'cancelLikeInfoMessagingModal', {source: 'nonCancelButton'}
       @trigger 'cancel'
       @hasReturned = true
     @modalHidden event

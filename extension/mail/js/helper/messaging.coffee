@@ -20,6 +20,7 @@ class Messaging
       callback true
     @likeInfoMessagingModal.on 'cancel', () =>
       callback false
+    MeetMikey.Helper.Analytics.trackEvent 'openLikeInfoMessagingModal'
     @likeInfoMessagingModal.render()
 
 MeetMikey.Helper.Messaging = new Messaging()
