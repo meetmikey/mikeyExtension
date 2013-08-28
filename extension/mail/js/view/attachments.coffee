@@ -208,12 +208,14 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
     @markDeleting(model)
+    false
 
   unMarkDeletingEvent: (event) =>
     event.preventDefault()
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
     @unMarkDeleting(model)
+    false
 
   unMarkDeleting: (model) =>
     model.set('deleting', false)
