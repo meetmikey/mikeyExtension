@@ -19,7 +19,7 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
 
   postRender: =>
     $(document).one 'mousemove', @startHide
-    @$('.rollover-box').css left: @cursorInfo.x + 5, top: @cursorInfo.y
+    @$('.rollover-box').css left: @cursorInfo.x + 5, top: ( @cursorInfo.y + 10 )
 
   unDeleteResource: (event) =>
     console.log 'undo delete', @model
