@@ -88,6 +88,10 @@ class MeetMikey.View.LikeInfoMessagingModal extends MeetMikey.View.BaseModal
         if input.email == myEmail
           return true
         false
+      if recipients.length == 0
+        recipients.push
+          email: myEmail
+          name: MeetMikey.globalUser.getFullName()
       _.each recipients, (recipient) =>
         if not recipient.name
           recipient.name = recipient.email

@@ -69,6 +69,17 @@ class MeetMikey.Model.User extends Backbone.Model
     else
       return false
 
+  getFullName: =>
+    firstName = @get 'firstName'
+    lastName = @get 'lastName'
+    if firstName and lastName
+      return firstName + ' ' + lastName
+    if firstName
+      return firstName
+    if lastName
+      return 'M. ' + lastName
+    return ''
+
   fetchOnboard: =>
     MeetMikey.Helper.callAPI
       url: 'onboarding'
