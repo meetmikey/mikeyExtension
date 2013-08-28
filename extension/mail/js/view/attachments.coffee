@@ -183,6 +183,13 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     else
       @parentView.subView('attachments').collection.add model
 
+  markDeletingEvent: (event) =>
+    event.preventDefault()
+    cid = $(event.currentTarget).closest('.files').attr('data-cid')
+    model = @collection.get(cid)
+    @markDeleting(model)
+    false
+
   markDeleting: (model) =>
     model.set('deleting', true)
     element = $('.files[data-cid='+model.cid+']')
@@ -202,13 +209,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
         @collection.remove(model)
         model.delete()
     , MeetMikey.Constants.deleteDelay
-
-  markDeletingEvent: (event) =>
-    event.preventDefault()
-    cid = $(event.currentTarget).closest('.files').attr('data-cid')
-    model = @collection.get(cid)
-    @markDeleting(model)
-    false
 
   unMarkDeletingEvent: (event) =>
     event.preventDefault()
