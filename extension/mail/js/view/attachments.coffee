@@ -1,20 +1,59 @@
 spriteUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png")
 
+attachmentTemplate = """
+  <tr class="files" data-cid="{{cid}}">
+
+    <td class="mm-madness mm-download shift-right" {{#if deleting}}style="opacity:0.1"{{/if}}>
+      <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">
+        <div class="inbox-icon message"></div>
+      </div>
+    </td>
+
+    <td class="mm-madness mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
+      <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
+        <div id="mm-attachment-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+      </div>
+    </td>
+
+    <td class="mm-madness mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
+      <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
+        <div id="mm-attachment-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+      </div>
+    </td>
+
+    <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat; {{#if deleting}}opacity:0.1{{/if}}">&nbsp;</td>
+    <td class="mm-undo" {{#unless deleting}}style="display:none;"{{/unless}}>File is hidden! <strong>Undo</strong></td>
+
+    <td class="mm-file truncate" {{#if deleting}}style="display:none;"{{/if}}><div class="inner-text">{{filename}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+      <div class="mm-hide hide-overlay">
+        <div class="close-x">Hide file</div>
+      </div>
+    </td>
+
+    <td class="mm-from truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{from}}</td>
+    <td class="mm-to truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{to}}</td>
+    <td class="mm-type truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{type}}</td>
+    <td class="mm-size truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{size}}</td>
+    <td class="mm-sent truncate fader" {{#if deleting}}style="opacity:0.1"{{/if}}>{{sentDate}}</td>
+    
+  </tr>
+"""
+
 template = """
   {{#unless models}}
     <div class="mm-placeholder"></div>
   {{else}}
   
   <div class="section-header active">
-      <div class="section-toggle">
-        <div class="section-arrow active">
-        </div>
-        <div class="section-name active">
-          {{sectionHeader}}
-        </div>
+    <div class="section-toggle">
+      <div class="section-arrow active"></div>
+      <div class="section-name active">
+        {{sectionHeader}}
       </div>
-      <div class="pagination-container"></div>
-      <div class="section-border"></div>
+    </div>
+    <div class="pagination-container"></div>
+    <div class="section-border"></div>
+
     <div class='sectionContents'>
       <table class="inbox-table search-results" id="mm-attachments-table" border="0">
         <thead class="labels">
@@ -29,59 +68,21 @@ template = """
           <th class="mm-sent" data-mm-field="sentDate">Sent<div style="background-image: url('#{spriteUrl}');" class="sort-carat">&nbsp;</div></th>
 
         </thead>
-        <tbody>
-      {{#each models}}
-          <tr class="files" data-cid="{{cid}}">
-            <!-- <td class="mm-madness shift-right mm-hide" {{#if deleting}}style="opacity:0.1"{{/if}}>
-              <div class="mm-download-tooltip" data-toggle="tooltip" title="Hide">
-                <div class="mm-hide inbox-icon"></div>
-              </div> 
-            </td> -->
-           
-            <td class="mm-madness mm-download shift-right" {{#if deleting}}style="opacity:0.1"{{/if}}>
-                <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">
-                  <div class="inbox-icon message"></div>
-                </div>
-            </td>
-
-            <td class="mm-madness mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
-              <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
-                <div id="mm-attachment-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-              </div>
-            </td>
-
-            <td class="mm-madness mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
-              <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
-                <div id="mm-attachment-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
-              </div>
-            </td>
-
-
-            <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat; {{#if deleting}}opacity:0.1{{/if}}">&nbsp;</td>
-            <td class="mm-undo" {{#unless deleting}}style="display:none;"{{/unless}}>File is hidden! <strong>Undo</strong></td>
-            <td class="mm-file truncate" {{#if deleting}}style="display:none;"{{/if}}><div class="inner-text">{{filename}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-              <div class="mm-hide hide-overlay">
-                <div class="close-x">Hide file</div>
-              </div>
-            </td>
-            <td class="mm-from truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{from}}</td>
-            <td class="mm-to truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{to}}</td>
-            <td class="mm-type truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{type}}</td>
-            <td class="mm-size truncate" {{#if deleting}}style="opacity:0.1"{{/if}}>{{size}}</td>
-            <td class="mm-sent truncate fader" {{#if deleting}}style="opacity:0.1"{{/if}}>{{sentDate}}</td>
-            
-          </tr>
-      {{/each}}
-      </tbody>
+        <tbody class="attachmentModelsStart">
+          {{#each models}}
+            """ + attachmentTemplate + """
+          {{/each}}
+        </tbody>
       </table>
-      
     </div>
+
+  </div>
   {{/unless}}
 """
 
-
 class MeetMikey.View.Attachments extends MeetMikey.View.Base
   template: Handlebars.compile(template)
+  attachmentTemplate: Handlebars.compile(attachmentTemplate)
 
   subViews:
     'pagination':
@@ -109,8 +110,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @collection = new MeetMikey.Collection.Attachments()
     @rollover = new MeetMikey.View.AttachmentRollover collection: @collection, search: !@options.fetch
     
-    @collection.on 'reset add remove', _.debounce(@render, 50)
-    @collection.on 'sort', @render
+    @collection.on 'reset', @render
     @collection.on 'delete', @markDeleting
     @collection.on 'undoDelete', @unMarkDeleting
 
@@ -158,9 +158,10 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
   teardown: =>
     @clearTimeout()
-    @collection.off('reset', @render)
     @cachedModels = _.clone @collection.models
+    @collection.off 'reset', @render
     @collection.reset()
+    @collection.on 'reset', @render #Apparently we have to put this back on.  Not sure why teardown took it off, really.
 
   sectionToggle: (event) =>
     if @sectionIsOpen
@@ -178,10 +179,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     event.preventDefault()
     cid = $(event.currentTarget).closest('.files').attr('data-cid')
     model = @collection.get(cid)
-    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, null, 'tab', (status) =>
-      if status == 'success'
-        @moveModelToOtherSubview model
-        @renderTemplate()
+    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, null, 'tab'
 
   toggleLikeEvent: (event) =>
     event.preventDefault()
@@ -190,14 +188,41 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     elementId = '#mm-attachment-like-' + model.cid
     MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'tab'
 
+  removeModel: (model) =>
+    if not model
+      return
+    element = @$('.files[data-cid='+model.cid+']')
+    element.remove()
+    @collection.remove model
+
+  addModel: (model) =>
+    if not model
+      return
+
+    @collection.add model
+
+    decoratedModel = model.decorate()
+    html = @attachmentTemplate decoratedModel
+
+    myIndex = @collection.models.indexOf model
+    if myIndex is -1
+      return
+    if myIndex is ( @collection.length - 1 )
+      @$('.attachmentModelsStart').append html
+    else
+      nextModel = @collection.at (myIndex + 1)
+      if not nextModel
+        return
+      @$('.files[data-cid='+nextModel.cid+']').before html
+
   moveModelToOtherSubview: (model) =>
     if @isSearch()
       return
-    @collection.remove model
+    @removeModel model
     if model.get('isFavorite')
-      @parentView.subView('attachmentsFavorite').collection.add model
+      @parentView.subView('attachmentsFavorite').addModel model
     else
-      @parentView.subView('attachments').collection.add model
+      @parentView.subView('attachments').addModel model
 
   markDeleting: (model) =>
     model.set('deleting', true)
@@ -305,6 +330,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   sortByColumn: (event) =>
     field = $(event.currentTarget).attr('data-mm-field')
     @collection.sortByField(field) if field?
+    @render()
 
   setActiveColumn: =>
     field = @collection.sortKey
