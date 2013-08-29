@@ -85,9 +85,10 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     'click .hide-image-x' : 'markDeleting'
     'click .mm-image-favorite': 'toggleFavoriteEvent'
     'click .mm-image-like': 'toggleLikeEvent'
+    'load .mm-image': 'imageLoaded'
 
   postInitialize: =>
-    @on 'showTab', @isotopeUntilImagesLoaded
+    @on 'showTab', @runIsotope
     #@on 'showTab', @bindScrollHandler
     Backbone.on 'change:tab', @hashChange
     @collection = new MeetMikey.Collection.Images()
@@ -128,8 +129,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @hasInitializedIsotope = false
     $('.download-tooltip').tooltip placement: 'bottom'
     $('.mm-download-tooltip').tooltip placement: 'top'
-    if MeetMikey.Globals.tabState == 'images'
-      @isotopeUntilImagesLoaded()
+    @runIsotope()
+    @addImageLoadEvents()
 
   openImage: (event) =>
     cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
@@ -254,23 +255,25 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     nearBottom
 
   fetchMoreImages: (forceNumToFetch) =>
-    if not @endOfImages and not @fetching
-      if @options.fetch
-        numToFetch = @defaultNumImagesToFetch
-        if forceNumToFetch
-          numToFetch = forceNumToFetch
-        @fetching = true
-        MeetMikey.Helper.callAPI
-          url: 'image'
-          data:
-            before: @earliestSentDate
-            limit: numToFetch
-          success: (res) =>
+    if @endOfImages or @fetching
+      return
+    if @isSearch()
+      @getMoreSearchResults()
+    else
+      numToFetch = @defaultNumImagesToFetch
+      if forceNumToFetch
+        numToFetch = forceNumToFetch
+      @fetching = true
+      MeetMikey.Helper.callAPI
+        url: 'image'
+        data:
+          before: @earliestSentDate
+          limit: numToFetch
+        success: (res) =>
+          if _.isEmpty(res)
+            @endOfImages = true
+          else
             @addImagesFromFetchResponse res
-          #error: (err) =>
-            #console.log 'fetch error: ', err
-      else
-        @getMoreSearchResults()
 
   getMoreSearchResults: =>
     @fetching = true
@@ -281,18 +284,18 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         query: @searchQuery
         fromIndex: @numSearchResultsReceived
       success: (res) =>
-        @addImagesFromFetchResponse res
-        @numSearchResultsReceived += res.length
-        @isotopeUntilImagesLoaded()
+        if _.isEmpty(res)
+          @endOfImages = true
+        else
+          @addImagesFromFetchResponse res
+          @numSearchResultsReceived += res.length
       failure: ->
         @logger.info 'search failed'
 
-  addImagesFromFetchResponse: (res) =>
-    if _.isEmpty(res)
-      @endOfImages = true
+  addImagesFromFetchResponse: (res, atBeginning) =>
     newModels = []
     _.each res, (imageData) =>
-      if imageData.sentDate and ( ! @earliestSentDate or ( imageData.sentDate < @earliestSentDate ) )
+      if not atBeginning and imageData.sentDate and ( ! @earliestSentDate or ( imageData.sentDate < @earliestSentDate ) )
         @earliestSentDate = imageData.sentDate
       newModel = new MeetMikey.Model.Image imageData
       isDupe = false
@@ -300,44 +303,56 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         if oldModel.get('hash') == newModel.get('hash')
           isDupe = true
       if not isDupe
-        @collection.push newModel
+        if atBeginning
+          @collection.unshift newModel
+        else
+          @collection.push newModel
         newModels.push newModel
-    @appendNewImageModelTemplates newModels
+    @addNewImageModelTemplates newModels, atBeginning
     @delegateEvents()
     @fetching = false
 
-  appendNewImageModelTemplates: (models) =>
+  addNewImageModelTemplates: (models, atBeginning) =>
+    if not models or not models.length
+      return
     decoratedModels = _.invoke(models, 'decorate')
     html = ''
     _.each decoratedModels, (decoratedModel) =>
       html += @imageTemplate(decoratedModel)
     items = $(html)
-    @$('.mmImagesIsotope').isotope 'insert', items
+    if atBeginning
+      @$('.mmImagesIsotope').prepend( items )
+    else
+      @$('.mmImagesIsotope').isotope 'insert', items
+    @addImageLoadEvents()
+    @runIsotope()
+
+  addImageLoadEvents: =>
+    @$el.find('.mm-image').off 'load'
+    @$el.find('.mm-image').on 'load', _.debounce @imageLoaded, 200
+
+  imageLoaded: (event) =>
+    @runIsotope()
+    @initializeIsotope()
+    @$('.mmImagesIsotope').isotope( 'reloadItems' ).isotope({ sortBy: 'original-order' })
+
+  initializeIsotope:() =>
+    if @hasInitializedIsotope
+      return
+    @$('.mmImagesIsotope').isotope
+      filter: '*'
+      animationEngine: 'css'
+    @hasInitializedIsotope = true
 
   runIsotope: =>
-    if ! @hasInitializedIsotope
-      @$('.mmImagesIsotope').isotope
-        filter: '*'
-        animationEngine: 'css'
-      @hasInitializedIsotope = true
-    @$('.mmImagesIsotope').isotope 'reLayout'
-
-  isotopeUntilImagesLoaded: =>
-    # @logger.info 'isotopeUntilImagesLoaded'
-    @runIsotope()
-    @$el.imagesLoaded =>
-      # @logger.info 'images loaded, isotoping one last time'
-      @runIsotope()
-      setTimeout @runIsotope, 1000
-      setTimeout @runIsotope, 4000
+    @initializeIsotope()
+    @$('.mmImagesIsotope').isotope( 'reloadItems' ).isotope({ sortBy: 'original-order' })
 
   setResults: (models, query) =>
-    @on 'showTab', @isotopeUntilImagesLoaded
     @searchQuery = query
     @endOfImages = false
     @numSearchResultsReceived = models.length
     @collection.reset models, sort: false
-    @isotopeUntilImagesLoaded()
 
   waitAndPoll: =>
     @timeoutId = setTimeout @poll, @pollDelay
@@ -351,12 +366,13 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     else
       after: @collection.latestSentDate()
 
-    @collection.fetch
-      update: true
-      remove: false
-      data: data
-      success: @waitAndPoll
-      error: @waitAndPoll
+    MeetMikey.Helper.callAPI
+        url: 'image'
+        data: data
+        success: (res) =>
+          @addImagesFromFetchResponse res, true
+          @waitAndPoll()
+        error: @waitAndPoll
 
   toggleFavoriteEvent: (event) =>
     event.preventDefault()
