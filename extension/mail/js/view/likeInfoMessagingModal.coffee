@@ -89,6 +89,10 @@ class MeetMikey.View.LikeInfoMessagingModal extends MeetMikey.View.BaseModal
         if input.email == myEmail
           return true
         false
+        
+      recipients = _.uniq recipients, false, (item) =>
+        item.email
+
       if recipients.length == 0
         recipients.push
           email: myEmail
