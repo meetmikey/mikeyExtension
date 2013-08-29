@@ -243,7 +243,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     setTimeout =>
       model = @collection.get(modelCId)
       if model and model.get('deleting')
-        @collection.remove(model)
+        @removeModel model
         model.delete()
     , MeetMikey.Constants.deleteDelay
 
