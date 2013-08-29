@@ -43,7 +43,7 @@ template = """
 
                 <td class="mm-madness mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
                   <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
-                    <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+                    <div id="mm-link-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
                   </div>
                 </td>
 
@@ -120,7 +120,6 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
     @collection.on 'reset add remove', _.debounce(@render, 50)
     @collection.on 'sort', @render
-    @collection.on 'remove', @render
     @collection.on 'delete', @markDeleting
     @collection.on 'undoDelete', @unMarkDeleting
 
@@ -128,7 +127,7 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @paginationState.on 'change:page', @render
     @subView('pagination').setState @paginationState
 
-    MeetMikey.globalEvents.on 'favoriteOrLikeAction', @initialFetch
+    MeetMikey.globalEvents.on 'favoriteOrLikeEvent', @favoriteOrLikeEvent
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
@@ -140,7 +139,28 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     if @isSearch()
       @subView('pagination').options.render = false
       @subView('pagination').render()
-      MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
+
+  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
+    if resourceType isnt 'link'
+      return
+    link = @collection.get resourceId
+    if not link
+      return
+    if actionType is 'favorite'
+      link.set 'isFavorite', value
+      if @options.isFavorite and value is true
+        return
+      if not @options.isFavorite and value is false
+        return
+      if @isSearch()
+        elementId = '#mm-link-favorite-' + link.cid
+        MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay link, elementId
+      else
+        @moveModelToOtherSubview link
+    else if actionType is 'like'
+      link.set 'isLiked', value
+      elementId = '#mm-link-like-' + link.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay link, elementId
 
   isSearch: =>
     not @options.fetch

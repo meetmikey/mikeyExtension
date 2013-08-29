@@ -46,7 +46,7 @@ template = """
 
             <td class="mm-madness mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
               <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
-                <div class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+                <div id="mm-attachment-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
               </div>
             </td>
 
@@ -111,7 +111,6 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     
     @collection.on 'reset add remove', _.debounce(@render, 50)
     @collection.on 'sort', @render
-    @collection.on 'remove', @render
     @collection.on 'delete', @markDeleting
     @collection.on 'undoDelete', @unMarkDeleting
 
@@ -119,19 +118,40 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @paginationState.on 'change:page', @render
     @subView('pagination').setState @paginationState
 
-    MeetMikey.globalEvents.on 'favoriteOrLikeAction', @initialFetch
+    MeetMikey.globalEvents.on 'favoriteOrLikeEvent', @favoriteOrLikeEvent
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     @setActiveColumn()
 
+  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
+    if resourceType isnt 'attachment'
+      return
+    attachment = @collection.get resourceId
+    if not attachment
+      return
+    if actionType is 'favorite'
+      attachment.set 'isFavorite', value
+      if @options.isFavorite and value is true
+        return
+      if not @options.isFavorite and value is false
+        return
+      if @isSearch()
+        elementId = '#mm-attachment-favorite-' + attachment.cid
+        MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay attachment, elementId
+      else
+        @moveModelToOtherSubview attachment
+    else if actionType is 'like'
+      attachment.set 'isLiked', value
+      elementId = '#mm-attachment-like-' + attachment.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay attachment, elementId
+
   setFetch: (isFetch) =>
     @options.fetch = isFetch
     if @isSearch()
       @subView('pagination').options.render = false
       @subView('pagination').render()
-      MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
 
   isSearch: =>
     not @options.fetch

@@ -96,6 +96,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @subViews.imageCarousel.view.setImageCollection @collection
     $(window).off 'hashchange', @hashChange
     $(window).on 'hashchange', @hashChange
+    MeetMikey.globalEvents.on 'favoriteOrLikeEvent', @favoriteOrLikeEvent
     @setupModal()
 
   setupModal: =>
@@ -104,13 +105,21 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   setFetch: (isFetch) =>
     @options.fetch = isFetch
-    if isFetch
-      MeetMikey.globalEvents.off 'favoriteOrLikeAction', @favoriteOrLikeAction
-      MeetMikey.globalEvents.on 'favoriteOrLikeAction', @favoriteOrLikeAction
 
-  favoriteOrLikeAction: =>
-    if not @isVisible()
-      @initialFetch()
+  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
+    if resourceType isnt 'image'
+      return
+    image = @collection.get resourceId
+    if not image
+      return
+    if actionType is 'favorite'
+      image.set 'isFavorite', value
+      elementId = '#mm-image-favorite-' + image.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay image, elementId
+    else if actionType is 'like'
+      image.set 'isLiked', value
+      elementId = '#mm-image-like-' + image.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay image, elementId
 
   isSearch: =>
     not @options.fetch
