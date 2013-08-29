@@ -208,6 +208,9 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
       return
 
     @collection.add model
+    if @collection.length is 1
+      @render()
+      return
 
     decoratedModel = model.decorate()
     html = @linkTemplate decoratedModel
