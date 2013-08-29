@@ -37,14 +37,34 @@ class MeetMikey.View.Pagination extends MeetMikey.View.Base
     data
 
   setState: (state) =>
-    @resetState() if @state?
+    if not state
+      return
+    @resetState()
     @state = state
-    @listenTo @state, 'change:page', @render if @state?
+    @listenToState state
     @render()
 
-  resetState: =>
-    @state.set 'page', 0
+  listenToState: (state) =>
+    if not state
+      return
+    @listenTo @state, 'change:page', @render
+    @listenTo @state, 'change:lastPage', @render
+    @state.items.on 'add', @render
+    @state.items.on 'remove', @render
+
+  stopListeningToState: (state) =>
+    if not state
+      return
     @stopListening @state, 'change:page'
+    @stopListening @state, 'change:lastPage'
+    @state.items.off 'add', @render
+    @state.items.off 'remove', @render
+
+  resetState: =>
+    if not @state
+      return
+    @state.set 'page', 0
+    @stopListeningToState state
 
   nextPage: =>
     @state.nextPage()
