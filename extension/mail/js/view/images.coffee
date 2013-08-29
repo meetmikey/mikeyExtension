@@ -278,7 +278,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   getMoreSearchResults: =>
     @fetching = true
     MeetMikey.Helper.callAPI
-      url: "searchImages"
+      url: 'searchImages'
       type: 'GET'
       data:
         query: @searchQuery
@@ -351,8 +351,16 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   setResults: (models, query) =>
     @searchQuery = query
     @endOfImages = false
-    @numSearchResultsReceived = models.length
-    @collection.reset models, sort: false
+    newModels = []
+    _.each models, (tempModel) =>
+      isDupe = false
+      _.each newModels, (newModelTemp) =>
+        if tempModel.hash == newModelTemp.hash
+          isDupe = true
+      if not isDupe
+        newModels.push tempModel
+    @numSearchResultsReceived = newModels.length
+    @collection.reset newModels, sort: false
 
   waitAndPoll: =>
     @timeoutId = setTimeout @poll, @pollDelay
