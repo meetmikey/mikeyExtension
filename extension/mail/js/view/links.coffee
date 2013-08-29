@@ -123,13 +123,12 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.on 'remove', @render
     @collection.on 'delete', @markDeleting
     @collection.on 'undoDelete', @unMarkDeleting
-    
-    MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
-    MeetMikey.globalEvents.on 'favoriteOrLikeAction', @initialFetch
 
     @paginationState = new MeetMikey.Model.PaginationState items: @collection
     @paginationState.on 'change:page', @render
     @subView('pagination').setState @paginationState
+
+    MeetMikey.globalEvents.on 'favoriteOrLikeAction', @initialFetch
 
   postRender: =>
     @rollover.setElement @$('.rollover-container')
@@ -138,12 +137,10 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
   setFetch: (isFetch) =>
     @options.fetch = isFetch
-    MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
     if @isSearch()
       @subView('pagination').options.render = false
       @subView('pagination').render()
-    else
-      MeetMikey.globalEvents.on 'favoriteOrLikeAction', @initialFetch
+      MeetMikey.globalEvents.off 'favoriteOrLikeAction', @initialFetch
 
   isSearch: =>
     not @options.fetch
@@ -232,11 +229,12 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
       $(child).css('opacity', 1) if not $(child).hasClass('mm-undo')
 
   initialFetch: =>
-    if @options.fetch
-      @collection.fetch
-        data:
-          isFavorite: @options.isFavorite?
-        success: @waitAndPoll
+    if @isSearch()
+      return
+    @collection.fetch
+      data:
+        isFavorite: @options.isFavorite?
+      success: @waitAndPoll
 
   restoreFromCache: =>
     @collection.reset(@cachedModels)
@@ -314,10 +312,16 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.reset models, sort: false
 
   waitAndPoll: =>
-    @timeoutId = setTimeout @poll, @pollDelay
+    if @timeoutId
+      return
+    @timeoutId = setTimeout () =>
+      @timeoutId = null
+      @poll()
+    , @pollDelay
 
   clearTimeout: =>
-    clearTimeout @timeoutId if @timeoutId
+    if @timeoutId
+      clearTimeout @timeoutId
 
   poll: =>
     data = if MeetMikey.globalUser.get('onboarding') or @collection.length < MeetMikey.Constants.paginationSize

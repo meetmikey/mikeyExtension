@@ -52,6 +52,8 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
   spawn: (cid) =>
     return if cid isnt @cursorInfo.cid
     @model = @collection.get cid
+    if not @model
+      return
     @render()
     @$el.show()
     @trackSpawnEvent()

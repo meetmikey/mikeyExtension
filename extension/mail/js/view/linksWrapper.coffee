@@ -15,7 +15,9 @@ class MeetMikey.View.LinksWrapper extends MeetMikey.View.Base
       args: {fetch: true}
 
   preInitialize: =>
-    if not @isSearch()
+    if @isSearch()
+      delete @subViews.linksFavorite
+    else
       @subViews.linksFavorite = {
         viewClass: MeetMikey.View.Links
         selector: '.mm-links-favorite'
@@ -47,12 +49,12 @@ class MeetMikey.View.LinksWrapper extends MeetMikey.View.Base
   restoreFromCache: () =>
     @subView('links').restoreFromCache()
     if not @isSearch()
-     @subView('linksFavorite').restoreFromCache()
+      @subView('linksFavorite').restoreFromCache()
 
   setResults: (models, query) =>
     @subView('links').setResults models, query
     if not @isSearch()
-     @subView('linksFavorite').setResults models, query
+      @subView('linksFavorite').setResults models, query
 
   getTemplateData: =>
     object = {}

@@ -15,7 +15,9 @@ class MeetMikey.View.AttachmentsWrapper extends MeetMikey.View.Base
       args: {fetch: true}
 
   preInitialize: =>
-    if not @isSearch()
+    if @isSearch()
+      delete @subViews.attachmentsFavorite
+    else
       @subViews.attachmentsFavorite = {
         viewClass: MeetMikey.View.Attachments
         selector: '.mm-attachments-favorite'
@@ -43,17 +45,17 @@ class MeetMikey.View.AttachmentsWrapper extends MeetMikey.View.Base
   initialFetch: =>
     @subView('attachments').initialFetch()
     if not @isSearch()
-     @subView('attachmentsFavorite').initialFetch()
+      @subView('attachmentsFavorite').initialFetch()
 
   restoreFromCache: () =>
     @subView('attachments').restoreFromCache()
     if not @isSearch()
-     @subView('attachmentsFavorite').restoreFromCache()
+      @subView('attachmentsFavorite').restoreFromCache()
 
   setResults: (models, query) =>
     @subView('attachments').setResults models, query
     if not @isSearch()
-     @subView('attachmentsFavorite').setResults models, query
+      @subView('attachmentsFavorite').setResults models, query
 
   getTemplateData: =>
     object = {}
