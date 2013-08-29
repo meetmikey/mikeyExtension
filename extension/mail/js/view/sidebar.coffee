@@ -78,6 +78,9 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   template: Handlebars.compile(template)
   containerSelector: MeetMikey.Constants.Selectors.sidebarContainer
 
+  injectionCount: 0
+  maxInjectionCount: 10
+
   events:
     'click .mm-favorite': 'toggleFavoriteEvent'
     'click .mm-like': 'toggleLikeEvent'
@@ -100,7 +103,7 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       @$el.hide()
     element = $(@containerSelector).parent().parent()
     element.off 'DOMSubtreeModified'
-    element.on 'DOMSubtreeModified', @domSubtreeModified
+    element.on 'DOMSubtreeModified', _.debounce @domSubtreeModified, 500
     $('.mm-download-tooltip').tooltip placement: 'top'
 
   domSubtreeModified: (event) =>
@@ -154,6 +157,10 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
         @render()
 
   injectContainer: (callback) =>
+    if @injectionCount > @maxInjectionCount
+      console.log 'too many injections, giving up'
+      return
+    @injectionCount++
     if $('#mm-sidebar-container') and $('#mm-sidebar-container').length
       $('#mm-sidebar-container').remove()
     element = '<div id="mm-sidebar-container" class="mm-container"></div>'
