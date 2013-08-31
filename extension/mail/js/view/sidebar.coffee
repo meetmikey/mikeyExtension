@@ -166,9 +166,10 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
     MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'sidebar'
 
   pageNavigationEvent: =>
+    console.log 'pageNavigationEvent'
     if not @inThread()
       return
-    if $('#mm-sidebar-container') and $('#mm-sidebar-container').is(':visible')
+    if $('#mm-sidebar-container') and $('#mm-sidebar-container').length and $('#mm-sidebar-container').is(':visible')
       return
     @injectContainer () =>
       @getResources () =>
@@ -179,25 +180,37 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       return
     rapportiveElement = $(@rapportiveContainerSelector)
     if rapportiveElement and rapportiveElement.length
+      console.log 'isRapportive!'
       MeetMikey.Globals.usingRapportive = true
 
   injectContainer: (callback) =>
+    console.log 'injectContainer'
     @checkForRapportive()
     if @injectionCount > @maxInjectionCount
+      console.log 'too many injections, giving up'
       return
     @setupDOMListener true
     if not @listenElement
+      console.log 'no dom listener, trying again soon'
       setTimeout @pageNavigationEvent, 50
+
+    @injectionCount++
+
     if $('#mm-sidebar-container') and $('#mm-sidebar-container').length
       $('#mm-sidebar-container').remove()
     element = '<div id="mm-sidebar-container" class="mm-container"></div>'
-    selector = MeetMikey.Helper.DOMManager.findEither @rapportiveContainerSelector, @containerSelector
-    if not selector or not selector.length
-      return
-    @injectionCount++
-    MeetMikey.Helper.DOMManager.injectInto selector, element, () =>
-      @$el = $('#mm-sidebar-container')
-      callback()
+    selector = @containerSelector
+    if MeetMikey.Globals.usingRapportive
+      selector = @rapportiveContainerSelector
+
+    MeetMikey.Helper.DOMManager.waitAndFind selector, (containerElement) =>
+      if not containerElement or not containerElement.length
+        console.log 'no container element'
+        return
+      console.log 'injecting into container!'
+      MeetMikey.Helper.DOMManager.injectInto selector, element, () =>
+        @$el = $('#mm-sidebar-container')
+        callback()
 
   getResources: (callback) =>
     threadHex = MeetMikey.Helper.Url.getThreadHex()
