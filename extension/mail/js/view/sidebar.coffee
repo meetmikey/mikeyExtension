@@ -186,9 +186,9 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   injectContainer: (callback) =>
     console.log 'injectContainer'
     @checkForRapportive()
-    if @injectionCount > @maxInjectionCount
-      console.log 'too many injections, giving up'
-      return
+    #if @injectionCount > @maxInjectionCount
+      #console.log 'too many injections, giving up'
+      #return
     @setupDOMListener true
     if not @listenElement
       console.log 'no dom listener, trying again soon'
