@@ -74,6 +74,9 @@ _.extend MeetMikey.Constants,
     # the sidebar along the right side of conversation threads
     sidebarContainer: ".u5"
 
+    # the rapportive container along the right side of conversation threads
+    sidebarRapportiveContainer: '#rapportive-sidebar'
+
     # the text found in the inbox on read messages
     inboxReadText: ".yO"
 

@@ -76,10 +76,12 @@ template = """
 
 class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   template: Handlebars.compile(template)
+
   containerSelector: MeetMikey.Constants.Selectors.sidebarContainer
+  rapportiveContainerSelector: MeetMikey.Constants.Selectors.sidebarRapportiveContainer
 
   injectionCount: 0
-  maxInjectionCount: 10
+  maxInjectionCount: 20
 
   events:
     'click .mm-favorite': 'toggleFavoriteEvent'
@@ -99,15 +101,31 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   postRender: =>
     if @inThread()
       @$el.show()
+      @setupDOMListener()
+      $('.mm-download-tooltip').tooltip placement: 'top'
     else
       @$el.hide()
-    element = $(@containerSelector).parent().parent()
-    element.off 'DOMSubtreeModified'
-    element.on 'DOMSubtreeModified', _.debounce @domSubtreeModified, 500
-    $('.mm-download-tooltip').tooltip placement: 'top'
+
+  setupDOMListener: (renew) =>
+    if @listenElement and not renew
+      return
+    if @listenElement
+      @listenElement.off 'DOMSubtreeModified'
+      @listenElement = null
+    element = $(@rapportiveContainerSelector)
+    if not element or not element.length
+      element = $(@containerSelector)
+    if element and element.length
+      @listenElement = element.parent().parent()
+      @listenElement.off 'DOMSubtreeModified'
+      @listenElement.on 'DOMSubtreeModified', _.debounce( @domSubtreeModified, 500 )
+
+  teardown: =>
+    if @listenElement
+      @listenElement.off 'DOMSubtreeModified'
 
   domSubtreeModified: (event) =>
-    @pageNavigationEvent()
+    @pageNavigationEvent event
 
   renderTemplateAndDelegateEvents: () =>
     @renderTemplate()
@@ -156,18 +174,30 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
       @getResources () =>
         @render()
 
-  injectContainer: (callback) =>
-    if @injectionCount > @maxInjectionCount
-      console.log 'too many injections, giving up'
+  checkForRapportive: () =>
+    if MeetMikey.Globals.usingRapportive
       return
-    @injectionCount++
+    rapportiveElement = $(@rapportiveContainerSelector)
+    if rapportiveElement and rapportiveElement.length
+      MeetMikey.Globals.usingRapportive = true
+
+  injectContainer: (callback) =>
+    @checkForRapportive()
+    if @injectionCount > @maxInjectionCount
+      return
+    @setupDOMListener true
+    if not @listenElement
+      setTimeout @pageNavigationEvent, 50
     if $('#mm-sidebar-container') and $('#mm-sidebar-container').length
       $('#mm-sidebar-container').remove()
     element = '<div id="mm-sidebar-container" class="mm-container"></div>'
-    MeetMikey.Helper.DOMManager.waitAndFind @containerSelector, () =>
-      MeetMikey.Helper.DOMManager.injectInto @containerSelector, element, () =>
-        @$el = $('#mm-sidebar-container')
-        callback()
+    selector = MeetMikey.Helper.DOMManager.findEither @rapportiveContainerSelector, @containerSelector
+    if not selector or not selector.length
+      return
+    @injectionCount++
+    MeetMikey.Helper.DOMManager.injectInto selector, element, () =>
+      @$el = $('#mm-sidebar-container')
+      callback()
 
   getResources: (callback) =>
     threadHex = MeetMikey.Helper.Url.getThreadHex()
