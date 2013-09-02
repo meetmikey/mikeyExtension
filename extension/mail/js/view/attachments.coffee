@@ -353,6 +353,8 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
     @collection.reset models, sort: false
 
   waitAndPoll: =>
+    if @options.isFavorite
+      return
     if @timeoutId
       return
     @timeoutId = setTimeout () =>
@@ -363,7 +365,7 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
   clearTimeout: =>
     if @timeoutId
       clearTimeout @timeoutId
-
+      
   poll: =>
     data = if MeetMikey.globalUser.get('onboarding') or @collection.length < MeetMikey.Constants.paginationSize
       {}
@@ -372,9 +374,16 @@ class MeetMikey.View.Attachments extends MeetMikey.View.Base
 
     data.isFavorite = @options.isFavorite?
 
-    @collection.fetch
-      update: true
-      remove: false
+    MeetMikey.Helper.callAPI
+      url: 'attachment'
       data: data
-      success: @waitAndPoll
-      error: @waitAndPoll
+      complete: (response, status) =>
+        if status is 'success' and response and response.responseText and response.responseText.length
+          try
+            responseArray = JSON.parse response.responseText
+            if responseArray and responseArray.length
+              _.each responseArray, (responseData) =>
+                model = new MeetMikey.Model.Attachment responseData
+                @addModel model
+          catch error
+        @waitAndPoll()

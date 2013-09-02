@@ -142,6 +142,8 @@ MeetMikey.Helper.isString  = ( input ) ->
 
 #Always returns a string value
 MeetMikey.Helper.decimalToHex = ( decimalInput ) ->
+  if not decimalInput
+    return ''
   decimalString = decimalInput
   if not MeetMikey.Helper.isString( decimalString )
     decimalString = decimalInput.toString()

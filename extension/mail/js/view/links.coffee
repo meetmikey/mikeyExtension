@@ -362,6 +362,8 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
     @collection.reset models, sort: false
 
   waitAndPoll: =>
+    if @options.isFavorite
+      return
     if @timeoutId
       return
     @timeoutId = setTimeout () =>
@@ -381,9 +383,16 @@ class MeetMikey.View.Links extends MeetMikey.View.Base
 
     data.isFavorite = @options.isFavorite?
 
-    @collection.fetch
-      update: true
-      remove: false
+    MeetMikey.Helper.callAPI
+      url: 'link'
       data: data
-      success: @waitAndPoll
-      error: @waitAndPoll
+      complete: (response, status) =>
+        if status is 'success' and response and response.responseText and response.responseText.length
+          try
+            responseLinkArray = JSON.parse response.responseText
+            if responseLinkArray and responseLinkArray.length
+              _.each responseLinkArray, (responseLink) =>
+                linkModel = new MeetMikey.Model.Link responseLink
+                @addModel linkModel
+          catch error
+        @waitAndPoll()
