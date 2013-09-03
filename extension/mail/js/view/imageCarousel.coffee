@@ -4,29 +4,39 @@ template = """
 
     <!-- Carousel items -->
     <div class="carousel-inner">
+
       {{#each models}}
         <div class="item" data-cid="{{cid}}">
-          <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" title="Hide this image"><div class="close-x">x</div></div>
+          
+          <div class="hide-image-x mm-download-mm-d" data-toggle="tooltip" title="Hide"><div class="close-x">x</div></div>
           <div class="modal-image-box">
             <img class="max-image" src="{{url}}"/>
           </div>
+
           <div class="image-info">
             <div class="image-sender">{{from}}</div>
             <div class="image-subject">{{subject}}</div>
 
-            <a href="#inbox/{{msgHex}}" class="open-message" data-dismiss="modal">
-              <div class="list-icon" style="float:right; display:inline-blocks;">
-                <div class="list-icon" style="background-image: url('#{downloadUrl}');"></div>
+              <div class="rollover-actions">
+                <div class="mm-image-carousel-interaction mm-download-tooltip mm-like" data-toggle="tooltip" title="Like">
+                  <div id="mm-resource-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+                </div>
+                <div class="mm-image-carousel-interaction mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
+                  <div id="mm-resource-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+                </div>
+                <div class="open-message mm-download-tooltip mm-image-carousel-interaction" data-dismiss="modal" data-toggle="tooltip" title="Open email">
+                  <div class="list-icon" style="margin-top: 0px; background-image: url('#{downloadUrl}');"></div>
+                </div>
               </div>
+
+              
             </a>
-
           </div>
-      </div>
 
+        </div>
       {{/each}}
+
     </div>
-
-
 
     <!-- Carousel nav -->
     <div class="carousel-control left" style="cursor:pointer;">&lsaquo;</div>
@@ -37,6 +47,10 @@ template = """
 class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  resourceType: 'image'
+  cidMarkerClass: '.image-box'
+  cidMarkerClassTwo: '.item'
+  eventSource: 'imageCarousel'
   carouselVisible: false
   numPreloadImagesEachWay: 5
   maxImagesInLocalCollection: 20
@@ -46,11 +60,14 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
   events:
     'click .open-message': 'openMessage'
+    'click .mm-favorite': 'toggleFavoriteEvent'
+    'click .mm-like': 'toggleLikeEvent'
     'click .left': 'goLeft'
     'click .right': 'goRight'
 
   postInitialize: =>
     @localCollection = new MeetMikey.Collection.Images()
+    MeetMikey.globalEvents.on 'favoriteOrLikeEvent', @favoriteOrLikeEvent
 
   setImageCollection: (collection) =>
     @fullCollection = collection
@@ -59,6 +76,7 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     @$('.mmCarousel').carousel
       interval: false
     @bindCarouselKeys()
+    $('.mm-download-tooltip').tooltip placement: 'top'
 
   activateModel: =>
     $('.item').removeClass 'active'
@@ -68,6 +86,40 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
   teardown: =>
     @unbindCarouselKeys()
+
+  toggleFavoriteEvent: (event) =>
+    event.preventDefault()
+    model = @getModelFromEvent event
+    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, @eventSource
+
+  toggleLikeEvent: (event) =>
+    event.preventDefault()
+    model = @getModelFromEvent event
+    MeetMikey.Helper.FavoriteAndLike.toggleLike model, @eventSource
+
+  getModelFromEvent: (event) =>
+    if not event
+      return
+    cid = MeetMikey.Helper.getCIDFromEventWithMarker event, @cidMarkerClass, @cidMarkerClassTwo
+    if not cid
+      return
+    model = @localCollection.get cid
+    model
+
+  favoriteOrLikeEvent: (actionType, resourceType, originModel, value) =>
+    if resourceType isnt @resourceType
+      return
+    model = @localCollection.get originModel.id
+    if not model
+      return
+    if actionType is 'favorite'
+      model.set 'isFavorite', value
+      elementId = '#mm-resource-favorite-' + model.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, elementId
+    else if actionType is 'like'
+      model.set 'isLiked', value
+      elementId = '#mm-resource-like-' + model.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay model, elementId
 
   getTemplateData: =>
     models: _.invoke(@localCollection.models, 'decorate')
@@ -195,21 +247,18 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
         return false
 
   openMessage: (event) =>
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    if ! cid
-      cid = $(event.currentTarget).closest('.item').attr('data-cid')
-    if ! cid
+    model = @getModelFromEvent event
+    if not model
       return
-    model = @localCollection.get cid
-    if ! model
-      return
-    msgHex = model.get 'gmMsgHex'
+    threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
     if @parentView.searchQuery
-      hash = "#search/#{@parentView.searchQuery}/#{msgHex}"
+      hash = "#search/#{@parentView.searchQuery}/#{threadHex}"
     else
-      hash = "#inbox/#{msgHex}"
+      hash = "#inbox/#{threadHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
-      currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
+      currentTab: MeetMikey.Globals.tabState
+      search: !@options.fetch
+      rollover: false
 
-    window.location = hash
+    MeetMikey.Helper.Url.setHash hash

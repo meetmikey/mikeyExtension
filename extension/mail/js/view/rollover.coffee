@@ -10,6 +10,8 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
     'click .rollover-resource-undo' : 'unDeleteResource'
 
   getTemplateData: =>
+    if not @model
+      return
     _.extend @model.decorate(), {searchQuery: @searchQuery}
 
   postInitialize: =>
@@ -17,7 +19,7 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
 
   postRender: =>
     $(document).one 'mousemove', @startHide
-    @$('.rollover-box').css left: @cursorInfo.x + 5, top: @cursorInfo.y
+    @$('.rollover-box').css left: @cursorInfo.x + 5, top: ( @cursorInfo.y + 10 )
 
   unDeleteResource: (event) =>
     console.log 'undo delete', @model
@@ -50,6 +52,8 @@ class MeetMikey.View.Rollover extends MeetMikey.View.Base
   spawn: (cid) =>
     return if cid isnt @cursorInfo.cid
     @model = @collection.get cid
+    if not @model
+      return
     @render()
     @$el.show()
     @trackSpawnEvent()

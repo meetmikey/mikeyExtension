@@ -5,35 +5,79 @@ template = """
       {{#if isPremium}}
         <h3>Share Mikey with Friends</h3>
       {{else}}
-        <h3>Get more out of Mikey</h3>
+        <h3>Get more Mikey</h3>
       {{/if}}
     </div>
     <div class="modal-body">
       {{#if isPremium}}
-        <p>You already have a premium account so we can't give you more days, but if Mikey has helped you out, we would be thrilled if you shared Mikey with your friends or rated us in the Chrome store.</p>
+        <p>You already have a premium account so we can't give you more days, but if Mikey has helped you out, you could really help Mikey out by:</p>
       {{else}}
         {{#if isFullyIndexed}}
-          <p>Mikey is showing you stuff from all <strong>{{mailTotalDays}}</strong> days in your account, but you will be limited to <strong>{{mailDaysLimit}}</strong>.</p>
+          <p>Mikey is showing you stuff <strong>{{mailTotalDays}}</strong> days in your account, but you will be limited to <strong>{{mailDaysLimit}}</strong>. Not to worry though, you can get more days by:</p>
         {{else}}
-          <p>Mikey is showing you stuff from the last <strong>{{mailDaysLimit}}</strong> out of the <strong>{{mailTotalDays}}</strong> total days that you've had this Gmail account.</p>
+          <p>Mikey is showing you <strong>{{mailDaysLimit}}</strong> out of the <strong>{{mailTotalDays}}</strong> total days that you've had this Gmail account.</p><p> 
+            We've made it super easy to get more days by:</p>
         {{/if}}
-        <p>Share with friends, rate us in the Chrome store, or upgrade to Mikey Premium to get more days.</p>
+        
       {{/if}}
     </div>
     <div class="modal-body">
-      <div class="buttons-cluster">
-        <a href="#" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">twitter</div></a>
-        <a href="#" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">facebook</div></a>
-        <a href="#" id="rateOnChromeStoreButton" class="share-modal-button chrome-share"><div class="referral-button-text">rate mikey</div></a>
-        {{#unless isGrantedPremium}}
-          <a href="#" id="upgradeButton" class="share-modal-button premium">
-            <div class="referral-button-text">upgrade</div>
-          </a>
-        {{/unless}}
+      
+      <div class="get-more-options">
+        <div class="modal-subheader">
+          <div class="modal-subheader-text">
+            Sharing with friends
+          </div>
+          <div class="modal-subtext">
+            30 days for every referral 
+          </div>
+        </div>
+        <div class="buttons-cluster">
+          <a href="#" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">Tweet</div></a>
+          <a href="#" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">Share</div></a>
+          <div class="url-copy-box">
+            <input id="directReferralLinkText" type="text" value="{{directReferralLink}}">
+            <a href="#" id="copyButton" class="copy-button" style="margin-left:-5px;">Copy</a>
+          </div>
+        </div>
       </div>
-      Or share this URL<br>
-      <input style="padding-bottom: 5px;" id="directReferralLinkText" type="text" value="{{directReferralLink}}"><a href="#" id="copyButton" style="margin-left:-2px;" class="button buttons">Copy</a>
-    </div>
+
+      <div class="get-more-options">
+        <div class="modal-subheader">
+          <div class="modal-subheader-text">
+            Showing Mikey love
+          </div>
+          <div class="modal-subtext">
+            15 days for chrome store or facebook support
+          </div>
+        </div>
+        <div class="buttons-cluster">
+          <a href="#" id="rateOnChromeStoreButton" class="share-modal-button chrome-share"><div class="referral-button-text">Rate Mikey</div></a>
+          <a href="#" id="facebookLikeButton">
+            <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FMikey-for-Gmail%2F1400138380211355%3Fref%3Dhl&amp;width=340&amp;height=62&amp;colorscheme=light&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;send=false&amp;appId=172776159468128" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:340px; height:62px;" allowTransparency="true"></iframe>
+          </a>
+        </div>
+      </div>
+
+      {{#unless isGrantedPremium}}
+      <div class="get-more-options">
+        <div class="modal-subheader">
+          <div class="modal-subheader-text">
+            Upgrading
+          </div>
+          <div class="modal-subtext">
+            Simple monthly plans. no tricks.
+          </div>
+        </div>
+        <div class="buttons-cluster">
+           <a href="#" id="upgradeButton" class="share-modal-button premium">
+            <div class="referral-button-text">check out the premium plans</div>
+          </a>
+        </div>
+      </div>
+      {{/unless}}
+
+
     <div class="footer-buttons">
      
     </div>
@@ -47,6 +91,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     'click #twitterReferralButton': 'twitterReferralClick'
     'click #facebookReferralButton': 'facebookReferralClick'
     'click #rateOnChromeStoreButton': 'rateOnChromeStoreClick'
+    'click #facebookLikeButton': 'facebookLikeClick'
     'click #upgradeButton': 'showUpgradeModal'
     'click #copyButton': 'copyTextToClipboard'
     'hidden .modal': 'modalHidden'
@@ -75,15 +120,18 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     url = MeetMikey.Constants.chromeStoreReviewURL
     window.open url
     @hide()
-    @creditUserWithReview()
+    @creditUserWithPromotionAction 'chromeStoreReview'
 
-  creditUserWithReview: =>
-    email = MeetMikey.globalUser?.get('email')
+  facebookLikeClick: =>
+    MeetMikey.Helper.Analytics.trackEvent 'facebookLikeClick'
+    @creditUserWithPromotionAction 'facebookLike'
+
+  creditUserWithPromotionAction: (promotionType) =>
     MeetMikey.Helper.callAPI
-      url: 'creditChromeStoreReview'
+      url: 'creditPromotionAction'
       type: 'POST'
       data:
-        userEmail: email
+        'promotionType': promotionType
       complete: () =>
         MeetMikey.globalUser.refreshFromServer()
 
@@ -133,4 +181,4 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     $('body').append $('<div id="mm-upgrade-modal"></div>')
     @upgradeModal = new MeetMikey.View.UpgradeModal el: '#mm-upgrade-modal'
     @upgradeModal.render()
-    @upgradeModal.notifyAboutUpgradeInterest {link: 'upgrade'}
+    MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal', {link: 'upgrade'}

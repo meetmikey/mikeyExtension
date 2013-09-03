@@ -7,16 +7,20 @@ class LinkDecorator
     object.title = model.get('title') ? model.get('url')
     object.summary = model.get('summary')
     object.image = model.get('image')
-    object.msgHex = model.get('gmMsgHex')
+    object.threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
     object.url = model.get 'url'
     object.displayUrl = @formatUrl model
     object.from = @formatSender model
     object.to = @formatRecipients model
     object.sentDate = @formatDate model
+    object.rawSentDate = model.get 'sentDate'
     object.faviconURL = MeetMikey.Helper.getFaviconURL(model.get('resolvedURL') ? model.get('url'))
     object.isGoogleDoc = @isGoogleDoc model
     object.cid = model.cid
+    object.isFavorite = model.get 'isFavorite'
     object.deleting = model.get('deleting')
+    object.isLiked = model.get 'isLiked'
+    object.isLink = true
 
     object
 

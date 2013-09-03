@@ -5,6 +5,7 @@ class Url
   inboxHashRegex: /^(?:$|#inbox(?!\/))/
   searchHashRegex: /^#(?:search|apps)(?!.+\/)/
   appsSearchHashRegex: /^#apps/
+  threadHashRegex: /#(search\/){0,1}((?!search|\s|\/).)+\/[a-f0-9]{16}/
 
   searchQueryHashRegex: /#(?:search|apps)\/([^\/]+)(?!.+\/)$/
 
@@ -15,6 +16,15 @@ class Url
     match = afterHash.match @hashRegex
 
     match?[0]
+
+  getThreadHex: =>
+    threadHex = ''
+    if @inThread()
+      hash = @getHash()
+      lastSlashIndex = hash.lastIndexOf '/'
+      if lastSlashIndex != -1
+        threadHex = hash.substring ( lastSlashIndex + 1 )
+    threadHex
 
   setHash: (hash) =>
     query = @getQueryString()
@@ -41,6 +51,9 @@ class Url
 
   inAppsSearch: =>
     @appsSearchHashRegex.test @getHash()
+
+  inThread: =>
+    @threadHashRegex.test @getHash()
 
   inViewWithTabs: =>
     @inInbox() or @inSearch()

@@ -13,15 +13,15 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   subViews:
     'attachments':
-      viewClass: MeetMikey.View.Attachments
+      viewClass: MeetMikey.View.AttachmentsWrapper
       selector: '.mm-attachments-tab'
       args: {}
     'links':
-      viewClass: MeetMikey.View.Links
+      viewClass: MeetMikey.View.LinksWrapper
       selector: '.mm-links-tab'
       args: {}
     'images':
-      viewClass: MeetMikey.View.Images
+      viewClass: MeetMikey.View.ImagesWrapper
       selector: '.mm-images-tab-inner'
       args: {}
 
@@ -49,6 +49,9 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
 
   tabState: => MeetMikey.Globals.tabState
 
+  isSearch: =>
+    not @options.fetch
+
   preInitialize: =>
     @tabs = $.extend true, {}, @tabs # deep copy tabs
     if @options.fetch and MeetMikey.Globals.multipleInbox
@@ -58,7 +61,8 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     @subViews.images.args.fetch = @options.fetch
 
   postInitialize: =>
-    @bindCountUpdate() unless @options.fetch
+    if @isSearch()
+      @bindCountUpdate()
 
   postRender: =>
     @adjustHeight()
@@ -127,38 +131,22 @@ class MeetMikey.View.Inbox extends MeetMikey.View.Base
     Backbone.on 'clicked:next-page', @nextPage
     Backbone.on 'clicked:prev-page', @prevPage
 
-  paginationForTab: =>
-    @subView(@tabState())?.pagination
-
-  nextPage: =>
-    view = @subView @tabState()
-    view.pagination.nextPage()
-
-  prevPage: =>
-    view = @subView @tabState()
-    view.pagination.prevPage()
-
   # not needed anymore ?
   bindCountUpdate: =>
+    @unbindCountUpdate()
     _.each @getTabs(), @bindCountUpdateForTab
 
   bindCountUpdateForTab: (tab) =>
-    @subView(tab).on 'reset', @updateCountForTab(tab)
-    @subView(tab).collection.on 'reset add remove', @updateCountForTab(tab)
+    @subView(tab).on 'updateTabCount', @updateCountForTab(tab)
 
   unbindCountUpdate: =>
     _.each @getTabs(), @unbindCountUpdateForTab
 
   unbindCountUpdateForTab: (tab) =>
-    @subView(tab).off 'reset', @updateCountForTab(tab)
-    @subView(tab).collection.off 'reset add remove', @updateCountForTab(tab)
+    @subView(tab).off 'updateTabCount'
 
-  updateCountForTab: (tab) => (collection, orCollection) =>
-    @trigger 'updateTabCount', tab, (collection.length ? orCollection.length)
-
-  updateTabCounts: =>
-    _.each @getTabs(), (tab) =>
-      @updateCountForTab(tab) @subView(tab).collection.length
+  updateCountForTab: (tab) => (count) =>
+    @trigger 'updateTabCount', tab, count
 
   setResults: (res, query) =>
     @subView('attachments').setResults res.attachments, query

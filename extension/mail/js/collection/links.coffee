@@ -1,4 +1,5 @@
 class MeetMikey.Collection.Links extends MeetMikey.Collection.Base
+  urlSuffix: 'link'
   url: MeetMikey.Helper.getAPIUrl() + '/link'
   model: MeetMikey.Model.Link
 
@@ -11,5 +12,3 @@ class MeetMikey.Collection.Links extends MeetMikey.Collection.Base
     sender: (model) -> model.decorator.formatSender(model).toLowerCase()
     url: (model) -> model.decorator.formatUrl(model)
     title: (model) -> model.get('title') ? model.get('url')
-
-

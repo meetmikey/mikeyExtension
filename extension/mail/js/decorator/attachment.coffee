@@ -17,17 +17,25 @@ class AttachmentDecorator
     object.filename = model.get('filename')
     object.from = @formatSender model
     object.to = @formatRecipients model
+    object.rawSentDate = model.get 'sentDate'
     object.sentDate = @formatDate model
     object.size = @formatFileSize model
-    object.url = model.getUrl()
+    object.url = model.getURL()
     object._id = model.get('_id')
     object.cid = model.cid
     object.type = model.get 'docType'
     object.iconUrl = @iconUrls[model.get 'docType']
     object.image = model.get 'image'
-    object.msgHex = model.get('gmMsgHex')
+    object.threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
     object.subject = model.get('mailCleanSubject')
     object.deleting = model.get('deleting')
+    object.isFavorite = model.get 'isFavorite'
+    object.isLiked = model.get 'isLiked'
+    #either isImage or isAttachment
+    if model.get 'isImage'
+      object.isImage = true
+    else
+      object.isAttachment = true
 
     object
 

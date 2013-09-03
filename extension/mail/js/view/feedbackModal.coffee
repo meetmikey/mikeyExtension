@@ -1,5 +1,5 @@
 template = """
-<div class="modal hide fade modal-wide" style="display: none; ">
+  <div class="modal hide fade modal-wide" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Sorry to see you go! Your account will be deleted shortly.</h3>

@@ -6,7 +6,7 @@ class MeetMikey.Model.PaginationState extends MeetMikey.Model.Base
 
   initialize: =>
     @items = @get 'items'
-    @items.once 'reset', =>
+    @items.on 'reset', =>
       @set 'lastPage', 0 if @items.length < @itemsPerPage
 
   getStateData: =>

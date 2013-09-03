@@ -62,7 +62,7 @@ class ThemeManager
       false
 
   getTextColor: =>
-    @safeFind(MeetMikey.Constants.Selectors.sideBarText).css 'color'
+    @safeFind(MeetMikey.Constants.Selectors.leftNavBarText).css 'color'
 
   getInboxTextColor: =>
     $(@inboxReadTextSelector).css('color') ? @safeFind(@inboxUnreadTextSelector).css('color')

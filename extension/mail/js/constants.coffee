@@ -14,6 +14,7 @@ _.extend MeetMikey.Constants,
   paginationSize: 50
   imagePaginationSize: 20
   deleteDelay: 8000
+  likeDelay: 8000
   basicPlanPrice: '3'
   basicPlanNumAccounts: 1
   basicPlanDays: '365'
@@ -49,8 +50,8 @@ _.extend MeetMikey.Constants,
     # top search bar container
     searchBar: '#gbqf'
 
-    # sidebar (with inbox, etc)
-    sideBar: '.nM[role=navigation]'
+    # leftNavBar (with inbox, etc)
+    leftNavBar: '.nM[role=navigation]'
 
     # contains most of the gmail dom
     topLevel: '.no .nH.nn'
@@ -64,11 +65,17 @@ _.extend MeetMikey.Constants,
     # the element that is used to measure the width of the inbox
     widthElem: '.nH.nn > .nH > .nH'
 
-    # links on the sidebar, inbox, starred, etc
-    sideBarLink: '.aim'
+    # links on the leftNavBar, inbox, starred, etc
+    leftNavBarLink: '.aim'
 
-    # the non-selected (normal) text in the sidebar
-    sideBarText: ":not(.nZ) > div > div > .nU > .n0"
+    # the non-selected (normal) text in the leftNavBar
+    leftNavBarText: ":not(.nZ) > div > div > .nU > .n0"
+
+    # the sidebar along the right side of conversation threads
+    sidebarContainer: ".u5"
+
+    # the rapportive container along the right side of conversation threads
+    sidebarRapportiveContainer: '.nH > #rapportive-sidebar'
 
     # the text found in the inbox on read messages
     inboxReadText: ".yO"

@@ -1,4 +1,5 @@
 class MeetMikey.Collection.Attachments extends MeetMikey.Collection.Base
+  urlSuffix: 'attachment'
   url: MeetMikey.Helper.getAPIUrl() + '/attachment'
   model: MeetMikey.Model.Attachment
 

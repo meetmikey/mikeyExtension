@@ -23,22 +23,21 @@ template = """
 
     <div class="rollover-footer">
       {{#if searchQuery}}
-        <a class="rollover-message-link" href="#search/{{searchQuery}}/{{msgHex}}">View email thread</a>
+        <a href="#search/{{searchQuery}}/{{threadHex}}"><div class="rollover-message-link inbox-icon message"></div></a>
       {{else}}
-        <a class="rollover-message-link" href="#inbox/{{msgHex}}">View email thread</a>
+        <a href="#inbox/{{threadHex}}"><div class="rollover-message-link inbox-icon message"></div></a>
       {{/if}}
       <div class="rollover-actions">
         {{#if deleting}}
-          <a class="rollover-resource-delete" href="#" style="display:none;">Hide</a>
+          <a class="rollover-resource-delete" href="#" style="display:none;">Hide link</a>
           <a class="rollover-resource-undo" href="#">Undo</a>
         {{else}}
-          <a class="rollover-resource-delete" href="#">Hide</a>
+          <a class="rollover-resource-delete" href="#">Hide link</a>
           <a class="rollover-resource-undo" href="#" style="display:none;">Undo</a>
         {{/if}}
       </div>
     </div>
   </div>
 """
-
 class MeetMikey.View.LinkRollover extends MeetMikey.View.Rollover
   template: Handlebars.compile(template)

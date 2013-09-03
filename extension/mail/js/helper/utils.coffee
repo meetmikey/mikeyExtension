@@ -42,14 +42,18 @@ MeetMikey.Helper.findSelectors = (selectors..., callback) ->
     else setTimeout find, 200
   find()
 
-MeetMikey.Helper.callAPI = (options) ->
-  options ?= {}
-  options.url = "#{MeetMikey.Helper.getAPIUrl()}/#{options.url}"
-  options.cache = false
+MeetMikey.Helper.getBasicAPIData = ->
   apiData =
     userEmail: MeetMikey.globalUser?.get('email')
     asymHash: MeetMikey.globalUser?.get('asymHash')
     extensionVersion: MeetMikey.Constants.extensionVersion
+  apiData
+
+MeetMikey.Helper.callAPI = (options) ->
+  options ?= {}
+  options.url = "#{MeetMikey.Helper.getAPIUrl()}/#{options.url}"
+  options.cache = false
+  apiData = MeetMikey.Helper.getBasicAPIData()
 
   _.extend apiData, options.data if options.data?
   options.data = apiData
@@ -79,11 +83,21 @@ MeetMikey.Helper.getResourceProperties = (resource) ->
 
     props
 
-MeetMikey.Helper.trackResourceEvent = (event, model, opts) ->
+MeetMikey.Helper.trackResourceEvent = (eventType, model, opts) ->
   resourceProps = MeetMikey.Helper.getResourceProperties(model)
   props = _.extend resourceProps, opts
+  MeetMikey.Helper.Analytics.trackEvent eventType, props
 
-  MeetMikey.Helper.Analytics.trackEvent event, props
+MeetMikey.Helper.trackResourceInteractionEvent = (event, resourceType, isOnInput, sourceInput) ->
+  source = 'sidebar'
+  if sourceInput
+    source = sourceInput
+  isOn = false
+  if isOnInput
+    isOn = true
+  if event == 'resourceLike'
+    isOn = true
+  MeetMikey.Helper.Analytics.trackEvent event, {resourceType: resourceType, isOn: isOn, source: source}
 
 MeetMikey.Helper.getHash = (input) ->
   hash = 0
@@ -111,3 +125,123 @@ MeetMikey.Helper.clearCheckTabsInterval = ->
 
 String.prototype.capitalize = () ->
   this.charAt(0).toUpperCase() + this.slice(1)
+
+MeetMikey.Helper.isString  = ( input ) ->
+  if typeof input == 'string'
+    return true
+  false
+
+
+
+
+
+#CONVERSION FUNCTIONS...
+###############################
+
+
+
+#Always returns a string value
+MeetMikey.Helper.decimalToHex = ( decimalInput ) ->
+  if not decimalInput
+    return ''
+  decimalString = decimalInput
+  if not MeetMikey.Helper.isString( decimalString )
+    decimalString = decimalInput.toString()
+  hex = MeetMikey.Helper.convertBase decimalString, 10, 16
+  hex
+
+#Always returns a string value
+MeetMikey.Helper.hexToDecimal = ( hexInput ) ->
+  hexString = hexInput
+  if not MeetMikey.Helper.isString( hexString )
+    hexString = hexInput.toString()
+  if (hexString.substring(0, 2) == '0x')
+    hexString = hexString.substring(2)
+  hexString = hexString.toLowerCase()
+  MeetMikey.Helper.convertBase hexString, 16, 10
+
+# Adds two arrays for the given base (10 or 16), returning the result.
+# This turns out to be the only "primitive" operation we need.
+MeetMikey.Helper.convertAdd = ( x, y, base ) ->
+  z = []
+  n = Math.max x.length, y.length
+  carry = 0
+  i = 0
+  while (i < n ) or carry
+    xi = 0
+    if i < x.length
+      xi = x[i]
+
+    yi = 0
+    if i < y.length
+      yi = y[i]
+
+    zi = carry + xi + yi
+    z.push(zi % base)
+    carry = Math.floor(zi / base)
+    i++
+  z
+
+# Returns a*x, where x is an array of decimal digits and a is an ordinary
+# JavaScript number. base is the number base of the array x.
+MeetMikey.Helper.convertMultiplyByNumber = ( num, x, base ) ->
+  if num < 0
+    return null
+  if num == 0
+    return []
+
+  result = []
+  power = x
+  while 1
+    if num & 1
+      result = MeetMikey.Helper.convertAdd result, power, base
+    num = num >> 1
+    if num == 0
+      break
+    power = MeetMikey.Helper.convertAdd power, power, base
+  result
+
+MeetMikey.Helper.parseToDigitsArray = ( str, base ) ->
+  digits = str.split ''
+  ary = []
+  for i in [(digits.length - 1)..0] by -1
+    n = parseInt digits[i], base
+    if isNaN n
+      return null
+    ary.push n
+  ary
+
+MeetMikey.Helper.convertBase = ( str, fromBase, toBase ) ->
+  digits = MeetMikey.Helper.parseToDigitsArray str, fromBase
+  if digits == null
+    return null
+
+  outArray = []
+  power = [1]
+  for i in [0..(digits.length - 1)] by 1
+    # invariant: at this point, fromBase^i = power
+    if digits[i]
+      outArray = MeetMikey.Helper.convertAdd(outArray, MeetMikey.Helper.convertMultiplyByNumber(digits[i], power, toBase), toBase)
+    power = MeetMikey.Helper.convertMultiplyByNumber fromBase, power, toBase
+
+  out = ''
+  for i in [(outArray.length - 1)..0] by -1
+    out += outArray[i].toString toBase
+  out
+
+
+MeetMikey.Helper.getCIDFromEventWithMarker = ( event, marker1, marker2 ) ->
+  if not event or not marker1
+    return
+  cid = $(event.currentTarget).closest( marker1 ).attr('data-cid')
+  if not cid and marker2
+    cid = $(event.currentTarget).closest( marker2 ).attr('data-cid')
+  cid
+
+
+MeetMikey.Helper.endsWith = (str, suffix) =>
+  if str and suffix
+    lastIndex = str.lastIndexOf suffix
+    if ( lastIndex > -1 ) and lastIndex == ( str.length - suffix.length )
+      return true
+  return false

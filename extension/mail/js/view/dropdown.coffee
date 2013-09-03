@@ -88,4 +88,4 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
     $('body').append $('<div id="mm-upgrade-modal"></div>')
     @upgradeModal = new MeetMikey.View.UpgradeModal el: '#mm-upgrade-modal'
     @upgradeModal.render()
-    @upgradeModal.notifyAboutUpgradeInterest {link: 'myAccount'}
+    MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal', {link: 'myAccount'}

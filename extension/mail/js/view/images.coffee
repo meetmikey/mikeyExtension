@@ -2,7 +2,7 @@ downloadUrl = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/sprite.png
 
 imageTemplate = """
   <div class="image-box" data-cid="{{cid}}">
-    <div class="hide-image-x mm-download-tooltip" data-toggle="tooltip" data-animation="false" title="Hide this image"><div class="close-x">x</div></div>
+    <div class="hide-image-x download-tooltip" data-toggle="tooltip" data-animation="false" title="Hide"><div class="close-x">x</div></div>
     {{#if deleting}}
 
       <div class="undo-delete">This image will no longer appear.<br>Click to undo.</div>
@@ -11,22 +11,31 @@ imageTemplate = """
       <div class="undo-delete" style="display:none;">This image will no longer appear.<br>Click to undo.</div>
       <div class="image-subbox">
     {{/if}}
-      <img class="mm-image" src="{{image}}"/>
-      <div class="image-text">
+      
+      <div class="mm-image-container">
+        <img class="mm-image" src="{{image}}"/>
+      </div>
+     
         <div class="image-filename">
-          <a href="#">{{filename}}&nbsp;</a>
+          <a href="#">{{subject}}</a>
         </div>
 
         <div class="rollover-actions">
-          <a href="#inbox/{{msgHex}}" class="open-message">
-            <div class="list-icon" data-toggle="tooltip" data-animation="false" title="View email">
-              <div class="list-icon" style="background-image: url('#{downloadUrl}');">
-              </div>
-            </div>
-          </a>
+          <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
+            <div id="mm-resource-like-{{cid}}" class="mm-resource-like inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+          </div>
+          <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
+            <div id="mm-resource-favorite-{{cid}}" class="mm-resource-favorite inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+          </div>
+          <div class="mm-download-tooltip" data-toggle="tooltip" title="Open email">
+            <div class="list-icon message" style="background-image: url('#{downloadUrl}');"></div>
+          </div>
         </div>
+
+        
       </div>
-    </div>
+      
+    
   </div>
 """
 
@@ -45,7 +54,7 @@ template = """
 """
 
 
-class MeetMikey.View.Images extends MeetMikey.View.Base
+class MeetMikey.View.Images extends MeetMikey.View.Resources
   template: Handlebars.compile(template)
   imageTemplate: Handlebars.compile(imageTemplate)
 
@@ -58,6 +67,9 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   searchQuery: null
   numSearchResultsReceived: 0
   endOfImages: false
+  cidMarkerClass: '.image-box'
+  cidMarkerClassTwo: '.item'
+  resourceType: 'image'
 
   safeFind: MeetMikey.Helper.DOMManager.find
 
@@ -72,23 +84,45 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   events:
     'click .mm-image': 'openImage'
     'click .image-filename a': 'openImage'
-    'click .open-message': 'openMessage'
+    'click .message': 'openMessage'
     'click .hide-image-x' : 'markDeleting'
+    'click .mm-resource-favorite': 'toggleFavoriteEvent'
+    'click .mm-resource-like': 'toggleLikeEvent'
+    'load .mm-image': 'imageLoaded'
 
   postInitialize: =>
-    @on 'showTab', @isotopeUntilImagesLoaded
+    @on 'showTab', @runIsotope
     #@on 'showTab', @bindScrollHandler
     Backbone.on 'change:tab', @hashChange
     @collection = new MeetMikey.Collection.Images()
-    @collection.on 'reset', _.debounce(@render, MeetMikey.Constants.imagePaginationSize)
+    @collection.on 'reset', _.debounce(@render, 50)
     @subViews.imageCarousel.view.setImageCollection @collection
     $(window).off 'hashchange', @hashChange
     $(window).on 'hashchange', @hashChange
+    MeetMikey.globalEvents.on 'favoriteOrLikeEvent', @favoriteOrLikeEvent
     @setupModal()
 
   setupModal: =>
     @$('.mmCarouselModal').modal
       show: false
+
+  setFetch: (isFetch) =>
+    @options.fetch = isFetch
+
+  favoriteOrLikeEvent: (actionType, resourceType, originModel, value) =>
+    if resourceType isnt @resourceType
+      return
+    image = @collection.get originModel.id
+    if not image
+      return
+    if actionType is 'favorite'
+      image.set 'isFavorite', value
+      elementId = '#mm-resource-favorite-' + image.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay image, elementId
+    else if actionType is 'like'
+      image.set 'isLiked', value
+      elementId = '#mm-resource-like-' + image.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay image, elementId
 
   isModalVisible: =>
     @$('.mmCarouselModal').hasClass 'fade-in'
@@ -102,14 +136,13 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   postRender: =>
     @hasInitializedIsotope = false
-    $('.mm-download-tooltip').tooltip placement: 'bottom'
-    $('.image-box-tooltip').tooltip placement: 'top'
-    if MeetMikey.Globals.tabState == 'images'
-      @isotopeUntilImagesLoaded()
+    $('.download-tooltip').tooltip placement: 'bottom'
+    $('.mm-download-tooltip').tooltip placement: 'top'
+    @runIsotope()
+    @addImageLoadEvents()
 
   openImage: (event) =>
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    model = @collection.get(cid)
+    model = @getModelFromEvent event
     if !model.get('deleting')
       @subViews.imageCarousel.view.openImage event
     else
@@ -135,8 +168,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   markDeleting: (event) =>
     event.preventDefault()
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    model = @collection.get(cid)
+    model = @getModelFromEvent event
     model.set 'deleting', true
     element = @$('.image-box[data-cid='+model.cid+']')
     imageElement = element.children '.image-subbox'
@@ -149,8 +181,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   unMarkDeleting: (event) =>
     event.preventDefault()
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    model = @collection.get(cid)
+    model = model = @getModelFromEvent event
 
     model.set('deleting', false)
     element = @$('.image-box[data-cid='+model.cid+']')
@@ -158,35 +189,15 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     imageElement.css('opacity', 1) if imageElement?
     element.children('.undo-delete').hide()
 
-  deleteAfterDelay: (modelId) =>
+  deleteAfterDelay: (modelCId) =>
     setTimeout =>
-      model = @collection.get modelId
-      if model.get 'deleting'
+      model = @collection.get modelCId
+      if model and model.get 'deleting'
         @collection.remove model
         model.delete()
         isotopeItem = @$('.image-box[data-cid='+model.cid+']')
         @$('.mmImagesIsotope').isotope 'remove', isotopeItem
     , MeetMikey.Constants.deleteDelay
-
-  openMessage: (event) =>
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    if ! cid
-      cid = $(event.currentTarget).closest('.item').attr('data-cid')
-    if ! cid
-      return
-    model = @collection.get cid
-    if ! model
-      return
-    msgHex = model.get 'gmMsgHex'
-    if @searchQuery
-      hash = "#search/#{@searchQuery}/#{msgHex}"
-    else
-      hash = "#inbox/#{msgHex}"
-
-    MeetMikey.Helper.trackResourceEvent 'openMessage', model,
-      currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
-
-    window.location = hash
 
   hashChange: =>
     if @isVisible()
@@ -230,90 +241,112 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     nearBottom
 
   fetchMoreImages: (forceNumToFetch) =>
-    if not @endOfImages and not @fetching
-      if @options.fetch
-        numToFetch = @defaultNumImagesToFetch
-        if forceNumToFetch
-          numToFetch = forceNumToFetch
-        @fetching = true
-        MeetMikey.Helper.callAPI
-          url: 'image'
-          data:
-            userEmail: MeetMikey.globalUser.get('email')
-            asymHash: MeetMikey.globalUser.get('asymHash')
-            extensionVersion: MeetMikey.Constants.extensionVersion
-            before: @collection.last()?.get('sentDate')
-            limit: numToFetch
-          success: (res) =>
+    if @endOfImages or @fetching
+      return
+    if @isSearch()
+      @getMoreSearchResults()
+    else
+      numToFetch = @defaultNumImagesToFetch
+      if forceNumToFetch
+        numToFetch = forceNumToFetch
+      @fetching = true
+      MeetMikey.Helper.callAPI
+        url: 'image'
+        data:
+          before: @earliestSentDate
+          limit: numToFetch
+        success: (res) =>
+          if _.isEmpty(res)
+            @endOfImages = true
+          else
             @addImagesFromFetchResponse res
-          #error: (err) =>
-            #console.log 'fetch error: ', err
-      else
-        @getMoreSearchResults()
 
   getMoreSearchResults: =>
     @fetching = true
     MeetMikey.Helper.callAPI
-      url: "searchImages"
+      url: 'searchImages'
       type: 'GET'
       data:
         query: @searchQuery
         fromIndex: @numSearchResultsReceived
       success: (res) =>
-        @addImagesFromFetchResponse res
-        @numSearchResultsReceived += res.length
-        @isotopeUntilImagesLoaded()
+        if _.isEmpty(res)
+          @endOfImages = true
+        else
+          @addImagesFromFetchResponse res
+          @numSearchResultsReceived += res.length
       failure: ->
         @logger.info 'search failed'
 
-  addImagesFromFetchResponse: (res) =>
-    @endOfImages = true if _.isEmpty(res)
+  addImagesFromFetchResponse: (res, atBeginning) =>
     newModels = []
     _.each res, (imageData) =>
+      if not atBeginning and imageData.sentDate and ( ! @earliestSentDate or ( imageData.sentDate < @earliestSentDate ) )
+        @earliestSentDate = imageData.sentDate
       newModel = new MeetMikey.Model.Image imageData
       isDupe = false
       @collection.each (oldModel) =>
         if oldModel.get('hash') == newModel.get('hash')
           isDupe = true
       if not isDupe
-        @collection.push newModel
+        if atBeginning
+          @collection.unshift newModel
+        else
+          @collection.push newModel
         newModels.push newModel
-    @appendNewImageModelTemplates newModels
+    @addNewImageModelTemplates newModels, atBeginning
     @delegateEvents()
     @fetching = false
 
-  appendNewImageModelTemplates: (models) =>
+  addNewImageModelTemplates: (models, atBeginning) =>
+    if not models or not models.length
+      return
     decoratedModels = _.invoke(models, 'decorate')
     html = ''
     _.each decoratedModels, (decoratedModel) =>
       html += @imageTemplate(decoratedModel)
     items = $(html)
-    @$('.mmImagesIsotope').isotope 'insert', items
+    if atBeginning
+      @$('.mmImagesIsotope').prepend( items )
+    else
+      @$('.mmImagesIsotope').isotope 'insert', items
+    @addImageLoadEvents()
+    @runIsotope()
+
+  addImageLoadEvents: =>
+    @$el.find('.mm-image').off 'load'
+    @$el.find('.mm-image').on 'load', _.debounce @imageLoaded, 200
+
+  imageLoaded: (event) =>
+    @runIsotope()
+    @initializeIsotope()
+    @$('.mmImagesIsotope').isotope( 'reloadItems' ).isotope({ sortBy: 'original-order' })
+
+  initializeIsotope:() =>
+    if @hasInitializedIsotope
+      return
+    @$('.mmImagesIsotope').isotope
+      filter: '*'
+      animationEngine: 'css'
+    @hasInitializedIsotope = true
 
   runIsotope: =>
-    if ! @hasInitializedIsotope
-      @$('.mmImagesIsotope').isotope
-        filter: '*'
-        animationEngine: 'css'
-      @hasInitializedIsotope = true
-    @$('.mmImagesIsotope').isotope 'reLayout'
-
-  isotopeUntilImagesLoaded: =>
-    # @logger.info 'isotopeUntilImagesLoaded'
-    @runIsotope()
-    @$el.imagesLoaded =>
-      # @logger.info 'images loaded, isotoping one last time'
-      @runIsotope()
-      setTimeout @runIsotope, 1000
-      setTimeout @runIsotope, 4000
+    @initializeIsotope()
+    @$('.mmImagesIsotope').isotope( 'reloadItems' ).isotope({ sortBy: 'original-order' })
 
   setResults: (models, query) =>
-    @on 'showTab', @isotopeUntilImagesLoaded
     @searchQuery = query
     @endOfImages = false
-    @numSearchResultsReceived = models.length
-    @collection.reset models, sort: false
-    @isotopeUntilImagesLoaded()
+    newModels = []
+    _.each models, (tempModel) =>
+      isDupe = false
+      _.each newModels, (newModelTemp) =>
+        if tempModel.hash == newModelTemp.hash
+          isDupe = true
+      if not isDupe
+        newModels.push tempModel
+    @numSearchResultsReceived = newModels.length
+    @collection.reset newModels, sort: false
 
   waitAndPoll: =>
     @timeoutId = setTimeout @poll, @pollDelay
@@ -327,9 +360,10 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     else
       after: @collection.latestSentDate()
 
-    @collection.fetch
-      update: true
-      remove: false
-      data: data
-      success: @waitAndPoll
-      error: @waitAndPoll
+    MeetMikey.Helper.callAPI
+        url: 'image'
+        data: data
+        success: (res) =>
+          @addImagesFromFetchResponse res, true
+          @waitAndPoll()
+        error: @waitAndPoll

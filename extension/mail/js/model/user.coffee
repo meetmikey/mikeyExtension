@@ -15,6 +15,15 @@ class MeetMikey.Model.User extends Backbone.Model
     else
       @fetchOnboard()
 
+  checkLikeInfoMessaging: =>
+    if MeetMikey.Helper.LocalStore.get @likeInfoMessagingKey()
+      return true
+    else
+      return false
+
+  setLikeInfoMessaging: =>
+    MeetMikey.Helper.LocalStore.set @likeInfoMessagingKey(), true
+
   checkInvalidToken: =>
     @.get('invalidToken') == true
 
@@ -60,6 +69,17 @@ class MeetMikey.Model.User extends Backbone.Model
     else
       return false
 
+  getFullName: =>
+    firstName = @get 'firstName'
+    lastName = @get 'lastName'
+    if firstName and lastName
+      return firstName + ' ' + lastName
+    if firstName
+      return firstName
+    if lastName
+      return 'M. ' + lastName
+    return ''
+
   fetchOnboard: =>
     MeetMikey.Helper.callAPI
       url: 'onboarding'
@@ -76,15 +96,14 @@ class MeetMikey.Model.User extends Backbone.Model
 
   onboardKey: => "meetmikey-#{@get('email')}-onboarded"
 
+  likeInfoMessagingKey: => "meetmikey-#{@get('email')}-likeInfoMessaging"
+
   deleteUser: (callback) =>
     return callback null unless @get ('asymHash')
 
     MeetMikey.Helper.callAPI
       url: 'user'
       type: 'DELETE'
-      data:
-        asymHash: @get('asymHash')
-        userEmail: @get('email')
       success: (res) =>
         callback res
       error: (err) =>

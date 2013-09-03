@@ -1,28 +1,35 @@
 class MeetMikey.Model.Attachment extends MeetMikey.Model.Base
   idAttribute: "_id"
-
   decorator: MeetMikey.Decorator.Attachment
 
   isImage: =>
     /^image\/.+/.test @get('contentType')
 
-  getUrl: =>
+  getURL: =>
+    if @isImage() and MeetMikey.Helper.endsWith @get('filename'), '.tiff'
+      #Apparently we have trouble converting .tiff files.  Ask Sagar.
+      return @get 'image'
     email = encodeURIComponent MeetMikey.Helper.OAuth.getUserEmail()
     asymHash = MeetMikey.globalUser.get('asymHash')
     "#{MeetMikey.Helper.getAPIUrl()}/attachmentURL/#{this.id}?userEmail=#{email}&asymHash=#{asymHash}"
 
+  putIsFavorite: (isFavorite, callback) =>
+    MeetMikey.Helper.callAPI
+      type: 'PUT'
+      url: 'attachment/' + @get('_id')
+      complete: callback
+      data:
+        isFavorite: isFavorite
+
+  putIsLiked: (isLiked, callback) =>
+    MeetMikey.Helper.callAPI
+      type: 'PUT'
+      url: 'attachment/' + @get('_id')
+      complete: callback
+      data:
+        isLiked: isLiked
+
   delete: =>
-
-    apiData =
-      userEmail: MeetMikey.globalUser.get('email')
-      asymHash: MeetMikey.globalUser.get('asymHash')
-      extensionVersion: MeetMikey.Constants.extensionVersion
-
-    $.ajax
+    MeetMikey.Helper.callAPI
       type: 'DELETE'
-      url: MeetMikey.Helper.getAPIUrl() + '/attachment/' + @get('_id')
-      data: apiData
-      error: (data) ->
-        console.log 'hide error', data
-      #success: (data) ->
-        #console.log 'hide success', data
+      url: 'attachment/' + @get('_id')

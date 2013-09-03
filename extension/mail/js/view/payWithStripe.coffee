@@ -103,12 +103,9 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
   cancelSubscription: =>
     MeetMikey.Helper.Analytics.trackEvent 'cancelSubscription', {billingPlan: @options.billingPlan}
     @subscriptionChangeSubmitted()
-    userEmail = MeetMikey.globalUser?.get 'email'
     MeetMikey.Helper.callAPI
       url: 'cancelBillingPlan'
       type: 'POST'
-      data:
-        userEmail: userEmail
       complete: @handleCancelAPIResponse
 
   subscriptionChangeSubmitted: =>
@@ -153,12 +150,10 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
   performPayment: (stripeCardToken) =>
     MeetMikey.Helper.Analytics.trackEvent 'subscribeToPlan', {billingPlan: @options.billingPlan}
     @subscriptionChangeSubmitted()
-    userEmail = MeetMikey.globalUser?.get 'email'
     MeetMikey.Helper.callAPI
       url: 'upgradeToBillingPlan'
       type: 'POST'
       data:
-        userEmail: userEmail
         billingPlan: @options.billingPlan
         stripeCardToken: stripeCardToken
       complete: @handlePaymentAPIResponse
