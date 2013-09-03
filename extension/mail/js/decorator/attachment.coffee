@@ -20,7 +20,7 @@ class AttachmentDecorator
     object.rawSentDate = model.get 'sentDate'
     object.sentDate = @formatDate model
     object.size = @formatFileSize model
-    object.url = model.getUrl()
+    object.url = model.getURL()
     object._id = model.get('_id')
     object.cid = model.cid
     object.type = model.get 'docType'

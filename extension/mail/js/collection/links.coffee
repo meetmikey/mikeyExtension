@@ -1,4 +1,5 @@
 class MeetMikey.Collection.Links extends MeetMikey.Collection.Base
+  urlSuffix: 'link'
   url: MeetMikey.Helper.getAPIUrl() + '/link'
   model: MeetMikey.Model.Link
 

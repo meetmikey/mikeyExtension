@@ -2,7 +2,7 @@ template = """
   <div class="mm-images-nonfavorite" style=""></div>
 """
 
-class MeetMikey.View.ImagesWrapper extends MeetMikey.View.Base
+class MeetMikey.View.ImagesWrapper extends MeetMikey.View.ResourcesWrapper
   template: Handlebars.compile(template)
 
   subViews:
@@ -11,24 +11,8 @@ class MeetMikey.View.ImagesWrapper extends MeetMikey.View.Base
       selector: '.mm-images-nonfavorite'
       args: {}
 
-  postInitialize: =>
-    @subView('images').collection.on 'reset add remove', () =>
-      @trigger 'updateTabCount', @getCount()
-    @subView('images').setFetch @options.fetch
+  getFavoriteSubview: () =>
+    null
 
-  getCount: =>
-    count = @subView('images').collection.length
-    count
-
-  initialFetch: =>
-    @subView('images').initialFetch()
-
-  restoreFromCache: () =>
-    @subView('images').restoreFromCache()
-
-  setResults: (models, query) =>
-    @subView('images').setResults models, query
-
-  getTemplateData: =>
-    object = {}
-    object
+  getNonFavoriteSubview: () =>
+    @subView 'images'

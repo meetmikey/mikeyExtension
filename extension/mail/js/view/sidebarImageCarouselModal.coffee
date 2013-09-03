@@ -16,11 +16,11 @@ template = """
             <div class="image-subject">{{subject}}</div>
 
             <div class="rollover-actions">
-              <div class="mm-image-carousel-interaction mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
-                <div id="mm-sidebar-image-carousel-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
-              </div>
               <div class="mm-image-carousel-interaction mm-download-tooltip mm-like" data-toggle="tooltip" title="Like">
-                <div id="mm-sidebar-image-carousel-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+                <div id="mm-sidebar-resource-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+              </div>
+              <div class="mm-image-carousel-interaction mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
+                <div id="mm-sidebar-resource-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
               </div>
             </div>
 
@@ -41,6 +41,9 @@ template = """
 
 class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
   template: Handlebars.compile(template)
+  resourceType: 'image'
+  cidMarkerClass: '.item'
+  eventSource: 'sidebarImageCarousel'
 
   events:
     'hidden .modal': 'modalHidden'
@@ -49,6 +52,9 @@ class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
     'click .mm-like': 'toggleLikeEvent'
     'click .left': 'goLeft'
     'click .right': 'goRight'
+
+  postInitialize: =>
+    MeetMikey.globalEvents.on 'favoriteOrLikeEvent', @favoriteOrLikeEvent
 
   setImageModelsCollection: (imageModelsCollection) =>
     @imageModelsCollection = imageModelsCollection
@@ -60,6 +66,20 @@ class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
     @bindCarouselKeys()
     $('.mm-download-tooltip').tooltip placement: 'top'
 
+  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
+    if resourceType isnt @resourceType
+      return
+    model = @imageModelsCollection.get resourceId
+    if not model
+      return
+    if actionType is 'favorite'
+      model.set 'isFavorite', value
+      elementId = '#mm-sidebar-resource-favorite-' + model.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, elementId
+    else if actionType is 'like'
+      model.set 'isLiked', value
+      elementId = '#mm-sidebar-resource-like-' + model.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay model, elementId
 
   activateModel: (model) =>
     @$('.item').removeClass 'active'
@@ -88,23 +108,22 @@ class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
 
   toggleFavoriteEvent: (event) =>
     event.preventDefault()
-    cid = $(event.currentTarget).closest('.item').attr('data-cid')
-    model = @imageModelsCollection.get cid
-    elementId = '#mm-sidebar-image-carousel-favorite-' + model.cid
-    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, elementId, 'sidebarImageCarousel', (status) =>
-      if status == 'success'
-        sidebarElementId = '#mm-sidebar-favorite-' + model.cid
-        MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, sidebarElementId
+    model = @getModelFromEvent event
+    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, @eventSource
 
   toggleLikeEvent: (event) =>
     event.preventDefault()
-    cid = $(event.currentTarget).closest('.item').attr('data-cid')
+    model = @getModelFromEvent event
+    MeetMikey.Helper.FavoriteAndLike.toggleLike model, @eventSource
+
+  getModelFromEvent: (event) =>
+    if not event
+      return
+    cid = MeetMikey.Helper.getCIDFromEventWithMarker event, @cidMarkerClass
+    if not cid
+      return
     model = @imageModelsCollection.get cid
-    elementId = '#mm-sidebar-image-carousel-like-' + model.cid
-    MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'sidebarImageCarousel', (status) =>
-      if status == 'success'
-        sidebarElementId = '#mm-sidebar-like-' + model.cid
-        MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay model, sidebarElementId
+    model
 
   bindCarouselKeys: =>
     @unbindCarouselKeys()

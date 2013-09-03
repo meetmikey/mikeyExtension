@@ -5,7 +5,7 @@ template = """
   <div class="mm-links-nonfavorite" style=""></div>
 """
 
-class MeetMikey.View.LinksWrapper extends MeetMikey.View.Base
+class MeetMikey.View.LinksWrapper extends MeetMikey.View.ResourcesWrapper
   template: Handlebars.compile(template)
 
   subViews:
@@ -24,39 +24,10 @@ class MeetMikey.View.LinksWrapper extends MeetMikey.View.Base
         args: {isFavorite: true, fetch: true}
       }
 
-  postInitialize: =>
-    @subView('links').collection.on 'reset add remove', () =>
-      @trigger 'updateTabCount', @getCount()
-    if not @isSearch()
-      @subView('linksFavorite').collection.on 'reset add remove', () =>
-        @trigger 'updateTabCount', @getCount()
-    @subView('links').setFetch @options.fetch
+  getFavoriteSubview: () =>
+    if @isSearch()
+      return null
+    @subView 'linksFavorite'
 
-  isSearch: =>
-    not @options.fetch
-
-  getCount: =>
-    count = @subView('links').collection.length
-    if not @isSearch()
-      count += @subView('linksFavorite').collection.length
-    count
-
-  initialFetch: =>
-    @subView('links').initialFetch()
-    if not @isSearch()
-      @subView('linksFavorite').initialFetch()
-
-  restoreFromCache: () =>
-    @subView('links').restoreFromCache()
-    if not @isSearch()
-      @subView('linksFavorite').restoreFromCache()
-
-  setResults: (models, query) =>
-    @subView('links').setResults models, query
-    if not @isSearch()
-      @subView('linksFavorite').setResults models, query
-
-  getTemplateData: =>
-    object = {}
-    object.isSearch = @isSearch()
-    object
+  getNonFavoriteSubview: () =>
+    @subView 'links'

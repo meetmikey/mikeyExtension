@@ -19,10 +19,10 @@ template = """
 
               <div class="rollover-actions">
                 <div class="mm-image-carousel-interaction mm-download-tooltip mm-like" data-toggle="tooltip" title="Like">
-                  <div id="mm-image-carousel-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+                  <div id="mm-resource-like-{{cid}}" class="inbox-icon like{{#if isLiked}}On{{/if}}"></div>
                 </div>
                 <div class="mm-image-carousel-interaction mm-download-tooltip mm-favorite" data-toggle="tooltip" title="Star">
-                  <div id="mm-image-carousel-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+                  <div id="mm-resource-favorite-{{cid}}" class="inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
                 </div>
                 <div class="open-message mm-download-tooltip mm-image-carousel-interaction" data-dismiss="modal" data-toggle="tooltip" title="Open email">
                   <div class="list-icon" style="margin-top: 0px; background-image: url('#{downloadUrl}');"></div>
@@ -47,6 +47,10 @@ template = """
 class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  resourceType: 'image'
+  cidMarkerClass: '.image-box'
+  cidMarkerClassTwo: '.item'
+  eventSource: 'imageCarousel'
   carouselVisible: false
   numPreloadImagesEachWay: 5
   maxImagesInLocalCollection: 20
@@ -63,6 +67,7 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
   postInitialize: =>
     @localCollection = new MeetMikey.Collection.Images()
+    MeetMikey.globalEvents.on 'favoriteOrLikeEvent', @favoriteOrLikeEvent
 
   setImageCollection: (collection) =>
     @fullCollection = collection
@@ -84,29 +89,37 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
 
   toggleFavoriteEvent: (event) =>
     event.preventDefault()
-    cid = $(event.currentTarget).closest('.item').attr('data-cid')
-    model = @localCollection.get cid
-    elementId = '#mm-image-carousel-favorite-' + model.cid
-    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, elementId, 'imageCarousel', (status) =>
-      if status == 'success'
-        imageTabModel = @fullCollection.get(model.id)
-        imageTabModel.set 'isFavorite', model.get('isFavorite')
-        imageTabCId = imageTabModel.cid
-        imageTabElementId = '#mm-image-favorite-' + imageTabCId
-        MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, imageTabElementId
+    model = @getModelFromEvent event
+    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, @eventSource
 
   toggleLikeEvent: (event) =>
     event.preventDefault()
-    cid = $(event.currentTarget).closest('.item').attr('data-cid')
+    model = @getModelFromEvent event
+    MeetMikey.Helper.FavoriteAndLike.toggleLike model, @eventSource
+
+  getModelFromEvent: (event) =>
+    if not event
+      return
+    cid = MeetMikey.Helper.getCIDFromEventWithMarker event, @cidMarkerClass, @cidMarkerClassTwo
+    if not cid
+      return
     model = @localCollection.get cid
-    elementId = '#mm-image-carousel-like-' + model.cid
-    MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'imageCarousel', (status) =>
-      if status == 'success'
-        imageTabModel = @fullCollection.get(model.id)
-        imageTabModel.set 'isLiked', model.get('isLiked')
-        imageTabCId = imageTabModel.cid
-        imageTabElementId = '#mm-image-like-' + imageTabCId
-        MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay model, imageTabElementId
+    model
+
+  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
+    if resourceType isnt @resourceType
+      return
+    model = @localCollection.get resourceId
+    if not model
+      return
+    if actionType is 'favorite'
+      model.set 'isFavorite', value
+      elementId = '#mm-resource-favorite-' + model.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, elementId
+    else if actionType is 'like'
+      model.set 'isLiked', value
+      elementId = '#mm-resource-like-' + model.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay model, elementId
 
   getTemplateData: =>
     models: _.invoke(@localCollection.models, 'decorate')
@@ -234,13 +247,8 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
         return false
 
   openMessage: (event) =>
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    if ! cid
-      cid = $(event.currentTarget).closest('.item').attr('data-cid')
-    if ! cid
-      return
-    model = @localCollection.get cid
-    if ! model
+    model = @getModelFromEvent event
+    if not model
       return
     threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
     if @parentView.searchQuery
@@ -249,6 +257,8 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
       hash = "#inbox/#{threadHex}"
 
     MeetMikey.Helper.trackResourceEvent 'openMessage', model,
-      currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
+      currentTab: MeetMikey.Globals.tabState
+      search: !@options.fetch
+      rollover: false
 
-    window.location = hash
+    MeetMikey.Helper.Url.setHash hash

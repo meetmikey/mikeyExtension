@@ -228,3 +228,12 @@ MeetMikey.Helper.convertBase = ( str, fromBase, toBase ) ->
   for i in [(outArray.length - 1)..0] by -1
     out += outArray[i].toString toBase
   out
+
+
+MeetMikey.Helper.getCIDFromEventWithMarker = ( event, marker1, marker2 ) ->
+  if not event or not marker1
+    return
+  cid = $(event.currentTarget).closest( marker1 ).attr('data-cid')
+  if not cid and marker2
+    cid = $(event.currentTarget).closest( marker2 ).attr('data-cid')
+  cid

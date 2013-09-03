@@ -3,12 +3,12 @@ resourceButtonsTemplate = """
     <div class="sidebar-buttons">
       <div class="mm-favorite" {{#if deleting}}style="opacity:0.1"{{/if}}>
         <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
-          <div id="mm-sidebar-favorite-{{cid}}" class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+          <div id="mm-resource-favorite-{{cid}}" class="sidebar-icon favorite{{#if isFavorite}}On{{/if}}"></div>
         </div>
       </div>
       <div class="mm-like" {{#if deleting}}style="opacity:0.1"{{/if}}>
         <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
-          <div id="mm-sidebar-like-{{cid}}" class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
+          <div id="mm-resource-like-{{cid}}" class="sidebar-icon like{{#if isLiked}}On{{/if}}"></div>
         </div>
       </div>
     </div>
@@ -77,6 +77,9 @@ template = """
 class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   template: Handlebars.compile(template)
 
+  cidMarkerClass: '.resource'
+  eventSource: 'sidebar'
+
   containerSelector: MeetMikey.Constants.Selectors.sidebarContainer
   rapportiveContainerSelector: MeetMikey.Constants.Selectors.sidebarRapportiveContainer
 
@@ -97,6 +100,8 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
 
     @linksCollection = new MeetMikey.Collection.Links()
     @linksCollection.on 'reset', @renderTemplateAndDelegateEvents
+
+    MeetMikey.globalEvents.on 'favoriteOrLikeEvent', @favoriteOrLikeEvent
 
   postRender: =>
     if @inThread()
@@ -134,8 +139,12 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
   toggleFavoriteEvent: (event) =>
     event.preventDefault()
     model = @getModelFromEvent event
-    elementId = '#mm-sidebar-favorite-' + model.cid
-    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, elementId, 'sidebar'
+    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, @eventSource
+
+  toggleLikeEvent: (event) =>
+    event.preventDefault()
+    model = @getModelFromEvent event
+    MeetMikey.Helper.FavoriteAndLike.toggleLike model, @eventSource
 
   getResourceType: (model) =>
     type = 'image'
@@ -147,23 +156,36 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
         type = 'link'
     type
 
+  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
+    model = @getModelByIdAndResourceType resourceId, resourceType
+    if not model
+      return
+    if actionType is 'favorite'
+      model.set 'isFavorite', value
+      elementId = '#mm-resource-favorite-' + model.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, elementId
+    else if actionType is 'like'
+      model.set 'isLiked', value
+      elementId = '#mm-resource-like-' + model.cid
+      MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay model, elementId
+
   getModelFromEvent: (event) =>
-    cid = $(event.currentTarget).closest('.resource').attr('data-cid')
-    resourceType = $(event.currentTarget).closest('.resource').attr('data-type')
-    model = null
-    if resourceType == 'attachment'
-      model = @attachmentsCollection.get(cid)
-    else if resourceType == 'image'
-      model = @imagesCollection.get(cid)
-    else
-      model = @linksCollection.get(cid)
+    cid = MeetMikey.Helper.getCIDFromEventWithMarker event, @cidMarkerClass
+    resourceType = $(event.currentTarget).closest( @cidMarkerClass ).attr('data-type')
+    model = @getModelByIdAndResourceType cid, resourceType
     model
 
-  toggleLikeEvent: (event) =>
-    event.preventDefault()
-    model = @getModelFromEvent event
-    elementId = '#mm-sidebar-like-' + model.cid
-    MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'sidebar'
+  getModelByIdAndResourceType: (id, resourceType) =>
+    if not id or not resourceType
+      return null
+    model = null
+    if resourceType == 'attachment'
+      model = @attachmentsCollection.get id
+    else if resourceType == 'image'
+      model = @imagesCollection.get id
+    else
+      model = @linksCollection.get id
+    model
 
   pageNavigationEvent: =>
     #console.log 'pageNavigationEvent'

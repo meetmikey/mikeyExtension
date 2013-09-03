@@ -22,10 +22,10 @@ imageTemplate = """
 
         <div class="rollover-actions">
           <div class="mm-download-tooltip" data-toggle="tooltip" title="Like">
-            <div id="mm-image-like-{{cid}}" class="mm-image-like inbox-icon like{{#if isLiked}}On{{/if}}"></div>
+            <div id="mm-resource-like-{{cid}}" class="mm-resource-like inbox-icon like{{#if isLiked}}On{{/if}}"></div>
           </div>
           <div class="mm-download-tooltip" data-toggle="tooltip" title="Star">
-            <div id="mm-image-favorite-{{cid}}" class="mm-image-favorite inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
+            <div id="mm-resource-favorite-{{cid}}" class="mm-resource-favorite inbox-icon favorite{{#if isFavorite}}On{{/if}}"></div>
           </div>
           <div class="mm-download-tooltip" data-toggle="tooltip" title="Open email">
             <div class="list-icon message" style="background-image: url('#{downloadUrl}');"></div>
@@ -54,7 +54,7 @@ template = """
 """
 
 
-class MeetMikey.View.Images extends MeetMikey.View.Base
+class MeetMikey.View.Images extends MeetMikey.View.Resources
   template: Handlebars.compile(template)
   imageTemplate: Handlebars.compile(imageTemplate)
 
@@ -67,6 +67,9 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
   searchQuery: null
   numSearchResultsReceived: 0
   endOfImages: false
+  cidMarkerClass: '.image-box'
+  cidMarkerClassTwo: '.item'
+  resourceType: 'image'
 
   safeFind: MeetMikey.Helper.DOMManager.find
 
@@ -83,8 +86,8 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     'click .image-filename a': 'openImage'
     'click .message': 'openMessage'
     'click .hide-image-x' : 'markDeleting'
-    'click .mm-image-favorite': 'toggleFavoriteEvent'
-    'click .mm-image-like': 'toggleLikeEvent'
+    'click .mm-resource-favorite': 'toggleFavoriteEvent'
+    'click .mm-resource-like': 'toggleLikeEvent'
     'load .mm-image': 'imageLoaded'
 
   postInitialize: =>
@@ -107,22 +110,19 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @options.fetch = isFetch
 
   favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
-    if resourceType isnt 'image'
+    if resourceType isnt @resourceType
       return
     image = @collection.get resourceId
     if not image
       return
     if actionType is 'favorite'
       image.set 'isFavorite', value
-      elementId = '#mm-image-favorite-' + image.cid
+      elementId = '#mm-resource-favorite-' + image.cid
       MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay image, elementId
     else if actionType is 'like'
       image.set 'isLiked', value
-      elementId = '#mm-image-like-' + image.cid
+      elementId = '#mm-resource-like-' + image.cid
       MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay image, elementId
-
-  isSearch: =>
-    not @options.fetch
 
   isModalVisible: =>
     @$('.mmCarouselModal').hasClass 'fade-in'
@@ -142,8 +142,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
     @addImageLoadEvents()
 
   openImage: (event) =>
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    model = @collection.get(cid)
+    model = @getModelFromEvent event
     if !model.get('deleting')
       @subViews.imageCarousel.view.openImage event
     else
@@ -169,8 +168,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   markDeleting: (event) =>
     event.preventDefault()
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    model = @collection.get(cid)
+    model = @getModelFromEvent event
     model.set 'deleting', true
     element = @$('.image-box[data-cid='+model.cid+']')
     imageElement = element.children '.image-subbox'
@@ -183,8 +181,7 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
 
   unMarkDeleting: (event) =>
     event.preventDefault()
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    model = @collection.get(cid)
+    model = model = @getModelFromEvent event
 
     model.set('deleting', false)
     element = @$('.image-box[data-cid='+model.cid+']')
@@ -201,26 +198,6 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
         isotopeItem = @$('.image-box[data-cid='+model.cid+']')
         @$('.mmImagesIsotope').isotope 'remove', isotopeItem
     , MeetMikey.Constants.deleteDelay
-
-  openMessage: (event) =>
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    if ! cid
-      cid = $(event.currentTarget).closest('.item').attr('data-cid')
-    if ! cid
-      return
-    model = @collection.get cid
-    if ! model
-      return
-    threadHex = MeetMikey.Helper.decimalToHex( model.get 'gmThreadId' )
-    if @searchQuery
-      hash = "#search/#{@searchQuery}/#{threadHex}"
-    else
-      hash = "#inbox/#{threadHex}"
-
-    MeetMikey.Helper.trackResourceEvent 'openMessage', model,
-      currentTab: MeetMikey.Globals.tabState, search: !@options.fetch, rollover: false
-
-    window.location = hash
 
   hashChange: =>
     if @isVisible()
@@ -390,17 +367,3 @@ class MeetMikey.View.Images extends MeetMikey.View.Base
           @addImagesFromFetchResponse res, true
           @waitAndPoll()
         error: @waitAndPoll
-
-  toggleFavoriteEvent: (event) =>
-    event.preventDefault()
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    model = @collection.get(cid)
-    elementId = '#mm-image-favorite-' + model.cid
-    MeetMikey.Helper.FavoriteAndLike.toggleFavorite model, elementId, 'tab'
-
-  toggleLikeEvent: (event) =>
-    event.preventDefault()
-    cid = $(event.currentTarget).closest('.image-box').attr('data-cid')
-    model = @collection.get(cid)
-    elementId = '#mm-image-like-' + model.cid
-    MeetMikey.Helper.FavoriteAndLike.toggleLike model, elementId, 'tab'

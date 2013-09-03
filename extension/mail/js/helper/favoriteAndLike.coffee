@@ -10,7 +10,7 @@ class FavoriteAndLike
   modelsCache: {}
   currentAlertCId: null
 
-  toggleFavorite: (model, elementId, source, callback) =>
+  toggleFavorite: (model, source) =>
     if not model
       return
     oldIsFavorite = model.get('isFavorite')
@@ -18,25 +18,18 @@ class FavoriteAndLike
     if oldIsFavorite
       newIsFavorite = false
     model.set 'isFavorite', newIsFavorite
-    @updateModelFavoriteDisplay model, elementId, true
+    @triggerEvent 'favorite', model
     resourceType = @getResourceType model
     MeetMikey.Helper.trackResourceInteractionEvent 'resourceFavorite', resourceType, newIsFavorite, source
     model.putIsFavorite newIsFavorite, (response, status) =>
       if status != 'success'
         model.set 'isFavorite', oldIsFavorite
-        @updateModelFavoriteDisplay model, elementId, true
-        if callback
-          callback 'fail'
-      else
-        if callback
-          callback 'success'
+        @triggerEvent 'favorite', model
 
-  updateModelFavoriteDisplay: (model, elementId, alsoTriggerEvent) =>
+  updateModelFavoriteDisplay: (model, elementId) =>
     if not model
       return
     resourceType = @getResourceType model
-    if alsoTriggerEvent
-      MeetMikey.globalEvents.trigger 'favoriteOrLikeEvent', 'favorite', resourceType, model.id, model.get('isFavorite')
     if not elementId
       return
     $(elementId).removeClass 'favorite'
@@ -46,7 +39,7 @@ class FavoriteAndLike
     else
       $(elementId).addClass 'favorite'
 
-  toggleLike: (model, elementId, source, callback) =>
+  toggleLike: (model, source) =>
     if not model
       return
     if model.get('isLiked')
@@ -57,11 +50,9 @@ class FavoriteAndLike
       if not shouldProceed
         return
       model.set 'isLiked', true
-      model.set 'elementId', elementId
-      model.set 'likeCallback', callback
-      @updateModelLikeDisplay model, elementId, true
+      @triggerEvent 'like', model
       MeetMikey.Helper.trackResourceInteractionEvent 'resourceLike', @getResourceType(model), true, source
-      @likeAfterDelay model, elementId, callback
+      @likeAfterDelay model
 
   showLikeAlert: (model) =>
     if @currentAlertCId
@@ -78,12 +69,10 @@ class FavoriteAndLike
   doLike: (model) =>
     if not model
       return
-    elementId = model.get 'elementId'
-    callback = model.get 'likeCallback'
     likeTimeout = model.get 'likeTimeout'
     if likeTimeout
       clearTimeout likeTimeout
-    @sendLike model, elementId, callback
+    @sendLike model
     @cleanModel model
     $('#mm-like-alert-' + model.cid).remove()
     delete @modelsCache[model.cid]
@@ -104,16 +93,13 @@ class FavoriteAndLike
     if likeTimeout
       clearTimeout likeTimeout
     model.set 'isLiked', false
-    elementId = model.get 'elementId'
-    @updateModelLikeDisplay model, elementId, true
+    @triggerEvent 'like', model
     @cleanModel model
 
   cleanModel: (model) =>
     if not model
       return
     model.unset 'likeTimeout'
-    model.unset 'elementId'
-    model.unset 'likeCallback'
 
   getLikeAlertHTML: (model) =>
     resourceType = @getResourceType( model )
@@ -136,32 +122,36 @@ class FavoriteAndLike
     html = compiledTemplate templateData
     html
 
-  likeAfterDelay: (model, elementId, callback) =>
+  likeAfterDelay: (model) =>
     likeTimeout = setTimeout () =>
         @doLike model
         @currentAlertCId = null
     , MeetMikey.Constants.likeDelay
     model.set 'likeTimeout', likeTimeout
-    model.set 'likeCallback', callback
     @modelsCache[model.cid] = model
     @showLikeAlert model
 
-  sendLike: (model, elementId, callback) =>
+  triggerEvent: (eventType, model) =>
+    if not eventType or not model
+      return
+    if eventType isnt 'like' and eventType isnt 'favorite'
+      return
+    if eventType is 'like'
+      value = model.get 'isLiked'
+    else
+      value = model.get 'isFavorite'
+    resourceType = @getResourceType model
+    MeetMikey.globalEvents.trigger 'favoriteOrLikeEvent', eventType, resourceType, model.id, value
+
+  sendLike: (model) =>
     model.putIsLiked true, (response, status) =>
       if status != 'success'
         model.set 'isLiked', false
-        @updateModelLikeDisplay model, elementId, true
-        if callback
-          callback 'fail'
-      else
-        if callback
-          callback 'success'
+        @triggerEvent 'like', model
 
-  updateModelLikeDisplay: (model, elementId, alsoTriggerEvent) =>
+  updateModelLikeDisplay: (model, elementId) =>
     if not model
       return
-    if alsoTriggerEvent
-      MeetMikey.globalEvents.trigger 'favoriteOrLikeEvent', 'like', @getResourceType(model), model.id, model.get('isLiked')
     if not elementId
       return
     $(elementId).removeClass 'like'
