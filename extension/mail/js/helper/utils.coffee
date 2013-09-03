@@ -237,3 +237,11 @@ MeetMikey.Helper.getCIDFromEventWithMarker = ( event, marker1, marker2 ) ->
   if not cid and marker2
     cid = $(event.currentTarget).closest( marker2 ).attr('data-cid')
   cid
+
+
+MeetMikey.Helper.endsWith = (str, suffix) =>
+  if str and suffix
+    lastIndex = str.lastIndexOf suffix
+    if ( lastIndex > -1 ) and lastIndex == ( str.length - suffix.length )
+      return true
+  return false
