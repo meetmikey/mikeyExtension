@@ -8,7 +8,7 @@ template = """
       <p>When you click Mikey's Like buttons, we shoot a quick notification to everyone in the conversation.</p>
       {{#if hasRecipients}}
         {{#if isMoreThanOneRecipient}}
-          <p>In this case, {{#each recipients}}<b>{{name}}</b>,&nbsp;{{/each}} will get an email like the one below.</p>
+          <p>In this case, {{{recipientNameList}}} will get an email like the one below.</p>
 
         {{else}}
           <p>In this case, <b>{{singleRecipient.name}}</b> will get an email like the one below.
@@ -99,6 +99,20 @@ class MeetMikey.View.LikeInfoMessagingModal extends MeetMikey.View.BaseModal
           recipient.name = recipient.email
     recipients
 
+  getRecipientNameList: (recipients) =>
+    list = ''
+    index = 0
+    _.each recipients, (recipient) =>
+      if index > 0
+        if recipients.length > 2
+          list += ','  
+        list += ' '
+      if index is recipients.length - 1
+        list += 'and '
+      list += '<b>' + recipient.name + '</b>'
+      index++
+    list
+
   getTemplateData: =>
     hasRecipients = false
     recipients = @getRecipients()
@@ -123,4 +137,5 @@ class MeetMikey.View.LikeInfoMessagingModal extends MeetMikey.View.BaseModal
     object.resourceType = resourceType
     object.singleRecipient = singleRecipient
     object.recipients = recipients
+    object.recipientNameList = @getRecipientNameList recipients
     object
