@@ -8,6 +8,13 @@
   }
 }
 
+@media only screen and (max-width: 1200px) {
+  th.mm-source, td.mm-source {
+    display: none;
+  }
+}
+
+
 
 
 /*--------------- COLORS ----------------- */
@@ -1027,6 +1034,7 @@ font-size: 13px;
 
 .footer-buttons {
   margin-bottom: 24px;
+  margin-top: 20px;
   padding: 0px 20px 0px 10px;
 
 }
@@ -1685,7 +1693,7 @@ box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
     padding: 0 5px;
   }
   .tooltip-inner {
-    max-width: 200px;
+    max-width: 400px;
     padding: 6px 8px 6px 8px;
     color: #ffffff;
     text-align: center;
@@ -3136,16 +3144,17 @@ td.mm-sent, td.mm-file {
   .sidebar-image & {
     font-size: 13px;
     margin-top: 4px;
-    width: 158px;
+    width: 148px;
     display: inline-block;
     float: left;
     .many& {
       float: left;
       line-height: 15px;
       margin-left: 8px;
-      width: 150px;
+      width: 140px;
       margin-top: 0px;
       padding-top: 2px;
+
       
     }
 
@@ -3179,7 +3188,7 @@ td.mm-sent, td.mm-file {
 
 .sidebar-size {
     color: #77777;
-  width: 160px;
+  width: 150px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -3267,7 +3276,7 @@ td.mm-sent, td.mm-file {
   height: 18px;
   display: inline-block;
     .sidebar-image.many & {
-    float: left;
+    float: right;
 
   }
 }
@@ -3278,6 +3287,7 @@ td.mm-sent, td.mm-file {
   margin-bottom: 4px;
   display: inline-block;
   margin-top: 3px;
+  margin-right: 8px;
 
   .sidebar-image & {
     margin-top: 0px;
@@ -3290,6 +3300,8 @@ td.mm-sent, td.mm-file {
       margin-left: 8px;
       margin-bottom: 0px;
       margin-top: 0px;
+       margin-left: 110px;
+
     }
   }
 
@@ -3330,7 +3342,7 @@ td.mm-sent, td.mm-file {
   .sidebar-link & {
   height: 44px;
   width: 44px;
-  float: left;
+  float: right;
   margin-top: 2px;
   margin-left: 0px;
   margin-right: 8px; 
@@ -3440,7 +3452,9 @@ td.mm-sent, td.mm-file {
 
 .like-email-container {
   overflow: hidden;
-  width: 700px;
+  width: 640px;
+  margin-top: -26px;
+  max-height: 350px;
 }
 
 .like-email-wrapper {
@@ -3452,4 +3466,6 @@ td.mm-sent, td.mm-file {
 .modal-like {
   width: 680px;
   margin-left: -340px;
+  top: 4% !important;
 }
+
