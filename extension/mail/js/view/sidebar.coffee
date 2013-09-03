@@ -156,8 +156,8 @@ class MeetMikey.View.Sidebar extends MeetMikey.View.Base
         type = 'link'
     type
 
-  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
-    model = @getModelByIdAndResourceType resourceId, resourceType
+  favoriteOrLikeEvent: (actionType, resourceType, originModel, value) =>
+    model = @getModelByIdAndResourceType originModel.id, resourceType
     if not model
       return
     if actionType is 'favorite'

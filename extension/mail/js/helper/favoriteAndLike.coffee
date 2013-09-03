@@ -141,7 +141,7 @@ class FavoriteAndLike
     else
       value = model.get 'isFavorite'
     resourceType = @getResourceType model
-    MeetMikey.globalEvents.trigger 'favoriteOrLikeEvent', eventType, resourceType, model.id, value
+    MeetMikey.globalEvents.trigger 'favoriteOrLikeEvent', eventType, resourceType, model, value
 
   sendLike: (model) =>
     model.putIsLiked true, (response, status) =>

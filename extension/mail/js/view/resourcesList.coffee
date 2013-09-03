@@ -23,16 +23,18 @@ class MeetMikey.View.ResourcesList extends MeetMikey.View.Resources
     $('.mm-download-tooltip').tooltip placement: 'bottom'
     @setActiveColumn()
 
-  getTemplateData: =>
+  getSectionHeader: =>
     sectionHeader = 'Everything'
     if @areFavoritesInView()
       sectionHeader += ' else'
     if @options.isFavorite
       sectionHeader = 'Starred'
+    sectionHeader
 
+  getTemplateData: =>
     object = {}
     object.models = _.invoke(@getModels(), 'decorate')
-    object.sectionHeader = sectionHeader
+    object.sectionHeader = @getSectionHeader()
     object
 
   teardown: =>
@@ -60,12 +62,25 @@ class MeetMikey.View.ResourcesList extends MeetMikey.View.Resources
       @subView('pagination').options.render = false
       @subView('pagination').render()
 
+  getOtherSubview: =>
+    if @options.isFavorite
+      return @getNonFavoriteSubview()
+    @getFavoriteSubview()
+
   removeModel: (model) =>
     if not model
       return
     element = @$('.files[data-cid='+model.cid+']')
     element.remove()
     @collection.remove model
+    if @collection.length is 0
+      if @options.isFavorite
+        @render()
+        @getOtherSubview().updateHeaderDisplay()
+
+  updateHeaderDisplay: =>
+    sectionHeader = @getSectionHeader()
+    @$('.section-name').html sectionHeader
 
   addModel: (model) =>
     if not model
@@ -74,6 +89,7 @@ class MeetMikey.View.ResourcesList extends MeetMikey.View.Resources
     @collection.add model
     if @collection.length is 1
       @render()
+      @getOtherSubview().updateHeaderDisplay()
       return
 
     decoratedModel = model.decorate()
@@ -90,36 +106,36 @@ class MeetMikey.View.ResourcesList extends MeetMikey.View.Resources
         return
       @$('.files[data-cid='+nextModel.cid+']').before html
 
-   moveModelToOtherSubview: (model) =>
-    if @isSearch()
-      return
-    @removeModel model
-    if model.get('isFavorite')
-    	@getFavoriteSubview().addModel model
-    else
-    	@getNonFavoriteSubview().addModel model
-
-  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
+  favoriteOrLikeEvent: (actionType, resourceType, originModel, value) =>
     if resourceType isnt @resourceType
       return
-    model = @collection.get resourceId
-    if not model
-      return
-    if actionType is 'favorite'
-      model.set 'isFavorite', value
-      if @isSearch()
-        elementId = '#mm-resource-favorite-' + model.cid
-        MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, elementId
-      else
-        if @options.isFavorite and value is true
-          return
-        if not @options.isFavorite and value is false
-          return
-        @moveModelToOtherSubview model
-    else if actionType is 'like'
+    model = @collection.get originModel.id
+    if actionType is 'like'
+      if not model
+        return
       model.set 'isLiked', value
       elementId = '#mm-resource-like-' + model.cid
       MeetMikey.Helper.FavoriteAndLike.updateModelLikeDisplay model, elementId
+    else if actionType is 'favorite'
+      if model
+        model.set 'isFavorite', value
+      if @isSearch()
+        if not model
+          return
+        elementId = '#mm-resource-favorite-' + model.cid
+        MeetMikey.Helper.FavoriteAndLike.updateModelFavoriteDisplay model, elementId
+      else
+        compareValue = false
+        if @options.isFavorite
+          compareValue = true          
+        if value is compareValue
+          if model
+            return
+          else
+            model = new @modelClass originModel.attributes
+            @addModel model
+        else if model
+          @removeModel model
 
   markDeleting: (model) =>
     model.set('deleting', true)

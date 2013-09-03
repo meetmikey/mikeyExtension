@@ -106,10 +106,10 @@ class MeetMikey.View.ImageCarousel extends MeetMikey.View.Base
     model = @localCollection.get cid
     model
 
-  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
+  favoriteOrLikeEvent: (actionType, resourceType, originModel, value) =>
     if resourceType isnt @resourceType
       return
-    model = @localCollection.get resourceId
+    model = @localCollection.get originModel.id
     if not model
       return
     if actionType is 'favorite'

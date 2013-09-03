@@ -47,6 +47,7 @@ template = """
   <div class="section-header active">
     <div class="section-toggle">
       <div class="section-arrow active"></div>
+      <!-- NOTE: "section-name" class is used by javascript -->
       <div class="section-name active">
         {{sectionHeader}}
       </div>

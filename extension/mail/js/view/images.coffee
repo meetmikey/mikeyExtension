@@ -109,10 +109,10 @@ class MeetMikey.View.Images extends MeetMikey.View.Resources
   setFetch: (isFetch) =>
     @options.fetch = isFetch
 
-  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
+  favoriteOrLikeEvent: (actionType, resourceType, originModel, value) =>
     if resourceType isnt @resourceType
       return
-    image = @collection.get resourceId
+    image = @collection.get originModel.id
     if not image
       return
     if actionType is 'favorite'

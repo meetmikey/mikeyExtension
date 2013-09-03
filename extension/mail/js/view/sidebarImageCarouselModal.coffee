@@ -66,10 +66,10 @@ class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
     @bindCarouselKeys()
     $('.mm-download-tooltip').tooltip placement: 'top'
 
-  favoriteOrLikeEvent: (actionType, resourceType, resourceId, value) =>
+  favoriteOrLikeEvent: (actionType, resourceType, originModel, value) =>
     if resourceType isnt @resourceType
       return
-    model = @imageModelsCollection.get resourceId
+    model = @imageModelsCollection.get originModel.id
     if not model
       return
     if actionType is 'favorite'
