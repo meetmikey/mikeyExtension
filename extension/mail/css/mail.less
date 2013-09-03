@@ -1111,6 +1111,14 @@ font-size: 13px;
     border-radius: 2px;
     border: 1px solid #ccc;
     font-weight: bold;
+    .dark-blocks & {
+      background-color: rgba(68, 68, 68, 0.75);
+      background-image: -webkit-linear-gradient(top,rgba(68, 68, 68, 0.75),rgba(60, 60, 60, 0.75));
+      background-image: linear-gradient(top,rgba(68,68,68,.75),rgba(60,60,60,.75));
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-color: rgba(0, 0, 0, 0);
+      color: #CCC;
+    }
     }
 
   .hide-image-x:hover & {
@@ -1122,14 +1130,20 @@ font-size: 13px;
     color: #222;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    border: 1px solid #b8b8b8;
-    background-color: #ededed;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(68, 68, 68, 1);
+
+    .dark-blocks & {
+    background-color: rgba(68, 68, 68, 1);
+      background-image: -webkit-linear-gradient(top,rgba(68, 68, 68, 0.9),rgba(60, 60, 60, 1));
+      background-image: linear-gradient(top,rgba(68,68,68,1),rgba(60,60,60,1);
+      border: 1px solid rgba(0, 0, 0, 1);
+      color: #CCC;
 
   }
-
-  .dark-blocks .mm-hide & {
-    color: #fff;
   }
+
+
 }
 
 .image-box {
@@ -3342,7 +3356,7 @@ td.mm-sent, td.mm-file {
   .sidebar-link & {
   height: 44px;
   width: 44px;
-  float: right;
+  float: left;
   margin-top: 2px;
   margin-left: 0px;
   margin-right: 8px; 
@@ -3455,6 +3469,7 @@ td.mm-sent, td.mm-file {
   width: 640px;
   margin-top: -26px;
   max-height: 350px;
+  overflow-y: scroll; 
 }
 
 .like-email-wrapper {
