@@ -3,7 +3,9 @@ driveIcon = chrome.extension.getURL("#{MeetMikey.Constants.imgPath}/google-drive
 
 linkTemplate = """
   <tr class="files" data-cid="{{cid}}">
-
+    <div style="display:none;">
+      <img src="{{image}}" />
+    </div>
     <td class="mm-madness mm-download shift-right" {{#if deleting}}style="opacity:0.1"{{/if}}>
       <div class="mm-download-tooltip" data-toggle="tooltip" title="View email">
         <div class="inbox-icon message"></div>
