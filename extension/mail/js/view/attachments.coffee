@@ -22,7 +22,7 @@ attachmentTemplate = """
     </td>
 
     <td class="mm-icon" style="background:url('{{iconUrl}}') no-repeat; {{#if deleting}}opacity:0.1{{/if}}">&nbsp;</td>
-    <td class="mm-undo" {{#unless deleting}}style="display:none;"{{/unless}}>File is hidden! <strong>Undo</strong></td>
+    <td class="mm-undo" {{#unless deleting}}style="display:none;"{{/unless}}>File will be hidden! <strong>Undo</strong></td>
 
     <td class="mm-file truncate" {{#if deleting}}style="display:none;"{{/if}}><div class="inner-text">{{filename}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
       <div class="mm-hide hide-overlay">

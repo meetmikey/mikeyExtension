@@ -40,7 +40,7 @@ linkTemplate = """
 
     <td class="mm-undo truncate" {{#unless deleting}}style="display:none;{{/unless}}>
       <div class="flex">
-        Link is hidden! <strong>Undo</strong> 
+        Link will be hidden! <strong>Undo</strong> 
       </div> 
     </td>
 
