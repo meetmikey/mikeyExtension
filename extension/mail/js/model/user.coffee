@@ -122,7 +122,6 @@ class MeetMikey.Model.User extends Backbone.Model
 
     if MeetMikey.Helper.Messaging.hasSeenMessage messageMaskBit
       return true
-
     return false
 
   setNewMessageMaskBit: (maskBit) =>

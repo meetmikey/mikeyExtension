@@ -36,11 +36,9 @@ class Setup
     @checkMessaging()
 
   checkMessaging: () =>
-    console.log 'checkMessaging'
     $('body').append $('<div id="mm-messaging-modal"></div>')
     @messagingModal = new MeetMikey.View.MessagingModal el: '#mm-messaging-modal'
     if @messagingModal.shouldShow()
-      console.log 'shouldShow!'
       setTimeout @messagingModal.render, MeetMikey.Constants.messagingPostLoginDelay
 
   trackLoginEvent: (user) =>

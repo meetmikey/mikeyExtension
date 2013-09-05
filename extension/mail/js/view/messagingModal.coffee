@@ -1,4 +1,6 @@
-chromeStoreReviewTemplate = """
+templates = {}
+
+templates.chromeStoreReview = """
   <div class="modal hide fade modal-wide" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -13,7 +15,7 @@ chromeStoreReviewTemplate = """
   </div>
 """
 
-facebookLikeTemplate = """
+templates.facebookLike = """
   <div class="modal hide fade modal-wide" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -28,7 +30,7 @@ facebookLikeTemplate = """
   </div>
 """
 
-socialShareTemplate = """
+templates.socialShare = """
   <div class="modal hide fade modal-wide" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -43,7 +45,7 @@ socialShareTemplate = """
   </div>
 """
 
-upgradeToPremiumTemplate = """
+templates.upgradeToPremium = """
   <div class="modal hide fade modal-wide" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -64,8 +66,8 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     'hidden .modal': 'modalHidden'
 
   shouldShow: () =>
-    template = @getTemplate()
-    if not template
+    templateKey = @getTemplateKey()
+    if not templateKey
       return false
     if MeetMikey.globalUser and MeetMikey.globalUser.get 'isPremium'
       return false
@@ -81,46 +83,50 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     Handlebars.compile( @getTemplate() )()
 
   messageShown: () =>
-    template = @getTemplate()
-    if not template
+    templateKey = @getTemplateKey()
+    if not templateKey
       return
-    messageMaskBit = @getMessageMaskBit template
+    template = templates[templateKey]
+    messageMaskBit = @getMessageMaskBit templateKey
     MeetMikey.Helper.Messaging.messageShown messageMaskBit
     MeetMikey.globalUser.setNewMessageMaskBit messageMaskBit
+    MeetMikey.Helper.Analytics.trackEvent 'viewMessagingModal',
+      whichModal: templateKey
 
-  getMessageMaskBit: (template) =>
-    if not template
+  getMessageMaskBit: (templateKey) =>
+    if not templateKey
       return 0
+    messageMaskBits = MeetMikey.Constants.userMessagingMaskBits
+    messageMaskBit = messageMaskBits[templateKey]
+    if not messageMaskBit
+      return 0
+    return messageMaskBit
 
-    maskBits = MeetMikey.Constants.userMessagingMaskBits
-    if template is chromeStoreReviewTemplate
-      return maskBits.chromeStoreReview
-    if template is facebookLikeTemplate
-      return maskBits.facebookLike
-    if template is socialShareTemplate
-      return maskBits.socialShare
-    if template is upgradeToPremiumTemplate
-      return maskBits.upgradeToPremium
-    return 0
-
-  getTemplate: () =>
-
-    if not MeetMikey.globalUser
-      return ''
-    
+  userShouldSeeMessage: (messageMaskBit) =>
+    if not messageMaskBit
+      return false
     user = MeetMikey.globalUser
-    maskBits = MeetMikey.Constants.userMessagingMaskBits
-    
-    if not user.hasSeenMessage maskBits.chromeStoreReview
-      return chromeStoreReviewTemplate
+    if not user
+      return false
+    messageMaskBits = MeetMikey.Constants.userMessagingMaskBits
+    if messageMaskBit is messageMaskBits.chromeStoreReview and user.get('clickedChromeStoreReview')
+      return false
+    if messageMaskBit is messageMaskBits.facebookLike and user.get('clickedFacebookLike')
+      return false
+    return true
 
-    if not user.hasSeenMessage maskBits.facebookLike
-      return facebookLikeTemplate
-
-    if not user.hasSeenMessage maskBits.socialShare
-      return socialShareTemplate
-
-    if not user.hasSeenMessage maskBits.upgradeToPremium
-      return upgradeToPremiumTemplate
-    
-    return ''
+  getTemplateKey: () =>
+    user = MeetMikey.globalUser
+    if not user
+      return null
+    for templateKey, template of templates
+      messageMaskBit = @getMessageMaskBit templateKey
+      if messageMaskBit and not user.hasSeenMessage(messageMaskBit) and @userShouldSeeMessage(messageMaskBit)
+        return templateKey
+    return null
+      
+  getTemplate: () =>
+    templateKey = @getTemplateKey()
+    if not templateKey or not templates[templateKey]
+      return null
+    return templates[templateKey]
