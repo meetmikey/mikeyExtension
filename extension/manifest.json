@@ -32,6 +32,7 @@
             "vendor/js/piwik.js",
             "vendor/js/googleAnalytics.js",
             "vendor/js/stripeCheckoutV2.js",
+            "vendor/js/facebook.js",
             "mail/js/namespace.js",
             "mail/js/constants.js",
             "mail/js/helper/utils.js",

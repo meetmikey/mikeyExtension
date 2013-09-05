@@ -53,9 +53,9 @@ template = """
         </div>
         <div class="buttons-cluster">
           <a href="#" id="rateOnChromeStoreButton" class="share-modal-button chrome-share"><div class="referral-button-text">Rate Mikey</div></a>
-          <a href="#" id="facebookLikeButton">
-            <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FMikey-for-Gmail%2F1400138380211355%3Fref%3Dhl&amp;width=340&amp;height=62&amp;colorscheme=light&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;send=false&amp;appId=172776159468128" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:340px; height:62px;" allowTransparency="true"></iframe>
-          </a>
+          <div id="facebookLikeButton">
+            <fb:like href="https://www.facebook.com/pages/Mikey-for-Gmail/1400138380211355?ref=br_tf" width="300" show_faces="true" send="false"></fb:like>
+          </div>
         </div>
       </div>
 
@@ -91,7 +91,6 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     'click #twitterReferralButton': 'twitterReferralClick'
     'click #facebookReferralButton': 'facebookReferralClick'
     'click #rateOnChromeStoreButton': 'rateOnChromeStoreClick'
-    'click #facebookLikeButton': 'facebookLikeClick'
     'click #upgradeButton': 'showUpgradeModal'
     'click #copyButton': 'copyTextToClipboard'
     'hidden .modal': 'modalHidden'
@@ -106,6 +105,24 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
       @$('.mm-download-tooltip').tooltip placement: 'bottom'
     super
     MeetMikey.Helper.Analytics.trackEvent 'viewGetMoreModal'
+    FB.XFBML.parse document.getElementById('facebookLikeButton')
+    @bindFacebookEvents()
+
+  _teardown: =>
+    @unbindFacebookEvents()
+
+  bindFacebookEvents: () =>
+    @unbindFacebookEvents()
+    FB.Event.subscribe 'edge.create', @facebookLikeEvent
+
+  unbindFacebookEvents: () =>
+    FB.Event.unsubscribe 'edge.create', @facebookLikeEvent
+
+  facebookLikeEvent: (likedURL) =>
+    if not likedURL or likedURL isnt MeetMikey.Constants.mikeyFacebookURL
+      return
+    MeetMikey.Helper.Analytics.trackEvent 'facebookLikeClick'
+    @creditUserWithPromotionAction 'facebookLike'
 
   twitterReferralClick: =>
     MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'twitter'
@@ -121,10 +138,6 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     window.open url
     @hide()
     @creditUserWithPromotionAction 'chromeStoreReview'
-
-  facebookLikeClick: =>
-    MeetMikey.Helper.Analytics.trackEvent 'facebookLikeClick'
-    @creditUserWithPromotionAction 'facebookLike'
 
   creditUserWithPromotionAction: (promotionType) =>
     MeetMikey.Helper.callAPI
