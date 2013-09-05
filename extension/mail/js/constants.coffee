@@ -154,3 +154,9 @@ _.extend MeetMikey.Constants,
     , '51c8c575086058b13c00013d'
     , '51c8bdc3e942e2303b013ed0'
   ]
+
+  userMessagingMaskBits:
+    chromeStoreReview: 1 << 0
+    facebookLike: 1 << 1
+    socialShare: 1 << 2
+    upgradeToPremium: 1 << 3

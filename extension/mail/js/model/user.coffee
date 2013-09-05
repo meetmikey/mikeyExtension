@@ -108,3 +108,10 @@ class MeetMikey.Model.User extends Backbone.Model
         callback res
       error: (err) =>
         callback err
+
+  hasSeenMessage: (messageMaskBit) =>
+    
+    messagingMask = @get 'messagingMask'
+    if messagingMask & messageMaskBit
+      return true
+    false
