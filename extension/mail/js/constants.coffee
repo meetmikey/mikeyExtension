@@ -15,6 +15,8 @@ _.extend MeetMikey.Constants,
   imagePaginationSize: 20
   deleteDelay: 8000
   likeDelay: 8000
+  messagingPostLoginDelay: 90*1000 #90 seconds
+  messagingWaitDelay: 7*24*60*60*1000 #7 days
   basicPlanPrice: '3'
   basicPlanNumAccounts: 1
   basicPlanDays: '365'

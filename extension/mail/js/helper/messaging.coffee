@@ -1,5 +1,8 @@
 class Messaging
 
+  lastMessageTimeKey: 'lastMessageTime'
+  seenMessageKeyPrefix: 'meetmikey-hasSeenMessage-'
+
   checkLikeInfoMessaging: (resourceModel, callback) =>
     if MeetMikey.globalUser.checkLikeInfoMessaging()
       callback true
@@ -22,5 +25,27 @@ class Messaging
       callback false
     MeetMikey.Helper.Analytics.trackEvent 'openLikeInfoMessagingModal'
     @likeInfoMessagingModal.render()
+
+  longEnoughSinceLastMessage: () =>
+    lastMessageTime = MeetMikey.Helper.LocalStore.get @lastMessageTimeKey
+    if not lastMessageTime
+      return true
+    now = Date.now()
+    timeDiff = now - lastMessageTime
+    if timeDiff > MeetMikey.Constants.messagingWaitDelay
+      return true
+    return false
+
+  messageShown: (messageMaskBit, notNow) =>
+    if not notNow
+      MeetMikey.Helper.LocalStore.set @lastMessageTimeKey, Date.now()
+    localStoreKey = @seenMessageKeyPrefix + messageMaskBit
+    MeetMikey.Helper.LocalStore.set localStoreKey, true
+
+  hasSeenMessage: (messageMaskBit) =>
+    localStoreKey = @seenMessageKeyPrefix + messageMaskBit
+    if MeetMikey.Helper.LocalStore.get localStoreKey
+      return true
+    return false
 
 MeetMikey.Helper.Messaging = new Messaging()
