@@ -1,5 +1,5 @@
 _.extend MeetMikey.Constants,
-  env: 'production'
+  env: 'local'
   imgPath: 'mail/img'
   mixpanelId: '4025d8a58a875ce9a39db05bcf86fd71'
   #mixpanelIdTest: '0d4029b8e19dddbfacd1da118b47c01b'
@@ -15,8 +15,8 @@ _.extend MeetMikey.Constants,
   imagePaginationSize: 20
   deleteDelay: 8000
   likeDelay: 8000
-  messagingPostLoginDelay: 90*1000 #90 seconds
-  messagingWaitDelay: 7*24*60*60*1000 #7 days
+  messagingPostLoginDelay: .5*1000 #TEMP!!! 90*1000 #90 seconds
+  messagingWaitDelay: 1*1000 #TEMP!!! 7*24*60*60*1000 #7 days
   basicPlanPrice: '3'
   basicPlanNumAccounts: 1
   basicPlanDays: '365'

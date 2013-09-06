@@ -143,7 +143,11 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     @show()
 
   template: () =>
-    Handlebars.compile( @getTemplate() )()
+    template = @getTemplate()
+    if template
+      return Handlebars.compile( template )( @getTemplateData() )
+    return () =>
+      return ''
 
   messageShown: () =>
     templateKey = @getTemplateKey()
@@ -198,6 +202,6 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     object = {}
     object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
-    object.directReferralLink = @getReferralURL 'direct'
+    object.directReferralLink = MeetMikey.globalUser.get('directReferralLink')
     object.isFullyIndexed = ( MeetMikey.globalUser?.getDaysLimit() >= MeetMikey.globalUser?.getMailTotalDays() )
     object
