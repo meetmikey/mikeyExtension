@@ -4,7 +4,7 @@ incentiveDaysAlertTemplate = """
       Thanks for using Mikey's '{{userActionType}}' feature!
       Since you've done it {{numUserActions}} time{{#if numUserActionsIsNotOne}}s{{/if}}, we just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account for free.
     </div>
-    <div class="mm-incentive-days-alert-close">Great!</div>
+    <div class="mm-incentive-days-alert-close">&nbsp;&nbsp;&nbsp;Thanks!</div>
   </div>
 """
 
@@ -44,6 +44,12 @@ class MeetMikey.Model.Resource extends MeetMikey.Model.Base
     hitNewThreshold = response.hitNewThreshold
     numUserActions = response.numUserActions
     numNewDays = response.numNewDays
+
+    #TEMP!!!!
+    hitNewThreshold = true
+    numUserActions = 5
+    numNewDays = 5
+
     if not hitNewThreshold
       return
     MeetMikey.globalUser.refreshFromServer()
