@@ -11,6 +11,7 @@ incentiveDaysAlertTemplate = """
 class MeetMikey.Model.Resource extends MeetMikey.Model.Base
   idAttribute: "_id"
   decorator: MeetMikey.Decorator.Attachment
+  alertTimeout: 8000
 
   putIsFavorite: (isFavorite, callback) =>
     @putResource 'favorite', isFavorite, callback
@@ -60,7 +61,7 @@ class MeetMikey.Model.Resource extends MeetMikey.Model.Base
     @incentiveDaysAlertTimeout = setTimeout () =>
       $(selector).remove()
       @incentiveDaysAlertTimeout = null
-    , 8000
+    , @alertTimeout
 
   getIncentiveDaysAlertHTML: (userActionType, numUserActions, numNewDays) =>
     compiledTemplate = Handlebars.compile incentiveDaysAlertTemplate
