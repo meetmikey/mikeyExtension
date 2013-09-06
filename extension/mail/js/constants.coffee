@@ -19,6 +19,8 @@ _.extend MeetMikey.Constants,
   likeDelay: 8000
   messagingPostLoginDelay: 90*1000 #90 seconds
   messagingWaitDelay: 7*24*60*60*1000 #7 days
+  numDaysForChromeOrFacebookSupport: 15
+  numDaysForReferral: 30
   basicPlanPrice: '3'
   basicPlanNumAccounts: 1
   basicPlanDays: '365'

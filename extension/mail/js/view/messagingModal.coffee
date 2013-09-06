@@ -12,7 +12,7 @@ templates.chromeStoreReview = """
   <div class="modal hide fade modal-wide modal-messenger" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Did you know you could get 15 more days of storage in 20 seconds?</h3>
+      <h3>Did you know you could get {{numDaysForChromeOrFacebookSupport}} more days of storage in 20 seconds?</h3>
     </div>
     <div class="modal-body">
       
@@ -21,7 +21,7 @@ templates.chromeStoreReview = """
             Review Mikey in the Chrome store
           </div>
           <div class="modal-subtext">
-            15 days for two clicks 
+            {{numDaysForChromeOrFacebookSupport}} days for two clicks 
           </div>
         </div>
         <div class="buttons-cluster">
@@ -37,7 +37,7 @@ templates.facebookLike = """
   <div class="modal hide fade modal-wide modal-messenger" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Did you know you could get 15 more days for a Facebook like?</h3>
+      <h3>Did you know you could get {{numDaysForChromeOrFacebookSupport}} more days for a Facebook like?</h3>
     </div>
     <div class="modal-body">
       
@@ -46,7 +46,7 @@ templates.facebookLike = """
             Show Mikey some Facebook love
           </div>
           <div class="modal-subtext">
-            15 days for two clicks 
+            {{numDaysForChromeOrFacebookSupport}} days for two clicks 
           </div>
         </div>
         <div class="buttons-cluster">
@@ -73,7 +73,7 @@ templates.socialShare = """
             Share with friends
           </div>
           <div class="modal-subtext">
-            30 days for every referral 
+            {{numDaysForReferral}} days for every referral 
           </div>
         </div>
         <div class="buttons-cluster">
@@ -244,4 +244,6 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
     object.directReferralLink = MeetMikey.Helper.Messaging.getReferralURL('direct')
     object.isFullyIndexed = ( MeetMikey.globalUser?.getDaysLimit() >= MeetMikey.globalUser?.getMailTotalDays() )
+    object.numDaysForChromeOrFacebookSupport = MeetMikey.Constants.numDaysForChromeOrFacebookSupport
+    object.numDaysForReferral = MeetMikey.Constants.numDaysForReferral
     object

@@ -29,7 +29,7 @@ template = """
             Sharing with friends
           </div>
           <div class="modal-subtext">
-            30 days for every referral 
+            {{numDaysForReferral}} days for every referral 
           </div>
         </div>
         <div class="buttons-cluster">
@@ -48,7 +48,7 @@ template = """
             Showing Mikey love
           </div>
           <div class="modal-subtext">
-            15 days for chrome store or facebook support
+            {{numDaysForChromeOrFacebookSupport}} days for chrome store or facebook support
           </div>
         </div>
         <div class="buttons-cluster">
@@ -134,6 +134,8 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     object.isPremium = MeetMikey.globalUser.isPremium()
     object.isGrantedPremium = MeetMikey.globalUser.get('isGrantedPremium')
     object.isFullyIndexed = ( MeetMikey.globalUser?.getDaysLimit() >= MeetMikey.globalUser?.getMailTotalDays() )
+    object.numDaysForChromeOrFacebookSupport = MeetMikey.Constants.numDaysForChromeOrFacebookSupport
+    object.numDaysForReferral = MeetMikey.Constants.numDaysForReferral
     object
 
   copyTextToClipboard: =>
