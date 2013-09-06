@@ -17,6 +17,10 @@ _.extend MeetMikey.Constants,
   imagePaginationSize: 20
   deleteDelay: 8000
   likeDelay: 8000
+  userActionThresholdOne: 1
+  userActionThresholdTwo: 5
+  userActionThresholdThree: 20
+  userActionThresholdFour: 20
   basicPlanPrice: '3'
   basicPlanNumAccounts: 1
   basicPlanDays: '365'
