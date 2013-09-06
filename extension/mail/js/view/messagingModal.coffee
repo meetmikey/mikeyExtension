@@ -22,7 +22,7 @@ templates.chromeStoreReview = """
       
     </div>
     <div class="footer-buttons">
-      <div class="footer-mail-count">You have mailDaysLimit TEMP</strong> out of <strong>mailTotalDays TEMP</strong> total days</div>
+      <div class="footer-mail-count">You have <strong>{{mailDaysLimit}}</strong> out of <strong>{{mailTotalDays}}</strong> total days</div>
       <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
     </div>
   </div>
@@ -52,7 +52,7 @@ templates.facebookLike = """
       
     </div>
     <div class="footer-buttons">
-      <div class="footer-mail-count">You have mailDaysLimit TEMP</strong> out of <strong>mailTotalDays TEMP</strong> total days</div>
+      <div class="footer-mail-count">You have <strong>{{mailDaysLimit}}</strong> out of <strong>{{mailTotalDays}}</strong> total days</div>
       <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
     </div>
   </div>
@@ -78,14 +78,14 @@ templates.socialShare = """
           <a href="#" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">Tweet</div></a>
           <a href="#" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">Share</div></a>
           <div class="url-copy-box">
-            <input id="directReferralLinkText" type="text" value="directReferral TEMP">
+            <input id="directReferralLinkText" type="text" value="{{directReferralLink}}">
             <a href="#" id="copyButton" class="copy-button" style="margin-left:-5px;">Copy</a>
           </div>
         </div>
       
     </div>
     <div class="footer-buttons">
-      <div class="footer-mail-count">You have mailDaysLimit TEMP</strong> out of <strong>mailTotalDays TEMP</strong> total days</div>
+      <div class="footer-mail-count">You have <strong>{{mailDaysLimit}}</strong> out of <strong>{{mailTotalDays}}</strong> total days</div>
       <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
     </div>
   </div>
@@ -116,7 +116,7 @@ templates.upgradeToPremium = """
     </div>
      
     <div class="footer-buttons">
-      <div class="footer-mail-count">You have mailDaysLimit TEMP</strong> out of <strong>mailTotalDays TEMP</strong> total days</div>
+      <div class="footer-mail-count">You have <strong>{{mailDaysLimit}}</strong> out of <strong>{{mailTotalDays}}</strong> total days</div>
       <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
     </div>
 
@@ -132,10 +132,6 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     templateKey = @getTemplateKey()
     if not templateKey
       return false
-
-    return true #TEMP!!!!! TURN OFF!!!
-
-
     if MeetMikey.globalUser and MeetMikey.globalUser.get 'isPremium'
       return false
     if not MeetMikey.Helper.Messaging.longEnoughSinceLastMessage()
@@ -188,9 +184,7 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
       return null
     for templateKey, template of templates
       messageMaskBit = @getMessageMaskBit templateKey
-      #if messageMaskBit and not user.hasSeenMessage(messageMaskBit) and @userShouldSeeMessage(messageMaskBit)
-      #TEMP!!!! SWITCH BACK!!!!
-      if messageMaskBit and not MeetMikey.Helper.Messaging.hasSeenMessage messageMaskBit
+      if messageMaskBit and not user.hasSeenMessage(messageMaskBit) and @userShouldSeeMessage(messageMaskBit)
         return templateKey
     return null
       
@@ -199,3 +193,11 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     if not templateKey or not templates[templateKey]
       return null
     return templates[templateKey]
+
+  getTemplateData: =>
+    object = {}
+    object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
+    object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
+    object.directReferralLink = @getReferralURL 'direct'
+    object.isFullyIndexed = ( MeetMikey.globalUser?.getDaysLimit() >= MeetMikey.globalUser?.getMailTotalDays() )
+    object

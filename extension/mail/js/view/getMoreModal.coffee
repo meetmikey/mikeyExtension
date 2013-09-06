@@ -13,7 +13,7 @@ template = """
         <p>You already have a premium account so we can't give you more days, but if Mikey has helped you out, you could really help Mikey out by:</p>
       {{else}}
         {{#if isFullyIndexed}}
-          <p>Mikey is showing you stuff <strong>{{mailTotalDays}}</strong> days in your account, but you will be limited to <strong>{{mailDaysLimit}}</strong>. Not to worry though, you can get more days by:</p>
+          <p>Mikey is showing you all <strong>{{mailTotalDays}}</strong> days in your account, but you will be limited to <strong>{{mailDaysLimit}}</strong>. Not to worry though, you can get more days by:</p>
         {{else}}
           <p>Mikey is showing you <strong>{{mailDaysLimit}}</strong> out of the <strong>{{mailTotalDays}}</strong> total days that you've had this Gmail account.</p><p> 
             We've made it super easy to get more days by:</p>
