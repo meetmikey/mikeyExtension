@@ -56,11 +56,11 @@ class MeetMikey.Model.Resource extends MeetMikey.Model.Base
     $('body').append $( @getIncentiveDaysAlertHTML(userActionType, numUserActions, numNewDays) )
     $(closeSelector).on 'click', () =>
       $(selector).remove()
-    if @incentiveDaysAlertTimeout
-      clearTimeout @incentiveDaysAlertTimeout
-    @incentiveDaysAlertTimeout = setTimeout () =>
+    if MeetMikey.globalIncentiveDaysAlertTimeout
+      clearTimeout MeetMikey.globalIncentiveDaysAlertTimeout
+    MeetMikey.globalIncentiveDaysAlertTimeout = setTimeout () =>
       $(selector).remove()
-      @incentiveDaysAlertTimeout = null
+      MeetMikey.globalIncentiveDaysAlertTimeout = null
     , @alertTimeout
 
   getIncentiveDaysAlertHTML: (userActionType, numUserActions, numNewDays) =>
