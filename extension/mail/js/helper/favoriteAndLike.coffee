@@ -1,6 +1,6 @@
 likeAlertTemplate = """
   <div class="mm-like-alert" id="mm-like-alert-{{cid}}" data-cid="{{cid}}">
-      <div class="mm-like-alert-text">You just liked <strong>{{resourceName}}</strong>.</div>
+    <div class="mm-like-alert-text">You just liked <strong>{{resourceName}}</strong>.</div>
     <div class="mm-undo-like" id="mm-undo-like-{{cid}}">Undo</div>
   </div>
 """

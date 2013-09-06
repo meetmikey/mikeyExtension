@@ -49,6 +49,7 @@
             "mail/js/helper/favoriteAndLike.js",
             "mail/js/collection/base.js",
             "mail/js/model/base.js",
+            "mail/js/model/resource.js",
             "mail/js/model/paginationState.js",
             "mail/js/decorator/attachment.js",
             "mail/js/model/attachment.js",

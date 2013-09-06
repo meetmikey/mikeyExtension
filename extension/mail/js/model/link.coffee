@@ -1,27 +1,7 @@
-class MeetMikey.Model.Link extends MeetMikey.Model.Base
+class MeetMikey.Model.Link extends MeetMikey.Model.Resource
   idAttribute: "_id"
   decorator: MeetMikey.Decorator.Link
+  apiURLRoot: 'link'
 
   getURL: =>
     @get 'url'
-
-  putIsFavorite: (isFavorite, callback) =>
-    MeetMikey.Helper.callAPI
-      type: 'PUT'
-      url: 'link/' + @get('_id')
-      complete: callback
-      data:
-        isFavorite: isFavorite
-
-  putIsLiked: (isLiked, callback) =>
-    MeetMikey.Helper.callAPI
-      type: 'PUT'
-      url: 'link/' + @get('_id')
-      complete: callback
-      data:
-        isLiked: isLiked
-
-  delete: =>
-    MeetMikey.Helper.callAPI
-      type: 'DELETE'
-      url: 'link/' + @get('_id')
