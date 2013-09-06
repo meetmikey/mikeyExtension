@@ -5,6 +5,8 @@ _.extend MeetMikey.Constants,
   #mixpanelIdTest: '0d4029b8e19dddbfacd1da118b47c01b'
   stripeKeyTest: 'pk_test_xkrclY7n0l6KbnAmG2huBZzK'
   stripeKeyLive: 'pk_live_XVTbzJMXFGaHrDYQvmbu0zgM'
+  facebookAppId: '575613489170517'
+  mikeyFacebookURL: 'https://www.facebook.com/pages/Mikey-for-Gmail/1400138380211355?ref=br_tf'
   mixpanelOff: false
   piwikOff: false
   googleAnalyticsOff: false
