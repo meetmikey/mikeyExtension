@@ -103,7 +103,9 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     FB.XFBML.parse document.getElementById('facebookLikeButton')
     @bindFacebookEvents()
 
-  _teardown: =>
+  hide: =>
+    @$('.modal').modal 'hide'
+    @remove()
     @unbindFacebookEvents()
 
   bindFacebookEvents: () =>
