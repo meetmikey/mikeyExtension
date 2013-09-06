@@ -8,7 +8,8 @@ class Setup
   hasLoggedIn : false
 
   start: =>
-    $(window).one('DOMSubtreeModified', @bootstrap)
+    $(window).one 'DOMSubtreeModified', @bootstrap
+    $(window).one 'DOMSubtreeModified', @initFacebook
 
   bootstrap: =>
     @waitAndStartAuthFlow()
@@ -33,6 +34,14 @@ class Setup
     @checkMultipleInbox =>
       @waitForInbox()
     @injectSidebarView()
+
+  initFacebook: =>
+    element = $('#fb-root')
+    if not element or not element.length
+      content = "<div id='fb-root'></div>"
+      $('body').append $(content)
+    FB.init
+      appId: MeetMikey.Constants.facebookAppId
 
   trackLoginEvent: (user) =>
     if !@hasLoggedIn
