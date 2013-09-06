@@ -1,3 +1,11 @@
+footerTemplate = """  
+  <div class="footer-buttons">
+    <div class="footer-mail-count">
+      You have <strong><div class="daysLimitContainer" style="display:inline-block;">{{mailDaysLimit}}</div></strong> out of <strong>{{mailTotalDays}}</strong> total days.
+    </div>
+    <a href="#" data-dismiss="modal" class="button buttons closeMessagingModal">Got it.</a>
+  </div>
+"""
 templates = {}
 
 templates.chromeStoreReview = """
@@ -21,10 +29,7 @@ templates.chromeStoreReview = """
         </div>
       
     </div>
-    <div class="footer-buttons">
-      <div class="footer-mail-count">You have <strong>{{mailDaysLimit}}</strong> out of <strong>{{mailTotalDays}}</strong> total days</div>
-      <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
-    </div>
+    """ + footerTemplate + """
   </div>
 """
 
@@ -46,15 +51,12 @@ templates.facebookLike = """
         </div>
         <div class="buttons-cluster">
           <a href="#" id="facebookLikeButton">
-            <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FMikey-for-Gmail%2F1400138380211355%3Fref%3Dhl&amp;width=340&amp;height=62&amp;colorscheme=light&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;send=false&amp;appId=172776159468128" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:340px; height:62px;" allowTransparency="true"></iframe>
+            <fb:like href="https://www.facebook.com/pages/Mikey-for-Gmail/1400138380211355?ref=br_tf" width="300" show_faces="true" send="false"></fb:like>
           </a>
         </div>
       
     </div>
-    <div class="footer-buttons">
-      <div class="footer-mail-count">You have <strong>{{mailDaysLimit}}</strong> out of <strong>{{mailTotalDays}}</strong> total days</div>
-      <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
-    </div>
+    """ + footerTemplate + """
   </div>
 """
 
@@ -84,10 +86,7 @@ templates.socialShare = """
         </div>
       
     </div>
-    <div class="footer-buttons">
-      <div class="footer-mail-count">You have <strong>{{mailDaysLimit}}</strong> out of <strong>{{mailTotalDays}}</strong> total days</div>
-      <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
-    </div>
+   """ + footerTemplate + """
   </div>
 """
 
@@ -114,19 +113,64 @@ templates.upgradeToPremium = """
         </a>
       </div>
     </div>
-     
-    <div class="footer-buttons">
-      <div class="footer-mail-count">You have <strong>{{mailDaysLimit}}</strong> out of <strong>{{mailTotalDays}}</strong> total days</div>
-      <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
-    </div>
-
+    """ + footerTemplate + """
   </div>
 """
+
 
 class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
 
   events:
+    'click #twitterReferralButton': 'twitterReferralClick'
+    'click #facebookReferralButton': 'facebookReferralClick'
+    'click #rateOnChromeStoreButton': 'rateOnChromeStoreClick'
+    'click #upgradeButton': 'showUpgradeModal'
+    'click #copyButton': 'copyTextToClipboard'
     'hidden .modal': 'modalHidden'
+
+  postInitialize: =>
+    MeetMikey.globalUser?.on 'change', @updateMailDaysLimit
+
+  postRender: =>
+    @messageShown()
+    @show()
+    FB.XFBML.parse document.getElementById('facebookLikeButton')
+    @bindFacebookEvents()
+
+  _teardown: =>
+    @unbindFacebookEvents()
+
+  bindFacebookEvents: () =>
+    @unbindFacebookEvents()
+    FB.Event.subscribe 'edge.create', @facebookLikeEvent
+
+  unbindFacebookEvents: () =>
+    FB.Event.unsubscribe 'edge.create', @facebookLikeEvent
+
+  updateMailDaysLimit: () =>
+    newDaysLimit = MeetMikey.globalUser.getDaysLimit()
+    $('.daysLimitContainer').html newDaysLimit
+
+  rateOnChromeStoreClick: =>
+    MeetMikey.Helper.Messaging.rateOnChromeStoreClick 'messagingModal'
+    @hide()
+
+  facebookLikeEvent: (likedURL) =>
+    MeetMikey.Helper.Messaging.facebookLikeEvent likedURL, 'messagingModal'
+    $('.closeMessagingModal').html 'Thanks!'
+
+  twitterReferralClick: =>
+    MeetMikey.Helper.Messaging.twitterReferralClick()
+
+  facebookReferralClick: =>
+    MeetMikey.Helper.Messaging.facebookReferralClick()
+
+  copyTextToClipboard: =>
+    MeetMikey.Helper.Messaging.copyTextToClipboard '#directReferralLinkText', 'messagingModal'
+
+  showUpgradeModal: =>
+    MeetMikey.Helper.Messaging.showUpgradeModal 'messagingModal'
+    @hide()
 
   shouldShow: () =>
     templateKey = @getTemplateKey()
@@ -137,10 +181,6 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     if not MeetMikey.Helper.Messaging.longEnoughSinceLastMessage()
       return false
     return true
-
-  postRender: =>
-    @messageShown()
-    @show()
 
   template: () =>
     template = @getTemplate()
@@ -202,6 +242,6 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     object = {}
     object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
-    object.directReferralLink = MeetMikey.globalUser.get('directReferralLink')
+    object.directReferralLink = MeetMikey.Helper.Messaging.getReferralURL('direct')
     object.isFullyIndexed = ( MeetMikey.globalUser?.getDaysLimit() >= MeetMikey.globalUser?.getMailTotalDays() )
     object

@@ -135,3 +135,12 @@ class MeetMikey.Model.User extends Backbone.Model
       type: 'POST'
       data:
         messagingMaskBit: maskBit
+
+  creditUserWithPromotionAction: (promotionType) =>
+    MeetMikey.Helper.callAPI
+      url: 'creditPromotionAction'
+      type: 'POST'
+      data:
+        'promotionType': promotionType
+      complete: () =>
+        @refreshFromServer()

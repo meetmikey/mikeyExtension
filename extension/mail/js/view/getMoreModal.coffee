@@ -95,11 +95,6 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     'click #copyButton': 'copyTextToClipboard'
     'hidden .modal': 'modalHidden'
 
-  shareTitle: 'Meet Mikey'
-  shareSummary: 'The best way to find things in Gmail.'
-  twitterTagIntro: 'Checkout'
-  twitterTag: '@mikeyforgmail'
-
   postRender: =>
     if MeetMikey.globalUser?.isPremium()
       @$('.mm-download-tooltip').tooltip placement: 'bottom'
@@ -118,80 +113,32 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
   unbindFacebookEvents: () =>
     FB.Event.unsubscribe 'edge.create', @facebookLikeEvent
 
+  rateOnChromeStoreClick: (source) =>
+    MeetMikey.Helper.Messaging.rateOnChromeStoreClick 'getMoreModal'
+    @hide()
+
   facebookLikeEvent: (likedURL) =>
-    if not likedURL or likedURL isnt MeetMikey.Constants.mikeyFacebookURL
-      return
-    MeetMikey.Helper.Analytics.trackEvent 'facebookLikeClick'
-    @creditUserWithPromotionAction 'facebookLike'
+    MeetMikey.Helper.Messaging.facebookLikeEvent likedURL, 'getMoreModal'
 
   twitterReferralClick: =>
-    MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'twitter'
-    window.open @getTwitterShareLink(), 'sharer', 'width=626,height=236'
+    MeetMikey.Helper.Messaging.twitterReferralClick()
 
   facebookReferralClick: =>
-    MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'facebook'
-    window.open @getFacebookShareLink(), 'sharer', 'width=626,height=436'
-
-  rateOnChromeStoreClick: =>
-    MeetMikey.Helper.Analytics.trackEvent 'rateOnChromeStoreClick'
-    url = MeetMikey.Constants.chromeStoreReviewURL
-    window.open url
-    @hide()
-    @creditUserWithPromotionAction 'chromeStoreReview'
-
-  creditUserWithPromotionAction: (promotionType) =>
-    MeetMikey.Helper.callAPI
-      url: 'creditPromotionAction'
-      type: 'POST'
-      data:
-        'promotionType': promotionType
-      complete: () =>
-        MeetMikey.globalUser.refreshFromServer()
-
-  getTwitterShareLink: =>
-    link = 'https://twitter.com/intent/tweet'
-    link += '?text=' + encodeURIComponent @twitterTagIntro + ' ' + @twitterTag + ': ' + @shareSummary
-    link += '&url=' + encodeURIComponent @getReferralURL 'twitter'
-    link
-
-  getFacebookShareLink: =>
-    link = 'https://www.facebook.com/sharer/sharer.php?s=100'
-    link += '&p[url]=' + encodeURIComponent @getReferralURL 'facebook'
-    link += '&p[title]=' + encodeURIComponent @shareTitle
-    link += '&p[summary]=' + encodeURIComponent @shareSummary
-    link
+    MeetMikey.Helper.Messaging.facebookReferralClick()
 
   getTemplateData: =>
     object = {}
     object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
-    object.directReferralLink = @getReferralURL 'direct'
+    object.directReferralLink = MeetMikey.Helper.Messaging.getReferralURL('direct')
     object.isPremium = MeetMikey.globalUser.isPremium()
     object.isGrantedPremium = MeetMikey.globalUser.get('isGrantedPremium')
     object.isFullyIndexed = ( MeetMikey.globalUser?.getDaysLimit() >= MeetMikey.globalUser?.getMailTotalDays() )
     object
 
-  getReferralURL: (type) =>
-    url
-    switch type
-      when 'twitter' then url = MeetMikey.globalUser.get 'twitterReferralLink'
-      when 'facebook' then url = MeetMikey.globalUser.get 'facebookReferralLink'
-      when 'direct' then url = MeetMikey.globalUser.get 'directReferralLink'
-    url
-
   copyTextToClipboard: =>
-    linkText = $('#directReferralLinkText').val()
-    messageData =
-      type: "copyTextToClipboard"
-      text: linkText
-    chrome.runtime.sendMessage messageData, (response) ->
-      #console.log 'copied text to clipboard: ', linkText
-
-    MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'direct'
+    MeetMikey.Helper.Messaging.copyTextToClipboard '#directReferralLinkText', 'getMoreModal'
 
   showUpgradeModal: =>
+    MeetMikey.Helper.Messaging.showUpgradeModal 'getMoreModal'
     @hide()
-    $('body').append $('<div id="mm-upgrade-modal"></div>')
-    @upgradeModal = new MeetMikey.View.UpgradeModal el: '#mm-upgrade-modal'
-    @upgradeModal.render()
-    MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal', {link: 'upgrade'}
