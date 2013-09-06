@@ -1,11 +1,70 @@
 incentiveDaysAlertTemplate = """
+  
+  LIKES - 1,5,20,50
+
   <div class="mm-incentive-days-alert">
     <div class="mm-incentive-days-alert-text">
-      Thanks for using Mikey's '{{userActionType}}' feature!
-      Since you've done it {{numUserActions}} time{{#if numUserActionsIsNotOne}}s{{/if}}, we just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account for free.
+      Your first {{userActionType}}! Glad you liked it. 
+      To celebrate, we just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account for free.&nbsp;&nbsp;&nbsp;
+    <div class="mm-incentive-days-alert-close">Thanks!</div>
     </div>
-    <div class="mm-incentive-days-alert-close">&nbsp;&nbsp;&nbsp;Thanks!</div>
   </div>
+
+  <div class="mm-incentive-days-alert">
+    <div class="mm-incentive-days-alert-text">
+      {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}} - Nice. We just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account. Keep it up! Can you get to 20?&nbsp;&nbsp;&nbsp;
+    <div class="mm-incentive-days-alert-close">Thanks!</div>
+    </div>
+  </div>
+
+  <div class="mm-incentive-days-alert">
+    <div class="mm-incentive-days-alert-text">
+      {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! Who sends you all these sweet links? 
+      We just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account.&nbsp;&nbsp;&nbsp;
+    <div class="mm-incentive-days-alert-close">Thanks!</div>
+    </div>
+  </div>
+
+  <div class="mm-incentive-days-alert">
+    <div class="mm-incentive-days-alert-text">
+      {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! You better be tweeting some of these.
+      Have a few more{{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} on us.&nbsp;&nbsp;&nbsp;
+    <div class="mm-incentive-days-alert-close">Thanks!</div>
+    </div>
+  </div>
+
+  FAVORITES - 1,5,20,50
+
+  <div class="mm-incentive-days-alert">
+    <div class="mm-incentive-days-alert-text">
+      Your first {{userActionType}}! It's a great way to bookmark stuff for later. 
+      To celebrate, we just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account for free.&nbsp;&nbsp;&nbsp;
+    <div class="mm-incentive-days-alert-close">Thanks!</div>
+    </div>
+  </div>
+
+  <div class="mm-incentive-days-alert">
+    <div class="mm-incentive-days-alert-text">
+      {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! We appreciate organized folks here and thought we would {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account. Keep it up!&nbsp;&nbsp;&nbsp;
+    <div class="mm-incentive-days-alert-close">Thanks!</div>
+    </div>
+  </div>
+
+  <div class="mm-incentive-days-alert">
+    <div class="mm-incentive-days-alert-text">
+      {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! An organized inbox is the mark of a great mind. We've given you {{numNewDays}} additional day{{#if numNewDaysIsNotOne}}s{{/if}}.&nbsp;&nbsp;&nbsp;
+    <div class="mm-incentive-days-alert-close">Thanks!</div>
+    </div>
+  </div>
+
+  <div class="mm-incentive-days-alert">
+    <div class="mm-incentive-days-alert-text">
+      {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! You are definitely a power user.
+      Have a few more{{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} on us.&nbsp;&nbsp;&nbsp;
+    <div class="mm-incentive-days-alert-close">Thanks!</div>
+    </div>
+  </div>
+
 """
 
 class MeetMikey.Model.Resource extends MeetMikey.Model.Base
@@ -44,12 +103,6 @@ class MeetMikey.Model.Resource extends MeetMikey.Model.Base
     hitNewThreshold = response.hitNewThreshold
     numUserActions = response.numUserActions
     numNewDays = response.numNewDays
-
-    #TEMP!!!!
-    hitNewThreshold = true
-    numUserActions = 5
-    numNewDays = 5
-
     if not hitNewThreshold
       return
     MeetMikey.globalUser.refreshFromServer()
