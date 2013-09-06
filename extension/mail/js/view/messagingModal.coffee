@@ -141,6 +141,7 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     @$('.modal').modal 'hide'
     @remove()
     @unbindFacebookEvents()
+    MeetMikey.globalUser?.off 'change', @updateMailDaysLimit
 
   bindFacebookEvents: () =>
     @unbindFacebookEvents()
