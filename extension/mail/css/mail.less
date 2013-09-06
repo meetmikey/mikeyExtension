@@ -1010,7 +1010,7 @@ margin-right: 0px;
 margin-left: 10px;
 padding: 6px 12px;
 min-width: 54px;
-height: 27px;
+height: 16px;
 outline: 0;
 -webkit-border-radius: 2px;
 -moz-border-radius: 2px;
@@ -1020,7 +1020,7 @@ text-decoration: none;
 white-space: nowrap;
 font-weight: bold;
 font-size: 12px;
-line-height: 27px;
+line-height: 16px;
 cursor: pointer;
 }
 
@@ -2214,7 +2214,7 @@ body::-webkit-scrollbar-corner {
 
 .referral-button-text {
   display: block;
-  padding: 15px 16px 10px 40px;
+  padding: 15px 28px 10px 40px;
 }
 
 .mail-days {
@@ -3484,3 +3484,51 @@ td.mm-sent, td.mm-file {
   top: 4% !important;
 }
 
+/* ================ MESSAGE MODAL =================== */
+
+.modal-messenger {
+  & .modal-subheader {
+    margin-top: 30px;
+
+  }
+  & .footer-buttons {
+  margin-bottom: 0px;
+  margin-top: 20px;
+  padding: 14px 20px 14px 20px;
+  background-color: #f1f1f1;
+  border-top: #e5e5e5 1px solid;
+  height: 30px;
+  }
+
+  &.modal {
+    padding: 0px !important;
+  }
+
+  & .buttons {
+    float: right;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: linear-gradient(top,#ffffff,#f9f9f9);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#FFFFFF),to(#F9F9F9));
+    background-image: -webkit-linear-gradient(top,#ffffff,#f9f9f9);
+    color: #444;
+    border: 1px solid #eee;
+    &:hover {
+      color: #000;
+      border: 1px solid #ccc;
+    }
+
+  }
+
+  & .buttons-cluster {
+    padding-bottom: 20px;
+  }
+}
+
+.footer-mail-count {
+  display: inline-block;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #444;
+  height: 30px;
+  line-height: 30px;
+}

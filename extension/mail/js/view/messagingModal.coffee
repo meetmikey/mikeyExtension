@@ -1,62 +1,125 @@
 templates = {}
 
 templates.chromeStoreReview = """
-  <div class="modal hide fade modal-wide" style="display: none; ">
+  <div class="modal hide fade modal-wide modal-messenger" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Get more Mikey days!</h3>
+      <h3>Did you know you could get 15 more days of storage in 20 seconds?</h3>
     </div>
     <div class="modal-body">
-      <p>Review us in the Chrome Store</p>
+      
+        <div class="modal-subheader">
+          <div class="modal-subheader-text">
+            Review Mikey in the Chrome store
+          </div>
+          <div class="modal-subtext">
+            15 days for two clicks 
+          </div>
+        </div>
+        <div class="buttons-cluster">
+          <a href="#" id="rateOnChromeStoreButton" class="share-modal-button chrome-share"><div class="referral-button-text">Show Mikey some love</div></a>
+        </div>
+      
     </div>
     <div class="footer-buttons">
-      <a href="#" data-dismiss="modal" class="button buttons">Thanks</a>
+      <div class="footer-mail-count">You have mailDaysLimit TEMP</strong> out of <strong>mailTotalDays TEMP</strong> total days</div>
+      <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
     </div>
   </div>
 """
 
 templates.facebookLike = """
-  <div class="modal hide fade modal-wide" style="display: none; ">
+  <div class="modal hide fade modal-wide modal-messenger" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Get more Mikey days!</h3>
+      <h3>Did you know you could get 15 more days for a Facebook like?</h3>
     </div>
     <div class="modal-body">
-      <p>Like Mikey on Facebook</p>
+      
+        <div class="modal-subheader">
+          <div class="modal-subheader-text">
+            Show Mikey some Facebook love
+          </div>
+          <div class="modal-subtext">
+            15 days for two clicks 
+          </div>
+        </div>
+        <div class="buttons-cluster">
+          <a href="#" id="facebookLikeButton">
+            <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FMikey-for-Gmail%2F1400138380211355%3Fref%3Dhl&amp;width=340&amp;height=62&amp;colorscheme=light&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;send=false&amp;appId=172776159468128" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:340px; height:62px;" allowTransparency="true"></iframe>
+          </a>
+        </div>
+      
     </div>
     <div class="footer-buttons">
-      <a href="#" data-dismiss="modal" class="button buttons">Thanks</a>
+      <div class="footer-mail-count">You have mailDaysLimit TEMP</strong> out of <strong>mailTotalDays TEMP</strong> total days</div>
+      <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
     </div>
   </div>
 """
 
 templates.socialShare = """
-  <div class="modal hide fade modal-wide" style="display: none; ">
+  <div class="modal hide fade modal-wide modal-messenger" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Get more Mikey days!</h3>
+      <h3>Get more days of Mikey storage</h3>
     </div>
     <div class="modal-body">
-      <p>Share Mikey</p>
+      
+        <div class="modal-subheader">
+          <div class="modal-subheader-text">
+            Share with friends
+          </div>
+          <div class="modal-subtext">
+            30 days for every referral 
+          </div>
+        </div>
+        <div class="buttons-cluster">
+          <a href="#" id="twitterReferralButton" class="share-modal-button twitter-share"><div class="referral-button-text">Tweet</div></a>
+          <a href="#" id="facebookReferralButton" class="share-modal-button facebook-share"><div class="referral-button-text">Share</div></a>
+          <div class="url-copy-box">
+            <input id="directReferralLinkText" type="text" value="directReferral TEMP">
+            <a href="#" id="copyButton" class="copy-button" style="margin-left:-5px;">Copy</a>
+          </div>
+        </div>
+      
     </div>
     <div class="footer-buttons">
-      <a href="#" data-dismiss="modal" class="button buttons">Thanks</a>
+      <div class="footer-mail-count">You have mailDaysLimit TEMP</strong> out of <strong>mailTotalDays TEMP</strong> total days</div>
+      <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
     </div>
   </div>
 """
 
 templates.upgradeToPremium = """
-  <div class="modal hide fade modal-wide" style="display: none; ">
+  <div class="modal hide fade modal-wide modal-messenger" style="display: none; ">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Get more Mikey days!</h3>
+      <h3>Wish you had more days of Mikey storage? Consider an upgrade.</h3>
     </div>
     <div class="modal-body">
-      <p>Upgrade to Premium</p>
+    
+      <div class="modal-subheader">
+        <div class="modal-subheader-text">
+          Mikey Premium
+        </div>
+        <div class="modal-subtext">
+          Simple monthly plans. no tricks.
+        </div>
+      </div>
+          
+      <div class="buttons-cluster">
+         <a href="#" id="upgradeButton" class="share-modal-button premium">
+          <div class="referral-button-text">check out the premium plans</div>
+        </a>
+      </div>
     </div>
+     
     <div class="footer-buttons">
-      <a href="#" data-dismiss="modal" class="button buttons">Thanks</a>
+      <div class="footer-mail-count">You have mailDaysLimit TEMP</strong> out of <strong>mailTotalDays TEMP</strong> total days</div>
+      <a href="#" data-dismiss="modal" class="button buttons">No thanks.</a>
     </div>
+
   </div>
 """
 
@@ -69,6 +132,10 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
     templateKey = @getTemplateKey()
     if not templateKey
       return false
+
+    return true #TEMP!!!!! TURN OFF!!!
+
+
     if MeetMikey.globalUser and MeetMikey.globalUser.get 'isPremium'
       return false
     if not MeetMikey.Helper.Messaging.longEnoughSinceLastMessage()
@@ -121,7 +188,9 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
       return null
     for templateKey, template of templates
       messageMaskBit = @getMessageMaskBit templateKey
-      if messageMaskBit and not user.hasSeenMessage(messageMaskBit) and @userShouldSeeMessage(messageMaskBit)
+      #if messageMaskBit and not user.hasSeenMessage(messageMaskBit) and @userShouldSeeMessage(messageMaskBit)
+      #TEMP!!!! SWITCH BACK!!!!
+      if messageMaskBit and not MeetMikey.Helper.Messaging.hasSeenMessage messageMaskBit
         return templateKey
     return null
       
