@@ -8,18 +8,18 @@ incentiveDaysAlertTemplate = """
       
         {{#if messageOne}}
           Your first {{userActionType}}! Glad you liked it. 
-          To celebrate, we just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account for free.&nbsp;&nbsp;&nbsp;
+          To celebrate, we just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account for free.&nbsp;
         {{else}}
           {{#if messageTwo}}
-            {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}} - Nice. We just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account. Keep it up! Can you get to 20?&nbsp;&nbsp;&nbsp;
+            {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}} - Nice. We just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account. Keep it up! Can you get to 20?&nbsp;
           {{else}}
             {{#if messageThree}}
               {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! Who sends you all this great stuff?
-              We just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account.&nbsp;&nbsp;&nbsp;
+              We just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account.&nbsp;
             {{else}}
               {{#if messageFour}}
                 {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! You better be tweeting some of these.
-                Have {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} on us.&nbsp;&nbsp;&nbsp;
+                Have {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} on us.&nbsp;
               {{/if}}
             {{/if}}
           {{/if}}
@@ -31,17 +31,17 @@ incentiveDaysAlertTemplate = """
 
         {{#if messageOne}}
           Your first {{userActionType}}! It's a great way to bookmark stuff for later. 
-          To celebrate, we just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account for free.&nbsp;&nbsp;&nbsp;
+          To celebrate, we just added {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account for free.&nbsp;
         {{else}}
           {{#if messageTwo}}
-            {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! We appreciate organized folks and thought we would add {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account. Keep it up!&nbsp;&nbsp;&nbsp;
+            {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! We appreciate organized folks and thought we would add {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} to your account. Keep it up!&nbsp;
           {{else}}
             {{#if messageThree}}
-              {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! An organized inbox is the mark of a great mind. We've given you {{numNewDays}} additional day{{#if numNewDaysIsNotOne}}s{{/if}}.&nbsp;&nbsp;&nbsp;
+              {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! An organized inbox is the mark of a great mind. We've given you {{numNewDays}} additional day{{#if numNewDaysIsNotOne}}s{{/if}}.&nbsp;
             {{else}}
               {{#if messageFour}}
                 {{numUserActions}} {{userActionType}}{{#if numUserActionsIsNotOne}}s{{/if}}! You are definitely a power user.
-                Have {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} on us.&nbsp;&nbsp;&nbsp;
+                Have {{numNewDays}} day{{#if numNewDaysIsNotOne}}s{{/if}} on us.&nbsp;
               {{/if}}
             {{/if}}
           {{/if}}
@@ -49,7 +49,7 @@ incentiveDaysAlertTemplate = """
 
       {{/if}}
 
-      <div class="mm-incentive-days-alert-close">Thanks!</div>
+      <div class="mm-incentive-days-alert-close">Got it.</div>
     </div>
   </div>
 """
