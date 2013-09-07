@@ -185,6 +185,8 @@ class MeetMikey.View.MessagingModal extends MeetMikey.View.BaseModal
       return false
     if MeetMikey.globalUser.get 'onboarding'
       return false
+    if MeetMikey.globalUser.getDaysLimit() >= MeetMikey.globalUser.getMailTotalDays()
+      return false
     if not MeetMikey.Helper.Messaging.longEnoughSinceLastMessage()
       return false
     return true
