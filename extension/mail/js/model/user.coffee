@@ -108,3 +108,39 @@ class MeetMikey.Model.User extends Backbone.Model
         callback res
       error: (err) =>
         callback err
+
+  hasSeenMessage: (messageMaskBit) =>
+    if not messageMaskBit
+      return true
+
+    messagingMask = @get 'messagingMask'
+    if messagingMask & messageMaskBit
+      #also save this to local storage
+      notNow = true
+      MeetMikey.Helper.Messaging.messageShown messageMaskBit, notNow
+      return true
+
+    if MeetMikey.Helper.Messaging.hasSeenMessage messageMaskBit
+      return true
+    return false
+
+  setNewMessageMaskBit: (maskBit) =>
+    if not maskBit
+      return
+    oldMessagingMaskBit = @get 'messagingMask'
+    newMessagingMaskBit = oldMessagingMaskBit | maskBit
+    @set 'messagingMask', newMessagingMaskBit
+    MeetMikey.Helper.callAPI
+      url: 'userMessaging'
+      type: 'POST'
+      data:
+        messagingMaskBit: maskBit
+
+  creditUserWithPromotionAction: (promotionType) =>
+    MeetMikey.Helper.callAPI
+      url: 'creditPromotionAction'
+      type: 'POST'
+      data:
+        'promotionType': promotionType
+      complete: () =>
+        @refreshFromServer()

@@ -1,5 +1,5 @@
 _.extend MeetMikey.Constants,
-  env: 'production'
+  env: 'local'
   imgPath: 'mail/img'
   mixpanelId: '4025d8a58a875ce9a39db05bcf86fd71'
   #mixpanelIdTest: '0d4029b8e19dddbfacd1da118b47c01b'
@@ -21,6 +21,10 @@ _.extend MeetMikey.Constants,
   userActionThresholdTwo: 5
   userActionThresholdThree: 20
   userActionThresholdFour: 20
+  messagingPostLoginDelay: 90*1000 #90 seconds
+  messagingWaitDelay: 7*24*60*60*1000 #7 days
+  numDaysForChromeOrFacebookSupport: 15
+  numDaysForReferral: 30
   basicPlanPrice: '3'
   basicPlanNumAccounts: 1
   basicPlanDays: '365'
@@ -160,3 +164,9 @@ _.extend MeetMikey.Constants,
     , '51c8c575086058b13c00013d'
     , '51c8bdc3e942e2303b013ed0'
   ]
+
+  userMessagingMaskBits:
+    chromeStoreReview: 1 << 0
+    facebookLike: 1 << 1
+    socialShare: 1 << 2
+    upgradeToPremium: 1 << 3

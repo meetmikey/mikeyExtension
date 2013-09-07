@@ -13,9 +13,9 @@ template = """
         <p>You already have a premium account so we can't give you more days, but if Mikey has helped you out, you could really help Mikey out by:</p>
       {{else}}
         {{#if isFullyIndexed}}
-          <p>Mikey is showing you stuff <strong>{{mailTotalDays}}</strong> days in your account, but you will be limited to <strong>{{mailDaysLimit}}</strong>. Not to worry though, you can get more days by:</p>
+          <p>Mikey is showing you all <strong>{{mailTotalDays}}</strong> days in your account, but you will be limited to <strong><span class="daysLimitContainer">{{mailDaysLimit}}</span></strong>. Not to worry though, you can get more days by:</p>
         {{else}}
-          <p>Mikey is showing you <strong>{{mailDaysLimit}}</strong> out of the <strong>{{mailTotalDays}}</strong> total days that you've had this Gmail account.</p><p> 
+          <p>Mikey is showing you <strong><span class="daysLimitContainer">{{mailDaysLimit}}</span></strong> out of the <strong>{{mailTotalDays}}</strong> total days that you've had this Gmail account.</p><p> 
             We've made it super easy to get more days by:</p>
         {{/if}}
         
@@ -29,7 +29,7 @@ template = """
             Sharing with friends
           </div>
           <div class="modal-subtext">
-            30 days for every referral 
+            {{numDaysForReferral}} days for every referral 
           </div>
         </div>
         <div class="buttons-cluster">
@@ -48,7 +48,7 @@ template = """
             Showing Mikey love
           </div>
           <div class="modal-subtext">
-            15 days for chrome store or facebook support
+            {{numDaysForChromeOrFacebookSupport}} days for chrome store or facebook support
           </div>
         </div>
         <div class="buttons-cluster">
@@ -95,10 +95,12 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     'click #copyButton': 'copyTextToClipboard'
     'hidden .modal': 'modalHidden'
 
-  shareTitle: 'Meet Mikey'
-  shareSummary: 'The best way to find things in Gmail.'
-  twitterTagIntro: 'Checkout'
-  twitterTag: '@mikeyforgmail'
+  postInitialize: =>
+    MeetMikey.globalUser?.on 'change', @updateMailDaysLimit
+
+  updateMailDaysLimit: () =>
+    newDaysLimit = MeetMikey.globalUser.getDaysLimit()
+    $('.daysLimitContainer').html newDaysLimit
 
   postRender: =>
     if MeetMikey.globalUser?.isPremium()
@@ -112,6 +114,7 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
     @$('.modal').modal 'hide'
     @remove()
     @unbindFacebookEvents()
+    MeetMikey.globalUser?.off 'change', @updateMailDaysLimit
 
   bindFacebookEvents: () =>
     @unbindFacebookEvents()
@@ -120,80 +123,34 @@ class MeetMikey.View.GetMoreModal extends MeetMikey.View.BaseModal
   unbindFacebookEvents: () =>
     FB.Event.unsubscribe 'edge.create', @facebookLikeEvent
 
+  rateOnChromeStoreClick: (source) =>
+    MeetMikey.Helper.Messaging.rateOnChromeStoreClick 'getMoreModal'
+    @hide()
+
   facebookLikeEvent: (likedURL) =>
-    if not likedURL or likedURL isnt MeetMikey.Constants.mikeyFacebookURL
-      return
-    MeetMikey.Helper.Analytics.trackEvent 'facebookLikeClick'
-    @creditUserWithPromotionAction 'facebookLike'
+    MeetMikey.Helper.Messaging.facebookLikeEvent likedURL, 'getMoreModal'
 
   twitterReferralClick: =>
-    MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'twitter'
-    window.open @getTwitterShareLink(), 'sharer', 'width=626,height=236'
+    MeetMikey.Helper.Messaging.twitterReferralClick()
 
   facebookReferralClick: =>
-    MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'facebook'
-    window.open @getFacebookShareLink(), 'sharer', 'width=626,height=436'
-
-  rateOnChromeStoreClick: =>
-    MeetMikey.Helper.Analytics.trackEvent 'rateOnChromeStoreClick'
-    url = MeetMikey.Constants.chromeStoreReviewURL
-    window.open url
-    @hide()
-    @creditUserWithPromotionAction 'chromeStoreReview'
-
-  creditUserWithPromotionAction: (promotionType) =>
-    MeetMikey.Helper.callAPI
-      url: 'creditPromotionAction'
-      type: 'POST'
-      data:
-        'promotionType': promotionType
-      complete: () =>
-        MeetMikey.globalUser.refreshFromServer()
-
-  getTwitterShareLink: =>
-    link = 'https://twitter.com/intent/tweet'
-    link += '?text=' + encodeURIComponent @twitterTagIntro + ' ' + @twitterTag + ': ' + @shareSummary
-    link += '&url=' + encodeURIComponent @getReferralURL 'twitter'
-    link
-
-  getFacebookShareLink: =>
-    link = 'https://www.facebook.com/sharer/sharer.php?s=100'
-    link += '&p[url]=' + encodeURIComponent @getReferralURL 'facebook'
-    link += '&p[title]=' + encodeURIComponent @shareTitle
-    link += '&p[summary]=' + encodeURIComponent @shareSummary
-    link
+    MeetMikey.Helper.Messaging.facebookReferralClick()
 
   getTemplateData: =>
     object = {}
     object.mailDaysLimit = MeetMikey.globalUser?.getDaysLimit()
     object.mailTotalDays = MeetMikey.globalUser?.getMailTotalDays()
-    object.directReferralLink = @getReferralURL 'direct'
+    object.directReferralLink = MeetMikey.Helper.Messaging.getReferralURL('direct')
     object.isPremium = MeetMikey.globalUser.isPremium()
     object.isGrantedPremium = MeetMikey.globalUser.get('isGrantedPremium')
     object.isFullyIndexed = ( MeetMikey.globalUser?.getDaysLimit() >= MeetMikey.globalUser?.getMailTotalDays() )
+    object.numDaysForChromeOrFacebookSupport = MeetMikey.Constants.numDaysForChromeOrFacebookSupport
+    object.numDaysForReferral = MeetMikey.Constants.numDaysForReferral
     object
 
-  getReferralURL: (type) =>
-    url
-    switch type
-      when 'twitter' then url = MeetMikey.globalUser.get 'twitterReferralLink'
-      when 'facebook' then url = MeetMikey.globalUser.get 'facebookReferralLink'
-      when 'direct' then url = MeetMikey.globalUser.get 'directReferralLink'
-    url
-
   copyTextToClipboard: =>
-    linkText = $('#directReferralLinkText').val()
-    messageData =
-      type: "copyTextToClipboard"
-      text: linkText
-    chrome.runtime.sendMessage messageData, (response) ->
-      #console.log 'copied text to clipboard: ', linkText
-
-    MeetMikey.Helper.Analytics.trackEvent 'clickReferralButton', type: 'direct'
+    MeetMikey.Helper.Messaging.copyTextToClipboard '#directReferralLinkText', 'getMoreModal'
 
   showUpgradeModal: =>
+    MeetMikey.Helper.Messaging.showUpgradeModal 'getMoreModal'
     @hide()
-    $('body').append $('<div id="mm-upgrade-modal"></div>')
-    @upgradeModal = new MeetMikey.View.UpgradeModal el: '#mm-upgrade-modal'
-    @upgradeModal.render()
-    MeetMikey.Helper.Analytics.trackEvent 'viewUpgradeModal', {link: 'upgrade'}

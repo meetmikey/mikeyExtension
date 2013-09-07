@@ -34,6 +34,13 @@ class Setup
     @checkMultipleInbox =>
       @waitForInbox()
     @injectSidebarView()
+    @checkMessaging()
+
+  checkMessaging: () =>
+    $('body').append $('<div id="mm-messaging-modal"></div>')
+    @messagingModal = new MeetMikey.View.MessagingModal el: '#mm-messaging-modal'
+    if @messagingModal.shouldShow()
+      setTimeout @messagingModal.render, MeetMikey.Constants.messagingPostLoginDelay
 
   initFacebook: =>
     element = $('#fb-root')

@@ -73,6 +73,7 @@
             "mail/js/view/payWithStripe.js",
             "mail/js/view/upgradeModal.js",
             "mail/js/view/getMoreModal.js",
+            "mail/js/view/messagingModal.js",
             "mail/js/view/pagination.js",
             "mail/js/view/mailCounts.js",
             "mail/js/view/tabs.js",
