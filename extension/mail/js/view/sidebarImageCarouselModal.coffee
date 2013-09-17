@@ -138,9 +138,9 @@ class MeetMikey.View.SidebarImageCarouselModal extends MeetMikey.View.BaseModal
     @activateModel @imageModelsCollection.models[ @activeIndex ]
 
   goRight: =>
-    if ( @activeIndex == 0 or @activeIndex > 0 ) and ( @activeIndex < ( @imageModels.length - 1 ) )
+    if ( @activeIndex == 0 or @activeIndex > 0 ) and ( @activeIndex < ( @imageModelsCollection.length - 1 ) )
       @activeIndex++
-    @activateModel @imageModels[ @activeIndex ]
+    @activateModel @imageModelsCollection.models[ @activeIndex ]
 
   isModalVisible: =>
     @$('.mmCarousel').parent().hasClass 'fade-in'
