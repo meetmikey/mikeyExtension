@@ -2,6 +2,7 @@ class Setup
   inboxSelector: MeetMikey.Constants.Selectors.inboxContainer
   tabsSelector: MeetMikey.Constants.Selectors.tabsContainer
   userEmailSelector: MeetMikey.Constants.Selectors.userEmail
+  themeSelector: MeetMikey.Constants.Selectors.tableCell
   inInbox: MeetMikey.Helper.Url.inInbox
 
   logger: MeetMikey.Helper.Logger
@@ -16,7 +17,7 @@ class Setup
     MeetMikey.Globals.checkTabsInterval = null
 
   waitAndStartAuthFlow: =>
-    MeetMikey.Helper.findSelectors [@userEmailSelector,@inboxSelector], @startAuthFlow
+    MeetMikey.Helper.findSelectors [@userEmailSelector,@inboxSelector,@themeSelector], @startAuthFlow
 
   startAuthFlow: (target) =>
     @injectDropdown()
