@@ -20,6 +20,9 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
   enableSearch: =>
     @subView('searchBar').on 'search', @handleSearch
 
+  inboxClicked: =>
+    @subView('tabs').$el.hide()
+
   handleSearch: (query) =>
     @subView('searchResults')._teardown()
     @subView('tabs')._teardown()
@@ -49,9 +52,7 @@ class MeetMikey.View.Search extends MeetMikey.View.Base
   injectTabBarContainer: =>
     selector = MeetMikey.Constants.Selectors.tabsContainer
     element = '<div id="mm-search-tabs-container" class="mm-tabs-container"></div>'
-    console.log 'search: injectTabBarContainer...'
-    MeetMikey.Helper.DOMManager.injectBeside selector, element, =>
-      console.log 'search: injectTabBarContainer success.'
+    MeetMikey.Helper.DOMManager.injectInto selector, element, =>
       @renderSubview 'tabs'
       @subView('tabs').setActiveTab MeetMikey.Globals.tabState
       @$('.AO').addClass 'AO-tabs'

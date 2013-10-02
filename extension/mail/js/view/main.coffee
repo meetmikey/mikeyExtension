@@ -26,7 +26,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     @options.render = false
 
   postInitialize: =>
-    @subView('leftNavBar').on 'clicked:inbox', @showEmailTab
+    @subView('leftNavBar').on 'clicked:inbox', @inboxClicked
     @subView('inbox').on 'updateTabCount', @subView('tabs').updateTabCount
     $(window).on 'hashchange', @pageNavigated
     MeetMikey.Globals.tabState = 'email'
@@ -77,9 +77,10 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
     view = new MeetMikey.View.WelcomeModal el: '#mm-welcome-modal'
     view.render()
 
-  showEmailTab: =>
+  inboxClicked: =>
     @subView('tabs').setActiveTab 'email'
     @subView('inbox').showTab 'email'
+    @subView('search').inboxClicked()
     if MeetMikey.Globals.gmailTabs
       $(MeetMikey.Constants.Selectors.gmailTabsSelector).show()
 

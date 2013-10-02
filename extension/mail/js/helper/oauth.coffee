@@ -8,7 +8,6 @@ class OAuth
     email = msg.substring( prefix.length, msg.length - suffix.length )
     email
 
-
   isUserEmail: (email) =>
     email is @getUserEmail()
 
