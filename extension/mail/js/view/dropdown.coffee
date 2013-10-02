@@ -3,7 +3,7 @@ image1 = chrome.extension.getURL "#{imgPath}/mikeyIcon120x120.png"
 
 template = """
   {{#if newGmail}}
-    <div class="dropdown" id="mikeyDropdown">
+    <div class="dropdown" id="mikeyDropdown" style="margin-left:10px; margin-top:5px">
       <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">
         <img src=#{image1} width="16" height="16"/>
       </a>
