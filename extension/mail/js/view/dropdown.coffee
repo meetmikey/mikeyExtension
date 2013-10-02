@@ -2,65 +2,65 @@ imgPath = MeetMikey.Constants.imgPath
 image1 = chrome.extension.getURL "#{imgPath}/mikeyIcon120x120.png"
 
 template = """
-	<li class="dropdown gbt" id="mikeyDropdown">
-    <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">Mikey <span class="mm-carat"></span></a>
-    <ul id="menu1" class="dropdown-menu mm-menu" role="menu" aria-labelledby="drop4">
-      <li><a tabindex="-1" href="http://mikey.uservoice.com">Suggest a feature</a></li>
-      <li><a tabindex="-1" href="mailto:support@mikeyteam.com">Mikey support</a></li>
-      <li><a tabindex="-1" target="_blank" href="http://www.meetmikey.com/faq.html">Mikey FAQ</a></li>
-      <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
-      {{#if shouldShowDivider}}
-        <li class="divider"></li>
-      {{/if}}
-      {{#if shouldShowShareMikey}}
-        <li>
-          <a tabindex="-1" href="#" class="get-more">
-            {{#if isPremium}}
-              Share Mikey
-            {{else}}
-              Get more Mikey
-            {{/if}}
-          </a>
-        </li>
-      {{/if}}
-      {{#if shouldShowMyAccount}}
-        <li><a tabindex="-1" href="#" class="mikey-account">My Mikey Account</a></li>
-      {{/if}}
-    </ul>
-  </li>
-"""
-
-template2 = """
-  <div class="dropdown" id="mikeyDropdown">
-    <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">Mikey <span class="mm-carat"></span></a>
-    <ul id="menu1" class="dropdown-menu mm-menu" role="menu" aria-labelledby="drop4">
-      <li><a tabindex="-1" href="http://mikey.uservoice.com">Suggest a feature</a></li>
-      <li><a tabindex="-1" href="mailto:support@mikeyteam.com">Mikey support</a></li>
-      <li><a tabindex="-1" target="_blank" href="http://www.meetmikey.com/faq.html">Mikey FAQ</a></li>
-      <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
-      {{#if shouldShowDivider}}
-        <li class="divider"></li>
-      {{/if}}
-      {{#if shouldShowShareMikey}}
-        <li>
-          <a tabindex="-1" href="#" class="get-more">
-            {{#if isPremium}}
-              Share Mikey
-            {{else}}
-              Get more Mikey
-            {{/if}}
-          </a>
-        </li>
-      {{/if}}
-      {{#if shouldShowMyAccount}}
-        <li><a tabindex="-1" href="#" class="mikey-account">My Mikey Account</a></li>
-      {{/if}}
-    </ul>
-  </div>
+  {{#if newGmail}}
+    <div class="dropdown" id="mikeyDropdown">
+      <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">Mikey <span class="mm-carat"></span></a>
+      <ul id="menu1" class="dropdown-menu mm-menu" role="menu" aria-labelledby="drop4">
+        <li><a tabindex="-1" href="http://mikey.uservoice.com">Suggest a feature</a></li>
+        <li><a tabindex="-1" href="mailto:support@mikeyteam.com">Mikey support</a></li>
+        <li><a tabindex="-1" target="_blank" href="http://www.meetmikey.com/faq.html">Mikey FAQ</a></li>
+        <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
+        {{#if shouldShowDivider}}
+          <li class="divider"></li>
+        {{/if}}
+        {{#if shouldShowShareMikey}}
+          <li>
+            <a tabindex="-1" href="#" class="get-more">
+              {{#if isPremium}}
+                Share Mikey
+              {{else}}
+                Get more Mikey
+              {{/if}}
+            </a>
+          </li>
+        {{/if}}
+        {{#if shouldShowMyAccount}}
+          <li><a tabindex="-1" href="#" class="mikey-account">My Mikey Account</a></li>
+        {{/if}}
+      </ul>
+    </div>
+  {{else}}
+  	<li class="dropdown gbt" id="mikeyDropdown">
+      <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">Mikey <span class="mm-carat"></span></a>
+      <ul id="menu1" class="dropdown-menu mm-menu" role="menu" aria-labelledby="drop4">
+        <li><a tabindex="-1" href="http://mikey.uservoice.com">Suggest a feature</a></li>
+        <li><a tabindex="-1" href="mailto:support@mikeyteam.com">Mikey support</a></li>
+        <li><a tabindex="-1" target="_blank" href="http://www.meetmikey.com/faq.html">Mikey FAQ</a></li>
+        <li><a tabindex="-1" href="#" class="toggle-mikey">{{toggleAction}} Mikey</a></li>
+        {{#if shouldShowDivider}}
+          <li class="divider"></li>
+        {{/if}}
+        {{#if shouldShowShareMikey}}
+          <li>
+            <a tabindex="-1" href="#" class="get-more">
+              {{#if isPremium}}
+                Share Mikey
+              {{else}}
+                Get more Mikey
+              {{/if}}
+            </a>
+          </li>
+        {{/if}}
+        {{#if shouldShowMyAccount}}
+          <li><a tabindex="-1" href="#" class="mikey-account">My Mikey Account</a></li>
+        {{/if}}
+      </ul>
+    </li>
+  {{/if}}
 """
 
 class MeetMikey.View.Dropdown extends MeetMikey.View.Base
-  template: Handlebars.compile(template2)
+  template: Handlebars.compile(template)
 
   events:
     'click .toggle-mikey': 'toggleMikey'
@@ -85,6 +85,7 @@ class MeetMikey.View.Dropdown extends MeetMikey.View.Base
     object.shouldShowShareMikey = @shouldShowShareMikey()
     object.shouldShowMyAccount = @shouldShowMyAccount()
     object.shouldShowDivider = @shouldShowShareMikey() or @shouldShowMyAccount()
+    object.newGmail = @version == 2
     object
 
   shouldShowMyAccount: =>

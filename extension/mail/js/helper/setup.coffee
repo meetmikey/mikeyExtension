@@ -3,7 +3,6 @@ class Setup
   tabsSelector: MeetMikey.Constants.Selectors.tabsContainer
   userEmailSelector: MeetMikey.Constants.Selectors.userEmail
   themeSelector: MeetMikey.Constants.Selectors.tableCell
-  navBarSelector: MeetMikey.Constants.Selectors.navBar2
   inInbox: MeetMikey.Helper.Url.inInbox
 
   logger: MeetMikey.Helper.Logger
@@ -18,7 +17,7 @@ class Setup
     MeetMikey.Globals.checkTabsInterval = null
 
   waitAndStartAuthFlow: =>
-    MeetMikey.Helper.findSelectors @userEmailSelector,@inboxSelector,@navBarSelector,@themeSelector,@startAuthFlow
+    MeetMikey.Helper.findSelectors @userEmailSelector,@inboxSelector,@themeSelector,@startAuthFlow
 
   startAuthFlow: (target) =>
     @injectDropdown()
@@ -103,6 +102,20 @@ class Setup
     else
       return 0
 
+  #TODO: remove backwards compatibility
+  setNavBarSelector: =>
+    version1 = $(MeetMikey.Constants.Selectors.navBar)
+    version2 = $(MeetMikey.Constants.Selectors.navBar2)
+
+    if version1.length
+      @navBarSelector = version1
+      @navBarVersion = 1
+    else if version2.length
+      @navBarSelector = version2
+      @navBarVersion = 2
+    else
+      console.log 'Mikey: no nav bar selector found'
+
   checkGmailTabs: (callback) =>
     gmailTabsSelector = MeetMikey.Constants.Selectors.gmailTabsSelector
     if $(gmailTabsSelector) && $(gmailTabsSelector).length
@@ -149,8 +162,17 @@ class Setup
 
   injectDropdown: =>
     return if @dropdownView?
-    @dropdownView = new MeetMikey.View.Dropdown
-      el: MeetMikey.Constants.Selectors.navBar2, prepend: true
+    @setNavBarSelector()
+    console.log @navBarVersion
+    console.log @navBarSelector
+    if @navBarVersion == 1
+      @dropdownView = new MeetMikey.View.Dropdown
+        version: @navBarVersion
+        el: @navBarSelector, append: true
+    else
+      @dropdownView = new MeetMikey.View.Dropdown
+        version: @navBarVersion
+        el: @navBarSelector, prepend: true
     @dropdownView.rerender()
 
   # Rename Auth modal
