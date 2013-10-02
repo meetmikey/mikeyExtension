@@ -68,7 +68,7 @@ class MeetMikey.View.Main extends MeetMikey.View.Base
 
   injectTabBarContainer: (selector) =>
     element = '<div id="mm-tabs-container" class="mm-tabs-container"></div>'
-    MeetMikey.Helper.DOMManager.injectInto @tabsSelector, element, =>
+    MeetMikey.Helper.DOMManager.injectBeside @tabsSelector, element, =>
       @$(@contentSelector).addClass 'AO-tabs'
 
   injectWelcomeModal: =>

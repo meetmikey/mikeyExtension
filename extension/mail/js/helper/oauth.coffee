@@ -1,6 +1,13 @@
 class OAuth
   getUserEmail: ->
-    $(MeetMikey.Constants.Selectors.userEmail).text()
+    msg = $(MeetMikey.Constants.Selectors.userEmail).text().trim()
+    prefix = 'Loading '
+    if ( msg.substring( 0, prefix.length ) isnt prefix )
+      return null
+    suffix = '…'
+    email = msg.substring( prefix.length, msg.length - suffix.length )
+    email
+
 
   isUserEmail: (email) =>
     email is @getUserEmail()

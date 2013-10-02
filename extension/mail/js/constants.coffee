@@ -49,7 +49,8 @@ _.extend MeetMikey.Constants,
   Selectors:
     # selector that contains controls above inbox where we inject tabs
     #tabsContainer: '[id=":ro"] [gh="tm"]'
-    tabsContainer: '[gh="tm"]'
+    #tabsContainer: '[gh="tm"]'
+    tabsContainer: '.Tm.aeJ'
 
     # selector that the inbox should be inserted before
     inboxContainer: '.BltHke.nH.oy8Mbf[role=main] .UI'
@@ -100,7 +101,8 @@ _.extend MeetMikey.Constants,
     gmailDropdownText: '.akh[gh="pb"] span'
 
     # element that contains the user's email address
-    userEmail: '#gbmpdv .gbps2'
+    #userEmail: '#gbmpdv .gbps2'
+    userEmail: '.msg'
 
     # gmail's pagination controls
     gmailPagination: '.Cr.aqJ > .ar5.J-J5-Ji'
