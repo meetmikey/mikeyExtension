@@ -116,6 +116,8 @@ _.extend MeetMikey.Constants,
     # nav bar at very top of viewport
     navBar: '#gbzc'
 
+    navBar2: '.gb_mb'
+
     mikeyDropdown: ''
 
     # bar containing pagination for app search

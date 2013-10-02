@@ -39,7 +39,8 @@ MeetMikey.Helper.findSelectors = (selectors..., callback) ->
     targets = _.map selectors, (s) -> $ s
     if _.every(targets, (target) -> target.length > 0)
       callback targets
-    else setTimeout find, 200
+    else setTimeout find, 500
+
   find()
 
 MeetMikey.Helper.getBasicAPIData = ->

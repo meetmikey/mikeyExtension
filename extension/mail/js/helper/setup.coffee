@@ -3,6 +3,7 @@ class Setup
   tabsSelector: MeetMikey.Constants.Selectors.tabsContainer
   userEmailSelector: MeetMikey.Constants.Selectors.userEmail
   themeSelector: MeetMikey.Constants.Selectors.tableCell
+  navBarSelector: MeetMikey.Constants.Selectors.navBar2
   inInbox: MeetMikey.Helper.Url.inInbox
 
   logger: MeetMikey.Helper.Logger
@@ -17,7 +18,7 @@ class Setup
     MeetMikey.Globals.checkTabsInterval = null
 
   waitAndStartAuthFlow: =>
-    MeetMikey.Helper.findSelectors [@userEmailSelector,@inboxSelector,@themeSelector], @startAuthFlow
+    MeetMikey.Helper.findSelectors @userEmailSelector,@inboxSelector,@navBarSelector,@themeSelector,@startAuthFlow
 
   startAuthFlow: (target) =>
     @injectDropdown()
@@ -89,6 +90,7 @@ class Setup
       MeetMikey.Globals.multipleInbox = @multipleInbox = margin isnt "-400px" and count == 0
       @setSelectors()
       callback @multipleInbox
+      console.log '@multipleInbox', @multipleInbox
 
   checkDomVersion: =>
     version1 = $(MeetMikey.Constants.Selectors.multipleInboxTabsContainer)
@@ -148,7 +150,7 @@ class Setup
   injectDropdown: =>
     return if @dropdownView?
     @dropdownView = new MeetMikey.View.Dropdown
-      el: MeetMikey.Constants.Selectors.navBar, append: true
+      el: MeetMikey.Constants.Selectors.navBar2, prepend: true
     @dropdownView.rerender()
 
   # Rename Auth modal

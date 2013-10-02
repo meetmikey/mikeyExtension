@@ -5,6 +5,7 @@ class MeetMikey.View.Base extends Backbone.View
     render: true # should we replace content of $el with a template
     renderChildren: true # should we render our subViews on render
     append: false # should we append the template to $el rather than replace
+    prepend: false
     owned: true # do we own $el? can we destroy it on teardown?
 
   initialize: =>
@@ -51,6 +52,8 @@ class MeetMikey.View.Base extends Backbone.View
     renderedTemplate = @template(@getTemplateData())
     if @options.append
       @$el.append renderedTemplate
+    else if @options.prepend
+      @$el.prepend renderedTemplate
     else
       @$el.html renderedTemplate
       
