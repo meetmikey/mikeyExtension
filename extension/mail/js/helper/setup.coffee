@@ -17,7 +17,7 @@ class Setup
     MeetMikey.Globals.checkTabsInterval = null
 
   waitAndStartAuthFlow: =>
-    MeetMikey.Helper.findSelectors @userEmailSelector,@inboxSelector,@themeSelector,@startAuthFlow
+    MeetMikey.Helper.findSelectors @userEmailSelector,@themeSelector,@startAuthFlow
 
   startAuthFlow: (target) =>
     @injectDropdown()
