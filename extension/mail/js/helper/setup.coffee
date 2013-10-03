@@ -163,8 +163,6 @@ class Setup
   injectDropdown: =>
     return if @dropdownView?
     @setNavBarSelector()
-    console.log @navBarVersion
-    console.log @navBarSelector
     if @navBarVersion == 1
       @dropdownView = new MeetMikey.View.Dropdown
         el: @navBarSelector, append: true, version: @navBarVersion
