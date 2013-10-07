@@ -3,12 +3,17 @@ class OAuth
     msg = $(MeetMikey.Constants.Selectors.userEmail).text().trim()
     split = msg.split(" ")
     if (split && split.length > 1)
-      msg = split[split.length-1]
+      split.forEach (candidate) =>
+        if candidate.indexOf('@') != -1
+          msg = candidate
     else
       return null
     
     suffix = '…'
-    email = msg.substring( 0, msg.length - suffix.length )
+    if (msg.indexOf(suffix) != -1)
+      email = msg.substring( 0, msg.length - suffix.length )
+    else
+      email = msg.substring( 0, msg.length)
     email
 
   isUserEmail: (email) =>
