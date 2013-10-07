@@ -3,7 +3,7 @@ class OAuth
     msg = $(MeetMikey.Constants.Selectors.userEmail).text().trim()
     split = msg.split(" ")
     if (split && split.length > 1)
-      msg = split[1]
+      msg = split[split.length-1]
     else
       return null
     
