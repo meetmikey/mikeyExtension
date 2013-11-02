@@ -116,7 +116,7 @@ _.extend MeetMikey.Constants,
     # nav bar at very top of viewport
     navBar: '#gbzc'
 
-    navBar2: '.gb_qb'
+    navBar2: '.gb_rb.gb_yb.gb_g'
 
     mikeyDropdown: ''
 
