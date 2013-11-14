@@ -8,14 +8,22 @@ template = """
 
     <div class="modal-body">
       <p>Your account is on the <b>Mikey {{billingPlanCapitalized}} Plan</b>.</p>
+
+
       {{#unless isGrantedPremium}}
+        <p>Sadly, Mikey is shutting down so upgrading is no longer an option.</p>
+        <p>Please contact <a href="mailto:support@mikeyteam.com" target="_blank">Mikey support</a> with any questions.</p>
+        <p>Thanks for being a great customer.</p>
+
+        <!--
         <div class='pricing'>
           <div id='mm-stripe-basic' class='pricing-tier'></div>
           <div id='mm-stripe-pro' class='pricing-tier'></div>
-          <!-- <div id='mm-stripe-team' class='pricing-tier'></div> -->
           <div id='mm-stripe-enterprise' class='pricing-tier'></div>
           <p>Simple monthly rates. No surprises. See Mikey's <a href="https://meetmikey.com/premium-terms.html" target="_blank">premium terms</a> for more info.</p>
         </div>
+        -->
+
       {{/unless}}
     </div>
 

@@ -138,7 +138,8 @@ class MeetMikey.View.PayWithStripe extends MeetMikey.View.Base
         , token: token
         , image: chrome.extension.getURL MeetMikey.Constants.imgPath + '/' + @mikeyIcon
       }
-      StripeCheckout.open stripeData
+      #Mikey's dying.  Turning off stripe checkouts...
+      #StripeCheckout.open stripeData
     false
 
   handlePaymentAPIResponse: (response, status) =>
